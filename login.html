@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login – Camino Bíblico</title>
- <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 
-  <script src="supabase.js" defer></script>
-  <script src="js/auth.js" defer></script>
+  <!-- SDK de Supabase v2 UMD -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <!-- Conexión Supabase -->
+  <script src="supabase.js"></script>
+  <!-- Lógica de autenticación -->
+  <script src="js/auth.js"></script>
+
   <style>
     body { font-family: Arial, sans-serif; padding: 2rem; max-width: 400px; margin: auto; }
     h2 { margin-top: 2rem; }
     label, input, select { display: block; width: 100%; margin-bottom: 1rem; }
     button { padding: 0.5rem 1rem; }
+    #mensaje { margin-top: 1rem; color: green; font-weight: bold; }
   </style>
 </head>
 <body>
@@ -41,3 +46,4 @@
 
 </body>
 </html>
+
