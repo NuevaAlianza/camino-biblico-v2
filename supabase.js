@@ -1,7 +1,7 @@
-
-
 // supabase.js
 const SUPABASE_URL = 'https://wrcoawxhvyduinkzwsgc.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndyY29hd3hodnlkdWlua3p3c2djIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA3MjAxNjksImV4cCI6MjA2NjI5NjE2OX0.ktA1A3nlTadvAZIMakQ8NVu5BVHHKzwKPevfAm6kkf4';
 
-window.supabase = window.supabase || window.Supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// ESTA es la forma correcta con el script UMD que usas
+window.supabase = Supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
