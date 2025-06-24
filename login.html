@@ -5,12 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login – Camino Bíblico</title>
 
-  <!-- SDK de Supabase v2 UMD -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-  <!-- Conexión Supabase -->
-  <script src="supabase.js"></script>
-  <!-- Lógica de autenticación -->
-  <script src="js/auth.js"></script>
+<!-- ⚠️ SIN defer para el SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+
+<!-- ✅ Con defer para los scripts que dependen del SDK -->
+<script src="supabase.js" defer></script>
+<script src="js/auth.js" defer></script>
+
 
   <style>
     body { font-family: Arial, sans-serif; padding: 2rem; max-width: 400px; margin: auto; }
