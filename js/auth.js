@@ -14,6 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const ciudad = document.getElementById('reg-ciudad').value;
     const parroquia = document.getElementById('reg-parroquia').value;
 
+    console.log("Intentando registrar con:", { email, password });
+
+
     // Crear cuenta en Supabase Auth
     const { data, error } = await supabase.auth.signUp({
       email,
