@@ -5,13 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login – Camino Bíblico</title>
 
-  <!-- Supabase SDK (sin defer) -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <!-- SDK de Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 
-  <!-- Tus scripts (con defer) -->
-  <script src="supabase.js" defer></script>
-  <script src="auth.js" defer></script>
-  <script src="progreso.js" defer></script>
+<!-- Script de configuración (junto al index) -->
+<script src="supabase.js" defer></script>
+
+<!-- Scripts dentro de /js -->
+<script src="js/auth.js" defer></script>
+<script src="js/progreso.js" defer></script>
+
 
   <style>
     body { font-family: Arial, sans-serif; padding: 2rem; max-width: 400px; margin: auto; }
