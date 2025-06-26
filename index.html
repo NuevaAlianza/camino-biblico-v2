@@ -1,1 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login – Camino Bíblico</title>
+
+  <!-- Supabase SDK (sin defer) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+
+  <!-- Tus scripts (con defer) -->
+  <script src="supabase.js" defer></script>
+  <script src="auth.js" defer></script>
+  <script src="progreso.js" defer></script>
+
+  <style>
+    body { font-family: Arial, sans-serif; padding: 2rem; max-width: 400px; margin: auto; }
+    h2 { margin-top: 2rem; }
+    input, button { display: block; width: 100%; margin-bottom: 1rem; padding: 0.6rem; }
+    #mensaje { margin-top: 1rem; color: green; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <h1>Camino Bíblico</h1>
+
+  <h2>Registro</h2>
+  <form id="registro-form">
+    <input type="email" id="reg-email" placeholder="Correo electrónico" required />
+    <input type="password" id="reg-password" placeholder="Contraseña" required />
+    <input type="text" id="reg-nombre" placeholder="Nombre completo" required />
+    <input type="text" id="reg-pais" placeholder="País" />
+    <input type="text" id="reg-ciudad" placeholder="Ciudad" />
+    <input type="text" id="reg-parroquia" placeholder="Parroquia" />
+    <button type="submit">Registrarse</button>
+  </form>
+
+  <h2>Iniciar sesión</h2>
+  <form id="login-form">
+    <input type="email" id="login-email" placeholder="Correo electrónico" required />
+    <input type="password" id="login-password" placeholder="Contraseña" required />
+    <button type="submit">Entrar</button>
+  </form>
+
+  <div id="mensaje"></div>
+</body>
+</html>
 
