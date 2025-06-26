@@ -3,8 +3,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const loginForm = document.getElementById('login-form');
   const mensaje = document.getElementById('mensaje');
 
+  // Registro
   registroForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+
     const email = document.getElementById('reg-email').value;
     const password = document.getElementById('reg-password').value;
     const nombre = document.getElementById('reg-nombre').value;
@@ -12,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const ciudad = document.getElementById('reg-ciudad').value;
     const parroquia = document.getElementById('reg-parroquia').value;
 
+    // Crear cuenta en Supabase Auth
     const { data, error } = await supabase.auth.signUp({
       email,
       password
@@ -19,25 +22,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (error) {
       mensaje.textContent = `Error: ${error.message}`;
-    } else {
-      const user = data.user;
-      if (user) {
-        // Guarda datos adicionales en la tabla `usuarios`
-        await supabase.from('usuarios').insert({
-          id: user.id,
-           email,
-          nombre,
-          pais,
-          ciudad,
-          parroquia
-        });
+      return;
+    }
+
+    const user = data.user;
+    if (user) {
+      // Insertar datos adicionales en tabla `usuarios`
+      const { error: insertError } = await supabase.from('usuarios').insert({
+        id: user.id,
+        email,
+        nombre,
+        pais,
+        ciudad,
+        parroquia
+      });
+
+      if (insertError) {
+        mensaje.textContent = `Error al guardar datos extra: ${insertError.message}`;
+        return;
       }
-      mensaje.textContent = "Registro exitoso. Revisa tu correo.";
+
+      mensaje.textContent = "Registro exitoso.";
     }
   });
 
+  // Login
   loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
 
@@ -50,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
       mensaje.textContent = `Error: ${error.message}`;
     } else {
       mensaje.textContent = "Inicio de sesión exitoso.";
-      // Redirigir a la app o mostrar nombre
+      // Redirigir a la app si quieres:
       // window.location.href = "index.html";
     }
   });
