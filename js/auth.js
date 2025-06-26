@@ -64,7 +64,9 @@ document.addEventListener('DOMContentLoaded', () => {
           return;
         }
 
-        mensaje.textContent = "Registro exitoso.";
+        mensaje.textContent = "Inicio de sesión exitoso.";
+await cargarProgresoDesdeNube();
+
       }
     });
   }
@@ -73,6 +75,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (loginForm) {
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+
+      
+
 
       const email = document.getElementById('login-email').value;
       const password = document.getElementById('login-password').value;
@@ -87,6 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
         mensaje.textContent = `Error: ${error.message}`;
       } else {
         mensaje.textContent = "Inicio de sesión exitoso.";
+        await cargarProgresoDesdeNube();
         // Aquí cargaremos el progreso en el paso 2
       }
     });
