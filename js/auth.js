@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Guarda datos adicionales en la tabla `usuarios`
         await supabase.from('usuarios').insert({
           id: user.id,
+           email,
           nombre,
           pais,
           ciudad,
