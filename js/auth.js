@@ -2,6 +2,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const registroForm = document.getElementById('registro-form');
   const loginForm = document.getElementById('login-form');
   const mensaje = document.getElementById('mensaje');
+const btnLogout = document.getElementById('btn-logout');
+
+btnLogout.addEventListener('click', async () => {
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    console.error("❌ Error al cerrar sesión:", error.message);
+  } else {
+    localStorage.removeItem("progreso"); // Opcional
+    window.location.href = "index.html"; // O página de login
+  }
+});
 
   // Registro
   registroForm.addEventListener('submit', async (e) => {
