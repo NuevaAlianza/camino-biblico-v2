@@ -5,7 +5,8 @@ function mostrarResultado() {
   resultadoEl.classList.remove("oculto");
   detalleResultado.textContent = `Respondiste correctamente ${puntaje} de ${preguntas.length} preguntas.`;
 
-  guardarProgreso("quiz comentado", temaSelect.value, puntaje, preguntas.length);
+ guardarProgresoEnNube();
+
 
   // Sincronizar con Supabase si hay sesión activa
   guardarProgresoEnNube();
