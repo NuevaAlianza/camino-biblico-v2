@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quiz Comentado – Camino Bíblico</title>
+  <link rel="stylesheet" href="css/quiz.css" />
+</head>
+<body>
+
+  <div class="quiz-container">
+    <!-- Selección de categoría y tema -->
+    <div class="seleccion-tema">
+      <label for="categoria">Categoría:</label>
+      <select id="categoria">
+        <option value="">-- Elige una categoría --</option>
+      </select>
+
+      <label for="tema">Tema:</label>
+      <select id="tema" disabled>
+        <option value="">-- Elige un tema --</option>
+      </select>
+
+      <button id="iniciar" disabled>Iniciar Quiz</button>
+    </div>
+
+    <!-- Zona de juego -->
+    <div id="juego" class="oculto">
+      <div id="barra-tiempo" class="barra-tiempo">
+        <div id="progreso"></div>
+      </div>
+      <div id="contador" class="contador">Tiempo: 58s</div>
+      <div id="conteo-pregunta" class="conteo-pregunta"></div>
+
+      <div id="pregunta" class="pregunta"></div>
+      <div id="opciones" class="opciones"></div>
+      <div id="comentario" class="comentario oculto"></div>
+    </div>
+
+    <!-- Resultado final -->
+    <div id="resultado" class="oculto resultado">
+      <div id="detalle-resultado"></div>
+      <button id="ver-coleccionables" class="oculto">Ver coleccionables</button>
+      <button id="reiniciar">Reiniciar Quiz</button>
+      <button id="volver">Volver al inicio</button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/supabase.js" defer></script>
+  <script src="js/auth.js" defer></script>
+  <script src="js/progreso.js" defer></script>
+  <script src="js/quiz.js" defer></script>
+</body>
+</html>
