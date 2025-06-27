@@ -1,0 +1,123 @@
+:root {
+  --color-primario: #2a9d8f;
+  --color-secundario: #f4a261;
+  --color-fallo: #e76f51;
+  --barra-verde: #4caf50;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #fafafa;
+  color: #333;
+  padding: 2rem;
+}
+
+.quiz-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.seleccion-tema {
+  display: grid;
+  grid-template-columns: 1fr 1fr max-content;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.seleccion-tema select,
+.seleccion-tema button {
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+}
+
+#juego {
+  background: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.barra-tiempo {
+  width: 100%;
+  height: 8px;
+  background: #ddd;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+#progreso {
+  height: 100%;
+  width: 100%;
+  background: var(--barra-verde);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.contador,
+.conteo-pregunta {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.pregunta {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.opciones {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.opcion {
+  padding: 0.75rem;
+  border: 1px solid var(--color-primario);
+  border-radius: 0.25rem;
+  background: white;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.opcion:hover {
+  background: #f0f0f0;
+}
+
+.correcto {
+  border-color: var(--barra-verde);
+  background: #e8f5e9;
+}
+
+.incorrecto {
+  border-color: var(--color-fallo);
+  background: #ffebee;
+}
+
+.comentario {
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.resultado {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.resultado button {
+  margin: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.oculto {
+  display: none !important;
+}
