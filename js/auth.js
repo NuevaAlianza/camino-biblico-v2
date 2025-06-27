@@ -6,8 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 🔐 Mostrar botón de logout si hay sesión activa
   supabase.auth.getSession().then(({ data }) => {
-    if (data.session) {
-      if (btnLogout) btnLogout.style.display = "block";
+    if (data.session && btnLogout) {
+      btnLogout.style.display = "block";
     }
   });
 
@@ -19,8 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if (error) {
         console.error("❌ Error al cerrar sesión:", error.message);
       } else {
-        localStorage.removeItem("progreso"); // Borra si usas sincronización
-        window.location.href = "index.html"; // O redirige donde prefieras
+        localStorage.removeItem("progreso");
+        window.location.href = "index.html";
       }
     });
   }
@@ -64,9 +64,8 @@ document.addEventListener('DOMContentLoaded', () => {
           return;
         }
 
-        mensaje.textContent = "Inicio de sesión exitoso.";
-await cargarProgresoDesdeNube();
-
+        mensaje.textContent = "Registro exitoso.";
+        await cargarProgresoDesdeNube(); // Opcional: para nuevos usuarios
       }
     });
   }
@@ -75,9 +74,6 @@ await cargarProgresoDesdeNube();
   if (loginForm) {
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-
-      
-
 
       const email = document.getElementById('login-email').value;
       const password = document.getElementById('login-password').value;
@@ -92,8 +88,7 @@ await cargarProgresoDesdeNube();
         mensaje.textContent = `Error: ${error.message}`;
       } else {
         mensaje.textContent = "Inicio de sesión exitoso.";
-        await cargarProgresoDesdeNube();
-        // Aquí cargaremos el progreso en el paso 2
+        await cargarProgresoDesdeNube(); // 🟢 Aquí sincronizas desde la nube
       }
     });
   }
