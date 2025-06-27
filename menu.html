@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Menú Principal – Camino Bíblico</title>
+  <link rel="stylesheet" href="css/estilos.css" />
+</head>
+<body>
+  <main class="menu">
+    <h1>Camino Bíblico</h1>
+    <div id="bienvenida"></div>
+    <nav>
+      <button onclick="window.location.href='quiz.html'">Jugar Quiz</button>
+      <button onclick="window.location.href='coleccionables-v2.html'">Ver Coleccionables</button>
+      <button onclick="window.location.href='progreso.html'">Mi Progreso</button>
+      <button id="btn-logout">Cerrar sesión</button>
+    </nav>
+  </main>
+  <script src="js/supabase.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    // Redirección si no hay sesión
+    supabase.auth.getSession().then(({ data }) => {
+      if (!data.session) window.location.href = "index.html";
+    });
+    // Mostrar usuario
+    supabase.auth.getUser().then(({ data }) => {
+      const user = data?.user;
+      let saludo = "¡Bienvenido/a!";
+      if (user && user.email) {
+        saludo = `¡Bienvenido/a, <strong>${user.email}</strong>!`;
+      }
+      document.getElementById('bienvenida').innerHTML = saludo;
+    });
+    // Logout
+    document.getElementById('btn-logout').addEventListener('click', async () => {
+      await supabase.auth.signOut();
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>
