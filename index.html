@@ -6,15 +6,12 @@
   <title>Login – Camino Bíblico</title>
 
   <!-- SDK de Supabase -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-
-<!-- Script de configuración (junto al index) -->
-<script src="supabase.js" defer></script>
-
-<!-- Scripts dentro de /js -->
-<script src="js/auth.js" defer></script>
-<script src="js/progreso.js" defer></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <!-- Configuración de Supabase -->
+  <script src="supabase.js" defer></script>
+  <!-- Scripts principales -->
+  <script src="js/auth.js" defer></script>
+  <script src="js/progreso.js" defer></script>
 
   <style>
     body { font-family: Arial, sans-serif; padding: 2rem; max-width: 400px; margin: auto; }
@@ -24,6 +21,24 @@
   </style>
 </head>
 <body>
+  <script>
+    // Redirección si ya hay sesión
+    document.addEventListener('DOMContentLoaded', () => {
+      // Esperar a que el objeto global 'supabase' esté listo
+      const esperar = () => {
+        if (window.supabase) {
+          supabase.auth.getSession().then(({ data }) => {
+            if (data.session) {
+              window.location.href = "menu.html";
+            }
+          });
+        } else {
+          setTimeout(esperar, 30);
+        }
+      };
+      esperar();
+    });
+  </script>
 
   <h1>Camino Bíblico</h1>
 
@@ -47,7 +62,5 @@
 
   <div id="mensaje"></div>
   <button id="btn-logout" style="display:none;">Cerrar sesión</button>
-
 </body>
 </html>
-
