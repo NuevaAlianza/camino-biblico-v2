@@ -1,1 +1,29 @@
+main.menu {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  text-align: center;
+}
+main.menu h1 {
+  margin-bottom: 1.2rem;
+}
+main.menu nav button {
+  display: block;
+  width: 100%;
+  margin: 0.5rem 0;
+  padding: 0.7rem 0;
+  border-radius: 0.5rem;
+  background: #2a9d8f;
+  color: white;
+  font-size: 1.1rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+main.menu nav button:hover {
+  background: #21867a;
+}
 
