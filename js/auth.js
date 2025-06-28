@@ -89,6 +89,8 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         mensaje.textContent = "Inicio de sesión exitoso.";
         await cargarProgresoDesdeNube(); // 🟢 Aquí sincronizas desde la nube
+        window.location.href = "menu.html";
+
       }
     });
   }
