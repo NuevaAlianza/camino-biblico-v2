@@ -46,10 +46,14 @@
     </div>
   </div>
 
-  <!-- Scripts -->
-  <script src="js/supabase.js" defer></script>
-  <script src="js/auth.js" defer></script>
-  <script src="js/progreso.js" defer></script>
-  <script src="js/quiz.js" defer></script>
+<!-- SDK UMD de Supabase (primero) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<!-- Tu archivo de configuración (en la raíz) -->
+<script src="supabase.js"></script>
+<!-- Tus scripts propios -->
+<script src="js/auth.js"></script>
+<script src="js/progreso.js"></script>
+<script src="js/quiz.js"></script>
+
 </body>
 </html>
