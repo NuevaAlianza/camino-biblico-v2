@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coleccionables V2</title>
+  <link rel="stylesheet" href="css/estilos.css" />
+  <link rel="stylesheet" href="css/coleccionables-v2.css" />
+</head>
+<body>
+  <main class="coleccionables-v2">
+    <h1>Coleccionables por Categoría</h1>
+
+    <!-- Vista resumen por categoría -->
+    <section id="resumen-categorias"></section>
+
+    <!-- Logros especiales -->
+<section id="resumen-logros">
+  <h2>🏅 Logros especiales</h2>
+  <div id="logros-especiales" class="seccion-tarjetas"></div>
+</section>
+
+    <!-- Vista personajes por categoría (inicialmente oculta) -->
+    <section id="vista-personajes" class="oculto">
+      <button id="volver-resumen">⬅ Volver</button>
+      <h2 id="titulo-categoria"></h2>
+      <div id="personajes-categoria"></div>
+    </section>
+  </main>
+
+  <!-- Modal de detalle -->
+  <div id="modal-detalle" class="oculto">
+    <div class="modal-contenido">
+      <button id="cerrar-modal">✖</button>
+      <img id="modal-imagen" src="" alt="Imagen del coleccionable" />
+      <h2 id="modal-nombre"></h2>
+      <p id="modal-nota"></p>
+      <p id="modal-info"></p>
+      <a id="descargar-img" href="#" download style="display:none;">📥 Descargar</a>
+    </div>
+  </div>
+
+  <!-- 🔄 Carga el JS después de todo el HTML -->
+  <script src="js/app/coleccionables-v2.js"></script>
+<a href="index.html" id="btn-inicio" title="Volver al inicio">🏠</a>
+
+</body>
+</html>
+ 
