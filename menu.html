@@ -2,40 +2,75 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Menú principal – Camino Bíblico</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Menú Principal – Camino Bíblico</title>
+  <link rel="stylesheet" href="css/estilos.css" />
   <link rel="stylesheet" href="css/menu.css" />
-  <!-- Si tienes un css general para colores/fondo/base, puedes agregarlo antes -->
 </head>
 <body>
- <main class="menu">
-  <h1>Camino Bíblico</h1>
-  <div id="bienvenida">¡Bienvenido/a, <strong>Roman</strong>!</div>
-  <nav>
-    <button class="menu-btn quiz" onclick="window.location.href='quiz.html'">
-      <span class="emoji">🎲</span>Jugar Quiz
-    </button>
-    <button class="menu-btn coleccion" onclick="window.location.href='coleccionables-v2.html'">
-      <span class="emoji">🧩</span>Ver Coleccionables
-    </button>
-    <button class="menu-btn progreso" onclick="window.location.href='progreso.html'">
-      <span class="emoji">📊</span>Mi Progreso
-    </button>
-    <button class="menu-btn temporada" id="btn-temporada" style="display:none;">
-      <span class="emoji">🔔</span>Nueva Alianza
-    </button>
-  </nav>
-  <button id="btn-logout"><span class="emoji">📕</span>Cerrar sesión</button>
-</main>
+  <main class="menu">
+    <h1>Camino Bíblico</h1>
+    <div id="bienvenida">¡Bienvenido/a, <strong>Roman</strong>!</div>
+    <nav>
+      <button class="menu-btn quiz" onclick="window.location.href='quiz.html'">
+        <span class="emoji">🎲</span>
+        Jugar Quiz
+      </button>
+      <button class="menu-btn coleccion" onclick="window.location.href='coleccionables-v2.html'">
+        <span class="emoji">🧩</span>
+        Ver Coleccionables
+      </button>
+      <button class="menu-btn progreso" onclick="window.location.href='progreso.html'">
+        <span class="emoji">📊</span>
+        Mi Progreso
+      </button>
+      <button class="menu-btn temporada" id="btn-temporada" style="display:none;">
+        <span class="emoji">🔔</span>
+        Nueva Alianza
+      </button>
+    </nav>
+    <button id="btn-logout"><span class="emoji">📕</span>Cerrar sesión</button>
+  </main>
+  
+  <!-- Scripts principales -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="supabase.js"></script>
+  <script src="js/auth.js"></script>
 
   <script>
-    // Reemplaza esto por tu lógica de usuario (Supabase/localStorage/etc.)
-    const usuario = { nombre: "Roman" };
-    document.getElementById('nombre-usuario').textContent = usuario.nombre || "Invitado";
-    function cerrarSesion() {
-      // Aquí pones tu lógica de cierre de sesión
-      alert("Cerrando sesión...");
-    }
+    // Redirección si no hay sesión
+    supabase.auth.getSession().then(({ data }) => {
+      if (!data.session) window.location.href = "index.html";
+    });
+    // Mostrar usuario (nombre preferido, sino email)
+    supabase.auth.getUser().then(({ data }) => {
+      const user = data?.user;
+      let nombre = user?.user_metadata?.nombre || user?.email || "Usuario";
+      document.getElementById('bienvenida').innerHTML = `¡Bienvenido/a, <strong>${nombre}</strong>!`;
+    });
+    // Logout
+    document.getElementById('btn-logout').addEventListener('click', async () => {
+      await supabase.auth.signOut();
+      window.location.href = "index.html";
+    });
+
+    // Mostrar botón de temporada activa SOLO SI HAY una temporada vigente
+    fetch("datos/temporadas.json")
+      .then(res => res.json())
+      .then(temporadas => {
+        const hoy = new Date();
+        const btn = document.getElementById("btn-temporada");
+        for (const temp of temporadas) {
+          const ini = new Date(temp.fecha_inicio);
+          const fin = new Date(temp.fecha_fin);
+          if (hoy >= ini && hoy <= fin) {
+            btn.style.display = "inline-block";
+            btn.textContent = `🔔 ${temp.titulo}`;
+            btn.onclick = () => window.location.href = `temporada.html?id=${temp.id}`;
+            break; // Detener al encontrar la primera temporada activa
+          }
+        }
+      });
   </script>
 </body>
 </html>
