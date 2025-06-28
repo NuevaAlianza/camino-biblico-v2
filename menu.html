@@ -14,12 +14,16 @@
       <button onclick="window.location.href='quiz.html'">Jugar Quiz</button>
       <button onclick="window.location.href='coleccionables-v2.html'">Ver Coleccionables</button>
       <button onclick="window.location.href='progreso.html'">Mi Progreso</button>
+      <button id="btn-temporada" style="display:none;">Temporada especial</button>
       <button id="btn-logout">Cerrar sesión</button>
     </nav>
   </main>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+
+  <!-- Scripts principales -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script src="supabase.js"></script>
   <script src="js/auth.js"></script>
+
   <script>
     // Redirección si no hay sesión
     supabase.auth.getSession().then(({ data }) => {
@@ -39,6 +43,24 @@
       await supabase.auth.signOut();
       window.location.href = "index.html";
     });
+
+    // Mostrar botón de temporada activa SOLO SI HAY una temporada vigente
+    fetch("datos/temporadas.json")
+      .then(res => res.json())
+      .then(temporadas => {
+        const hoy = new Date();
+        const btn = document.getElementById("btn-temporada");
+        for (const temp of temporadas) {
+          const ini = new Date(temp.fecha_inicio);
+          const fin = new Date(temp.fecha_fin);
+          if (hoy >= ini && hoy <= fin) {
+            btn.style.display = "inline-block";
+            btn.textContent = `🔔 ${temp.titulo}`;
+            btn.onclick = () => window.location.href = `temporada.html?id=${temp.id}`;
+            break; // Detener al encontrar la primera temporada activa
+          }
+        }
+      });
   </script>
 </body>
 </html>
