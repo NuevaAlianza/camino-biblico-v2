@@ -1,3 +1,11 @@
+#modal-detalle {
+  display: none !important;
+}
+#modal-detalle.activo {
+  display: flex !important;
+}
+
+
 /* css/coleccionables-v2.css */
 :root {
   --color-primario: #f4a261;
