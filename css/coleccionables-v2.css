@@ -298,3 +298,88 @@ body {
     min-height: 100px;
   }
 }
+body {
+  background: linear-gradient(135deg, #181e24 0%, #22223b 100%);
+}
+
+.galeria-coleccionables {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 1.7rem;
+  padding: 2rem 1.2rem;
+  margin: 0 auto;
+}
+
+.tarjeta-coleccionable {
+  border-radius: 20px;
+  background: rgba(255,255,255,0.07);
+  box-shadow: 0 6px 26px rgba(0,0,0,0.10), 0 1.5px 6px 1.5px #0002;
+  padding: 1.2rem 1.2rem 1.4rem;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.18s cubic-bezier(.4,1.6,.49,.98), box-shadow 0.2s;
+  position: relative;
+  overflow: hidden;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  animation: fadeInScale 0.5s;
+}
+.tarjeta-coleccionable:hover {
+  transform: scale(1.04) rotate(-1deg);
+  box-shadow: 0 8px 30px 4px #c49c5f88, 0 2px 8px #0002;
+}
+.tarjeta-coleccionable img {
+  width: 100%;
+  max-width: 150px;
+  height: 160px;
+  object-fit: contain;
+  border-radius: 10px;
+  margin: 0 auto 0.7rem;
+  background: rgba(255,255,255,0.1);
+  box-shadow: 0 2px 8px rgba(194,153,95,0.07);
+  transition: box-shadow 0.25s;
+}
+.tarjeta-coleccionable h3 {
+  font-family: 'Cinzel', serif;
+  color: #fffbea;
+  font-size: 1.08rem;
+  margin: 0 0 0.6rem;
+  font-weight: 700;
+  text-shadow: 0 1.5px 6px #0005;
+}
+.etiqueta-nota {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 0.45em 0.85em;
+  letter-spacing: 0.02em;
+  box-shadow: 0 0 8px rgba(0,0,0,0.10);
+  z-index: 2;
+  border: 2px solid #fff3;
+  background: rgba(255,255,255,0.22);
+}
+.tarjeta-coleccionable.a      { border: 2.5px solid #f7c873; }
+.tarjeta-coleccionable.b      { border: 2.5px solid #d3d6dd; }
+.tarjeta-coleccionable.c      { border: 2.5px solid #e4c09a; }
+.tarjeta-coleccionable.bloqueado { border: 2.5px dashed #6a758a; opacity: 0.70; }
+.etiqueta-nota.nota-a { color: #cf961d; border-color: #f7c873; background: #fffbeaee; }
+.etiqueta-nota.nota-b { color: #aaa; border-color: #d3d6dd; background: #fff; }
+.etiqueta-nota.nota-c { color: #bd874d; border-color: #e4c09a; background: #fff; }
+.etiqueta-nota.nota-bloqueado { color: #6a758a; border-color: #6a758a; background: #25283b; }
+
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(.93);}
+  to   { opacity: 1; transform: scale(1);}
+}
+@media (max-width: 700px) {
+  .galeria-coleccionables { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
+  .galeria-coleccionables { grid-template-columns: 1fr; gap: 1rem; }
+  .tarjeta-coleccionable { min-height: 200px; padding: 0.7rem 0.3rem; }
+}
