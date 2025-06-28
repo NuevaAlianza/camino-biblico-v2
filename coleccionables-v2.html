@@ -10,9 +10,17 @@
 <body>
   <main class="coleccionables-v2">
     <h1>Coleccionables por Categoría</h1>
-    <!-- Solo UNA sección para todo el resumen (categorías + logros) -->
+
+    <!-- Resumen por categoría (visible al inicio) -->
     <section id="resumen-categorias"></section>
-    <!-- Vista personajes por categoría -->
+
+    <!-- Logros especiales -->
+    <section id="resumen-logros">
+      <h2>🏅 Logros especiales</h2>
+      <div id="logros-especiales" class="seccion-tarjetas"></div>
+    </section>
+
+    <!-- Personajes por categoría (oculto al inicio) -->
     <section id="vista-personajes" class="oculto">
       <button id="volver-resumen">⬅ Volver</button>
       <h2 id="titulo-categoria"></h2>
@@ -20,7 +28,7 @@
     </section>
   </main>
 
-  <!-- Modal de detalle -->
+  <!-- Modal detalle -->
   <div id="modal-detalle" class="oculto">
     <div class="modal-contenido">
       <button id="cerrar-modal">✖</button>
