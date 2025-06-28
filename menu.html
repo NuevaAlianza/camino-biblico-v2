@@ -8,32 +8,26 @@
   <!-- Si tienes un css general para colores/fondo/base, puedes agregarlo antes -->
 </head>
 <body>
-  <main class="menu-baldosas">
-    <h1>Camino Bíblico</h1>
-    <p class="bienvenida">¡Bienvenido/a, <span id="nombre-usuario">Roman</span>!</p>
-    <div class="baldosas">
-      <button class="baldosa quiz" onclick="location.href='quiz.html'">
-        <span class="icon">🎲</span>
-        Jugar Quiz
-      </button>
-      <button class="baldosa coleccionables" onclick="location.href='coleccionables-v2.html'">
-        <span class="icon">🃏</span>
-        Ver Coleccionables
-      </button>
-      <button class="baldosa progreso" onclick="location.href='progreso.html'">
-        <span class="icon">📈</span>
-        Mi Progreso
-      </button>
-      <button class="baldosa temporada" onclick="location.href='temporada.html'">
-        <span class="icon">🔔</span>
-        Nueva Alianza
-      </button>
-    </div>
-    <button class="cerrar-sesion" onclick="cerrarSesion()">
-      <span class="icon">🚪</span>
-      Cerrar sesión
+ <main class="menu">
+  <h1>Camino Bíblico</h1>
+  <div id="bienvenida">¡Bienvenido/a, <strong>Roman</strong>!</div>
+  <nav>
+    <button class="menu-btn quiz" onclick="window.location.href='quiz.html'">
+      <span class="emoji">🎲</span>Jugar Quiz
     </button>
-  </main>
+    <button class="menu-btn coleccion" onclick="window.location.href='coleccionables-v2.html'">
+      <span class="emoji">🧩</span>Ver Coleccionables
+    </button>
+    <button class="menu-btn progreso" onclick="window.location.href='progreso.html'">
+      <span class="emoji">📊</span>Mi Progreso
+    </button>
+    <button class="menu-btn temporada" id="btn-temporada" style="display:none;">
+      <span class="emoji">🔔</span>Nueva Alianza
+    </button>
+  </nav>
+  <button id="btn-logout"><span class="emoji">📕</span>Cerrar sesión</button>
+</main>
+
   <script>
     // Reemplaza esto por tu lógica de usuario (Supabase/localStorage/etc.)
     const usuario = { nombre: "Roman" };
