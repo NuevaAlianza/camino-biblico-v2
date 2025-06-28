@@ -214,4 +214,120 @@ body {
   margin-bottom: 0.12em;
   display: block;
 }
+body {
+  background: linear-gradient(135deg, #e9ecf6 0%, #f5f7fa 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu {
+  background: #fff;
+  border-radius: 2rem;
+  box-shadow: 0 6px 36px rgba(30, 60, 120, 0.10), 0 1.5px 6px rgba(30,30,50,0.04);
+  padding: 2.5rem 2rem 2rem 2rem;
+  max-width: 370px;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.menu h1 {
+  color: #211047;
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+  font-size: 2.3rem;
+  margin-bottom: 0.4em;
+  letter-spacing: 1px;
+}
+
+#bienvenida {
+  margin-bottom: 1.3rem;
+  color: #211047;
+  font-size: 1.13rem;
+  font-weight: 500;
+}
+
+.menu nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem 1.2rem;
+  margin-top: 1.4rem;
+}
+
+.menu-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 1.13rem;
+  padding: 1.3rem 0.3rem 0.9rem 0.3rem;
+  border-radius: 1.4rem;
+  box-shadow: 0 2px 8px rgba(60,80,150,0.08);
+  border: none;
+  cursor: pointer;
+  color: white;
+  transition: transform 0.14s, box-shadow 0.3s;
+  outline: none;
+}
+
+.menu-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 1px 2px rgba(30,40,60,0.10);
+}
+
+/* Baldosa colores */
+.menu-btn.quiz { background: #3CB371; }
+.menu-btn.coleccion { background: #7B32DF; }
+.menu-btn.progreso { background: #3474EE; }
+.menu-btn.temporada { background: #FF9100; }
+
+/* Hover efecto para más feedback */
+.menu-btn:hover {
+  filter: brightness(1.12);
+  transform: scale(1.04) translateY(-2px);
+  box-shadow: 0 4px 12px rgba(50,50,50,0.12);
+}
+
+/* Último botón más pequeño y abajo */
+#btn-logout {
+  display: block;
+  width: 78%;
+  margin: 2.5rem auto 0 auto;
+  background: #fff8f0;
+  color: #e74c3c;
+  border-radius: 1.2rem;
+  border: none;
+  box-shadow: 0 1px 6px rgba(30,30,50,0.05);
+  padding: 0.8rem 1.2rem;
+  font-weight: 600;
+  font-size: 1.03rem;
+  cursor: pointer;
+  transition: background 0.23s;
+  text-align: center;
+}
+#btn-logout:active {
+  background: #ffebe0;
+}
+
+.menu-btn span.emoji {
+  font-size: 2rem;
+  margin-bottom: 0.12em;
+  display: block;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .menu {
+    padding: 1.1rem 0.5rem 1.3rem 0.5rem;
+    max-width: 98vw;
+  }
+  .menu nav {
+    gap: 0.7rem 0.7rem;
+  }
+  #btn-logout {
+    width: 92%;
+    font-size: 0.99rem;
+  }
+}
 
