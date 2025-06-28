@@ -4,7 +4,7 @@ let coleccionablesData = {};
 let temporadasData = [];
 let progresoGlobal = null; // Usado en todo el flujo
 
-// --- 1. Carga el progreso sincronizado ---
+// 1. Cargar progreso sincronizado
 async function cargarProgresoUsuario() {
   if (window.supabase) {
     // Intenta traer sesión y cargar de la nube
@@ -22,11 +22,11 @@ async function cargarProgresoUsuario() {
       }
     }
   }
-  // Si no hay supabase o no hay sesión, usar localStorage
+  // Si no hay supabase o sesión, usar localStorage
   progresoGlobal = JSON.parse(localStorage.getItem("progreso")) || { categorias: {}, temporadas: {} };
 }
 
-// --- 2. Inicialización principal: carga datos y luego muestra categorías ---
+// 2. Inicialización principal: carga datos y luego muestra categorías
 (async function init() {
   [coleccionablesData, temporadasData] = await Promise.all([
     fetch('./datos/coleccionables.json').then(res => res.json()),
@@ -36,7 +36,7 @@ async function cargarProgresoUsuario() {
   mostrarResumenCategorias();
 })();
 
-// --- 3. Todas las funciones usan progresoGlobal en vez de localStorage ---
+// 3. Todas las funciones usan progresoGlobal en vez de localStorage
 
 function mostrarResumenCategorias() {
   const resumen = document.getElementById("resumen-categorias");
@@ -114,14 +114,13 @@ function mostrarPersonajes(categoriaActual) {
   resumenCategorias.classList.add("oculto");
   vistaPersonajes.classList.remove("oculto");
 
-  // Aplica animación de salida al contenedor
+  // Animación de salida
   contenedor.classList.remove("fade-in");
   contenedor.classList.add("fade-out");
 
-  // Espera 150ms antes de cargar el contenido (para transición)
   setTimeout(() => {
     contenedor.innerHTML = ""; // Limpia el contenido anterior
-    titulo.textContent = categoriaActual; // Actualiza el título de la sección
+    titulo.textContent = categoriaActual; // Actualiza el título
 
     let temas;
 
@@ -148,7 +147,7 @@ function mostrarPersonajes(categoriaActual) {
       temas = coleccionablesData[categoriaActual] || {};
     }
 
-    // Carga el progreso general del usuario
+    // Progreso global actualizado
     const progreso = progresoGlobal || { categorias: {}, temporadas: {} };
     const progresoCategorias = progreso.categorias || {};
 
@@ -162,14 +161,14 @@ function mostrarPersonajes(categoriaActual) {
       ? progreso.temporadas
       : (progresoCategoriaKey ? progresoCategorias[progresoCategoriaKey] : {});
 
-    // Recorre cada tema (personaje, misa, temporada o logro)
+    // Renderiza cada tarjeta
     for (const tema in temas) {
       const info = temas[tema];
       let nota;
 
       // Se asigna la nota según el tipo de categoría
       if (categoriaActual === "Temporadas" || categoriaActual === "Logros") {
-        nota = info.nota; // Ya viene calculada previamente
+        nota = info.nota;
       } else {
         nota = progresoTemas[tema]?.nota || "F";
       }
@@ -180,7 +179,7 @@ function mostrarPersonajes(categoriaActual) {
       else if (nota === "B") ruta = info.img_b;
       else if (nota === "C") ruta = info.img_c;
 
-      // Crea la tarjeta visual del personaje o logro
+      // Tarjeta del personaje o logro
       const card = document.createElement("div");
       card.className = "card-personaje";
       card.innerHTML = `
@@ -189,22 +188,22 @@ function mostrarPersonajes(categoriaActual) {
         <p class="nota">Nota: ${nota}</p>
       `;
 
-      // Permite abrir el modal con detalles solo si se obtuvo una A
+      // Modal solo si hay imagen de coleccionable desbloqueada
       card.addEventListener("click", () => {
-        if (nota === "A") {
+        if (["A", "B", "C"].includes(nota) && ruta !== "assets/img/coleccionables/bloqueado.png") {
           mostrarModal({ tema, nota, rutaImagen: ruta, descripcion: info.descripcion || "" });
         }
       });
 
-      contenedor.appendChild(card); // Agrega la tarjeta al DOM
+      contenedor.appendChild(card);
     }
 
-    // Aplica animación de entrada una vez renderizadas las tarjetas
+    // Animación de entrada
     contenedor.classList.remove("fade-out");
     contenedor.classList.add("fade-in");
   }, 150);
 
-  // Permite cambiar de categoría usando la rueda del mouse (efecto scroll horizontal)
+  // Permite cambiar de categoría usando la rueda del mouse (scroll horizontal)
   const todas = [...Object.keys(coleccionablesData), "Temporadas"];
   const i = todas.indexOf(categoriaActual);
 
@@ -214,12 +213,9 @@ function mostrarPersonajes(categoriaActual) {
   };
 }
 
-document.getElementById("volver-resumen").addEventListener("click", () => {
-  document.getElementById("vista-personajes").classList.add("oculto");
-  document.getElementById("resumen-categorias").classList.remove("oculto");
-});
-
+// Cerrar y abrir modal
 function mostrarModal({ tema, nota, rutaImagen, descripcion = "" }) {
+  const modal = document.getElementById("modal-detalle");
   document.getElementById("modal-imagen").src = rutaImagen;
   document.getElementById("modal-nombre").textContent = tema;
   document.getElementById("modal-nota").textContent = `Nota obtenida: ${nota}`;
@@ -233,11 +229,34 @@ function mostrarModal({ tema, nota, rutaImagen, descripcion = "" }) {
     btn.style.display = "none";
   }
 
-  document.getElementById("modal-detalle").classList.remove("oculto");
+  modal.classList.remove("oculto");
+  modal.classList.add("activo"); // para futuras transiciones
+  // Cierra con ESC
+  document.onkeydown = (ev) => {
+    if (ev.key === "Escape") {
+      cerrarModal();
+    }
+  };
 }
 
-document.getElementById("cerrar-modal").addEventListener("click", () => {
-  document.getElementById("modal-detalle").classList.add("oculto");
+// Mejor cierre de modal (clic o esc)
+function cerrarModal() {
+  const modal = document.getElementById("modal-detalle");
+  modal.classList.add("oculto");
+  modal.classList.remove("activo");
+  document.onkeydown = null;
+}
+
+document.getElementById("cerrar-modal").addEventListener("click", cerrarModal);
+
+// Oculta modal si hace clic fuera del contenido
+document.getElementById("modal-detalle").addEventListener("click", (e) => {
+  if (e.target.id === "modal-detalle") cerrarModal();
+});
+
+document.getElementById("volver-resumen").addEventListener("click", () => {
+  document.getElementById("vista-personajes").classList.add("oculto");
+  document.getElementById("resumen-categorias").classList.remove("oculto");
 });
 
 function mostrarResumenLogros() {
