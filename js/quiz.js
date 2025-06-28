@@ -137,24 +137,28 @@ function seleccionarOpcion(opcion, actual) {
   detenerTemporizador();
 
   const botones = opcionesEl.querySelectorAll("button");
+  let esCorrecta = opcion === actual.respuesta;
+
   botones.forEach(btn => {
     btn.disabled = true;
-    if (btn.textContent === actual.respuesta) {
-      btn.classList.add("correcto");
-    } else if (btn.textContent === opcion) {
-      btn.classList.add("incorrecto");
+    if (btn.textContent === opcion) {
+      if (esCorrecta) {
+        btn.classList.add("correcto");
+        reproducirSonido(sonidoCorrecto);
+      } else {
+        btn.classList.add("incorrecto");
+        reproducirSonido(sonidoIncorrecto);
+      }
     }
   });
 
-  if (opcion === actual.respuesta) {
+  if (esCorrecta) {
     puntaje++;
-    reproducirSonido(sonidoCorrecto);
+    comentarioEl.classList.add("oculto");
   } else {
-    reproducirSonido(sonidoIncorrecto);
+    comentarioEl.textContent = "¡Fallaste! Inténtalo en la próxima pregunta.";
+    comentarioEl.classList.remove("oculto");
   }
-
-  comentarioEl.textContent = actual["cita biblica"];
-  comentarioEl.classList.remove("oculto");
 
   setTimeout(() => {
     preguntaActual++;
@@ -163,7 +167,7 @@ function seleccionarOpcion(opcion, actual) {
     } else {
       mostrarResultado();
     }
-  }, 6000);
+  }, 1800);
 }
 
 // Mostrar resultado al finalizar
@@ -297,3 +301,4 @@ async function guardarProgresoEnNube() {
     console.log("✅ Progreso guardado en Supabase.");
   }
 }
+
