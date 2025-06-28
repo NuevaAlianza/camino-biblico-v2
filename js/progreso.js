@@ -34,7 +34,7 @@ async function cargarProgresoDesdeNube() {
     .from("progreso")
     .select("progreso")
     .eq("user_id", userId)
-    .single();
+    .single(); // ❌ ESTA línea es la que produce el error
 
   if (error) {
     console.warn("No se pudo cargar progreso:", error.message);
