@@ -2,65 +2,46 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Menú Principal – Camino Bíblico</title>
-  <link rel="stylesheet" href="css/estilos.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menú principal – Camino Bíblico</title>
+  <link rel="stylesheet" href="css/menu.css" />
+  <!-- Si tienes un css general para colores/fondo/base, puedes agregarlo antes -->
 </head>
 <body>
-  <main class="menu">
+  <main class="menu-baldosas">
     <h1>Camino Bíblico</h1>
-    <div id="bienvenida"></div>
-    <nav>
-      <button onclick="window.location.href='quiz.html'">Jugar Quiz</button>
-      <button onclick="window.location.href='coleccionables-v2.html'">Ver Coleccionables</button>
-      <button onclick="window.location.href='progreso.html'">Mi Progreso</button>
-      <button id="btn-temporada" style="display:none;">Temporada especial</button>
-      <button id="btn-logout">Cerrar sesión</button>
-    </nav>
+    <p class="bienvenida">¡Bienvenido/a, <span id="nombre-usuario">Roman</span>!</p>
+    <div class="baldosas">
+      <button class="baldosa quiz" onclick="location.href='quiz.html'">
+        <span class="icon">🎲</span>
+        Jugar Quiz
+      </button>
+      <button class="baldosa coleccionables" onclick="location.href='coleccionables-v2.html'">
+        <span class="icon">🃏</span>
+        Ver Coleccionables
+      </button>
+      <button class="baldosa progreso" onclick="location.href='progreso.html'">
+        <span class="icon">📈</span>
+        Mi Progreso
+      </button>
+      <button class="baldosa temporada" onclick="location.href='temporada.html'">
+        <span class="icon">🔔</span>
+        Nueva Alianza
+      </button>
+    </div>
+    <button class="cerrar-sesion" onclick="cerrarSesion()">
+      <span class="icon">🚪</span>
+      Cerrar sesión
+    </button>
   </main>
-
-  <!-- Scripts principales -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-  <script src="supabase.js"></script>
-  <script src="js/auth.js"></script>
-
   <script>
-    // Redirección si no hay sesión
-    supabase.auth.getSession().then(({ data }) => {
-      if (!data.session) window.location.href = "index.html";
-    });
-    // Mostrar usuario
-    supabase.auth.getUser().then(({ data }) => {
-      const user = data?.user;
-      let saludo = "¡Bienvenido/a!";
-      if (user && user.email) {
-        saludo = `¡Bienvenido/a, <strong>${user.email}</strong>!`;
-      }
-      document.getElementById('bienvenida').innerHTML = saludo;
-    });
-    // Logout
-    document.getElementById('btn-logout').addEventListener('click', async () => {
-      await supabase.auth.signOut();
-      window.location.href = "index.html";
-    });
-
-    // Mostrar botón de temporada activa SOLO SI HAY una temporada vigente
-    fetch("datos/temporadas.json")
-      .then(res => res.json())
-      .then(temporadas => {
-        const hoy = new Date();
-        const btn = document.getElementById("btn-temporada");
-        for (const temp of temporadas) {
-          const ini = new Date(temp.fecha_inicio);
-          const fin = new Date(temp.fecha_fin);
-          if (hoy >= ini && hoy <= fin) {
-            btn.style.display = "inline-block";
-            btn.textContent = `🔔 ${temp.titulo}`;
-            btn.onclick = () => window.location.href = `temporada.html?id=${temp.id}`;
-            break; // Detener al encontrar la primera temporada activa
-          }
-        }
-      });
+    // Reemplaza esto por tu lógica de usuario (Supabase/localStorage/etc.)
+    const usuario = { nombre: "Roman" };
+    document.getElementById('nombre-usuario').textContent = usuario.nombre || "Invitado";
+    function cerrarSesion() {
+      // Aquí pones tu lógica de cierre de sesión
+      alert("Cerrando sesión...");
+    }
   </script>
 </body>
 </html>
