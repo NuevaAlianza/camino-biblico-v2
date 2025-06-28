@@ -1,0 +1,266 @@
+/* css/coleccionables-v2.css */
+:root {
+  --color-primario: #f4a261;
+  --color-secundario: #2a9d8f;
+  --color-fondo: #fffefc;
+  --color-texto: #333;
+  --sombra: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: var(--color-fondo);
+  color: var(--color-texto);
+  margin: 0;
+  padding: 1rem;
+}
+
+.coleccionables-v2 {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.oculto {
+  display: none;
+}
+
+/* -------------------- Resumen por Categoría -------------------- */
+#resumen-categorias {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.card-categoria {
+  background: white;
+  border-radius: 1rem;
+  box-shadow: var(--sombra);
+  padding: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.card-categoria:hover {
+  transform: scale(1.02);
+}
+
+.card-categoria h2 {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.card-categoria p {
+  margin: 0.5rem 0 0;
+  font-size: 0.95rem;
+}
+
+.progreso {
+  height: 8px;
+  background: #eee;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  overflow: hidden;
+}
+
+.progreso-barra {
+  height: 100%;
+  background: var(--color-primario);
+  transition: width 0.3s ease;
+}
+
+/* -------------------- Vista de Personajes -------------------- */
+#vista-personajes {
+  padding-top: 1rem;
+}
+
+#titulo-categoria {
+  text-align: center;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+#personajes-categoria {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.card-personaje {
+  width: 140px;
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: var(--sombra);
+  padding: 0.6rem;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.card-personaje:hover {
+  transform: scale(1.03);
+}
+
+.card-personaje img {
+  width: 100%;
+  border-radius: 0.5rem;
+}
+
+.card-personaje h3 {
+  margin: 0.5rem 0 0.2rem;
+  font-size: 1rem;
+}
+
+.card-personaje .nota {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* -------------------- Modal de Detalle -------------------- */
+#modal-detalle {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.modal-contenido {
+  background: white;
+  border-radius: 1rem;
+  padding: 1rem;
+  max-width: 320px;
+  width: 100%;
+  position: relative;
+  text-align: center;
+  overflow-y: auto;
+  max-height: 90vh;
+}
+
+.modal-contenido img {
+  width: 100%;
+  border-radius: 1rem;
+  max-width: 260px;
+  margin-bottom: 1rem;
+}
+
+.modal-contenido h2 {
+  margin: 0.5rem 0;
+  font-size: 1.3rem;
+}
+
+.modal-contenido p {
+  margin: 0.3rem 0;
+  font-size: 1rem;
+}
+
+#cerrar-modal {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: transparent;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+#descargar-img {
+  display: inline-block;
+  margin-top: 0.8rem;
+  padding: 0.5rem 1rem;
+  background: var(--color-primario);
+  color: white;
+  text-decoration: none;
+  border-radius: 0.5rem;
+}
+/* Transiciones suaves para cambio de categoría */
+#personajes-categoria.fade-out {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+#personajes-categoria.fade-in {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+#btn-inicio {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  color: var(--color-primario);
+  font-size: 1.8rem;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  z-index: 999;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: var(--color-fondo);
+  color: var(--color-texto);
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.coleccionables-v2 {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 1rem; /* restauramos padding simple */
+  box-sizing: border-box;
+}
+/* -------------------- Logros Especiales -------------------- */
+#logros-especiales {
+  margin-top: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+#logros-especiales .tarjeta {
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: var(--sombra);
+  padding: 0.6rem;
+  width: 140px;
+  text-align: center;
+  transition: transform 0.2s ease, opacity 0.3s ease;
+}
+
+#logros-especiales .tarjeta:hover {
+  transform: scale(1.03);
+}
+
+#logros-especiales .tarjeta img {
+  width: 100%;
+  border-radius: 0.5rem;
+}
+
+#logros-especiales .tarjeta h3 {
+  margin: 0.5rem 0 0.2rem;
+  font-size: 1rem;
+}
+
+#logros-especiales .tarjeta p {
+  font-size: 0.9rem;
+  color: #666;
+}
