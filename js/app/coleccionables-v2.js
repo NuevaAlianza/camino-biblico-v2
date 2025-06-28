@@ -103,15 +103,19 @@ function mostrarResumenCategorias() {
   mostrarResumenLogros();
 }
 
+// ⬇️⬇️ ACTUALIZA ESTA FUNCIÓN ⬇️⬇️
+
 function mostrarPersonajes(categoriaActual) {
   // Referencias a los elementos principales de la vista
   const vistaPersonajes = document.getElementById("vista-personajes");
   const resumenCategorias = document.getElementById("resumen-categorias");
+  const resumenLogros = document.getElementById("resumen-logros");
   const titulo = document.getElementById("titulo-categoria");
   const contenedor = document.getElementById("personajes-categoria");
 
-  // Oculta el resumen de categorías y muestra la vista de personajes
+  // Oculta el resumen de categorías **y** logros, muestra la vista de personajes
   resumenCategorias.classList.add("oculto");
+  if (resumenLogros) resumenLogros.classList.add("oculto");
   vistaPersonajes.classList.remove("oculto");
 
   // Animación de salida
@@ -254,9 +258,12 @@ document.getElementById("modal-detalle").addEventListener("click", (e) => {
   if (e.target.id === "modal-detalle") cerrarModal();
 });
 
+// ⬇️⬇️ AQUÍ EL CAMBIO: muestra ambos al volver ⬇️⬇️
 document.getElementById("volver-resumen").addEventListener("click", () => {
   document.getElementById("vista-personajes").classList.add("oculto");
   document.getElementById("resumen-categorias").classList.remove("oculto");
+  const resumenLogros = document.getElementById("resumen-logros");
+  if (resumenLogros) resumenLogros.classList.remove("oculto");
 });
 
 function mostrarResumenLogros() {
@@ -327,3 +334,4 @@ function mostrarResumenLogros() {
   card.addEventListener("click", () => mostrarPersonajes("Logros"));
   resumen.appendChild(card);
 }
+
