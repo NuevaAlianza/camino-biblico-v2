@@ -137,28 +137,24 @@ function seleccionarOpcion(opcion, actual) {
   detenerTemporizador();
 
   const botones = opcionesEl.querySelectorAll("button");
-  let esCorrecta = opcion === actual.respuesta;
-
   botones.forEach(btn => {
     btn.disabled = true;
-    if (btn.textContent === opcion) {
-      if (esCorrecta) {
-        btn.classList.add("correcto");
-        reproducirSonido(sonidoCorrecto);
-      } else {
-        btn.classList.add("incorrecto");
-        reproducirSonido(sonidoIncorrecto);
-      }
+    if (btn.textContent === actual.respuesta) {
+      btn.classList.add("correcto");
+    } else if (btn.textContent === opcion) {
+      btn.classList.add("incorrecto");
     }
   });
 
-  if (esCorrecta) {
+  if (opcion === actual.respuesta) {
     puntaje++;
-    comentarioEl.classList.add("oculto");
+    reproducirSonido(sonidoCorrecto);
+    comentarioEl.textContent = actual["cita biblica"]; // ⬅️ Muestra cita si acierta
   } else {
-    comentarioEl.textContent = "¡Fallaste! Inténtalo en la próxima pregunta.";
-    comentarioEl.classList.remove("oculto");
+    reproducirSonido(sonidoIncorrecto);
+    comentarioEl.textContent = "¡Fallaste! Inténtalo en la próxima pregunta."; // ⬅️ Muestra mensaje si falla
   }
+  comentarioEl.classList.remove("oculto");
 
   setTimeout(() => {
     preguntaActual++;
@@ -167,8 +163,9 @@ function seleccionarOpcion(opcion, actual) {
     } else {
       mostrarResultado();
     }
-  }, 1800);
+  }, 6000);
 }
+
 
 // Mostrar resultado al finalizar
 function mostrarResultado() {
