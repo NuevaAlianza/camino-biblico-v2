@@ -35,44 +35,68 @@ function mezclarArray(array) {
   return array;
 }
 
-// Aquí puedes personalizar cómo se muestra cada pregunta
-function mostrarPreguntas(preguntas) {
+function iniciarQuizConPreguntas(preguntas) {
+  let indice = 0;
+  let aciertos = 0;
   const juegoDiv = document.getElementById("juego-aleatorio");
   const configDiv = document.getElementById("config-quiz-random");
+
   configDiv.classList.add("oculto");
   juegoDiv.classList.remove("oculto");
-  let html = "<ol>";
-  preguntas.forEach((p, idx) => {
-    html += `
-      <li style="margin-bottom:1em;">
-        <strong>${p.pregunta}</strong><br>
-        <ul style="list-style:none;">
-          <li>A) ${p.respuesta}</li>
-          <li>B) ${p.opcion_1}</li>
-          <li>C) ${p.opcion_2}</li>
-          <li>D) ${p.opcion_3}</li>
-        </ul>
-        <small>${p.categoria} / ${p.tema}</small>
-      </li>
-    `;
-  });
-  html += "</ol>";
-  html += `<button onclick="window.location.reload()">Volver a configurar</button>`;
-  juegoDiv.innerHTML = html;
-}
 
-document.addEventListener("DOMContentLoaded", () => {
-  fetch('datos/quiz.json')
-    .then(res => res.json())
-    .then(data => {
-      preguntasData = data;
-      generarCheckboxCategorias(preguntasData);
+  function mostrarPregunta() {
+    const p = preguntas[indice];
+
+    // Prepara las opciones mezcladas (respuesta correcta y 3 falsas)
+    const opciones = [
+      { texto: p.respuesta, correcta: true },
+      { texto: p.opcion_1, correcta: false },
+      { texto: p.opcion_2, correcta: false },
+      { texto: p.opcion_3, correcta: false }
+    ].sort(() => Math.random() - 0.5);
+
+    let html = `
+      <div>
+        <h3>Pregunta ${indice + 1} de ${preguntas.length}</h3>
+        <strong>${p.pregunta}</strong>
+        <div id="opciones">
+    `;
+
+    opciones.forEach((op, i) => {
+      html += `<button class="btn-opcion" data-correcta="${op.correcta}" style="display:block;margin:0.5em 0;">${op.texto}</button>`;
     });
 
-  document.getElementById("iniciar-quiz-random").addEventListener("click", () => {
-    const cantidad = parseInt(document.getElementById("cantidad-preguntas").value);
-    let preguntasFiltradas = obtenerPreguntasFiltradas(preguntasData);
-    preguntasFiltradas = mezclarArray(preguntasFiltradas).slice(0, cantidad);
-    mostrarPreguntas(preguntasFiltradas);
-  });
-});
+    html += `
+        </div>
+        <small>${p.categoria} / ${p.tema}</small>
+      </div>
+    `;
+
+    juegoDiv.innerHTML = html;
+
+    // Escucha los clics en las opciones
+    document.querySelectorAll('.btn-opcion').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        if (btn.dataset.correcta === "true") aciertos++;
+        indice++;
+        if (indice < preguntas.length) {
+          mostrarPregunta();
+        } else {
+          mostrarResultado();
+        }
+      });
+    });
+  }
+
+  function mostrarResultado() {
+    juegoDiv.innerHTML = `
+      <h2>¡Quiz finalizado!</h2>
+      <p>Respondiste correctamente <b>${aciertos}</b> de <b>${preguntas.length}</b> preguntas.</p>
+      <button onclick="window.location.reload()">Volver a configurar</button>
+      <a href="index.html" class="btn-volver">Volver al inicio</a>
+    `;
+  }
+
+  mostrarPregunta();
+}
+
