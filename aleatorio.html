@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quiz Aleatorio</title>
+  <link rel="stylesheet" href="css/estilos.css" />
+</head>
+<body>
+  <main id="contenido-aleatorio">
+    <div id="config-quiz-random">
+      <h2>Quiz aleatorio</h2>
+      <p id="descripcion-quiz">
+        Selecciona cuántas preguntas quieres responder.<br>
+        El sistema elegirá preguntas aleatorias de las categorías que marques.<br>
+        Puedes incluir o excluir categorías según tu preferencia.
+      </p>
+      <label>
+        ¿Cuántas preguntas?
+        <select id="cantidad-preguntas">
+          <option value="5">5</option>
+          <option value="10" selected>10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+        </select>
+      </label>
+      <div id="elige-categorias"></div>
+      <button id="iniciar-quiz-random">Iniciar</button>
+    </div>
+    <div id="juego-aleatorio" class="oculto"></div>
+    <a href="index.html" id="btn-inicio" title="Volver al inicio">🏠</a>
+  </main>
+  <script src="js/app/aleatorio.js"></script>
+</body>
+</html>
