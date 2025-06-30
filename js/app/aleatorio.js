@@ -100,3 +100,20 @@ function iniciarQuizConPreguntas(preguntas) {
   mostrarPregunta();
 }
 
+// --- Carga inicial y evento de iniciar quiz ---
+
+document.addEventListener("DOMContentLoaded", () => {
+  fetch('datos/quiz.json')
+    .then(res => res.json())
+    .then(data => {
+      preguntasData = data;
+      generarCheckboxCategorias(preguntasData);
+    });
+
+  document.getElementById("iniciar-quiz-random").addEventListener("click", () => {
+    const cantidad = parseInt(document.getElementById("cantidad-preguntas").value);
+    let preguntasFiltradas = obtenerPreguntasFiltradas(preguntasData);
+    preguntasFiltradas = mezclarArray(preguntasFiltradas).slice(0, cantidad);
+    iniciarQuizConPreguntas(preguntasFiltradas);
+  });
+});
