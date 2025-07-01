@@ -77,5 +77,43 @@
         }
       });
   </script>
+  <script>
+fetch("datos/temporadas.json")
+  .then(res => res.json())
+  .then(temporadas => {
+    const hoy = new Date();
+    const btn = document.getElementById("btn-temporada");
+    let hayActiva = false;
+    let proxima = null;
+
+    for (const temp of temporadas) {
+      const ini = new Date(temp.fecha_inicio);
+      const fin = new Date(temp.fecha_fin);
+      if (hoy >= ini && hoy <= fin) {
+        btn.style.display = "inline-block";
+        btn.disabled = false;
+        btn.innerHTML = `<span class="emoji">🔔</span> ${temp.titulo}`;
+        btn.onclick = () => window.location.href = `temporada.html?id=${temp.id}`;
+        hayActiva = true;
+        break;
+      }
+      if (ini > hoy && (!proxima || ini < new Date(proxima.fecha_inicio))) {
+        proxima = temp;
+      }
+    }
+    if (!hayActiva && proxima) {
+      btn.style.display = "inline-block";
+      const ini = new Date(proxima.fecha_inicio);
+      const diffMs = ini - hoy;
+      const diffDias = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+      btn.innerHTML = `<span class="emoji">⏳</span> Próxima: ${proxima.titulo} (en ${diffDias} día${diffDias===1?'':'s'})`;
+      btn.disabled = true;
+      btn.style.opacity = 0.7;
+      btn.style.cursor = "not-allowed";
+      btn.onclick = null;
+    }
+  });
+</script>
+
 </body>
 </html>
