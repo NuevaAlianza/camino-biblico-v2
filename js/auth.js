@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ✅ Registro de usuario
+  // ✅ Registro de usuario con metadata en Auth
   if (registroForm) {
     registroForm.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -37,9 +37,16 @@ document.addEventListener('DOMContentLoaded', () => {
       const ciudad = document.getElementById('reg-ciudad').value;
       const parroquia = document.getElementById('reg-parroquia').value;
 
-      console.log("Intentando registrar con:", { email, password });
+      mensaje.textContent = "Procesando...";
 
-      const { data, error } = await supabase.auth.signUp({ email, password });
+      // Registro usando metadata de Auth (lo mejor)
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: { nombre, pais, ciudad, parroquia }
+        }
+      });
 
       if (error) {
         console.error("❌ Error en signUp:", error);
@@ -47,26 +54,9 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      const user = data.user;
-      if (user) {
-        const { error: insertError } = await supabase.from('usuarios').insert({
-          id: user.id,
-          email,
-          nombre,
-          pais,
-          ciudad,
-          parroquia
-        });
-
-        if (insertError) {
-          console.error("❌ Error al insertar en usuarios:", insertError);
-          mensaje.textContent = `Error al guardar datos extra: ${insertError.message}`;
-          return;
-        }
-
-        mensaje.textContent = "Registro exitoso.";
-        await cargarProgresoDesdeNube(); // Opcional: para nuevos usuarios
-      }
+      mensaje.textContent = "Registro exitoso. Revisa tu correo para confirmar tu cuenta.";
+      // Opcional: limpiar el formulario o redirigir
+      registroForm.reset();
     });
   }
 
@@ -78,6 +68,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const email = document.getElementById('login-email').value;
       const password = document.getElementById('login-password').value;
 
+      mensaje.textContent = "Procesando...";
+
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password
@@ -88,10 +80,11 @@ document.addEventListener('DOMContentLoaded', () => {
         mensaje.textContent = `Error: ${error.message}`;
       } else {
         mensaje.textContent = "Inicio de sesión exitoso.";
-        await cargarProgresoDesdeNube(); // 🟢 Aquí sincronizas desde la nube
+        // Puedes acceder a user_metadata aquí:
+        // data.user.user_metadata.nombre, etc.
         window.location.href = "menu.html";
-
       }
     });
   }
 });
+
