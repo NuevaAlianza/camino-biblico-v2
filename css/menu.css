@@ -331,3 +331,11 @@ body {
   }
 }
 
+.menu-btn.aleatorio {
+  background: linear-gradient(90deg, #ffc371 0%, #ff5f6d 100%);
+  color: #fff;
+  font-weight: bold;
+}
+.menu-btn.aleatorio:hover {
+  background: linear-gradient(90deg, #ff5f6d 0%, #ffc371 100%);
+}
