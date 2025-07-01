@@ -58,106 +58,117 @@ function iniciarQuizConPreguntas(preguntas) {
   configDiv.classList.add("oculto");
   juegoDiv.classList.remove("oculto");
 
-  function mostrarPregunta() {
-    // Sonido de fondo y de inicio
-    sonidoFondo.pause();
-    sonidoFondo.currentTime = 0;
-    sonidoFondo.play();
-    reproducirSonido(sonidoInicio);
+ function mostrarPregunta() {
+  reproducirSonido(sonidoInicio);
 
-    const p = preguntas[indice];
+  const p = preguntas[indice];
 
-    // Opciones mezcladas (respuesta correcta y 3 falsas)
-    const opciones = [
-      { texto: p.respuesta, correcta: true },
-      { texto: p.opcion_1, correcta: false },
-      { texto: p.opcion_2, correcta: false },
-      { texto: p.opcion_3, correcta: false }
-    ].sort(() => Math.random() - 0.5);
+  // Opciones mezcladas (respuesta correcta y 3 falsas)
+  const opciones = [
+    { texto: p.respuesta, correcta: true },
+    { texto: p.opcion_1, correcta: false },
+    { texto: p.opcion_2, correcta: false },
+    { texto: p.opcion_3, correcta: false }
+  ].sort(() => Math.random() - 0.5);
 
-    let html = `
-      <div>
-        <h3>Pregunta ${indice + 1} de ${preguntas.length}</h3>
-        <div id="barra-tiempo" style="width: 100%; height: 16px; background: #eee; border-radius: 8px; margin-bottom: 1em;">
-          <div id="progreso" style="height: 100%; width: 100%; background: #4caf50; border-radius: 8px; transition: width 0.2s;"></div>
-        </div>
-        <strong>${p.pregunta}</strong>
-        <div id="opciones" style="margin-top:1em;">
-    `;
-
-    opciones.forEach((op, i) => {
-      html += `<button class="btn-opcion" data-correcta="${op.correcta}" style="display:block;margin:0.5em 0;">${op.texto}</button>`;
-    });
-
-    html += `
-        </div>
-        <small>${p.categoria} / ${p.tema}</small>
+  let html = `
+    <div>
+      <h3>Pregunta ${indice + 1} de ${preguntas.length}</h3>
+      <div id="barra-tiempo" style="width: 100%; height: 16px; background: #eee; border-radius: 8px; margin-bottom: 1em;">
+        <div id="progreso" style="height: 100%; width: 100%; background: #4caf50; border-radius: 8px; transition: width 0.2s;"></div>
       </div>
-    `;
+      <div id="contador" style="font-weight: bold; margin:0.5em 0;">Tiempo: 20s</div>
+      <strong>${p.pregunta}</strong>
+      <div id="opciones" style="margin-top:1em;">
+  `;
 
-    juegoDiv.innerHTML = html;
+  opciones.forEach((op, i) => {
+    html += `<button class="btn-opcion" data-correcta="${op.correcta}" style="display:block;margin:0.5em 0;">${op.texto}</button>`;
+  });
 
-    // --- TEMPORIZADOR Y BARRA ---
-    const duracion = 20; // segundos
-    let tiempoRestante = duracion;
-    const barra = document.getElementById("progreso");
-    let intervalo = setInterval(() => {
-      tiempoRestante--;
-      // Actualiza ancho barra
-      let porcentaje = (tiempoRestante / duracion) * 100;
-      barra.style.width = porcentaje + "%";
-      // Cambia color según el tiempo
-      if (tiempoRestante <= 5) {
-        barra.style.background = "#e53935"; // rojo
-      } else if (tiempoRestante <= 10) {
-        barra.style.background = "#fbc02d"; // amarillo
-      } else {
-        barra.style.background = "#4caf50"; // verde
-      }
+  html += `
+      </div>
+      <small>${p.categoria} / ${p.tema}</small>
+    </div>
+  `;
 
-      if (tiempoRestante <= 0) {
-        clearInterval(intervalo);
-        desactivarOpciones();
-        reproducirSonido(sonidoIncorrecto); // sonido de tiempo agotado (puedes poner otro si tienes)
-        sonidoFondo.pause();
-        siguientePregunta(false, true); // tiempo agotado
-      }
-    }, 1000);
+  juegoDiv.innerHTML = html;
 
-    function desactivarOpciones() {
-      document.querySelectorAll('.btn-opcion').forEach(btn => {
-        btn.disabled = true;
-      });
+  // --- TEMPORIZADOR Y BARRA FLUIDA ---
+  const duracion = 20; // segundos
+  const barra = document.getElementById("progreso");
+  const contador = document.getElementById("contador");
+  const tiempoInicio = Date.now();
+  const tiempoFin = tiempoInicio + duracion * 1000;
+  let terminado = false;
+
+  function actualizarBarra() {
+    if (terminado) return;
+    const ahora = Date.now();
+    let restante = (tiempoFin - ahora) / 1000; // en segundos
+    if (restante < 0) restante = 0;
+    const porcentaje = (restante / duracion) * 100;
+    barra.style.width = porcentaje + "%";
+
+    // Cambia color según el tiempo
+    if (restante <= 5) {
+      barra.style.background = "#e53935";
+    } else if (restante <= 10) {
+      barra.style.background = "#fbc02d";
+    } else {
+      barra.style.background = "#4caf50";
     }
 
-    function siguientePregunta(respondioCorrecto, timeout = false) {
-      clearInterval(intervalo);
-      if (respondioCorrecto) aciertos++;
-      indice++;
-      setTimeout(() => {
-        if (indice < preguntas.length) {
-          mostrarPregunta();
-        } else {
-          mostrarResultado();
-        }
-      }, 700); // Pequeña pausa para que vea el resultado
-    }
+    contador.textContent = `Tiempo: ${Math.ceil(restante)}s`;
 
+    if (restante > 0) {
+      requestAnimationFrame(actualizarBarra);
+    } else {
+      terminado = true;
+      desactivarOpciones();
+      reproducirSonido(sonidoIncorrecto);
+      sonidoFondo.pause();
+      siguientePregunta(false, true);
+    }
+  }
+  actualizarBarra();
+
+  function desactivarOpciones() {
     document.querySelectorAll('.btn-opcion').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        desactivarOpciones();
-        const correcta = btn.dataset.correcta === "true";
-        if (correcta) {
-          reproducirSonido(sonidoCorrecto);
-        } else {
-          reproducirSonido(sonidoIncorrecto);
-        }
-        btn.style.background = correcta ? "#81c784" : "#e57373"; // verde o rojo
-        sonidoFondo.pause();
-        siguientePregunta(correcta);
-      });
+      btn.disabled = true;
     });
   }
+
+  function siguientePregunta(respondioCorrecto, timeout = false) {
+    if (terminado) return;
+    terminado = true;
+    if (respondioCorrecto) aciertos++;
+    indice++;
+    setTimeout(() => {
+      if (indice < preguntas.length) {
+        mostrarPregunta();
+      } else {
+        mostrarResultado();
+      }
+    }, 700); // Pausa para ver la respuesta
+  }
+
+  document.querySelectorAll('.btn-opcion').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      desactivarOpciones();
+      const correcta = btn.dataset.correcta === "true";
+      if (correcta) {
+        reproducirSonido(sonidoCorrecto);
+      } else {
+        reproducirSonido(sonidoIncorrecto);
+      }
+      btn.style.background = correcta ? "#81c784" : "#e57373"; // verde o rojo
+      sonidoFondo.pause();
+      siguientePregunta(correcta);
+    });
+  });
+}
+
 
   function mostrarResultado() {
     sonidoFondo.pause();
