@@ -47,7 +47,7 @@ function iniciarQuizConPreguntas(preguntas) {
   function mostrarPregunta() {
     const p = preguntas[indice];
 
-    // Prepara las opciones mezcladas (respuesta correcta y 3 falsas)
+    // Opciones mezcladas (respuesta correcta y 3 falsas)
     const opciones = [
       { texto: p.respuesta, correcta: true },
       { texto: p.opcion_1, correcta: false },
@@ -58,8 +58,11 @@ function iniciarQuizConPreguntas(preguntas) {
     let html = `
       <div>
         <h3>Pregunta ${indice + 1} de ${preguntas.length}</h3>
+        <div id="barra-tiempo" style="width: 100%; height: 16px; background: #eee; border-radius: 8px; margin-bottom: 1em;">
+          <div id="progreso" style="height: 100%; width: 100%; background: #4caf50; border-radius: 8px; transition: width 0.2s;"></div>
+        </div>
         <strong>${p.pregunta}</strong>
-        <div id="opciones">
+        <div id="opciones" style="margin-top:1em;">
     `;
 
     opciones.forEach((op, i) => {
@@ -74,16 +77,56 @@ function iniciarQuizConPreguntas(preguntas) {
 
     juegoDiv.innerHTML = html;
 
-    // Escucha los clics en las opciones
-    document.querySelectorAll('.btn-opcion').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        if (btn.dataset.correcta === "true") aciertos++;
-        indice++;
+    // --- TEMPORIZADOR Y BARRA ---
+    const duracion = 20; // segundos
+    let tiempoRestante = duracion;
+    const barra = document.getElementById("progreso");
+    let intervalo = setInterval(() => {
+      tiempoRestante--;
+      // Actualiza ancho barra
+      let porcentaje = (tiempoRestante / duracion) * 100;
+      barra.style.width = porcentaje + "%";
+      // Cambia color según el tiempo
+      if (tiempoRestante <= 5) {
+        barra.style.background = "#e53935"; // rojo
+      } else if (tiempoRestante <= 10) {
+        barra.style.background = "#fbc02d"; // amarillo
+      } else {
+        barra.style.background = "#4caf50"; // verde
+      }
+
+      if (tiempoRestante <= 0) {
+        clearInterval(intervalo);
+        desactivarOpciones();
+        siguientePregunta(false, true); // tiempo agotado
+      }
+    }, 1000);
+
+    function desactivarOpciones() {
+      document.querySelectorAll('.btn-opcion').forEach(btn => {
+        btn.disabled = true;
+      });
+    }
+
+    function siguientePregunta(respondioCorrecto, timeout = false) {
+      clearInterval(intervalo);
+      if (respondioCorrecto) aciertos++;
+      indice++;
+      setTimeout(() => {
         if (indice < preguntas.length) {
           mostrarPregunta();
         } else {
           mostrarResultado();
         }
+      }, 700); // Pequeña pausa para que vea el resultado
+    }
+
+    document.querySelectorAll('.btn-opcion').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        desactivarOpciones();
+        const correcta = btn.dataset.correcta === "true";
+        btn.style.background = correcta ? "#81c784" : "#e57373"; // verde o rojo
+        siguientePregunta(correcta);
       });
     });
   }
