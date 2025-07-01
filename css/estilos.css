@@ -131,4 +131,163 @@ main.menu nav button:hover {
   cursor: pointer;
   color: #e76f51;
 }
+body {
+  background: linear-gradient(120deg, #f0f4f8 0%, #e3e6e8 100%);
+  min-height: 100vh;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  color: #343a40;
+  margin: 0;
+}
+
+main, #contenido-aleatorio {
+  max-width: 500px;
+  margin: 2.5rem auto;
+  background: #fff;
+  border-radius: 1.5em;
+  box-shadow: 0 4px 24px rgba(80,110,130,0.10), 0 1.5px 10px rgba(0,0,0,0.03);
+  padding: 2.2rem 1.5rem 2.8rem 1.5rem;
+}
+
+h2 {
+  color: #2a9d8f;
+  font-size: 2.1rem;
+  font-weight: 700;
+  letter-spacing: -1px;
+  margin-bottom: 0.5em;
+}
+
+#descripcion-quiz {
+  background: #f6f4f2;
+  color: #456;
+  border-left: 4px solid #f4a261;
+  border-radius: 0.6em;
+  padding: 1em 1.2em;
+  margin-bottom: 1.2em;
+  font-size: 1.04em;
+}
+
+#config-quiz-random label,
+#config-quiz-random h3 {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.7em;
+  color: #444;
+}
+
+#cantidad-preguntas {
+  margin-left: 0.5em;
+  padding: 0.3em 0.7em;
+  border-radius: 0.5em;
+  border: 1px solid #ddd;
+  background: #f6f4f2;
+  font-size: 1em;
+}
+
+#elige-categorias label {
+  display: inline-block;
+  background: #e0e4ed;
+  color: #223;
+  border-radius: 2em;
+  padding: 0.5em 1.1em 0.5em 0.9em;
+  margin: 0.25em 0.4em 0.25em 0;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.22s;
+  border: 1.5px solid #e6e7ef;
+}
+#elige-categorias input[type="checkbox"]:checked + span,
+#elige-categorias label:hover {
+  background: #2a9d8f;
+  color: #fff;
+  border-color: #219177;
+}
+
+#iniciar-quiz-random {
+  display: block;
+  margin: 2.2em auto 0.5em auto;
+  background: #f4a261;
+  color: #fff;
+  border: none;
+  border-radius: 2em;
+  padding: 0.85em 2.2em;
+  font-size: 1.12em;
+  font-weight: bold;
+  box-shadow: 0 2px 8px rgba(245, 172, 97, 0.15);
+  transition: background 0.2s, transform 0.15s;
+  cursor: pointer;
+}
+#iniciar-quiz-random:hover {
+  background: #e76f51;
+  transform: scale(1.04);
+}
+
+#juego-aleatorio {
+  margin-top: 1em;
+}
+#juego-aleatorio h3 {
+  margin-bottom: 0.7em;
+}
+
+#barra-tiempo {
+  margin-bottom: 1em;
+}
+#progreso {
+  transition: width 0.3s, background 0.2s;
+}
+
+.btn-opcion {
+  display: block;
+  width: 100%;
+  margin: 0.4em 0;
+  padding: 0.8em 1em;
+  border: none;
+  border-radius: 1em;
+  background: #e0e4ed;
+  color: #333;
+  font-size: 1.05em;
+  cursor: pointer;
+  transition: background 0.15s, color 0.18s, transform 0.13s;
+  font-weight: 500;
+  box-shadow: 0 2px 6px rgba(80,110,130,0.07);
+}
+.btn-opcion:hover:not(:disabled) {
+  background: #b2dfdb;
+  color: #166;
+  transform: scale(1.03);
+}
+.btn-opcion:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Resultado final */
+#juego-aleatorio h2 {
+  color: #e76f51;
+  margin-top: 1.5em;
+}
+#juego-aleatorio p {
+  font-size: 1.13em;
+}
+
+#btn-inicio {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #2a9d8f;
+  font-size: 1.6rem;
+  padding: 0.8rem 1rem;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+  text-decoration: none;
+  z-index: 10;
+  border: none;
+  transition: background 0.18s;
+}
+#btn-inicio:hover {
+  background-color: #f4a261;
+  color: #fff;
+}
 
