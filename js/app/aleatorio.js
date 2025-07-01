@@ -2,6 +2,20 @@
 
 let preguntasData = [];
 
+// --- SONIDOS ---
+const sonidoInicio = new Audio('assets/sonidos/inicio.mp3');
+const sonidoCorrecto = new Audio('assets/sonidos/correcto.mp3');
+const sonidoIncorrecto = new Audio('assets/sonidos/incorecto.mp3');
+const sonidoFondo = new Audio('assets/sonidos/background.mp3');
+sonidoFondo.volume = 0.4;
+
+function reproducirSonido(audioObj) {
+  try {
+    audioObj.currentTime = 0;
+    audioObj.play();
+  } catch (e) {}
+}
+
 function obtenerCategoriasUnicas(preguntasData) {
   return [...new Set(preguntasData.map(p => p.categoria))];
 }
@@ -45,6 +59,12 @@ function iniciarQuizConPreguntas(preguntas) {
   juegoDiv.classList.remove("oculto");
 
   function mostrarPregunta() {
+    // Sonido de fondo y de inicio
+    sonidoFondo.pause();
+    sonidoFondo.currentTime = 0;
+    sonidoFondo.play();
+    reproducirSonido(sonidoInicio);
+
     const p = preguntas[indice];
 
     // Opciones mezcladas (respuesta correcta y 3 falsas)
@@ -98,6 +118,8 @@ function iniciarQuizConPreguntas(preguntas) {
       if (tiempoRestante <= 0) {
         clearInterval(intervalo);
         desactivarOpciones();
+        reproducirSonido(sonidoIncorrecto); // sonido de tiempo agotado (puedes poner otro si tienes)
+        sonidoFondo.pause();
         siguientePregunta(false, true); // tiempo agotado
       }
     }, 1000);
@@ -125,13 +147,20 @@ function iniciarQuizConPreguntas(preguntas) {
       btn.addEventListener('click', (e) => {
         desactivarOpciones();
         const correcta = btn.dataset.correcta === "true";
+        if (correcta) {
+          reproducirSonido(sonidoCorrecto);
+        } else {
+          reproducirSonido(sonidoIncorrecto);
+        }
         btn.style.background = correcta ? "#81c784" : "#e57373"; // verde o rojo
+        sonidoFondo.pause();
         siguientePregunta(correcta);
       });
     });
   }
 
   function mostrarResultado() {
+    sonidoFondo.pause();
     juegoDiv.innerHTML = `
       <h2>¡Quiz finalizado!</h2>
       <p>Respondiste correctamente <b>${aciertos}</b> de <b>${preguntas.length}</b> preguntas.</p>
