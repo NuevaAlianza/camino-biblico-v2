@@ -1,0 +1,69 @@
+{
+  "niveles": {
+    "1": [
+      {
+        "pregunta": "¿Quién fue el primer hombre creado según la Biblia?",
+        "opciones": ["Adán", "Moisés", "Noé", "Pedro"],
+        "respuesta": "Adán"
+      },
+      {
+        "pregunta": "¿En qué libro encontramos la historia de la creación?",
+        "opciones": ["Génesis", "Éxodo", "Levítico", "Mateo"],
+        "respuesta": "Génesis"
+      }
+    ],
+    "2": [
+      {
+        "pregunta": "¿Quién liberó a los israelitas de Egipto?",
+        "opciones": ["Moisés", "David", "Josué", "Pablo"],
+        "respuesta": "Moisés"
+      },
+      {
+        "pregunta": "¿Cuál es el primer mandamiento?",
+        "opciones": [
+          "Amarás a Dios sobre todas las cosas",
+          "No matarás",
+          "Honrarás a tu padre y a tu madre",
+          "No robarás"
+        ],
+        "respuesta": "Amarás a Dios sobre todas las cosas"
+      }
+    ],
+    "3": [
+      {
+        "pregunta": "¿Quién fue el rey sabio de Israel?",
+        "opciones": ["Salomón", "David", "Saúl", "Ezequías"],
+        "respuesta": "Salomón"
+      },
+      {
+        "pregunta": "¿Quién negó a Jesús tres veces?",
+        "opciones": ["Pedro", "Juan", "Judas", "Tomás"],
+        "respuesta": "Pedro"
+      }
+    ],
+    "4": [
+      {
+        "pregunta": "¿Quién escribió la mayoría de las cartas del Nuevo Testamento?",
+        "opciones": ["Pablo", "Pedro", "Santiago", "Juan"],
+        "respuesta": "Pablo"
+      },
+      {
+        "pregunta": "¿Dónde nació Jesús?",
+        "opciones": ["Belén", "Nazaret", "Jerusalén", "Cafarnaúm"],
+        "respuesta": "Belén"
+      }
+    ],
+    "5": [
+      {
+        "pregunta": "¿Cuál es el sermón más famoso de Jesús?",
+        "opciones": ["Sermón del Monte", "Sermón del Lago", "Sermón del Templo", "Sermón del Huerto"],
+        "respuesta": "Sermón del Monte"
+      },
+      {
+        "pregunta": "¿Qué apóstol es conocido como el 'discípulo amado'?",
+        "opciones": ["Juan", "Pedro", "Andrés", "Santiago"],
+        "respuesta": "Juan"
+      }
+    ]
+  }
+}
