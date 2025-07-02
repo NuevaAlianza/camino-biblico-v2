@@ -1,4 +1,4 @@
-let preguntasRPG = {};
+let preguntasRPG = {}; 
 let progresoRPG = null;
 let cicloActual = obtenerSemanaAnio(); // Cambia si usas ciclo quincenal
 
