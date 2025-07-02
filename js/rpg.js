@@ -95,7 +95,7 @@ function jugarNivel() {
       <small>Si fallas, pierdes una vida. ¡Suerte!</small>
     </div>
   `;
-
+}
   // Botones respuesta
   document.querySelectorAll('.rpg-btn-op').forEach(btn => {
     btn.onclick = () => {
