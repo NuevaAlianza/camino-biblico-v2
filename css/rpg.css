@@ -1,0 +1,54 @@
+body {
+  background: linear-gradient(135deg, #ead196 0%, #7b6f4d 100%);
+  font-family: 'Georgia', serif;
+  color: #492e0c;
+}
+.rpg-main {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fffbe6;
+  border-radius: 2rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.09);
+}
+.rpg-menu button, .panel-mensaje button {
+  font-size: 1.1rem;
+  margin: 0.6rem 0.3rem;
+  padding: 0.7rem 1.5rem;
+  border-radius: 1.2rem;
+  border: none;
+  background: #c1a368;
+  color: #442f12;
+  font-weight: bold;
+  transition: background 0.2s;
+  cursor: pointer;
+  box-shadow: 0 3px 9px rgba(168,133,34,0.10);
+}
+.rpg-menu button:hover {
+  background: #f6d365;
+}
+.rpg-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1em;
+  font-size: 1.1rem;
+}
+.rpg-nivel { font-weight: bold; }
+.rpg-vidas { letter-spacing: 2px; }
+.panel-pregunta { margin: 2em 0; }
+.rpg-pregunta { font-size: 1.25rem; margin-bottom: 1em; }
+.rpg-opciones button {
+  width: 100%;
+  margin: 0.5em 0;
+  font-size: 1.1rem;
+}
+.rpg-btn-op.acierto { background: #90c978 !important; }
+.rpg-btn-op.fallo { background: #f28c8c !important; }
+.oculto { display: none !important; }
+.panel-mensaje { text-align: center; margin-top: 2em; }
+#btn-inicio {
+  position: fixed; bottom: 1.2rem; right: 1.2rem;
+  background: #f4d061; color: #3d260b; font-size: 1.4rem; border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(50,30,5,0.13); padding: 0.8em;
+  text-decoration: none;
+}
