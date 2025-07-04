@@ -339,3 +339,20 @@ body {
 .menu-btn.aleatorio:hover {
   background: linear-gradient(90deg, #ff5f6d 0%, #ffc371 100%);
 }
+.cabecera-quiz {
+  width: 100%;
+  padding-bottom: 1.2rem;
+  border-bottom: 2px solid #eceaf8;
+  margin-bottom: 1.3rem;
+}
+.seleccion-tema {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  align-items: center;
+  justify-content: center;
+}
+.seleccion-tema label {
+  font-weight: 500;
+  margin-bottom: 0;
+}
