@@ -29,23 +29,21 @@
         Nueva Alianza
       </button>
       <button class="menu-btn aleatorio" onclick="window.location.href='aleatorio.html'">
-  <span class="emoji">🤹</span>
-  Quiz Aleatorio
-</button>
-<button class="menu-btn rpg" onclick="window.location.href='rpg.html'">
-  <span class="emoji">⚔️</span>
-  Trivia Bíblica RPG
-</button>
-
+        <span class="emoji">🤹</span>
+        Quiz Aleatorio
+      </button>
+      <button class="menu-btn rpg" onclick="window.location.href='rpg.html'">
+        <span class="emoji">⚔️</span>
+        Trivia Bíblica RPG
+      </button>
     </nav>
     <button id="btn-logout"><span class="emoji">📕</span>Cerrar sesión</button>
   </main>
   
-  <!-- Scripts principales -->
+  <!-- SCRIPTS AL FINAL, SOLO UNA VEZ -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script src="supabase.js"></script>
   <script src="js/auth.js"></script>
-
   <script>
     // Redirección si no hay sesión
     supabase.auth.getSession().then(({ data }) => {
@@ -62,62 +60,42 @@
       await supabase.auth.signOut();
       window.location.href = "index.html";
     });
-
-    // Mostrar botón de temporada activa SOLO SI HAY una temporada vigente
+    // Botón temporada activa/próxima
     fetch("datos/temporadas.json")
       .then(res => res.json())
       .then(temporadas => {
         const hoy = new Date();
         const btn = document.getElementById("btn-temporada");
+        let hayActiva = false;
+        let proxima = null;
         for (const temp of temporadas) {
           const ini = new Date(temp.fecha_inicio);
           const fin = new Date(temp.fecha_fin);
           if (hoy >= ini && hoy <= fin) {
             btn.style.display = "inline-block";
-            btn.textContent = `🔔 ${temp.titulo}`;
+            btn.disabled = false;
+            btn.innerHTML = `<span class="emoji">🔔</span> ${temp.titulo}`;
             btn.onclick = () => window.location.href = `temporada.html?id=${temp.id}`;
-            break; // Detener al encontrar la primera temporada activa
+            hayActiva = true;
+            break;
           }
+          if (ini > hoy && (!proxima || ini < new Date(proxima.fecha_inicio))) {
+            proxima = temp;
+          }
+        }
+        if (!hayActiva && proxima) {
+          btn.style.display = "inline-block";
+          const ini = new Date(proxima.fecha_inicio);
+          const diffMs = ini - hoy;
+          const diffDias = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+          btn.innerHTML = `<span class="emoji">⏳</span> Próxima: ${proxima.titulo} (en ${diffDias} día${diffDias===1?'':'s'})`;
+          btn.disabled = true;
+          btn.style.opacity = 0.7;
+          btn.style.cursor = "not-allowed";
+          btn.onclick = null;
         }
       });
   </script>
-  <script>
-fetch("datos/temporadas.json")
-  .then(res => res.json())
-  .then(temporadas => {
-    const hoy = new Date();
-    const btn = document.getElementById("btn-temporada");
-    let hayActiva = false;
-    let proxima = null;
-
-    for (const temp of temporadas) {
-      const ini = new Date(temp.fecha_inicio);
-      const fin = new Date(temp.fecha_fin);
-      if (hoy >= ini && hoy <= fin) {
-        btn.style.display = "inline-block";
-        btn.disabled = false;
-        btn.innerHTML = `<span class="emoji">🔔</span> ${temp.titulo}`;
-        btn.onclick = () => window.location.href = `temporada.html?id=${temp.id}`;
-        hayActiva = true;
-        break;
-      }
-      if (ini > hoy && (!proxima || ini < new Date(proxima.fecha_inicio))) {
-        proxima = temp;
-      }
-    }
-    if (!hayActiva && proxima) {
-      btn.style.display = "inline-block";
-      const ini = new Date(proxima.fecha_inicio);
-      const diffMs = ini - hoy;
-      const diffDias = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
-      btn.innerHTML = `<span class="emoji">⏳</span> Próxima: ${proxima.titulo} (en ${diffDias} día${diffDias===1?'':'s'})`;
-      btn.disabled = true;
-      btn.style.opacity = 0.7;
-      btn.style.cursor = "not-allowed";
-      btn.onclick = null;
-    }
-  });
-</script>
-
 </body>
 </html>
+
