@@ -1,17 +1,46 @@
+// --- 1. Detección de confirmación de correo (token en hash) ---
+if (window.location.hash && window.location.hash.includes('access_token')) {
+  const hash = window.location.hash.substring(1);
+  const params = new URLSearchParams(hash);
+
+  const access_token = params.get('access_token');
+  const refresh_token = params.get('refresh_token');
+  const token_type = params.get('token_type') || 'bearer';
+
+  if (access_token && refresh_token) {
+    // Guarda la sesión y redirige al menú principal
+    supabase.auth.setSession({
+      access_token,
+      refresh_token,
+      token_type
+    }).then(({ error }) => {
+      if (!error) {
+        // Borra el hash de la URL para evitar repetir el proceso
+        window.location.hash = '';
+        // Redirige al menú principal
+        window.location.href = "menu.html";
+      } else {
+        alert("Ocurrió un problema al confirmar tu correo. Intenta iniciar sesión normalmente.");
+      }
+    });
+  }
+}
+
+// --- 2. Lógica estándar de registro, login y logout ---
 document.addEventListener('DOMContentLoaded', () => {
   const registroForm = document.getElementById('registro-form');
   const loginForm = document.getElementById('login-form');
   const mensaje = document.getElementById('mensaje');
   const btnLogout = document.getElementById('btn-logout');
 
-  // 🔐 Mostrar botón de logout si hay sesión activa
+  // Mostrar botón de logout si hay sesión activa
   supabase.auth.getSession().then(({ data }) => {
     if (data.session && btnLogout) {
       btnLogout.style.display = "block";
     }
   });
 
-  // 🔐 Logout (cerrar sesión)
+  // Logout (cerrar sesión)
   if (btnLogout) {
     btnLogout.addEventListener('click', async () => {
       const { error } = await supabase.auth.signOut();
@@ -25,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ✅ Registro de usuario con metadata en Auth
+  // Registro de usuario con metadata en Auth
   if (registroForm) {
     registroForm.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -39,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       mensaje.textContent = "Procesando...";
 
-      // Registro usando metadata de Auth (lo mejor)
+      // Registro usando metadata de Auth
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
@@ -55,12 +84,11 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       mensaje.textContent = "Registro exitoso. Revisa tu correo para confirmar tu cuenta.";
-      // Opcional: limpiar el formulario o redirigir
       registroForm.reset();
     });
   }
 
-  // ✅ Login
+  // Login
   if (loginForm) {
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -80,11 +108,8 @@ document.addEventListener('DOMContentLoaded', () => {
         mensaje.textContent = `Error: ${error.message}`;
       } else {
         mensaje.textContent = "Inicio de sesión exitoso.";
-        // Puedes acceder a user_metadata aquí:
-        // data.user.user_metadata.nombre, etc.
         window.location.href = "menu.html";
       }
     });
   }
 });
-
