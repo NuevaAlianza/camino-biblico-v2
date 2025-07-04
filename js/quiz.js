@@ -22,7 +22,6 @@ const resultadoEl        = document.getElementById("resultado");
 const detalleResultado   = document.getElementById("detalle-resultado");
 const reiniciarBtn       = document.getElementById("reiniciar");
 const volverBtn          = document.getElementById("volver");
-const contadorEl         = document.getElementById("contador");
 const conteoPreguntaEl   = document.getElementById("conteo-pregunta");
 const barraProgreso      = document.getElementById("progreso");
 
@@ -146,15 +145,21 @@ function seleccionarOpcion(opcion, actual) {
     }
   });
 
+  // Muestra el comentario dependiendo del resultado
   if (opcion === actual.respuesta) {
     puntaje++;
     reproducirSonido(sonidoCorrecto);
-    comentarioEl.textContent = actual["cita biblica"]; // ⬅️ Muestra cita si acierta
+    comentarioEl.textContent = actual["cita biblica"];
   } else {
     reproducirSonido(sonidoIncorrecto);
-    comentarioEl.textContent = "¡Fallaste! Inténtalo en la próxima pregunta."; // ⬅️ Muestra mensaje si falla
+    comentarioEl.textContent = "¡Fallaste! Inténtalo en la próxima pregunta.";
   }
   comentarioEl.classList.remove("oculto");
+
+  // Oculta el comentario suavemente antes de la próxima pregunta
+  setTimeout(() => {
+    comentarioEl.classList.add("oculto");
+  }, 5300);
 
   setTimeout(() => {
     preguntaActual++;
@@ -165,7 +170,6 @@ function seleccionarOpcion(opcion, actual) {
     }
   }, 6000);
 }
-
 
 // Mostrar resultado al finalizar
 function mostrarResultado() {
@@ -188,15 +192,19 @@ function mostrarResultado() {
   else if (porcentaje >= 40) nota = "D";
 
   const btnColeccionable = document.getElementById("ver-coleccionables");
+  // Limpia listeners viejos
+  const nuevoBtn = btnColeccionable.cloneNode(true);
+  btnColeccionable.parentNode.replaceChild(nuevoBtn, btnColeccionable);
+
   if (["A", "B", "C"].includes(nota)) {
-    btnColeccionable.classList.remove("oculto");
-    btnColeccionable.addEventListener("click", () => {
+    nuevoBtn.classList.remove("oculto");
+    nuevoBtn.addEventListener("click", () => {
       reproducirSonido(sonidoClick);
       if (navigator.vibrate) navigator.vibrate(100);
       window.location.href = "coleccionables-v2.html";
     });
   } else {
-    btnColeccionable.classList.add("oculto");
+    nuevoBtn.classList.add("oculto");
   }
 }
 
@@ -204,26 +212,19 @@ function mostrarResultado() {
 function resetearEstado() {
   opcionesEl.innerHTML = "";
   comentarioEl.classList.add("oculto");
-  contadorEl.textContent = "Tiempo: 58s";
   barraProgreso.style.width = "100%";
-  barraProgreso.style.backgroundColor = "green";
+  // El color lo controla el gradiente del CSS
 }
 
 function iniciarTemporizador() {
   tiempo = 58;
-  contadorEl.textContent = `Tiempo: ${tiempo}s`;
   barraProgreso.style.width = "100%";
-  barraProgreso.style.backgroundColor = "green";
-
   intervalo = setInterval(() => {
     tiempo--;
-    contadorEl.textContent = `Tiempo: ${tiempo}s`;
     const pct = (tiempo / 58) * 100;
     barraProgreso.style.width = `${pct}%`;
 
     if (tiempo === 20 || tiempo === 10) reproducirSonido(sonidoAdvertencia);
-    if (tiempo <= 20 && tiempo > 10) barraProgreso.style.backgroundColor = "orange";
-    if (tiempo <= 10) barraProgreso.style.backgroundColor = "red";
 
     if (tiempo <= 0) {
       clearInterval(intervalo);
@@ -331,5 +332,7 @@ async function guardarProgresoEnNube() {
   } else {
     console.log("✅ Historial guardado en Supabase.");
   }
+}
+
 }
 
