@@ -1,6 +1,6 @@
-let preguntasRPG = {}; 
+let preguntasRPG = {};
 let progresoRPG = null;
-let cicloActual = obtenerSemanaAnio(); // Cambia si usas ciclo quincenal
+let cicloActual = obtenerSemanaAnio();
 
 // --- Carga preguntas ---
 fetch('datos/rpg-preguntas.json')
@@ -44,7 +44,7 @@ document.getElementById("btn-comenzar").onclick = () => {
     nivel: 1,
     vidas: 3,
     pregunta: 0,
-    respondidas: [],
+    preguntasNivel: null, // <-- NUEVO, para persistencia real
     completado: false,
     rango: "",
     xp: 0
@@ -68,74 +68,71 @@ function jugarNivel() {
   document.getElementById("logros-rpg").classList.add("oculto");
 
   const nivel = progresoRPG.nivel;
-  const preguntasNivel = mezclarArray([...preguntasRPG[nivel]]).slice(0, 5);
-  let actual = 0;
-  let vidas = progresoRPG.vidas;
 
+  // Guardar el array de preguntas en el progreso SOLO la primera vez en cada nivel
+  if (!progresoRPG.preguntasNivel || progresoRPG.preguntasNivel.length !== 5) {
+    progresoRPG.preguntasNivel = mezclarArray([...preguntasRPG[nivel]]).slice(0, 5);
+    progresoRPG.pregunta = 0; // Siempre empieza en la 0 al entrar a nivel nuevo
+    guardarProgreso(progresoRPG);
+  }
   mostrarPregunta();
 
- function mostrarPregunta() {
-  const juego = document.getElementById("juego-rpg");
-  const nivel = progresoRPG.nivel;
-  const vidas = progresoRPG.vidas;
-  const preguntasNivel = mezclarArray([...preguntasRPG[nivel]]).slice(0, 5);
-  const p = preguntasNivel[progresoRPG.pregunta || 0];
+  function mostrarPregunta() {
+    const preguntaActual = progresoRPG.pregunta || 0;
+    const p = progresoRPG.preguntasNivel[preguntaActual];
 
-  // Render pregunta y corazones
-  juego.innerHTML = `
-    <div class="panel-pregunta">
-      <div class="rpg-info">
-        <span class="rpg-nivel">Nivel: ${nivel}</span>
-        <span class="rpg-vidas">${"❤️".repeat(vidas)}</span>
+    juego.innerHTML = `
+      <div class="panel-pregunta">
+        <div class="rpg-info">
+          <span class="rpg-nivel">Nivel: ${nivel}</span>
+          <span class="rpg-vidas">${"❤️".repeat(progresoRPG.vidas)}</span>
+        </div>
+        <div class="rpg-pregunta"><b>${p.pregunta}</b></div>
+        <div class="rpg-opciones">
+          ${p.opciones.map((op, i) => `<button class="rpg-btn-op" data-i="${i}">${op}</button>`).join("")}
+        </div>
+        <small>Si fallas, pierdes una vida. ¡Suerte!</small>
       </div>
-      <div class="rpg-pregunta"><b>${p.pregunta}</b></div>
-      <div class="rpg-opciones">
-        ${p.opciones.map((op, i) => `<button class="rpg-btn-op" data-i="${i}">${op}</button>`).join("")}
-      </div>
-      <small>Si fallas, pierdes una vida. ¡Suerte!</small>
-    </div>
-  `;
-}
-  // Botones respuesta
-  document.querySelectorAll('.rpg-btn-op').forEach(btn => {
-    btn.onclick = () => {
-      const correcta = p.opciones[btn.dataset.i] === p.respuesta;
-      if (correcta) {
-        btn.classList.add("acierto");
-        progresoRPG.xp += nivel * 10;
-      } else {
-        btn.classList.add("fallo");
-        progresoRPG.vidas--;
-        // Animación corazones:
-        const vidasEl = document.querySelector('.rpg-vidas');
-        if (vidasEl) {
-          vidasEl.classList.add("shake");
-          setTimeout(() => vidasEl.classList.remove("shake"), 400);
-        }
-      }
-      setTimeout(() => {
-        // Siguiente pregunta o nivel:
-        progresoRPG.pregunta = (progresoRPG.pregunta || 0) + 1;
-        guardarProgreso(progresoRPG);
-        if (progresoRPG.vidas <= 0) {
-          terminarAventura();
-        } else if (progresoRPG.pregunta >= 5) {
-          progresoRPG.nivel++;
-          progresoRPG.pregunta = 0;
-          guardarProgreso(progresoRPG);
-          if (progresoRPG.nivel > 5) {
-            terminarAventura(true);
-          } else {
-            mostrarMensajeNivel(`¡Avanzas al nivel ${progresoRPG.nivel}!`, jugarNivel);
-          }
+    `;
+
+    document.querySelectorAll('.rpg-btn-op').forEach(btn => {
+      btn.onclick = () => {
+        const correcta = p.opciones[btn.dataset.i] === p.respuesta;
+        if (correcta) {
+          btn.classList.add("acierto");
+          progresoRPG.xp += nivel * 10;
         } else {
-          mostrarPregunta();
+          btn.classList.add("fallo");
+          progresoRPG.vidas--;
+          const vidasEl = document.querySelector('.rpg-vidas');
+          if (vidasEl) {
+            vidasEl.classList.add("shake");
+            setTimeout(() => vidasEl.classList.remove("shake"), 400);
+          }
         }
-      }, 700);
-    };
-  });
+        setTimeout(() => {
+          progresoRPG.pregunta = preguntaActual + 1;
+          guardarProgreso(progresoRPG);
+          if (progresoRPG.vidas <= 0) {
+            terminarAventura();
+          } else if (progresoRPG.pregunta >= 5) {
+            progresoRPG.nivel++;
+            progresoRPG.pregunta = 0;
+            progresoRPG.preguntasNivel = null; // Al avanzar de nivel, se genera nuevo set
+            guardarProgreso(progresoRPG);
+            if (progresoRPG.nivel > 5) {
+              terminarAventura(true);
+            } else {
+              mostrarMensajeNivel(`¡Avanzas al nivel ${progresoRPG.nivel}!`, jugarNivel);
+            }
+          } else {
+            mostrarPregunta();
+          }
+        }, 700);
+      };
+    });
+  }
 }
-
 
 function mostrarMensajeNivel(msg, cb) {
   const juego = document.getElementById("juego-rpg");
@@ -187,7 +184,6 @@ function mostrarLogros() {
   document.getElementById("juego-rpg").classList.add("oculto");
   document.getElementById("resultados-rpg").classList.add("oculto");
   document.getElementById("logros-rpg").classList.remove("oculto");
-  // Aquí puedes renderizar logros guardados (deja el placeholder por ahora)
   document.getElementById("logros-rpg").innerHTML = `
     <h2>Logros RPG (próximamente)</h2>
     <button onclick="window.location.reload()">Volver</button>
