@@ -2,72 +2,24 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login – Camino Bíblico</title>
+
+  <!-- SDK de Supabase y configuración -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="supabase.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/progreso.js"></script>
+
   <style>
     body { font-family: Arial, sans-serif; padding: 2rem; max-width: 400px; margin: auto; }
     h2 { margin-top: 2rem; }
-    input, button { display: block; width: 100%; margin-bottom: 1rem; padding: 0.6rem; }
+    label, input, select { display: block; width: 100%; margin-bottom: 1rem; }
+    button { padding: 0.5rem 1rem; }
     #mensaje { margin-top: 1rem; color: green; font-weight: bold; }
   </style>
 </head>
 <body>
-  <script>
-  // --- 1. Detección de confirmación de correo (token en hash) ---
-  if (window.location.hash && window.location.hash.includes('access_token')) {
-    document.body.innerHTML = `<h2>Confirmando tu cuenta...</h2><p>Un momento, estamos validando tu usuario.</p>`;
-    const hash = window.location.hash.substring(1);
-    const params = new URLSearchParams(hash);
-
-    const access_token = params.get('access_token');
-    const refresh_token = params.get('refresh_token');
-    const token_type = params.get('token_type') || 'bearer';
-
-    if (access_token && refresh_token) {
-      // Espera a que supabase esté definido
-      const checkSupabase = () => {
-        if (window.supabase) {
-          supabase.auth.setSession({
-            access_token,
-            refresh_token,
-            token_type
-          }).then(({ error }) => {
-            if (!error) {
-              window.location.hash = '';
-              // Opcional: mensaje de éxito rápido antes de ir a menú
-              document.body.innerHTML = `<h2>¡Cuenta confirmada!</h2><p>Redirigiendo...</p>`;
-              setTimeout(() => window.location.href = "menu.html", 700);
-            } else {
-              alert("Ocurrió un problema al confirmar tu correo. Intenta iniciar sesión normalmente.");
-              window.location.href = "index.html";
-            }
-          });
-        } else {
-          setTimeout(checkSupabase, 50);
-        }
-      };
-      checkSupabase();
-    }
-  }
-</script>
-
-  <script>
-    // Redirección si ya hay sesión
-    document.addEventListener('DOMContentLoaded', () => {
-      const esperar = () => {
-        if (window.supabase) {
-          supabase.auth.getSession().then(({ data }) => {
-            if (data.session) {
-              window.location.href = "menu.html";
-            }
-          });
-        } else {
-          setTimeout(esperar, 30);
-        }
-      };
-      esperar();
-    });
-  </script>
 
   <h1>Camino Bíblico</h1>
 
@@ -90,11 +42,46 @@
   </form>
 
   <div id="mensaje"></div>
-  <button id="btn-logout" style="display:none;">Cerrar sesión</button>
-  
-  <!-- SCRIPTS AL FINAL, SOLO UNA VEZ -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-  <script src="supabase.js"></script>
-  <script src="js/auth.js"></script>
+
+  <!-- CONFIRMACIÓN DE CUENTA -->
+  <script>
+    // --- 1. Detección de confirmación de correo (token en hash) ---
+    if (window.location.hash && window.location.hash.includes('access_token')) {
+      document.body.innerHTML = `<h2>Confirmando tu cuenta...</h2><p>Un momento, estamos validando tu usuario.</p>`;
+      const hash = window.location.hash.substring(1);
+      const params = new URLSearchParams(hash);
+
+      const access_token = params.get('access_token');
+      const refresh_token = params.get('refresh_token');
+      const token_type = params.get('token_type') || 'bearer';
+
+      if (access_token && refresh_token) {
+        // Espera a que supabase esté definido
+        const checkSupabase = () => {
+          if (window.supabase) {
+            supabase.auth.setSession({
+              access_token,
+              refresh_token,
+              token_type
+            }).then(({ error }) => {
+              if (!error) {
+                window.location.hash = '';
+                // Mensaje rápido antes de ir a menú
+                document.body.innerHTML = `<h2>¡Cuenta confirmada!</h2><p>Redirigiendo...</p>`;
+                setTimeout(() => window.location.href = "menu.html", 900);
+              } else {
+                alert("Ocurrió un problema al confirmar tu correo. Intenta iniciar sesión normalmente.");
+                window.location.href = "index.html";
+              }
+            });
+          } else {
+            setTimeout(checkSupabase, 50);
+          }
+        };
+        checkSupabase();
+      }
+    }
+  </script>
 </body>
 </html>
+
