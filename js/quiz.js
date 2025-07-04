@@ -281,7 +281,6 @@ function guardarProgreso(tipo, tema, puntaje, total) {
 
 // Sincronización con Supabase
 async function guardarProgresoEnNube() {
-  const local = JSON.parse(localStorage.getItem("progreso") || "{}");
   const { data: sessionData } = await supabase.auth.getSession();
   const userId = sessionData?.session?.user?.id;
   if (!userId) {
@@ -289,13 +288,48 @@ async function guardarProgresoEnNube() {
     return;
   }
 
+  // Datos principales
+  const tipo = "quiz comentado";
+  const clave = temaSelect.value;
+  const porcentaje = Math.round((puntaje / preguntas.length) * 100);
+  let nota = "F";
+  if (porcentaje >= 90) nota = "A";
+  else if (porcentaje >= 75) nota = "B";
+  else if (porcentaje >= 60) nota = "C";
+  else if (porcentaje >= 40) nota = "D";
+
+  // Guarda progreso (último intento, una fila por usuario-tipo-clave)
   const { error } = await supabase
     .from("progreso")
-    .upsert([{ user_id: userId, progreso: local }]);
+    .upsert([{
+      user_id: userId,
+      tipo,
+      clave,
+      nota,
+      porcentaje,
+      fecha: new Date().toISOString()
+    }]);
   if (error) {
     console.error("❌ Error al guardar progreso en nube:", error.message);
   } else {
     console.log("✅ Progreso guardado en Supabase.");
+  }
+
+  // Guarda historial (todas las sesiones, cada intento)
+  const { error: histError } = await supabase
+    .from("historial")
+    .insert([{
+      user_id: userId,
+      tipo,
+      clave,
+      puntaje,
+      total: preguntas.length,
+      fecha: new Date().toISOString()
+    }]);
+  if (histError) {
+    console.error("❌ Error al guardar historial en nube:", histError.message);
+  } else {
+    console.log("✅ Historial guardado en Supabase.");
   }
 }
 
