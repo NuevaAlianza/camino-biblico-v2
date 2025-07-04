@@ -13,6 +13,45 @@
 </head>
 <body>
   <script>
+  // --- 1. Detección de confirmación de correo (token en hash) ---
+  if (window.location.hash && window.location.hash.includes('access_token')) {
+    document.body.innerHTML = `<h2>Confirmando tu cuenta...</h2><p>Un momento, estamos validando tu usuario.</p>`;
+    const hash = window.location.hash.substring(1);
+    const params = new URLSearchParams(hash);
+
+    const access_token = params.get('access_token');
+    const refresh_token = params.get('refresh_token');
+    const token_type = params.get('token_type') || 'bearer';
+
+    if (access_token && refresh_token) {
+      // Espera a que supabase esté definido
+      const checkSupabase = () => {
+        if (window.supabase) {
+          supabase.auth.setSession({
+            access_token,
+            refresh_token,
+            token_type
+          }).then(({ error }) => {
+            if (!error) {
+              window.location.hash = '';
+              // Opcional: mensaje de éxito rápido antes de ir a menú
+              document.body.innerHTML = `<h2>¡Cuenta confirmada!</h2><p>Redirigiendo...</p>`;
+              setTimeout(() => window.location.href = "menu.html", 700);
+            } else {
+              alert("Ocurrió un problema al confirmar tu correo. Intenta iniciar sesión normalmente.");
+              window.location.href = "index.html";
+            }
+          });
+        } else {
+          setTimeout(checkSupabase, 50);
+        }
+      };
+      checkSupabase();
+    }
+  }
+</script>
+
+  <script>
     // Redirección si ya hay sesión
     document.addEventListener('DOMContentLoaded', () => {
       const esperar = () => {
