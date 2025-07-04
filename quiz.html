@@ -8,21 +8,20 @@
 </head>
 <body>
 
-  <div class="quiz-container">
-    <!-- Selección de categoría y tema -->
-    <div class="seleccion-tema">
-      <label for="categoria">Categoría:</label>
-      <select id="categoria">
-        <option value="">-- Elige una categoría --</option>
-      </select>
+ <div class="cabecera-quiz">
+  <div class="seleccion-tema">
+    <label for="categoria">Categoría:</label>
+    <select id="categoria">
+      <option value="">-- Elige una categoría --</option>
+    </select>
+    <label for="tema">Tema:</label>
+    <select id="tema" disabled>
+      <option value="">-- Elige un tema --</option>
+    </select>
+    <button id="iniciar" disabled>Iniciar Quiz</button>
+  </div>
+</div>
 
-      <label for="tema">Tema:</label>
-      <select id="tema" disabled>
-        <option value="">-- Elige un tema --</option>
-      </select>
-
-      <button id="iniciar" disabled>Iniciar Quiz</button>
-    </div>
 
     <!-- Zona de juego -->
     <div id="juego" class="oculto">
