@@ -20,10 +20,13 @@ const opcionesEl         = document.getElementById("opciones");
 const comentarioEl       = document.getElementById("comentario");
 const resultadoEl        = document.getElementById("resultado");
 const detalleResultado   = document.getElementById("detalle-resultado");
+const mensajeResultado   = document.getElementById("mensaje-resultado");
 const reiniciarBtn       = document.getElementById("reiniciar");
 const volverBtn          = document.getElementById("volver");
 const conteoPreguntaEl   = document.getElementById("conteo-pregunta");
 const barraProgreso      = document.getElementById("progreso");
+// Si quieres mostrar el tiempo, desoculta el contadorEl en el HTML y aquí:
+const contadorEl         = document.getElementById("contador");
 
 // Sonidos
 const sonidoInicio     = new Audio("assets/sonidos/inicio.mp3");
@@ -129,6 +132,8 @@ function mostrarPregunta() {
   });
 
   conteoPreguntaEl.textContent = `Pregunta ${preguntaActual + 1} de ${preguntas.length}`;
+  // Si quieres mostrar el tiempo, desoculta esta línea:
+  // contadorEl.textContent = `Tiempo: 58s`;
   iniciarTemporizador();
 }
 
@@ -163,10 +168,11 @@ function seleccionarOpcion(opcion, actual) {
 
   setTimeout(() => {
     preguntaActual++;
-    if (preguntaActual < preguntas.length) {
-      mostrarPregunta();
-    } else {
+    // Si era la última, fuerza mostrarResultado:
+    if (preguntaActual >= preguntas.length) {
       mostrarResultado();
+    } else {
+      mostrarPregunta();
     }
   }, 6000);
 }
@@ -177,6 +183,15 @@ function mostrarResultado() {
   resultadoEl.classList.remove("oculto");
   detalleResultado.textContent = `Respondiste correctamente ${puntaje} de ${preguntas.length} preguntas.`;
 
+  // Mensaje personalizado según puntaje
+  let mensaje = "";
+  const porcentaje = (puntaje / preguntas.length) * 100;
+  if (porcentaje >= 90) mensaje = "¡Increíble! Eres un maestro del tema 🎉";
+  else if (porcentaje >= 75) mensaje = "¡Muy bien! Sigue practicando 👏";
+  else if (porcentaje >= 60) mensaje = "¡Bien hecho! Pero puedes mejorar 👍";
+  else mensaje = "¡Ánimo! Practica un poco más y lo lograrás 💡";
+  mensajeResultado.textContent = mensaje;
+
   // Guardar localmente
   guardarProgreso("quiz comentado", temaSelect.value, puntaje, preguntas.length);
 
@@ -184,7 +199,6 @@ function mostrarResultado() {
   guardarProgresoEnNube();
 
   // Determinar nota y mostrar botón coleccionables
-  const porcentaje = (puntaje / preguntas.length) * 100;
   let nota = "F";
   if (porcentaje >= 90) nota = "A";
   else if (porcentaje >= 75) nota = "B";
@@ -213,16 +227,19 @@ function resetearEstado() {
   opcionesEl.innerHTML = "";
   comentarioEl.classList.add("oculto");
   barraProgreso.style.width = "100%";
-  // El color lo controla el gradiente del CSS
+  // contadorEl.textContent = "Tiempo: 58s"; // solo si lo usas
 }
 
 function iniciarTemporizador() {
   tiempo = 58;
   barraProgreso.style.width = "100%";
+  // contadorEl.textContent = `Tiempo: ${tiempo}s`; // solo si lo usas
   intervalo = setInterval(() => {
     tiempo--;
     const pct = (tiempo / 58) * 100;
     barraProgreso.style.width = `${pct}%`;
+
+    // contadorEl.textContent = `Tiempo: ${tiempo}s`; // solo si lo usas
 
     if (tiempo === 20 || tiempo === 10) reproducirSonido(sonidoAdvertencia);
 
@@ -333,6 +350,3 @@ async function guardarProgresoEnNube() {
     console.log("✅ Historial guardado en Supabase.");
   }
 }
-
-
-
