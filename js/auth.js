@@ -17,6 +17,9 @@ if (window.location.hash && window.location.hash.includes('access_token')) {
       if (!error) {
         // Borra el hash de la URL para evitar repetir el proceso
         window.location.hash = '';
+        // Limpia progreso local antes de entrar
+        localStorage.removeItem("progreso");
+        localStorage.removeItem("rpg_progreso");
         // Redirige al menú principal
         window.location.href = "menu.html";
       } else {
@@ -108,6 +111,9 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error("❌ Error en login:", error);
         mensaje.textContent = `Error: ${error.message}`;
       } else {
+        // Limpia progreso local al iniciar sesión antes de cargar datos del usuario
+        localStorage.removeItem("progreso");
+        localStorage.removeItem("rpg_progreso");
         mensaje.textContent = "Inicio de sesión exitoso.";
         window.location.href = "menu.html";
       }
