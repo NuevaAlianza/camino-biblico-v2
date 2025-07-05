@@ -1,3 +1,5 @@
+// coleccionables-v2.js
+
 let coleccionablesData = {};
 let temporadasData = [];
 let progresoGlobal = null;
@@ -14,7 +16,7 @@ Promise.all([
   });
 });
 
-// Requiere que Supabase esté cargado y usuario logueado
+// ---- 2. Cargar progreso desde Supabase para usuario activo ----
 async function cargarProgresoUsuario() {
   const { data: sessionData } = await supabase.auth.getSession();
   const userId = sessionData?.session?.user?.id;
@@ -35,19 +37,11 @@ async function cargarProgresoUsuario() {
     return;
   }
 
-  // --- Procesar progreso a objeto compatible con tu UI ---
-  // Ejemplo de salida:
-  // {
-  //   categorias: { "Apóstoles": { "Pedro": {...}, ... } },
-  //   temporadas: { T1: {...}, ... }
-  // }
-
+  // Procesar progreso a objeto compatible
   let categorias = {};
   let temporadas = {};
   for (const row of progresoRows) {
-    // Si es quiz comentado: tipo = 'quiz comentado', clave = tema
     if (row.tipo === "quiz comentado") {
-      // Buscar la categoría real para el tema (ya tienes los datos)
       const tema = row.clave;
       let categoria = null;
       for (const cat in coleccionablesData) {
@@ -65,7 +59,6 @@ async function cargarProgresoUsuario() {
         };
       }
     }
-    // Si es temporada: tipo = "temporada", clave = ID temporada
     if (row.tipo === "temporada") {
       temporadas[row.clave] = {
         nota: row.nota,
@@ -79,7 +72,6 @@ async function cargarProgresoUsuario() {
     temporadas
   };
 }
-
 
 // ---- 3. Mostrar resumen principal ----
 function mostrarResumenCategorias() {
@@ -152,7 +144,7 @@ function mostrarResumenCategorias() {
   mostrarResumenLogros();
 }
 
-// ---- 4. Mostrar los personajes/temas de una categoría (¡ahora galería visual!) ----
+// ---- 4. Mostrar los personajes/temas de una categoría (galería visual) ----
 function mostrarPersonajes(categoriaActual) {
   const vistaPersonajes = document.getElementById("vista-personajes");
   const resumenCategorias = document.getElementById("resumen-categorias");
@@ -160,12 +152,10 @@ function mostrarPersonajes(categoriaActual) {
   const titulo = document.getElementById("titulo-categoria");
   const contenedor = document.getElementById("personajes-categoria");
 
-  // OCULTA resumen y logros, muestra solo vista-personajes
   resumenCategorias.classList.add("oculto");
   if (resumenLogros) resumenLogros.classList.add("oculto");
   vistaPersonajes.classList.remove("oculto");
 
-  // ANIMACIÓN salida
   contenedor.classList.remove("fade-in");
   contenedor.classList.add("fade-out");
 
@@ -174,7 +164,6 @@ function mostrarPersonajes(categoriaActual) {
     titulo.textContent = categoriaActual;
 
     let temas;
-    // Si es Temporadas, arma el objeto manualmente
     if (categoriaActual === "Temporadas") {
       temas = {};
       const progreso = progresoGlobal || {};
@@ -193,7 +182,6 @@ function mostrarPersonajes(categoriaActual) {
       temas = coleccionablesData[categoriaActual] || {};
     }
 
-    // Calcula progreso de esa categoría
     const progreso = progresoGlobal || { categorias: {}, temporadas: {} };
     const progresoCategorias = progreso.categorias || {};
     const progresoCategoriaKey = Object.keys(progresoCategorias).find(
@@ -203,7 +191,7 @@ function mostrarPersonajes(categoriaActual) {
       ? progreso.temporadas
       : (progresoCategoriaKey ? progresoCategorias[progresoCategoriaKey] : {});
 
-    contenedor.className = "galeria-coleccionables"; // AQUÍ el display grid visual
+    contenedor.className = "galeria-coleccionables";
 
     for (const tema in temas) {
       const info = temas[tema];
@@ -219,7 +207,6 @@ function mostrarPersonajes(categoriaActual) {
       else if (nota === "B") ruta = info.img_b;
       else if (nota === "C") ruta = info.img_c;
 
-      // --- asigna clases y etiqueta según la nota ---
       let clase = "tarjeta-coleccionable bloqueado";
       let etiqueta = `<span class="etiqueta-nota nota-bloqueado">🔒</span>`;
       if (nota === "A") {
@@ -233,7 +220,6 @@ function mostrarPersonajes(categoriaActual) {
         etiqueta = `<span class="etiqueta-nota nota-c">C</span>`;
       }
 
-      // crea la tarjeta premium
       const card = document.createElement("div");
       card.className = clase;
       card.innerHTML = `
@@ -241,7 +227,6 @@ function mostrarPersonajes(categoriaActual) {
         <h3>${tema}</h3>
         ${etiqueta}
       `;
-      // solo permite ver detalles si está desbloqueado
       card.addEventListener("click", () => {
         if (["A", "B", "C"].includes(nota) && ruta !== "assets/img/coleccionables/bloqueado.png") {
           mostrarModal({ tema, nota, rutaImagen: ruta, descripcion: info.descripcion || "" });
@@ -250,12 +235,11 @@ function mostrarPersonajes(categoriaActual) {
       contenedor.appendChild(card);
     }
 
-    // ANIMACIÓN entrada
     contenedor.classList.remove("fade-out");
     contenedor.classList.add("fade-in");
   }, 150);
 
-  // Permite cambiar de categoría usando la rueda del mouse (scroll horizontal)
+  // Scroll de categorías (si quieres, opcional)
   const todas = [...Object.keys(coleccionablesData), "Temporadas"];
   const i = todas.indexOf(categoriaActual);
   vistaPersonajes.onwheel = (e) => {
@@ -303,7 +287,7 @@ document.getElementById("volver-resumen").addEventListener("click", () => {
   if (resumenLogros) resumenLogros.classList.remove("oculto");
 });
 
-// ---- 6. Mostrar tarjeta de logros (sin cambios) ----
+// ---- 6. Mostrar tarjeta de logros ----
 function mostrarResumenLogros() {
   const progreso = progresoGlobal || { categorias: {}, historial: [] };
   const progresoCategorias = progreso.categorias || {};
@@ -330,6 +314,7 @@ function mostrarResumenLogros() {
     totalA += Object.values(progresoTemas).filter(p => p.nota === "A").length;
   }
 
+  // Construir objetos de logros en coleccionablesData["Logros"]
   coleccionablesData["Logros"] = {};
 
   for (const categoria in completosPorCategoria) {
@@ -354,7 +339,22 @@ function mostrarResumenLogros() {
       nota: logrado ? "A" : "F"
     };
   }
+
+  // --- Visualizar logros en la sección especial
+  const logrosEspeciales = document.getElementById("logros-especiales");
+  if (!logrosEspeciales) return;
+  logrosEspeciales.innerHTML = "";
+
+  for (const nombre in coleccionablesData["Logros"]) {
+    const logro = coleccionablesData["Logros"][nombre];
+    const card = document.createElement("div");
+    card.className = "tarjeta-coleccionable" + (logro.nota === "A" ? " a" : " bloqueado");
+    card.innerHTML = `
+      <img src="${logro.img_a}" alt="${nombre}" />
+      <h3>${nombre}</h3>
+      <span class="etiqueta-nota">${logro.nota === "A" ? "A" : "🔒"}</span>
+      <p>${logro.descripcion}</p>
+    `;
+    logrosEspeciales.appendChild(card);
+  }
 }
-
-
-
