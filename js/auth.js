@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error("❌ Error al cerrar sesión:", error.message);
       } else {
         localStorage.removeItem("progreso");
+        localStorage.removeItem("rpg_progreso");
         window.location.href = "index.html";
       }
     });
