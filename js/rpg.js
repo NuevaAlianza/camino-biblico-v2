@@ -236,7 +236,7 @@ function jugarNivel() {
       };
     });
   }
-}
+
 
 function mostrarMensajeNivel(msg, cb) {
   const juego = document.getElementById("juego-rpg");
