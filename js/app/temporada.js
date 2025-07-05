@@ -1,123 +1,4 @@
-let datosTemporada = null;
-let preguntas = [];
-let preguntaActual = 0;
-let puntaje = 0;
-let tiempo = 58;
-let intervalo;
-let idTemporada = "";
-
-// DOM
-const tituloTemporada = document.getElementById("titulo-temporada");
-const descripcionTemporada = document.getElementById("descripcion-temporada");
-const btnComenzar = document.getElementById("btn-comenzar");
-const juego = document.getElementById("juego");
-const inicio = document.getElementById("inicio");
-const final = document.getElementById("final");
-const preguntaEl = document.getElementById("pregunta");
-const opcionesEl = document.getElementById("opciones");
-const progresoBarra = document.getElementById("progreso");
-const contador = document.getElementById("contador");
-const conteoPreguntaEl = document.getElementById("conteo-pregunta");
-const puntajeFinal = document.getElementById("puntaje-final");
-const imagenColeccionable = document.getElementById("imagen-coleccionable");
-
-document.addEventListener("DOMContentLoaded", async () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  idTemporada = urlParams.get("id");
-
-  if (!idTemporada) {
-    tituloTemporada.textContent = "Temporada no encontrada (sin parámetro)";
-    btnComenzar.disabled = true;
-    return;
-  }
-
-  try {
-    const res = await fetch("./datos/temporadas.json");
-    const temporadas = await res.json();
-
-    datosTemporada = temporadas.find(t =>
-      t.id.toLowerCase().trim() === idTemporada.toLowerCase().trim()
-    );
-
-    if (!datosTemporada) {
-      tituloTemporada.textContent = `Temporada no válida: ${idTemporada}`;
-      btnComenzar.disabled = true;
-      return;
-    }
-
-    tituloTemporada.textContent = datosTemporada.titulo;
-    descripcionTemporada.textContent = datosTemporada.descripcion;
-    preguntas = datosTemporada.preguntas;
-
-    btnComenzar.addEventListener("click", comenzarJuego);
-  } catch (error) {
-    console.error("Error cargando temporadas.json:", error);
-    tituloTemporada.textContent = "Error al cargar la temporada.";
-    btnComenzar.disabled = true;
-  }
-});
-
-function comenzarJuego() {
-  inicio.classList.add("oculto");
-  juego.classList.remove("oculto");
-  mostrarPregunta();
-  iniciarTemporizador();
-}
-
-function mostrarPregunta() {
-  const actual = preguntas[preguntaActual];
-  preguntaEl.textContent = actual.pregunta;
-  conteoPreguntaEl.textContent = `Pregunta ${preguntaActual + 1} de ${preguntas.length}`;
-
-  const opciones = [actual.respuesta, actual.opcion_1, actual.opcion_2, actual.opcion_3];
-  const mezcladas = opciones.sort(() => Math.random() - 0.5);
-
-  opcionesEl.innerHTML = "";
-  mezcladas.forEach(opcion => {
-    const btn = document.createElement("button");
-    btn.textContent = opcion;
-    btn.onclick = () => {
-      verificarRespuesta(opcion, actual.respuesta);
-    };
-    opcionesEl.appendChild(btn);
-  });
-}
-
-function verificarRespuesta(seleccionada, correcta) {
-  if (seleccionada === correcta) puntaje++;
-  siguientePregunta();
-}
-
-function siguientePregunta() {
-  clearInterval(intervalo);
-  tiempo = 58;
-  progresoBarra.style.width = "0%";
-
-  preguntaActual++;
-  if (preguntaActual < preguntas.length) {
-    mostrarPregunta();
-    iniciarTemporizador();
-  } else {
-    finalizarJuego();
-  }
-}
-
-function iniciarTemporizador() {
-  tiempo = 58;
-  contador.textContent = `Tiempo: ${tiempo}s`;
-  progresoBarra.style.width = `0%`;
-
-  intervalo = setInterval(() => {
-    tiempo--;
-    contador.textContent = `Tiempo: ${tiempo}s`;
-    progresoBarra.style.width = `${((58 - tiempo) / 58) * 100}%`;
-
-    if (tiempo <= 0) {
-      clearInterval(intervalo);
-      siguientePregunta();
-    }
-  }, 1000);
-}
+// ...todo tu código previo sin cambios...
 
 function finalizarJuego() {
   juego.classList.add("oculto");
@@ -148,29 +29,42 @@ function finalizarJuego() {
 
   puntajeFinal.textContent = `Puntaje: ${puntaje} de ${max}`;
 
-  guardarProgreso();
-  // --- CAMBIO PRINCIPAL: sincroniza con Supabase/NUBE
-  if (typeof guardarProgresoEnNube === "function") {
-    guardarProgresoEnNube();
-  }
+  guardarProgreso();           // Guardado local
+  guardarProgresoEnNubeTemporada(); // <-- NUEVO, guardado en la nube
 }
 
-function guardarProgreso() {
-  let progreso = JSON.parse(localStorage.getItem("progreso")) || { version: 2, categorias: {}, temporadas: {} };
+// --------- NUEVA FUNCIÓN: guardar en Supabase solo este avance de temporada -----------
+async function guardarProgresoEnNubeTemporada() {
+  // Asegúrate de que supabase esté disponible (por si acaso)
+  if (typeof supabase === "undefined") return;
 
-  if (progreso.version !== 2) {
-    progreso = { version: 2, categorias: {}, temporadas: {} };
+  const { data: sessionData } = await supabase.auth.getSession();
+  const userId = sessionData?.session?.user?.id;
+  if (!userId) return;
+
+  // Datos principales para la tabla "progreso"
+  const tipo = "temporada";
+  const clave = idTemporada;
+  const porcentaje = Math.round((puntaje / datosTemporada.puntaje_maximo) * 100);
+  let nota = "F";
+  if (puntaje >= datosTemporada.umbral_coleccionable) nota = "A";
+  else if (puntaje >= datosTemporada.umbral_coleccionable - 2) nota = "B";
+  else nota = "C";
+
+  // Guarda o actualiza el progreso de la temporada para este usuario
+  const { error } = await supabase
+    .from("progreso")
+    .upsert([{
+      user_id: userId,
+      tipo,
+      clave,
+      nota,
+      porcentaje,
+      fecha: new Date().toISOString()
+    }]);
+  if (error) {
+    console.error("❌ Error al guardar progreso de temporada:", error.message);
+  } else {
+    console.log("✅ Progreso de temporada guardado en Supabase.");
   }
-
-  if (!progreso.temporadas) progreso.temporadas = {};
-
-  progreso.temporadas[idTemporada] = {
-    titulo: datosTemporada.titulo,
-    puntaje,
-    nota: puntaje >= datosTemporada.umbral_coleccionable ? "A" :
-          puntaje >= datosTemporada.umbral_coleccionable - 2 ? "B" : "C",
-    coleccionable: puntaje >= datosTemporada.umbral_coleccionable
-  };
-
-  localStorage.setItem("progreso", JSON.stringify(progreso));
 }
