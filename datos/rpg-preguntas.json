@@ -1,3 +1,4 @@
+[
 {
   "ciclos": {
     "2025-S27": {
@@ -45,88 +46,430 @@
           }
         ]
       }
-    },
+    }}},
+    {
+  "ciclos": {
     "2025-S28": {
       "titulo": "Semana 28 – Profetas y Reyes",
-      "descripcion": "Reta tus conocimientos sobre los profetas y los reyes más influyentes del Antiguo Testamento.",
+      "descripcion": "Una aventura especial para conocer a los profetas y reyes más importantes del pueblo de Israel. ¡Pon a prueba tu sabiduría!",
       "niveles": {
         "1": [
           {
-            "pregunta": "¿Quién ungió al rey David?",
-            "opciones": ["Samuel", "Elías", "Isaías", "Salomón"],
+            "pregunta": "¿Quién fue el primer rey de Israel?",
+            "opciones": ["Saúl", "David", "Salomón", "Josías"],
+            "respuesta": "Saúl"
+          },
+          {
+            "pregunta": "¿Quién venció a Goliat?",
+            "opciones": ["David", "Salomón", "Saúl", "Samuel"],
+            "respuesta": "David"
+          },
+          {
+            "pregunta": "¿Quién fue el profeta que desafió a los profetas de Baal en el monte Carmelo?",
+            "opciones": ["Elías", "Isaías", "Jeremías", "Oseas"],
+            "respuesta": "Elías"
+          },
+          {
+            "pregunta": "¿Cuál de estos fue rey sabio de Israel?",
+            "opciones": ["Salomón", "Josué", "Samuel", "Eliseo"],
+            "respuesta": "Salomón"
+          },
+          {
+            "pregunta": "¿Quién sucedió a Moisés como líder de Israel?",
+            "opciones": ["Josué", "Samuel", "David", "Saúl"],
+            "respuesta": "Josué"
+          },
+          {
+            "pregunta": "¿A qué rey le construyó el profeta Natán el templo de Jerusalén?",
+            "opciones": ["Salomón", "David", "Saúl", "Josías"],
+            "respuesta": "Salomón"
+          },
+          {
+            "pregunta": "¿Quién interpretó los sueños del faraón en Egipto?",
+            "opciones": ["José", "Daniel", "Elías", "David"],
+            "respuesta": "José"
+          },
+          {
+            "pregunta": "¿Quién fue el profeta llamado cuando era niño?",
+            "opciones": ["Samuel", "Isaías", "Jeremías", "Ezequiel"],
+            "respuesta": "Samuel"
+          },
+          {
+            "pregunta": "¿Quién fue lanzado al foso de los leones?",
+            "opciones": ["Daniel", "Jeremías", "Elías", "David"],
+            "respuesta": "Daniel"
+          },
+          {
+            "pregunta": "¿Quién ungió a David como rey?",
+            "opciones": ["Samuel", "Natán", "Elías", "Eliseo"],
             "respuesta": "Samuel"
           }
         ],
         "2": [
           {
-            "pregunta": "¿Qué profeta desafió a los profetas de Baal en el monte Carmelo?",
-            "opciones": ["Elías", "Eliseo", "Isaías", "Daniel"],
+            "pregunta": "¿Quién fue el profeta que habló del 'Emanuel'?",
+            "opciones": ["Isaías", "Jeremías", "Elías", "Oseas"],
+            "respuesta": "Isaías"
+          },
+          {
+            "pregunta": "¿Qué rey fue conocido por encontrar el libro de la Ley y renovar la alianza?",
+            "opciones": ["Josías", "Salomón", "Saúl", "David"],
+            "respuesta": "Josías"
+          },
+          {
+            "pregunta": "¿Quién fue el profeta que animó al pueblo durante el exilio en Babilonia?",
+            "opciones": ["Ezequiel", "Elías", "Moisés", "Samuel"],
+            "respuesta": "Ezequiel"
+          },
+          {
+            "pregunta": "¿Quién fue el profeta que predijo la venida de Juan el Bautista?",
+            "opciones": ["Isaías", "Daniel", "Jeremías", "Eliseo"],
+            "respuesta": "Isaías"
+          },
+          {
+            "pregunta": "¿A qué rey le escribió el profeta Isaías durante el asedio de Jerusalén?",
+            "opciones": ["Ezequías", "Josías", "David", "Saúl"],
+            "respuesta": "Ezequías"
+          },
+          {
+            "pregunta": "¿Quién fue el profeta llevado al cielo en un carro de fuego?",
+            "opciones": ["Elías", "Daniel", "Isaías", "Ezequiel"],
             "respuesta": "Elías"
+          },
+          {
+            "pregunta": "¿Qué rey tuvo un sueño de una estatua de diferentes metales?",
+            "opciones": ["Nabucodonosor", "Faraón", "David", "Saúl"],
+            "respuesta": "Nabucodonosor"
+          },
+          {
+            "pregunta": "¿Quién fue el profeta que escribió lamentaciones sobre Jerusalén?",
+            "opciones": ["Jeremías", "Isaías", "Elías", "Ezequiel"],
+            "respuesta": "Jeremías"
+          },
+          {
+            "pregunta": "¿Quién reconstruyó el templo después del exilio?",
+            "opciones": ["Zorobabel", "David", "Salomón", "Josías"],
+            "respuesta": "Zorobabel"
+          },
+          {
+            "pregunta": "¿Qué rey fue confrontado por el profeta Natán por su pecado?",
+            "opciones": ["David", "Saúl", "Salomón", "Josías"],
+            "respuesta": "David"
           }
         ],
         "3": [
           {
-            "pregunta": "¿Quién fue el rey más sabio de Israel?",
-            "opciones": ["Salomón", "Saúl", "Josías", "David"],
-            "respuesta": "Salomón"
+            "pregunta": "¿Cuál de estos NO fue profeta mayor?",
+            "opciones": ["Oseas", "Isaías", "Ezequiel", "Daniel"],
+            "respuesta": "Oseas"
+          },
+          {
+            "pregunta": "¿Quién fue el profeta que restauró la fe en el Dios único en Israel durante un tiempo de idolatría?",
+            "opciones": ["Elías", "Isaías", "Jeremías", "Ezequiel"],
+            "respuesta": "Elías"
+          },
+          {
+            "pregunta": "¿Qué profeta tuvo la visión de un valle de huesos secos?",
+            "opciones": ["Ezequiel", "Daniel", "Isaías", "Samuel"],
+            "respuesta": "Ezequiel"
           }
+          
         ],
-        "4": [
-          {
-            "pregunta": "¿Qué profeta fue arrojado al foso de los leones?",
-            "opciones": ["Daniel", "Ezequiel", "Elías", "Jonás"],
-            "respuesta": "Daniel"
-          }
-        ],
-        "5": [
-          {
-            "pregunta": "¿Qué profeta fue tragado por un gran pez?",
-            "opciones": ["Jonás", "Elías", "Samuel", "Jeremías"],
-            "respuesta": "Jonás"
-          }
-        ]
-      }
-    },
-    "2025-S29": {
-      "titulo": "Semana 29 – Jesús y sus Apóstoles",
-      "descripcion": "Sumérgete en las enseñanzas, milagros y las vidas de los apóstoles junto a Jesús.",
-      "niveles": {
-        "1": [
-          {
-            "pregunta": "¿Quién caminó sobre el agua hacia Jesús?",
-            "opciones": ["Pedro", "Juan", "Santiago", "Andrés"],
-            "respuesta": "Pedro"
-          }
-        ],
-        "2": [
-          {
-            "pregunta": "¿Quién negó a Jesús tres veces?",
-            "opciones": ["Pedro", "Judas", "Tomás", "Felipe"],
-            "respuesta": "Pedro"
-          }
-        ],
-        "3": [
-          {
-            "pregunta": "¿Qué apóstol fue llamado 'el gemelo'?",
-            "opciones": ["Tomás", "Andrés", "Bartolomé", "Felipe"],
-            "respuesta": "Tomás"
-          }
-        ],
-        "4": [
-          {
-            "pregunta": "¿Quién recogió dinero de impuestos antes de seguir a Jesús?",
-            "opciones": ["Mateo", "Pedro", "Simón", "Judas"],
-            "respuesta": "Mateo"
-          }
-        ],
-        "5": [
-          {
-            "pregunta": "¿Quién fue el primer apóstol mártir?",
-            "opciones": ["Santiago", "Juan", "Pedro", "Felipe"],
-            "respuesta": "Santiago"
-          }
-        ]
+       "4": [
+  {
+    "pregunta": "¿Cuál de los profetas fue contemporáneo del rey Josías y predicó el arrepentimiento antes del exilio?",
+    "opciones": ["Jeremías", "Isaías", "Elías", "Daniel"],
+    "respuesta": "Jeremías"
+  },
+  {
+    "pregunta": "¿A qué profeta le ordenó Dios casarse con una mujer adúltera como signo profético?",
+    "opciones": ["Oseas", "Ezequiel", "Isaías", "Miqueas"],
+    "respuesta": "Oseas"
+  },
+  {
+    "pregunta": "¿Qué profeta tuvo que comer un rollo que sabía dulce como la miel?",
+    "opciones": ["Ezequiel", "Jeremías", "Isaías", "Daniel"],
+    "respuesta": "Ezequiel"
+  },
+  {
+    "pregunta": "¿Quién fue el rey que destruyó los altares de dioses paganos y restauró el templo, conocido por su reforma religiosa?",
+    "opciones": ["Josías", "Salomón", "Ezequías", "Manasés"],
+    "respuesta": "Josías"
+  },
+  {
+    "pregunta": "¿Qué profeta experimentó el milagro de la multiplicación del aceite y la harina en casa de una viuda?",
+    "opciones": ["Elías", "Eliseo", "Isaías", "Jeremías"],
+    "respuesta": "Elías"
+  },
+  {
+    "pregunta": "¿Qué profeta reprendió a David por su pecado con Betsabé?",
+    "opciones": ["Natán", "Samuel", "Gad", "Eliseo"],
+    "respuesta": "Natán"
+  }
+],
+
+       "5": [
+  {
+    "pregunta": "¿Cuál fue el rey de Judá que fue cegado y llevado cautivo a Babilonia?",
+    "opciones": ["Sedequías", "Ezequías", "Josías", "Manasés"],
+    "respuesta": "Sedequías"
+  },
+  {
+    "pregunta": "¿Qué profeta vio una visión de ruedas llenas de ojos?",
+    "opciones": ["Ezequiel", "Daniel", "Isaías", "Jeremías"],
+    "respuesta": "Ezequiel"
+  },
+  {
+    "pregunta": "¿Qué rey ofreció sacrificios en el altar, usurpando funciones sacerdotales, y fue castigado con lepra?",
+    "opciones": ["Uzías", "Saúl", "Salomón", "Josías"],
+    "respuesta": "Uzías"
+  },
+  {
+    "pregunta": "¿Qué profeta fue arrojado a una cisterna llena de lodo por anunciar la caída de Jerusalén?",
+    "opciones": ["Jeremías", "Ezequiel", "Isaías", "Oseas"],
+    "respuesta": "Jeremías"
+  },
+  {
+    "pregunta": "¿Quién fue el profeta sucesor de Elías?",
+    "opciones": ["Eliseo", "Natán", "Jeremías", "Ezequiel"],
+    "respuesta": "Eliseo"
+  },
+  {
+    "pregunta": "¿Qué profeta denunció el lujo y la injusticia social en el reino de Israel, usando visiones de cestas de frutas y plomadas?",
+    "opciones": ["Amós", "Oseas", "Miqueas", "Habacuc"],
+    "respuesta": "Amós"
+  }
+]
+
       }
     }
   }
+},
+"2025-S29",":", {
+  "titulo": "Semana 29 – Jesús y sus apóstoles",
+  "descripcion": "Descubre detalles sobre la vida de Jesús y la misión de los apóstoles. ¿Cuánto conoces a los Doce y a su Maestro?",
+  "niveles": {
+    "1": [
+      {
+        "pregunta": "¿Cómo se llama la madre de Jesús?",
+        "opciones": ["María", "Marta", "Ana", "Elisabet"],
+        "respuesta": "María"
+      },
+      {
+        "pregunta": "¿En qué pueblo nació Jesús?",
+        "opciones": ["Belén", "Nazaret", "Jerusalén", "Cafarnaúm"],
+        "respuesta": "Belén"
+      },
+      {
+        "pregunta": "¿Cuántos apóstoles eligió Jesús?",
+        "opciones": ["12", "7", "4", "70"],
+        "respuesta": "12"
+      },
+      {
+        "pregunta": "¿Quién traicionó a Jesús por 30 monedas de plata?",
+        "opciones": ["Judas", "Pedro", "Tomás", "Felipe"],
+        "respuesta": "Judas"
+      },
+      {
+        "pregunta": "¿Quién negó a Jesús tres veces?",
+        "opciones": ["Pedro", "Juan", "Andrés", "Mateo"],
+        "respuesta": "Pedro"
+      },
+      {
+        "pregunta": "¿Cuál apóstol era cobrador de impuestos antes de seguir a Jesús?",
+        "opciones": ["Mateo", "Santiago", "Simón", "Tomás"],
+        "respuesta": "Mateo"
+      },
+      {
+        "pregunta": "¿A quién le cambió Jesús el nombre a 'Pedro'?",
+        "opciones": ["Simón", "Santiago", "Juan", "Andrés"],
+        "respuesta": "Simón"
+      },
+      {
+        "pregunta": "¿Qué milagro hizo Jesús en las bodas de Caná?",
+        "opciones": ["Convirtió el agua en vino", "Sanó a un ciego", "Multiplicó panes", "Caminó sobre el agua"],
+        "respuesta": "Convirtió el agua en vino"
+      },
+      {
+        "pregunta": "¿Cuál apóstol es conocido como 'el gemelo'?",
+        "opciones": ["Tomás", "Andrés", "Juan", "Santiago"],
+        "respuesta": "Tomás"
+      },
+      {
+        "pregunta": "¿Quién fue el apóstol más joven?",
+        "opciones": ["Juan", "Pedro", "Santiago", "Judas"],
+        "respuesta": "Juan"
+      }
+    ],
+    "2": [
+      {
+        "pregunta": "¿Quién fue el apóstol que caminó sobre el agua hacia Jesús?",
+        "opciones": ["Pedro", "Juan", "Andrés", "Felipe"],
+        "respuesta": "Pedro"
+      },
+      {
+        "pregunta": "¿Cuál apóstol dudó de la resurrección de Jesús hasta ver sus heridas?",
+        "opciones": ["Tomás", "Mateo", "Bartolomé", "Simón"],
+        "respuesta": "Tomás"
+      },
+      {
+        "pregunta": "¿En qué monte ocurrió la Transfiguración de Jesús?",
+        "opciones": ["Tabor", "Oliveto", "Sinaí", "Moria"],
+        "respuesta": "Tabor"
+      },
+      {
+        "pregunta": "¿Qué apóstol era hermano de Juan?",
+        "opciones": ["Santiago", "Mateo", "Simón", "Bartolomé"],
+        "respuesta": "Santiago"
+      },
+      {
+        "pregunta": "¿A quién le dijo Jesús: 'Sígueme, y te haré pescador de hombres'?",
+        "opciones": ["Pedro y Andrés", "Mateo y Tomás", "Felipe y Bartolomé", "Santiago y Juan"],
+        "respuesta": "Pedro y Andrés"
+      },
+      {
+        "pregunta": "¿Cuál fue el primer milagro de Jesús?",
+        "opciones": ["Agua en vino", "Multiplicación de panes", "Sanó a un ciego", "Resucitó a Lázaro"],
+        "respuesta": "Agua en vino"
+      },
+      {
+        "pregunta": "¿Quién fue apóstol y publicano?",
+        "opciones": ["Mateo", "Pedro", "Andrés", "Juan"],
+        "respuesta": "Mateo"
+      },
+      {
+        "pregunta": "¿A quién le preguntó Jesús tres veces: '¿Me amas?'",
+        "opciones": ["Pedro", "Juan", "Felipe", "Tomás"],
+        "respuesta": "Pedro"
+      },
+      {
+        "pregunta": "¿Qué apóstol era conocido como 'el celote'?",
+        "opciones": ["Simón", "Felipe", "Santiago", "Judas Tadeo"],
+        "respuesta": "Simón"
+      },
+      {
+        "pregunta": "¿Quién fue el apóstol que escribió el Apocalipsis?",
+        "opciones": ["Juan", "Pedro", "Santiago", "Tomás"],
+        "respuesta": "Juan"
+      }
+    ],
+    "3": [
+      {
+        "pregunta": "¿Quién fue el apóstol que llevó a Natanael (Bartolomé) a Jesús?",
+        "opciones": ["Felipe", "Tomás", "Mateo", "Andrés"],
+        "respuesta": "Felipe"
+      },
+      {
+        "pregunta": "¿Qué apóstol fue llamado también 'Leví'?",
+        "opciones": ["Mateo", "Simón", "Santiago", "Bartolomé"],
+        "respuesta": "Mateo"
+      },
+      {
+        "pregunta": "¿Qué apóstol fue martirizado en la India según la tradición?",
+        "opciones": ["Tomás", "Pedro", "Juan", "Mateo"],
+        "respuesta": "Tomás"
+      },
+      {
+        "pregunta": "¿Quién fue el apóstol que preguntó: '¿Muéstranos al Padre?'",
+        "opciones": ["Felipe", "Bartolomé", "Santiago", "Simón"],
+        "respuesta": "Felipe"
+      },
+      {
+        "pregunta": "¿Cuál apóstol fue martirizado boca abajo en una cruz?",
+        "opciones": ["Pedro", "Santiago", "Juan", "Andrés"],
+        "respuesta": "Pedro"
+      },
+      {
+        "pregunta": "¿Quién fue el apóstol conocido por ser celoso y tener celo patriótico?",
+        "opciones": ["Simón el Zelote", "Felipe", "Andrés", "Tomás"],
+        "respuesta": "Simón el Zelote"
+      },
+      {
+        "pregunta": "¿Qué apóstol es mencionado como 'hermano del Señor'?",
+        "opciones": ["Santiago", "Juan", "Pedro", "Tomás"],
+        "respuesta": "Santiago"
+      },
+      {
+        "pregunta": "¿Cuál apóstol recibió el encargo de cuidar a María al pie de la cruz?",
+        "opciones": ["Juan", "Pedro", "Felipe", "Andrés"],
+        "respuesta": "Juan"
+      },
+      {
+        "pregunta": "¿Quién fue el apóstol que escribió una carta conocida como Epístola Católica?",
+        "opciones": ["Santiago", "Judas Tadeo", "Pedro", "Andrés"],
+        "respuesta": "Santiago"
+      },
+      {
+        "pregunta": "¿Quién fue el apóstol que reemplazó a Judas Iscariote?",
+        "opciones": ["Matías", "Bartolomé", "Felipe", "Tomás"],
+        "respuesta": "Matías"
+      }
+    ],
+    "4": [
+      {
+        "pregunta": "¿Qué apóstol fue el primero en sufrir martirio?",
+        "opciones": ["Santiago el Mayor", "Pedro", "Juan", "Andrés"],
+        "respuesta": "Santiago el Mayor"
+      },
+      {
+        "pregunta": "¿A cuál apóstol se le atribuye haber predicado en Etiopía según la tradición?",
+        "opciones": ["Bartolomé", "Felipe", "Judas Tadeo", "Simón"],
+        "respuesta": "Bartolomé"
+      },
+      {
+        "pregunta": "¿Quién fue el apóstol que escribió la segunda carta a los Corintios?",
+        "opciones": ["Pablo", "Pedro", "Juan", "Santiago"],
+        "respuesta": "Pablo"
+      },
+      {
+        "pregunta": "¿Cuál apóstol fue apedreado según la tradición y su muerte narrada en los Hechos de los Apóstoles?",
+        "opciones": ["Santiago el Menor", "Tomás", "Simón", "Judas Tadeo"],
+        "respuesta": "Santiago el Menor"
+      },
+      {
+        "pregunta": "¿Cuál apóstol es llamado 'hijo del trueno' junto a su hermano?",
+        "opciones": ["Juan", "Pedro", "Mateo", "Tomás"],
+        "respuesta": "Juan"
+      },
+      {
+        "pregunta": "¿Qué apóstol fue compañero de Pablo y apóstol de los gentiles?",
+        "opciones": ["Bernabé", "Santiago", "Judas Tadeo", "Simón"],
+        "respuesta": "Bernabé"
+      }
+    ],
+    "5": [
+      {
+        "pregunta": "¿Qué apóstol evangelizó la región del Mar Negro según la tradición?",
+        "opciones": ["Andrés", "Felipe", "Bartolomé", "Matías"],
+        "respuesta": "Andrés"
+      },
+      {
+        "pregunta": "¿Quién fue el apóstol conocido por predicar en Armenia?",
+        "opciones": ["Bartolomé", "Tomás", "Santiago", "Felipe"],
+        "respuesta": "Bartolomé"
+      },
+      {
+        "pregunta": "¿Qué apóstol fue martirizado con una lanza?",
+        "opciones": ["Tomás", "Simón", "Felipe", "Juan"],
+        "respuesta": "Tomás"
+      },
+      {
+        "pregunta": "¿Cuál apóstol murió decapitado en Roma?",
+        "opciones": ["Pablo", "Pedro", "Santiago el Mayor", "Juan"],
+        "respuesta": "Pablo"
+      },
+      {
+        "pregunta": "¿A qué apóstol se le atribuye la fundación de la Iglesia de Alejandría en Egipto?",
+        "opciones": ["Marcos", "Mateo", "Lucas", "Juan"],
+        "respuesta": "Marcos"
+      },
+      {
+        "pregunta": "¿Qué apóstol llevó el Evangelio a Etiopía, según la tradición?",
+        "opciones": ["Felipe", "Bartolomé", "Santiago", "Judas Tadeo"],
+        "respuesta": "Felipe"
+      }
+    ]
+  }
 }
+
+]
