@@ -1,4 +1,3 @@
-[
 {
   "ciclos": {
     "2025-S27": {
@@ -46,210 +45,62 @@
           }
         ]
       }
-    }}},
-    {
-  "ciclos": {
+    },
     "2025-S28": {
       "titulo": "Semana 28 – Profetas y Reyes",
       "descripcion": "Una aventura especial para conocer a los profetas y reyes más importantes del pueblo de Israel. ¡Pon a prueba tu sabiduría!",
       "niveles": {
         "1": [
-          {
-            "pregunta": "¿Quién fue el primer rey de Israel?",
-            "opciones": ["Saúl", "David", "Salomón", "Josías"],
-            "respuesta": "Saúl"
-          },
-          {
-            "pregunta": "¿Quién venció a Goliat?",
-            "opciones": ["David", "Salomón", "Saúl", "Samuel"],
-            "respuesta": "David"
-          },
-          {
-            "pregunta": "¿Quién fue el profeta que desafió a los profetas de Baal en el monte Carmelo?",
-            "opciones": ["Elías", "Isaías", "Jeremías", "Oseas"],
-            "respuesta": "Elías"
-          },
-          {
-            "pregunta": "¿Cuál de estos fue rey sabio de Israel?",
-            "opciones": ["Salomón", "Josué", "Samuel", "Eliseo"],
-            "respuesta": "Salomón"
-          },
-          {
-            "pregunta": "¿Quién sucedió a Moisés como líder de Israel?",
-            "opciones": ["Josué", "Samuel", "David", "Saúl"],
-            "respuesta": "Josué"
-          },
-          {
-            "pregunta": "¿A qué rey le construyó el profeta Natán el templo de Jerusalén?",
-            "opciones": ["Salomón", "David", "Saúl", "Josías"],
-            "respuesta": "Salomón"
-          },
-          {
-            "pregunta": "¿Quién interpretó los sueños del faraón en Egipto?",
-            "opciones": ["José", "Daniel", "Elías", "David"],
-            "respuesta": "José"
-          },
-          {
-            "pregunta": "¿Quién fue el profeta llamado cuando era niño?",
-            "opciones": ["Samuel", "Isaías", "Jeremías", "Ezequiel"],
-            "respuesta": "Samuel"
-          },
-          {
-            "pregunta": "¿Quién fue lanzado al foso de los leones?",
-            "opciones": ["Daniel", "Jeremías", "Elías", "David"],
-            "respuesta": "Daniel"
-          },
-          {
-            "pregunta": "¿Quién ungió a David como rey?",
-            "opciones": ["Samuel", "Natán", "Elías", "Eliseo"],
-            "respuesta": "Samuel"
-          }
+          { "pregunta": "¿Quién fue el primer rey de Israel?", "opciones": ["Saúl", "David", "Salomón", "Josías"], "respuesta": "Saúl" },
+          { "pregunta": "¿Quién venció a Goliat?", "opciones": ["David", "Salomón", "Saúl", "Samuel"], "respuesta": "David" },
+          { "pregunta": "¿Quién fue el profeta que desafió a los profetas de Baal en el monte Carmelo?", "opciones": ["Elías", "Isaías", "Jeremías", "Oseas"], "respuesta": "Elías" },
+          { "pregunta": "¿Cuál de estos fue rey sabio de Israel?", "opciones": ["Salomón", "Josué", "Samuel", "Eliseo"], "respuesta": "Salomón" },
+          { "pregunta": "¿Quién sucedió a Moisés como líder de Israel?", "opciones": ["Josué", "Samuel", "David", "Saúl"], "respuesta": "Josué" },
+          { "pregunta": "¿A qué rey le construyó el profeta Natán el templo de Jerusalén?", "opciones": ["Salomón", "David", "Saúl", "Josías"], "respuesta": "Salomón" },
+          { "pregunta": "¿Quién interpretó los sueños del faraón en Egipto?", "opciones": ["José", "Daniel", "Elías", "David"], "respuesta": "José" },
+          { "pregunta": "¿Quién fue el profeta llamado cuando era niño?", "opciones": ["Samuel", "Isaías", "Jeremías", "Ezequiel"], "respuesta": "Samuel" },
+          { "pregunta": "¿Quién fue lanzado al foso de los leones?", "opciones": ["Daniel", "Jeremías", "Elías", "David"], "respuesta": "Daniel" },
+          { "pregunta": "¿Quién ungió a David como rey?", "opciones": ["Samuel", "Natán", "Elías", "Eliseo"], "respuesta": "Samuel" }
         ],
         "2": [
-          {
-            "pregunta": "¿Quién fue el profeta que habló del 'Emanuel'?",
-            "opciones": ["Isaías", "Jeremías", "Elías", "Oseas"],
-            "respuesta": "Isaías"
-          },
-          {
-            "pregunta": "¿Qué rey fue conocido por encontrar el libro de la Ley y renovar la alianza?",
-            "opciones": ["Josías", "Salomón", "Saúl", "David"],
-            "respuesta": "Josías"
-          },
-          {
-            "pregunta": "¿Quién fue el profeta que animó al pueblo durante el exilio en Babilonia?",
-            "opciones": ["Ezequiel", "Elías", "Moisés", "Samuel"],
-            "respuesta": "Ezequiel"
-          },
-          {
-            "pregunta": "¿Quién fue el profeta que predijo la venida de Juan el Bautista?",
-            "opciones": ["Isaías", "Daniel", "Jeremías", "Eliseo"],
-            "respuesta": "Isaías"
-          },
-          {
-            "pregunta": "¿A qué rey le escribió el profeta Isaías durante el asedio de Jerusalén?",
-            "opciones": ["Ezequías", "Josías", "David", "Saúl"],
-            "respuesta": "Ezequías"
-          },
-          {
-            "pregunta": "¿Quién fue el profeta llevado al cielo en un carro de fuego?",
-            "opciones": ["Elías", "Daniel", "Isaías", "Ezequiel"],
-            "respuesta": "Elías"
-          },
-          {
-            "pregunta": "¿Qué rey tuvo un sueño de una estatua de diferentes metales?",
-            "opciones": ["Nabucodonosor", "Faraón", "David", "Saúl"],
-            "respuesta": "Nabucodonosor"
-          },
-          {
-            "pregunta": "¿Quién fue el profeta que escribió lamentaciones sobre Jerusalén?",
-            "opciones": ["Jeremías", "Isaías", "Elías", "Ezequiel"],
-            "respuesta": "Jeremías"
-          },
-          {
-            "pregunta": "¿Quién reconstruyó el templo después del exilio?",
-            "opciones": ["Zorobabel", "David", "Salomón", "Josías"],
-            "respuesta": "Zorobabel"
-          },
-          {
-            "pregunta": "¿Qué rey fue confrontado por el profeta Natán por su pecado?",
-            "opciones": ["David", "Saúl", "Salomón", "Josías"],
-            "respuesta": "David"
-          }
+          { "pregunta": "¿Quién fue el profeta que habló del 'Emanuel'?", "opciones": ["Isaías", "Jeremías", "Elías", "Oseas"], "respuesta": "Isaías" },
+          { "pregunta": "¿Qué rey fue conocido por encontrar el libro de la Ley y renovar la alianza?", "opciones": ["Josías", "Salomón", "Saúl", "David"], "respuesta": "Josías" },
+          { "pregunta": "¿Quién fue el profeta que animó al pueblo durante el exilio en Babilonia?", "opciones": ["Ezequiel", "Elías", "Moisés", "Samuel"], "respuesta": "Ezequiel" },
+          { "pregunta": "¿Quién fue el profeta que predijo la venida de Juan el Bautista?", "opciones": ["Isaías", "Daniel", "Jeremías", "Eliseo"], "respuesta": "Isaías" },
+          { "pregunta": "¿A qué rey le escribió el profeta Isaías durante el asedio de Jerusalén?", "opciones": ["Ezequías", "Josías", "David", "Saúl"], "respuesta": "Ezequías" },
+          { "pregunta": "¿Quién fue el profeta llevado al cielo en un carro de fuego?", "opciones": ["Elías", "Daniel", "Isaías", "Ezequiel"], "respuesta": "Elías" },
+          { "pregunta": "¿Qué rey tuvo un sueño de una estatua de diferentes metales?", "opciones": ["Nabucodonosor", "Faraón", "David", "Saúl"], "respuesta": "Nabucodonosor" },
+          { "pregunta": "¿Quién fue el profeta que escribió lamentaciones sobre Jerusalén?", "opciones": ["Jeremías", "Isaías", "Elías", "Ezequiel"], "respuesta": "Jeremías" },
+          { "pregunta": "¿Quién reconstruyó el templo después del exilio?", "opciones": ["Zorobabel", "David", "Salomón", "Josías"], "respuesta": "Zorobabel" },
+          { "pregunta": "¿Qué rey fue confrontado por el profeta Natán por su pecado?", "opciones": ["David", "Saúl", "Salomón", "Josías"], "respuesta": "David" }
         ],
         "3": [
-          {
-            "pregunta": "¿Cuál de estos NO fue profeta mayor?",
-            "opciones": ["Oseas", "Isaías", "Ezequiel", "Daniel"],
-            "respuesta": "Oseas"
-          },
-          {
-            "pregunta": "¿Quién fue el profeta que restauró la fe en el Dios único en Israel durante un tiempo de idolatría?",
-            "opciones": ["Elías", "Isaías", "Jeremías", "Ezequiel"],
-            "respuesta": "Elías"
-          },
-          {
-            "pregunta": "¿Qué profeta tuvo la visión de un valle de huesos secos?",
-            "opciones": ["Ezequiel", "Daniel", "Isaías", "Samuel"],
-            "respuesta": "Ezequiel"
-          }
-          
+          { "pregunta": "¿Cuál de estos NO fue profeta mayor?", "opciones": ["Oseas", "Isaías", "Ezequiel", "Daniel"], "respuesta": "Oseas" },
+          { "pregunta": "¿Quién fue el profeta que restauró la fe en el Dios único en Israel durante un tiempo de idolatría?", "opciones": ["Elías", "Isaías", "Jeremías", "Ezequiel"], "respuesta": "Elías" },
+          { "pregunta": "¿Qué profeta tuvo la visión de un valle de huesos secos?", "opciones": ["Ezequiel", "Daniel", "Isaías", "Samuel"], "respuesta": "Ezequiel" }
         ],
-       "4": [
-  {
-    "pregunta": "¿Cuál de los profetas fue contemporáneo del rey Josías y predicó el arrepentimiento antes del exilio?",
-    "opciones": ["Jeremías", "Isaías", "Elías", "Daniel"],
-    "respuesta": "Jeremías"
-  },
-  {
-    "pregunta": "¿A qué profeta le ordenó Dios casarse con una mujer adúltera como signo profético?",
-    "opciones": ["Oseas", "Ezequiel", "Isaías", "Miqueas"],
-    "respuesta": "Oseas"
-  },
-  {
-    "pregunta": "¿Qué profeta tuvo que comer un rollo que sabía dulce como la miel?",
-    "opciones": ["Ezequiel", "Jeremías", "Isaías", "Daniel"],
-    "respuesta": "Ezequiel"
-  },
-  {
-    "pregunta": "¿Quién fue el rey que destruyó los altares de dioses paganos y restauró el templo, conocido por su reforma religiosa?",
-    "opciones": ["Josías", "Salomón", "Ezequías", "Manasés"],
-    "respuesta": "Josías"
-  },
-  {
-    "pregunta": "¿Qué profeta experimentó el milagro de la multiplicación del aceite y la harina en casa de una viuda?",
-    "opciones": ["Elías", "Eliseo", "Isaías", "Jeremías"],
-    "respuesta": "Elías"
-  },
-  {
-    "pregunta": "¿Qué profeta reprendió a David por su pecado con Betsabé?",
-    "opciones": ["Natán", "Samuel", "Gad", "Eliseo"],
-    "respuesta": "Natán"
-  }
-],
-
-       "5": [
-  {
-    "pregunta": "¿Cuál fue el rey de Judá que fue cegado y llevado cautivo a Babilonia?",
-    "opciones": ["Sedequías", "Ezequías", "Josías", "Manasés"],
-    "respuesta": "Sedequías"
-  },
-  {
-    "pregunta": "¿Qué profeta vio una visión de ruedas llenas de ojos?",
-    "opciones": ["Ezequiel", "Daniel", "Isaías", "Jeremías"],
-    "respuesta": "Ezequiel"
-  },
-  {
-    "pregunta": "¿Qué rey ofreció sacrificios en el altar, usurpando funciones sacerdotales, y fue castigado con lepra?",
-    "opciones": ["Uzías", "Saúl", "Salomón", "Josías"],
-    "respuesta": "Uzías"
-  },
-  {
-    "pregunta": "¿Qué profeta fue arrojado a una cisterna llena de lodo por anunciar la caída de Jerusalén?",
-    "opciones": ["Jeremías", "Ezequiel", "Isaías", "Oseas"],
-    "respuesta": "Jeremías"
-  },
-  {
-    "pregunta": "¿Quién fue el profeta sucesor de Elías?",
-    "opciones": ["Eliseo", "Natán", "Jeremías", "Ezequiel"],
-    "respuesta": "Eliseo"
-  },
-  {
-    "pregunta": "¿Qué profeta denunció el lujo y la injusticia social en el reino de Israel, usando visiones de cestas de frutas y plomadas?",
-    "opciones": ["Amós", "Oseas", "Miqueas", "Habacuc"],
-    "respuesta": "Amós"
-  }
-]
-
+        "4": [
+          { "pregunta": "¿Cuál de los profetas fue contemporáneo del rey Josías y predicó el arrepentimiento antes del exilio?", "opciones": ["Jeremías", "Isaías", "Elías", "Daniel"], "respuesta": "Jeremías" },
+          { "pregunta": "¿A qué profeta le ordenó Dios casarse con una mujer adúltera como signo profético?", "opciones": ["Oseas", "Ezequiel", "Isaías", "Miqueas"], "respuesta": "Oseas" },
+          { "pregunta": "¿Qué profeta tuvo que comer un rollo que sabía dulce como la miel?", "opciones": ["Ezequiel", "Jeremías", "Isaías", "Daniel"], "respuesta": "Ezequiel" },
+          { "pregunta": "¿Quién fue el rey que destruyó los altares de dioses paganos y restauró el templo, conocido por su reforma religiosa?", "opciones": ["Josías", "Salomón", "Ezequías", "Manasés"], "respuesta": "Josías" },
+          { "pregunta": "¿Qué profeta experimentó el milagro de la multiplicación del aceite y la harina en casa de una viuda?", "opciones": ["Elías", "Eliseo", "Isaías", "Jeremías"], "respuesta": "Elías" },
+          { "pregunta": "¿Qué profeta reprendió a David por su pecado con Betsabé?", "opciones": ["Natán", "Samuel", "Gad", "Eliseo"], "respuesta": "Natán" }
+        ],
+        "5": [
+          { "pregunta": "¿Cuál fue el rey de Judá que fue cegado y llevado cautivo a Babilonia?", "opciones": ["Sedequías", "Ezequías", "Josías", "Manasés"], "respuesta": "Sedequías" },
+          { "pregunta": "¿Qué profeta vio una visión de ruedas llenas de ojos?", "opciones": ["Ezequiel", "Daniel", "Isaías", "Jeremías"], "respuesta": "Ezequiel" },
+          { "pregunta": "¿Qué rey ofreció sacrificios en el altar, usurpando funciones sacerdotales, y fue castigado con lepra?", "opciones": ["Uzías", "Saúl", "Salomón", "Josías"], "respuesta": "Uzías" },
+          { "pregunta": "¿Qué profeta fue arrojado a una cisterna llena de lodo por anunciar la caída de Jerusalén?", "opciones": ["Jeremías", "Ezequiel", "Isaías", "Oseas"], "respuesta": "Jeremías" },
+          { "pregunta": "¿Quién fue el profeta sucesor de Elías?", "opciones": ["Eliseo", "Natán", "Jeremías", "Ezequiel"], "respuesta": "Eliseo" },
+          { "pregunta": "¿Qué profeta denunció el lujo y la injusticia social en el reino de Israel, usando visiones de cestas de frutas y plomadas?", "opciones": ["Amós", "Oseas", "Miqueas", "Habacuc"], "respuesta": "Amós" }
+        ]
       }
-    }
-  }
-},
-"2025-S29",":", {
-  "titulo": "Semana 29 – Jesús y sus apóstoles",
-  "descripcion": "Descubre detalles sobre la vida de Jesús y la misión de los apóstoles. ¿Cuánto conoces a los Doce y a su Maestro?",
-  "niveles": {
-    "1": [
+    },
+    "2025-S29": {
+      "titulo": "Semana 29 – Jesús y sus apóstoles",
+      "descripcion": "Descubre detalles sobre la vida de Jesús y la misión de los apóstoles. ¿Cuánto conoces a los Doce y a su Maestro?",
+      "niveles": {"1": [
       {
         "pregunta": "¿Cómo se llama la madre de Jesús?",
         "opciones": ["María", "Marta", "Ana", "Elisabet"],
@@ -470,6 +321,4 @@
       }
     ]
   }
-}
-
-]
+}}}
