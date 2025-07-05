@@ -301,6 +301,20 @@ function mostrarPersonajes(categoriaActual) {
     else if (e.deltaY < -30 && i > 0) mostrarPersonajes(todas[i - 1]);
   };
 }
+// --- Swipe móvil para cambiar categoría ---
+let x0 = null;
+vistaPersonajes.ontouchstart = (e) => { x0 = e.touches[0].clientX; };
+vistaPersonajes.ontouchend = (e) => {
+  if (x0 === null) return;
+  let dx = e.changedTouches[0].clientX - x0;
+  if (Math.abs(dx) > 45) {
+    if (dx < 0 && i < todas.length - 1) mostrarPersonajes(todas[i + 1]);
+    else if (dx > 0 && i > 0) mostrarPersonajes(todas[i - 1]);
+  }
+  x0 = null;
+};
+
+
 
 // ---- 5. Modal de detalle ----
 function mostrarModal({ tema, nota, rutaImagen, descripcion = "" }) {
