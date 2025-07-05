@@ -152,14 +152,30 @@ function jugarNivel() {
   }
   mostrarPregunta();
 
+  // --- ESTA ES LA VERSIÓN MEJORADA QUE EVITA EL ERROR ---
   function mostrarPregunta() {
     const preguntaActual = progresoRPG.pregunta || 0;
-    const p = progresoRPG.preguntasNivel[preguntaActual];
+    const p = progresoRPG.preguntasNivel && progresoRPG.preguntasNivel[preguntaActual];
+
+    // Verifica si hay pregunta disponible
+    if (!p) {
+      // Si ya no hay preguntas, avanza el nivel o termina
+      if (progresoRPG.nivel >= preguntasPorNivel.length) {
+        terminarAventura(true);
+      } else {
+        progresoRPG.nivel++;
+        progresoRPG.pregunta = 0;
+        progresoRPG.preguntasNivel = null;
+        guardarProgreso(progresoRPG);
+        mostrarMensajeNivel(`¡Avanzas al nivel ${progresoRPG.nivel}!`, jugarNivel);
+      }
+      return;
+    }
 
     juego.innerHTML = `
       <div class="panel-pregunta">
         <div class="rpg-info">
-          <span class="rpg-nivel">Nivel: ${nivel}</span>
+          <span class="rpg-nivel">Nivel: ${progresoRPG.nivel}</span>
           <span class="rpg-vidas">${"❤️".repeat(progresoRPG.vidas)}</span>
         </div>
         <div class="rpg-pregunta"><b>${p.pregunta}</b></div>
@@ -175,7 +191,7 @@ function jugarNivel() {
         const correcta = p.opciones[btn.dataset.i] === p.respuesta;
         if (correcta) {
           btn.classList.add("acierto");
-          progresoRPG.xp += nivel * 10;
+          progresoRPG.xp += progresoRPG.nivel * 10;
         } else {
           btn.classList.add("fallo");
           progresoRPG.vidas--;
@@ -268,3 +284,4 @@ function mostrarLogros() {
     <button onclick="window.location.reload()">Volver</button>
   `;
 }
+
