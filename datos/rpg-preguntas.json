@@ -1,69 +1,96 @@
 {
-  "niveles": { 
-    "1": [
-      {
-        "pregunta": "¿Quién fue el primer hombre creado según la Biblia?",
-        "opciones": ["Adán", "Moisés", "Noé", "Pedro"],
-        "respuesta": "Adán"
-      },
-      {
-        "pregunta": "¿En qué libro encontramos la historia de la creación?",
-        "opciones": ["Génesis", "Éxodo", "Levítico", "Mateo"],
-        "respuesta": "Génesis"
-      }
-    ],
-    "2": [
-      {
-        "pregunta": "¿Quién liberó a los israelitas de Egipto?",
-        "opciones": ["Moisés", "David", "Josué", "Pablo"],
-        "respuesta": "Moisés"
-      },
-      {
-        "pregunta": "¿Cuál es el primer mandamiento?",
-        "opciones": [
-          "Amarás a Dios sobre todas las cosas",
-          "No matarás",
-          "Honrarás a tu padre y a tu madre",
-          "No robarás"
+  "ciclos": {
+    "2025-S27": {
+      "titulo": "Semana 27 – El Inicio",
+      "niveles": {
+        "1": [
+          {
+            "pregunta": "¿Quién fue el primer hombre creado según la Biblia?",
+            "opciones": ["Adán", "Moisés", "Noé", "Pedro"],
+            "respuesta": "Adán"
+          },
+          {
+            "pregunta": "¿En qué libro encontramos la historia de la creación?",
+            "opciones": ["Génesis", "Éxodo", "Levítico", "Mateo"],
+            "respuesta": "Génesis"
+          }
         ],
-        "respuesta": "Amarás a Dios sobre todas las cosas"
+        "2": [
+          {
+            "pregunta": "¿Quién liberó a los israelitas de Egipto?",
+            "opciones": ["Moisés", "David", "Josué", "Pablo"],
+            "respuesta": "Moisés"
+          },
+          {
+            "pregunta": "¿Cuál es el primer mandamiento?",
+            "opciones": [
+              "Amarás a Dios sobre todas las cosas",
+              "No matarás",
+              "Honrarás a tu padre y a tu madre",
+              "No robarás"
+            ],
+            "respuesta": "Amarás a Dios sobre todas las cosas"
+          }
+        ]
       }
-    ],
-    "3": [
-      {
-        "pregunta": "¿Quién fue el rey sabio de Israel?",
-        "opciones": ["Salomón", "David", "Saúl", "Ezequías"],
-        "respuesta": "Salomón"
-      },
-      {
-        "pregunta": "¿Quién negó a Jesús tres veces?",
-        "opciones": ["Pedro", "Juan", "Judas", "Tomás"],
-        "respuesta": "Pedro"
+    },
+    "2025-S28": {
+      "titulo": "Semana 28 – Los Patriarcas",
+      "niveles": {
+        "1": [
+          {
+            "pregunta": "¿Quién construyó un arca para salvarse del diluvio?",
+            "opciones": ["Noé", "Moisés", "David", "Salomón"],
+            "respuesta": "Noé"
+          },
+          {
+            "pregunta": "¿Quién fue el padre de Jacob y Esaú?",
+            "opciones": ["Isaac", "Abraham", "José", "Moisés"],
+            "respuesta": "Isaac"
+          }
+        ],
+        "2": [
+          {
+            "pregunta": "¿A quién le prometió Dios una descendencia tan numerosa como las estrellas?",
+            "opciones": ["Abraham", "Moisés", "Isaac", "Jacob"],
+            "respuesta": "Abraham"
+          },
+          {
+            "pregunta": "¿Cuál es el nombre de la esposa de Abraham?",
+            "opciones": ["Sara", "Rebeca", "Raquel", "Lea"],
+            "respuesta": "Sara"
+          }
+        ]
       }
-    ],
-    "4": [
-      {
-        "pregunta": "¿Quién escribió la mayoría de las cartas del Nuevo Testamento?",
-        "opciones": ["Pablo", "Pedro", "Santiago", "Juan"],
-        "respuesta": "Pablo"
-      },
-      {
-        "pregunta": "¿Dónde nació Jesús?",
-        "opciones": ["Belén", "Nazaret", "Jerusalén", "Cafarnaúm"],
-        "respuesta": "Belén"
+    },
+    "2025-S29": {
+      "titulo": "Semana 29 – Jesús y los Apóstoles",
+      "niveles": {
+        "1": [
+          {
+            "pregunta": "¿En qué ciudad nació Jesús?",
+            "opciones": ["Belén", "Nazaret", "Jerusalén", "Cafarnaúm"],
+            "respuesta": "Belén"
+          },
+          {
+            "pregunta": "¿Quién negó a Jesús tres veces?",
+            "opciones": ["Pedro", "Juan", "Judas", "Tomás"],
+            "respuesta": "Pedro"
+          }
+        ],
+        "2": [
+          {
+            "pregunta": "¿Cuál apóstol es conocido como el 'discípulo amado'?",
+            "opciones": ["Juan", "Pedro", "Andrés", "Santiago"],
+            "respuesta": "Juan"
+          },
+          {
+            "pregunta": "¿Quién traicionó a Jesús?",
+            "opciones": ["Judas", "Pedro", "Tomás", "Felipe"],
+            "respuesta": "Judas"
+          }
+        ]
       }
-    ],
-    "5": [
-      {
-        "pregunta": "¿Cuál es el sermón más famoso de Jesús?",
-        "opciones": ["Sermón del Monte", "Sermón del Lago", "Sermón del Templo", "Sermón del Huerto"],
-        "respuesta": "Sermón del Monte"
-      },
-      {
-        "pregunta": "¿Qué apóstol es conocido como el 'discípulo amado'?",
-        "opciones": ["Juan", "Pedro", "Andrés", "Santiago"],
-        "respuesta": "Juan"
-      }
-    ]
+    }
   }
 }
