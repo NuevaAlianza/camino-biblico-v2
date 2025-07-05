@@ -74,13 +74,14 @@ async function guardarProgreso(prog) {
     const { data: sessionData } = await supabase.auth.getSession();
     const userId = sessionData?.session?.user?.id;
     if (userId) {
-      await supabase.from("progreso").upsert([{
+      const { error } = await supabase.from("progreso").upsert([{
         user_id: userId,
         tipo: "rpg",
         clave: cicloActual,
         progreso: JSON.stringify(prog),
         fecha: new Date().toISOString()
       }]);
+      if (error) console.error("❌ Error guardando progreso en Supabase:", error.message);
       return;
     }
   }
@@ -91,8 +92,22 @@ async function guardarProgreso(prog) {
 
 async function inicializarRPG() {
   progresoRPG = await cargarProgreso();
-  document.getElementById("btn-comenzar").style.display = progresoRPG ? "none" : "inline-block";
-  document.getElementById("btn-continuar").style.display = progresoRPG ? "inline-block" : "none";
+
+  // Si ya completó el ciclo, no debe poder continuar
+  const terminado = progresoRPG && progresoRPG.completado;
+  document.getElementById("btn-comenzar").style.display = terminado ? "none" : (progresoRPG ? "none" : "inline-block");
+  document.getElementById("btn-continuar").style.display = (!terminado && progresoRPG) ? "inline-block" : "none";
+  
+  // Mostrar mensaje si ya completó la trivia
+  if (terminado) {
+    document.getElementById("menu-rpg").innerHTML += `
+      <div class="panel-mensaje" style="margin-top:1em;">
+        <h2>¡Ya completaste la Trivia de esta semana!</h2>
+        <p>Vuelve la próxima semana para un nuevo reto.</p>
+      </div>
+    `;
+  }
+
   document.getElementById("juego-rpg").classList.add("oculto");
   document.getElementById("resultados-rpg").classList.add("oculto");
   document.getElementById("logros-rpg").classList.add("oculto");
@@ -122,6 +137,12 @@ document.getElementById("btn-logros").onclick = () => {
 
 // ---- Jugar nivel ----
 function jugarNivel() {
+  // Prevención: si ya completó, no debe avanzar más
+  if (progresoRPG.completado) {
+    inicializarRPG();
+    return;
+  }
+
   const juego = document.getElementById("juego-rpg");
   juego.classList.remove("oculto");
   document.getElementById("menu-rpg").classList.add("oculto");
@@ -146,13 +167,16 @@ function jugarNivel() {
 
   // Guardar el array de preguntas en el progreso SOLO la primera vez en cada nivel
   if (!progresoRPG.preguntasNivel || progresoRPG.preguntasNivel.length !== numPreguntas) {
-    progresoRPG.preguntasNivel = mezclarArray([...datosCiclo.niveles[nivelKey]]).slice(0, numPreguntas);
+    // Aleatoriza también las opciones de cada pregunta al mezclar
+    progresoRPG.preguntasNivel = mezclarArray([...datosCiclo.niveles[nivelKey]]).slice(0, numPreguntas).map(preg => ({
+      ...preg,
+      opciones: mezclarArray([...preg.opciones])
+    }));
     progresoRPG.pregunta = 0;
     guardarProgreso(progresoRPG);
   }
   mostrarPregunta();
 
-  // --- ESTA ES LA VERSIÓN MEJORADA QUE EVITA EL ERROR ---
   function mostrarPregunta() {
     const preguntaActual = progresoRPG.pregunta || 0;
     const p = progresoRPG.preguntasNivel && progresoRPG.preguntasNivel[preguntaActual];
@@ -266,6 +290,7 @@ function obtenerRango(nivel, ganoTodo) {
   return "Principiante";
 }
 
+// Mezcla cualquier array de manera aleatoria
 function mezclarArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -284,4 +309,3 @@ function mostrarLogros() {
     <button onclick="window.location.reload()">Volver</button>
   `;
 }
-
