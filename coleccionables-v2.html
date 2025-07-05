@@ -6,8 +6,7 @@
   <title>Coleccionables V2</title>
   <link rel="stylesheet" href="css/estilos.css" />
   <link rel="stylesheet" href="css/coleccionables-v2.css" />
- <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
   <main class="coleccionables-v2">
@@ -27,7 +26,6 @@
       <button id="volver-resumen">⬅ Volver</button>
       <h2 id="titulo-categoria"></h2>
       <div id="personajes-categoria" class="galeria-coleccionables"></div>
-
     </section>
   </main>
 
@@ -43,7 +41,12 @@
     </div>
   </div>
 
-  <a href="menu.html.html" id="btn-inicio" title="Volver al inicio" tabindex="-1">🏠</a>
+  <!-- Botón flotante para volver al menú principal -->
+  <a href="menu.html" id="btn-inicio" title="Volver al inicio" tabindex="-1">🏠</a>
+
+  <!-- SCRIPTS EN ORDEN CORRECTO -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="supabase.js"></script>
   <script src="js/app/coleccionables-v2.js"></script>
 </body>
 </html>
