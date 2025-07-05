@@ -234,7 +234,12 @@ function mostrarNivel() {
             if (juegoActual.nivel > preguntasPorNivel.length) {
               terminarAventura(true);
             } else {
-              mostrarMensajeNivel(`¡Avanzas al nivel ${juegoActual.nivel}!`, mostrarNivel);
+              mostrarMensajeNivelPersonalizado(
+  juegoActual.nivel,
+  juegoActual.vidas,
+  mostrarNivel
+);
+
             }
           } else {
             mostrarPregunta();
@@ -295,4 +300,38 @@ function mostrarLogros() {
     <h2>Logros RPG (próximamente)</h2>
     <button onclick="window.location.reload()">Volver</button>
   `;
+}
+const tipsPorNivel = [
+  "Recuerda leer con atención las opciones antes de responder.",
+  "Algunas preguntas tienen pistas en los detalles de la pregunta.",
+  "Si tienes dudas, descarta primero las opciones más improbables.",
+  "¡Vas muy bien! Mantén la calma y sigue adelante.",
+  "¡Estás a un paso del rango más alto! Confía en tu intuición."
+];
+function mostrarMensajeNivelPersonalizado(nivel, vidas, callback) {
+  const mensajes = [
+    "¡Buen comienzo!",
+    "¡Vas avanzando muy bien!",
+    "¡Increíble progreso!",
+    "¡Estás entre los mejores!",
+    "¡Nivel máximo alcanzado, eres un crack!"
+  ];
+  const msg = mensajes[nivel-1] || "¡Sigue así!";
+  const tip = tipsPorNivel[nivel-1] || "";
+
+  // Render
+  document.getElementById("juego-rpg").innerHTML = `
+    <div class="panel-mensaje-nivel">
+      <h2>🎉 ¡Felicidades!</h2>
+      <p>${msg}</p>
+      <p>Has alcanzado el <b>nivel ${nivel}</b>.<br>
+      Te quedan <b>${vidas}</b> ${vidas === 1 ? "vida" : "vidas"}.</p>
+      <div class="tip-box">
+        <strong>Tip para este nivel:</strong>
+        <br>${tip}
+      </div>
+      <button id="btn-seguir-nivel">Continuar</button>
+    </div>
+  `;
+  document.getElementById("btn-seguir-nivel").onclick = callback;
 }
