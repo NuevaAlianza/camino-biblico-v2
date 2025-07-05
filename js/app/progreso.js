@@ -130,25 +130,32 @@ async function mostrarRanking({ pais, ciudad, parroquia }) {
   const cont = document.getElementById("progreso-ranking");
   cont.innerHTML = `<h3>Tu Ranking</h3><div id="rankings"></div>`;
 
-  // Consultar ranking global
-  const queryRanking = async (campo, valor) => {
+  // --- Consulta directa sobre los campos ---
+  const queryRanking = async (filtroCampo, filtroValor) => {
     let q = supabase
       .from("rpg_progreso")
-      .select("user_id, xp, nivel_max, rango, fecha_juego, usuario:usuario_id!inner(nombre, pais, ciudad, parroquia)")
+      .select("user_id, xp, nivel_max, rango, fecha_juego, pais, ciudad, parroquia")
       .eq("completado", true);
-    if (campo && valor) q = q.eq(campo, valor);
+
+    if (filtroCampo && filtroValor && filtroValor !== "N/A") q = q.eq(filtroCampo, filtroValor);
     q = q.order("xp", { ascending: false });
-    return (await q).data || [];
+
+    const { data, error } = await q;
+    if (error) {
+      console.error("Error al consultar ranking:", error.message);
+      return [];
+    }
+    return data || [];
   };
 
   // Ranking global
   const global = await queryRanking();
   // Ranking por país
-  const porPais = pais !== "N/A" ? await queryRanking("usuario.pais", pais) : [];
+  const porPais = await queryRanking("pais", pais);
   // Ranking por ciudad
-  const porCiudad = ciudad !== "N/A" ? await queryRanking("usuario.ciudad", ciudad) : [];
+  const porCiudad = await queryRanking("ciudad", ciudad);
   // Ranking por parroquia
-  const porParroquia = parroquia !== "N/A" ? await queryRanking("usuario.parroquia", parroquia) : [];
+  const porParroquia = await queryRanking("parroquia", parroquia);
 
   // Busca posición del usuario actual en cada ranking
   const posGlobal = global.findIndex(r => r.user_id === usuarioActual.id) + 1;
@@ -158,10 +165,10 @@ async function mostrarRanking({ pais, ciudad, parroquia }) {
 
   document.getElementById("rankings").innerHTML = `
     <div class="ranking-panel">
-      <p>🌎 Global: <b>#${posGlobal || '-'}</b> de ${global.length}</p>
-      <p>🇩🇴 País: <b>#${posPais || '-'}</b> de ${porPais.length} (${pais})</p>
-      <p>🏙️ Ciudad: <b>#${posCiudad || '-'}</b> de ${porCiudad.length} (${ciudad})</p>
-      <p>⛪ Parroquia: <b>#${posParroquia || '-'}</b> de ${porParroquia.length} (${parroquia})</p>
+      <p>🌎 Global: <b>#${posGlobal > 0 ? posGlobal : '-'}</b> de ${global.length}</p>
+      <p>🇩🇴 País: <b>#${posPais > 0 ? posPais : '-'}</b> de ${porPais.length} (${pais})</p>
+      <p>🏙️ Ciudad: <b>#${posCiudad > 0 ? posCiudad : '-'}</b> de ${porCiudad.length} (${ciudad})</p>
+      <p>⛪ Parroquia: <b>#${posParroquia > 0 ? posParroquia : '-'}</b> de ${porParroquia.length} (${parroquia})</p>
     </div>
   `;
 }
