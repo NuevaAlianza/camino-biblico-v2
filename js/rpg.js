@@ -70,6 +70,7 @@ async function guardarProgresoRPG({ nivel, rango, xp, completado }) {
   if (window.supabase) {
     const { data: sessionData } = await supabase.auth.getSession();
     const userId = sessionData?.session?.user?.id;
+    const meta = sessionData?.session?.user?.user_metadata || {};
     if (!userId) return;
     await supabase.from("rpg_progreso").upsert([{
       user_id: userId,
@@ -78,13 +79,19 @@ async function guardarProgresoRPG({ nivel, rango, xp, completado }) {
       rango,
       xp,
       completado,
+      fecha_juego: new Date().toISOString(),
+      pais: meta.pais || null,
+      ciudad: meta.ciudad || null,
+      parroquia: meta.parroquia || null
     }]);
     return;
   }
+  // LocalStorage para offline
   let p = JSON.parse(localStorage.getItem("rpg_progreso")) || {};
   p[cicloActual] = { nivel, rango, xp, completado };
   localStorage.setItem("rpg_progreso", JSON.stringify(p));
 }
+
 
 // --- 4. Estado interno de la partida (RAM) ---
 let juegoActual = null;
