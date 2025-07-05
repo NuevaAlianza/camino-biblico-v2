@@ -2,7 +2,6 @@ let preguntasRPG = {};
 let progresoRPG = null;
 let cicloActual = obtenerSemanaAnio();
 
-// --- Carga preguntas ---
 fetch('datos/rpg-preguntas.json')
   .then(res => res.json())
   .then(data => {
@@ -18,19 +17,55 @@ function obtenerSemanaAnio() {
   return d.getFullYear() + "-S" + Math.ceil((((d - yearStart) / 86400000) + 1)/7);
 }
 
-// --- Guardar/cargar progreso ---
-function cargarProgreso() {
+// ---- Guardar/cargar progreso (Supabase o local) ----
+async function cargarProgreso() {
+  // Espera que supabase esté definido (si lo usas)
+  if (window.supabase) {
+    const { data: sessionData } = await supabase.auth.getSession();
+    const userId = sessionData?.session?.user?.id;
+    if (userId) {
+      // Busca progreso RPG de este usuario y ciclo
+      const { data, error } = await supabase
+        .from("progreso")
+        .select("*")
+        .eq("user_id", userId)
+        .eq("tipo", "rpg")
+        .eq("clave", cicloActual)
+        .single();
+      if (data && data.progreso) return JSON.parse(data.progreso);
+      // Si no hay progreso, regresa null
+      return null;
+    }
+  }
+  // LocalStorage fallback si no está logueado
   const p = JSON.parse(localStorage.getItem("rpg_progreso")) || {};
   return p[cicloActual] || null;
 }
-function guardarProgreso(prog) {
+
+async function guardarProgreso(prog) {
+  if (window.supabase) {
+    const { data: sessionData } = await supabase.auth.getSession();
+    const userId = sessionData?.session?.user?.id;
+    if (userId) {
+      // Guarda/upserta progreso RPG de este usuario y ciclo
+      await supabase.from("progreso").upsert([{
+        user_id: userId,
+        tipo: "rpg",
+        clave: cicloActual,
+        progreso: JSON.stringify(prog),
+        fecha: new Date().toISOString()
+      }]);
+      return;
+    }
+  }
+  // Si no logueado, localStorage fallback
   let p = JSON.parse(localStorage.getItem("rpg_progreso")) || {};
   p[cicloActual] = prog;
   localStorage.setItem("rpg_progreso", JSON.stringify(p));
 }
 
-function inicializarRPG() {
-  progresoRPG = cargarProgreso();
+async function inicializarRPG() {
+  progresoRPG = await cargarProgreso();
   document.getElementById("btn-comenzar").style.display = progresoRPG ? "none" : "inline-block";
   document.getElementById("btn-continuar").style.display = progresoRPG ? "inline-block" : "none";
   document.getElementById("juego-rpg").classList.add("oculto");
@@ -38,28 +73,28 @@ function inicializarRPG() {
   document.getElementById("logros-rpg").classList.add("oculto");
 }
 
-// --- Empieza nueva partida ---
-document.getElementById("btn-comenzar").onclick = () => {
+document.getElementById("btn-comenzar").onclick = async () => {
   progresoRPG = {
     nivel: 1,
     vidas: 3,
     pregunta: 0,
-    preguntasNivel: null, // <-- NUEVO, para persistencia real
+    preguntasNivel: null,
     completado: false,
     rango: "",
     xp: 0
   };
-  guardarProgreso(progresoRPG);
+  await guardarProgreso(progresoRPG);
   jugarNivel();
 };
+
 document.getElementById("btn-continuar").onclick = () => {
   jugarNivel();
 };
+
 document.getElementById("btn-logros").onclick = () => {
   mostrarLogros();
 };
 
-// --- Lógica de preguntas y avance ---
 function jugarNivel() {
   const juego = document.getElementById("juego-rpg");
   juego.classList.remove("oculto");
@@ -68,11 +103,9 @@ function jugarNivel() {
   document.getElementById("logros-rpg").classList.add("oculto");
 
   const nivel = progresoRPG.nivel;
-
-  // Guardar el array de preguntas en el progreso SOLO la primera vez en cada nivel
   if (!progresoRPG.preguntasNivel || progresoRPG.preguntasNivel.length !== 5) {
     progresoRPG.preguntasNivel = mezclarArray([...preguntasRPG[nivel]]).slice(0, 5);
-    progresoRPG.pregunta = 0; // Siempre empieza en la 0 al entrar a nivel nuevo
+    progresoRPG.pregunta = 0;
     guardarProgreso(progresoRPG);
   }
   mostrarPregunta();
@@ -96,7 +129,7 @@ function jugarNivel() {
     `;
 
     document.querySelectorAll('.rpg-btn-op').forEach(btn => {
-      btn.onclick = () => {
+      btn.onclick = async () => {
         const correcta = p.opciones[btn.dataset.i] === p.respuesta;
         if (correcta) {
           btn.classList.add("acierto");
@@ -110,16 +143,16 @@ function jugarNivel() {
             setTimeout(() => vidasEl.classList.remove("shake"), 400);
           }
         }
-        setTimeout(() => {
+        setTimeout(async () => {
           progresoRPG.pregunta = preguntaActual + 1;
-          guardarProgreso(progresoRPG);
+          await guardarProgreso(progresoRPG);
           if (progresoRPG.vidas <= 0) {
             terminarAventura();
           } else if (progresoRPG.pregunta >= 5) {
             progresoRPG.nivel++;
             progresoRPG.pregunta = 0;
-            progresoRPG.preguntasNivel = null; // Al avanzar de nivel, se genera nuevo set
-            guardarProgreso(progresoRPG);
+            progresoRPG.preguntasNivel = null;
+            await guardarProgreso(progresoRPG);
             if (progresoRPG.nivel > 5) {
               terminarAventura(true);
             } else {
