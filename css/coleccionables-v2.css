@@ -155,4 +155,41 @@ body {
   .galeria-coleccionables { grid-template-columns: 1fr; }
   .tarjeta-coleccionable { min-height: 180px; padding: 0.7rem 0.3rem; }
 }
+.progreso-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.8rem;
+  font-family: monospace;
+  font-size: 1.08rem;
+}
+.cat-nombre {
+  width: 130px;
+  color: #85570d;
+  font-weight: bold;
+  text-align: right;
+}
+.barra-externa {
+  flex: 1;
+  height: 14px;
+  background: #e5dac5;
+  border-radius: 8px;
+  margin: 0 0.5rem;
+  overflow: hidden;
+  position: relative;
+}
+.barra-interna {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #f4a261 70%, #2a9d8f);
+  border-radius: 8px;
+  transition: width 0.4s cubic-bezier(.4,2,.5,1.1);
+}
+.cat-info {
+  width: 60px;
+  text-align: right;
+  font-weight: bold;
+  color: #222;
+  letter-spacing: 1px;
+}
 
