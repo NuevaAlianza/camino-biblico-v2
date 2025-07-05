@@ -189,7 +189,12 @@ function mostrarNivel() {
         juegoActual.nivel++;
         juegoActual.pregunta = 0;
         juegoActual.preguntasNivel = null;
-        mostrarMensajeNivel(`¡Avanzas al nivel ${juegoActual.nivel}!`, mostrarNivel);
+        mostrarMensajeNivelPersonalizado(
+  juegoActual.nivel,
+  juegoActual.vidas,
+  mostrarNivel
+);
+
       }
       return;
     }
