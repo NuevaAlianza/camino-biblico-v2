@@ -14,10 +14,72 @@ Promise.all([
   });
 });
 
-// ---- 2. Cargar progreso desde localStorage ----
+// Requiere que Supabase esté cargado y usuario logueado
 async function cargarProgresoUsuario() {
-  progresoGlobal = JSON.parse(localStorage.getItem("progreso")) || { categorias: {}, temporadas: {} };
+  const { data: sessionData } = await supabase.auth.getSession();
+  const userId = sessionData?.session?.user?.id;
+  if (!userId) {
+    progresoGlobal = { categorias: {}, temporadas: {} };
+    return;
+  }
+
+  // --- Leer progreso por usuario ---
+  const { data: progresoRows, error } = await supabase
+    .from("progreso")
+    .select("*")
+    .eq("user_id", userId);
+
+  if (error) {
+    console.error("Error al cargar progreso:", error.message);
+    progresoGlobal = { categorias: {}, temporadas: {} };
+    return;
+  }
+
+  // --- Procesar progreso a objeto compatible con tu UI ---
+  // Ejemplo de salida:
+  // {
+  //   categorias: { "Apóstoles": { "Pedro": {...}, ... } },
+  //   temporadas: { T1: {...}, ... }
+  // }
+
+  let categorias = {};
+  let temporadas = {};
+  for (const row of progresoRows) {
+    // Si es quiz comentado: tipo = 'quiz comentado', clave = tema
+    if (row.tipo === "quiz comentado") {
+      // Buscar la categoría real para el tema (ya tienes los datos)
+      const tema = row.clave;
+      let categoria = null;
+      for (const cat in coleccionablesData) {
+        if (coleccionablesData[cat]?.[tema]) {
+          categoria = cat;
+          break;
+        }
+      }
+      if (categoria) {
+        if (!categorias[categoria]) categorias[categoria] = {};
+        categorias[categoria][tema] = {
+          nota: row.nota,
+          porcentaje: row.porcentaje,
+          estado: "completado"
+        };
+      }
+    }
+    // Si es temporada: tipo = "temporada", clave = ID temporada
+    if (row.tipo === "temporada") {
+      temporadas[row.clave] = {
+        nota: row.nota,
+        porcentaje: row.porcentaje,
+        estado: "completado"
+      };
+    }
+  }
+  progresoGlobal = {
+    categorias,
+    temporadas
+  };
 }
+
 
 // ---- 3. Mostrar resumen principal ----
 function mostrarResumenCategorias() {
