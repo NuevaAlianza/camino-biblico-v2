@@ -1,96 +1,129 @@
 {
   "ciclos": {
     "2025-S27": {
-      "titulo": "Semana 27 – El Inicio",
-      "descripcion": "Comienza tu camino bíblico respondiendo preguntas sobre la Creación y los primeros personajes de la Biblia.",
+      "titulo": "Semana 27 – Patriarcas de la Fe",
+      "descripcion": "Esta semana exploramos la historia de los grandes patriarcas bíblicos: Abraham, Isaac, Jacob y José. ¿Cuánto sabes de ellos?",
       "niveles": {
         "1": [
           {
-            "pregunta": "¿Quién fue el primer hombre creado según la Biblia?",
-            "opciones": ["Adán", "Moisés", "Noé", "Pedro"],
-            "respuesta": "Adán"
+            "pregunta": "¿Quién es conocido como el padre de la fe?",
+            "opciones": ["Abraham", "Isaac", "Jacob", "David"],
+            "respuesta": "Abraham"
           },
           {
-            "pregunta": "¿En qué libro encontramos la historia de la creación?",
-            "opciones": ["Génesis", "Éxodo", "Levítico", "Mateo"],
-            "respuesta": "Génesis"
+            "pregunta": "¿Quién fue vendido por sus hermanos?",
+            "opciones": ["José", "Moisés", "Jacob", "Isaac"],
+            "respuesta": "José"
           }
         ],
         "2": [
           {
-            "pregunta": "¿Quién liberó a los israelitas de Egipto?",
-            "opciones": ["Moisés", "David", "Josué", "Pablo"],
-            "respuesta": "Moisés"
-          },
+            "pregunta": "¿Quién fue el hijo de la promesa?",
+            "opciones": ["Isaac", "Ismael", "Esaú", "Rubén"],
+            "respuesta": "Isaac"
+          }
+        ],
+        "3": [
           {
-            "pregunta": "¿Cuál es el primer mandamiento?",
-            "opciones": [
-              "Amarás a Dios sobre todas las cosas",
-              "No matarás",
-              "Honrarás a tu padre y a tu madre",
-              "No robarás"
-            ],
-            "respuesta": "Amarás a Dios sobre todas las cosas"
+            "pregunta": "¿A quién le cambiaron el nombre a Israel?",
+            "opciones": ["Jacob", "Abraham", "José", "David"],
+            "respuesta": "Jacob"
+          }
+        ],
+        "4": [
+          {
+            "pregunta": "¿Qué patriarca soñó con una escalera al cielo?",
+            "opciones": ["Jacob", "Isaac", "Abraham", "Moisés"],
+            "respuesta": "Jacob"
+          }
+        ],
+        "5": [
+          {
+            "pregunta": "¿A qué país fue llevado José como esclavo?",
+            "opciones": ["Egipto", "Babilonia", "Israel", "Persia"],
+            "respuesta": "Egipto"
           }
         ]
       }
     },
     "2025-S28": {
-      "titulo": "Semana 28 – Los Patriarcas",
-      "descripcion": "Comienza tu camino bíblico respondiendo preguntas sobre la Creación y los primeros personajes de la Biblia.",
+      "titulo": "Semana 28 – Profetas y Reyes",
+      "descripcion": "Reta tus conocimientos sobre los profetas y los reyes más influyentes del Antiguo Testamento.",
       "niveles": {
         "1": [
           {
-            "pregunta": "¿Quién construyó un arca para salvarse del diluvio?",
-            "opciones": ["Noé", "Moisés", "David", "Salomón"],
-            "respuesta": "Noé"
-          },
-          {
-            "pregunta": "¿Quién fue el padre de Jacob y Esaú?",
-            "opciones": ["Isaac", "Abraham", "José", "Moisés"],
-            "respuesta": "Isaac"
+            "pregunta": "¿Quién ungió al rey David?",
+            "opciones": ["Samuel", "Elías", "Isaías", "Salomón"],
+            "respuesta": "Samuel"
           }
         ],
         "2": [
           {
-            "pregunta": "¿A quién le prometió Dios una descendencia tan numerosa como las estrellas?",
-            "opciones": ["Abraham", "Moisés", "Isaac", "Jacob"],
-            "respuesta": "Abraham"
-          },
+            "pregunta": "¿Qué profeta desafió a los profetas de Baal en el monte Carmelo?",
+            "opciones": ["Elías", "Eliseo", "Isaías", "Daniel"],
+            "respuesta": "Elías"
+          }
+        ],
+        "3": [
           {
-            "pregunta": "¿Cuál es el nombre de la esposa de Abraham?",
-            "opciones": ["Sara", "Rebeca", "Raquel", "Lea"],
-            "respuesta": "Sara"
+            "pregunta": "¿Quién fue el rey más sabio de Israel?",
+            "opciones": ["Salomón", "Saúl", "Josías", "David"],
+            "respuesta": "Salomón"
+          }
+        ],
+        "4": [
+          {
+            "pregunta": "¿Qué profeta fue arrojado al foso de los leones?",
+            "opciones": ["Daniel", "Ezequiel", "Elías", "Jonás"],
+            "respuesta": "Daniel"
+          }
+        ],
+        "5": [
+          {
+            "pregunta": "¿Qué profeta fue tragado por un gran pez?",
+            "opciones": ["Jonás", "Elías", "Samuel", "Jeremías"],
+            "respuesta": "Jonás"
           }
         ]
       }
     },
     "2025-S29": {
-      "titulo": "Semana 29 – Jesús y los Apóstoles",
-      "descripcion": "Comienza tu camino bíblico respondiendo preguntas sobre la Creación y los primeros personajes de la Biblia.",
+      "titulo": "Semana 29 – Jesús y sus Apóstoles",
+      "descripcion": "Sumérgete en las enseñanzas, milagros y las vidas de los apóstoles junto a Jesús.",
       "niveles": {
         "1": [
           {
-            "pregunta": "¿En qué ciudad nació Jesús?",
-            "opciones": ["Belén", "Nazaret", "Jerusalén", "Cafarnaúm"],
-            "respuesta": "Belén"
-          },
-          {
-            "pregunta": "¿Quién negó a Jesús tres veces?",
-            "opciones": ["Pedro", "Juan", "Judas", "Tomás"],
+            "pregunta": "¿Quién caminó sobre el agua hacia Jesús?",
+            "opciones": ["Pedro", "Juan", "Santiago", "Andrés"],
             "respuesta": "Pedro"
           }
         ],
         "2": [
           {
-            "pregunta": "¿Cuál apóstol es conocido como el 'discípulo amado'?",
-            "opciones": ["Juan", "Pedro", "Andrés", "Santiago"],
-            "respuesta": "Juan"
-          },
+            "pregunta": "¿Quién negó a Jesús tres veces?",
+            "opciones": ["Pedro", "Judas", "Tomás", "Felipe"],
+            "respuesta": "Pedro"
+          }
+        ],
+        "3": [
           {
-            "pregunta": "¿Quién traicionó a Jesús?",
-            "opciones": ["Judas", "Pedro", "Tomás", "Felipe"],
-            "respuesta": "Judas"
+            "pregunta": "¿Qué apóstol fue llamado 'el gemelo'?",
+            "opciones": ["Tomás", "Andrés", "Bartolomé", "Felipe"],
+            "respuesta": "Tomás"
+          }
+        ],
+        "4": [
+          {
+            "pregunta": "¿Quién recogió dinero de impuestos antes de seguir a Jesús?",
+            "opciones": ["Mateo", "Pedro", "Simón", "Judas"],
+            "respuesta": "Mateo"
+          }
+        ],
+        "5": [
+          {
+            "pregunta": "¿Quién fue el primer apóstol mártir?",
+            "opciones": ["Santiago", "Juan", "Pedro", "Felipe"],
+            "respuesta": "Santiago"
           }
         ]
       }
