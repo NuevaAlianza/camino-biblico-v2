@@ -19,7 +19,6 @@ fetch('datos/rpg-preguntas.json')
     await mostrarStatsBienvenida(); // Panel superior (XP, ranking)
     inicializarPanelInicio();
     inicializarRPG();
-     debugRankingParroquia();
   });
 
 // --- 2. Funciones utilitarias ---
@@ -42,7 +41,7 @@ function mostrarSinCiclo() {
   document.getElementById("btn-continuar").style.display = "none";
 }
 
-// --- 2b. Panel bienvenida: XP y ranking parroquia ---
+// --- 2b. Panel bienvenida: XP y ranking global/país/ciudad/parroquia ---
 async function mostrarStatsBienvenida() {
   const bienvenida = document.getElementById("bienvenida-stats");
   // 1. Obtener usuario actual de Supabase Auth
@@ -60,36 +59,96 @@ async function mostrarStatsBienvenida() {
     .eq("user_id", usuarioActual.id);
   const xpTotal = xpRows ? xpRows.reduce((a, b) => a + (b.xp || 0), 0) : 0;
 
-  // 3. Ranking en parroquia
+  // 3. Obtener metadatos de usuario
+  const pais = usuarioActual.user_metadata?.pais || null;
+  const ciudad = usuarioActual.user_metadata?.ciudad || null;
   const parroquia = usuarioActual.user_metadata?.parroquia || null;
-  let rankingHTML = "";
+
+  // --- GLOBAL ---
+  const { data: globalRows } = await supabase
+    .from("rpg_progreso")
+    .select("user_id, xp")
+    .eq("completado", true);
+  const globalMap = {};
+  (globalRows || []).forEach(r => {
+    if (!globalMap[r.user_id]) globalMap[r.user_id] = 0;
+    globalMap[r.user_id] += r.xp || 0;
+  });
+  const globalArray = Object.entries(globalMap)
+    .map(([user_id, xp]) => ({ user_id, xp }))
+    .sort((a, b) => b.xp - a.xp);
+  const globalRanking = globalArray.findIndex(r => r.user_id === usuarioActual.id) + 1;
+
+  // --- PAÍS ---
+  let paisHTML = "";
+  if (pais) {
+    const { data: paisRows } = await supabase
+      .from("rpg_progreso")
+      .select("user_id, xp")
+      .eq("pais", pais)
+      .eq("completado", true);
+    const paisMap = {};
+    (paisRows || []).forEach(r => {
+      if (!paisMap[r.user_id]) paisMap[r.user_id] = 0;
+      paisMap[r.user_id] += r.xp || 0;
+    });
+    const paisArray = Object.entries(paisMap)
+      .map(([user_id, xp]) => ({ user_id, xp }))
+      .sort((a, b) => b.xp - a.xp);
+    const miPaisRank = paisArray.findIndex(r => r.user_id === usuarioActual.id) + 1;
+    paisHTML = `<p>🇩🇴 País: <b>#${miPaisRank > 0 ? miPaisRank : '-'}</b> de ${paisArray.length} (${pais})</p>`;
+  }
+
+  // --- CIUDAD ---
+  let ciudadHTML = "";
+  if (ciudad) {
+    const { data: ciudadRows } = await supabase
+      .from("rpg_progreso")
+      .select("user_id, xp")
+      .eq("ciudad", ciudad)
+      .eq("completado", true);
+    const ciudadMap = {};
+    (ciudadRows || []).forEach(r => {
+      if (!ciudadMap[r.user_id]) ciudadMap[r.user_id] = 0;
+      ciudadMap[r.user_id] += r.xp || 0;
+    });
+    const ciudadArray = Object.entries(ciudadMap)
+      .map(([user_id, xp]) => ({ user_id, xp }))
+      .sort((a, b) => b.xp - a.xp);
+    const miCiudadRank = ciudadArray.findIndex(r => r.user_id === usuarioActual.id) + 1;
+    ciudadHTML = `<p>🏙️ Ciudad: <b>#${miCiudadRank > 0 ? miCiudadRank : '-'}</b> de ${ciudadArray.length} (${ciudad})</p>`;
+  }
+
+  // --- PARROQUIA ---
+  let parroquiaHTML = "";
   if (parroquia) {
     const { data: parroquiaRows } = await supabase
       .from("rpg_progreso")
       .select("user_id, xp")
-      .eq("parroquia", parroquia);
-    // Suma XP total por user
-    const rankingMap = {};
+      .eq("parroquia", parroquia)
+      .eq("completado", true);
+    const parroquiaMap = {};
     (parroquiaRows || []).forEach(r => {
-      if (!rankingMap[r.user_id]) rankingMap[r.user_id] = 0;
-      rankingMap[r.user_id] += r.xp || 0;
+      if (!parroquiaMap[r.user_id]) parroquiaMap[r.user_id] = 0;
+      parroquiaMap[r.user_id] += r.xp || 0;
     });
-    // Ordena por XP desc
-    const rankingArray = Object.entries(rankingMap)
+    const parroquiaArray = Object.entries(parroquiaMap)
       .map(([user_id, xp]) => ({ user_id, xp }))
       .sort((a, b) => b.xp - a.xp);
-    const miRanking = rankingArray.findIndex(r => r.user_id === usuarioActual.id) + 1;
-    rankingHTML = `
-      <p>En tu parroquia eres el <b>#${miRanking > 0 ? miRanking : '-'}</b> de ${rankingArray.length}.</p>
-      <p>¡Veamos si hoy avanzas al #1! 🚀</p>
-    `;
+    const miParroquiaRank = parroquiaArray.findIndex(r => r.user_id === usuarioActual.id) + 1;
+    parroquiaHTML = `<p>⛪ Parroquia: <b>#${miParroquiaRank > 0 ? miParroquiaRank : '-'}</b> de ${parroquiaArray.length} (${parroquia})</p>`;
   }
-  // Renderiza el panel
+
+  // --- Renderiza el panel multi-ranking ---
   bienvenida.innerHTML = `
     <div class="panel-mensaje panel-bienvenida">
       <h2>¡Bienvenido!</h2>
       <p>Hasta hoy has acumulado <b>${xpTotal}</b> XP.</p>
-      ${rankingHTML}
+      <p>🌎 Global: <b>#${globalRanking > 0 ? globalRanking : '-'}</b> de ${globalArray.length}</p>
+      ${paisHTML}
+      ${ciudadHTML}
+      ${parroquiaHTML}
+      <p>¡Veamos si hoy avanzas al #1! 🚀</p>
     </div>
   `;
 }
@@ -145,7 +204,6 @@ async function guardarProgresoRPG({ nivel, rango, xp, completado }) {
 let juegoActual = null;
 
 async function inicializarPanelInicio() {
-  // NO vuelvas a llamar a mostrarStatsBienvenida aquí (ya se llama al inicio)
   document.getElementById("titulo-ciclo").textContent = datosCiclo.titulo || "Trivia Bíblica RPG";
   document.getElementById("descripcion-ciclo").textContent = datosCiclo.descripcion || "";
   document.getElementById("mensaje-rpg").textContent =
@@ -345,7 +403,7 @@ function obtenerRango(nivel, ganoTodo) {
 function mezclarArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
+    [arr[i], arr[j]] = [arr[j], arr[i]];
   }
   return array;
 }
@@ -394,35 +452,4 @@ function mostrarMensajeNivelPersonalizado(nivel, vidas, callback) {
   `;
   document.getElementById("btn-seguir-nivel").onclick = callback;
 }
-// --- DEBUG: Ver ranking parroquia (elimina después de probar) ---
-async function debugRankingParroquia() {
-  const { data: sessionData } = await supabase.auth.getSession();
-  const user = sessionData?.session?.user;
-  if (!user) return;
 
-  const parroquia = user.user_metadata?.parroquia || null;
-  if (!parroquia) return;
-
-  const { data: parroquiaRows, error } = await supabase
-    .from("rpg_progreso")
-    .select("user_id, xp")
-    .eq("parroquia", parroquia);
-
-  if (error) {
-    console.error("Error al consultar ranking parroquia:", error.message);
-    return;
-  }
-
-  // Suma XP por usuario
-  const rankingMap = {};
-  (parroquiaRows || []).forEach(r => {
-    if (!rankingMap[r.user_id]) rankingMap[r.user_id] = 0;
-    rankingMap[r.user_id] += r.xp || 0;
-  });
-  const rankingArray = Object.entries(rankingMap)
-    .map(([user_id, xp]) => ({ user_id, xp }))
-    .sort((a, b) => b.xp - a.xp);
-
-  // Mostramos todo en consola
-  console.log("Ranking parroquia DEBUG:", rankingArray, "Parroquia:", parroquia, "Tu user_id:", user.id);
-}
