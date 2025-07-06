@@ -130,22 +130,29 @@ async function mostrarRanking({ pais, ciudad, parroquia }) {
   const cont = document.getElementById("progreso-ranking");
   cont.innerHTML = `<h3>Tu Ranking</h3><div id="rankings"></div>`;
 
-  // --- Consulta directa sobre los campos ---
-  const queryRanking = async (filtroCampo, filtroValor) => {
+  // --- Consulta todos los registros (filtro según corresponde) ---
+  const queryRanking = async (campo, valor) => {
     let q = supabase
       .from("rpg_progreso")
-      .select("user_id, xp, nivel_max, rango, fecha_juego, pais, ciudad, parroquia")
+      .select("user_id, xp, pais, ciudad, parroquia")
       .eq("completado", true);
-
-    if (filtroCampo && filtroValor && filtroValor !== "N/A") q = q.eq(filtroCampo, filtroValor);
-    q = q.order("xp", { ascending: false });
+    if (campo && valor && valor !== "N/A") q = q.eq(campo, valor);
 
     const { data, error } = await q;
     if (error) {
       console.error("Error al consultar ranking:", error.message);
       return [];
     }
-    return data || [];
+    // Agrupar por usuario, sumar XP total
+    const xpPorUsuario = {};
+    (data || []).forEach(row => {
+      if (!xpPorUsuario[row.user_id]) xpPorUsuario[row.user_id] = 0;
+      xpPorUsuario[row.user_id] += row.xp || 0;
+    });
+    // Convertir a array ordenado
+    return Object.entries(xpPorUsuario)
+      .map(([user_id, xp]) => ({ user_id, xp }))
+      .sort((a, b) => b.xp - a.xp);
   };
 
   // Ranking global
