@@ -63,3 +63,21 @@ body {
 .rpg-vidas.shake {
   animation: shake 0.4s;
 }
+.panel-bienvenida {
+  background: #fffbe7;
+  border-radius: 1.1rem;
+  box-shadow: 0 1.5px 8px #ffd57133;
+  margin-bottom: 1.2rem;
+  padding: 1.1rem 1.2rem 1rem 1.2rem;
+  text-align: center;
+  font-size: 1.07rem;
+}
+.panel-bienvenida h2 {
+  margin-top: 0;
+  margin-bottom: 0.4em;
+  color: #bb8600;
+  font-size: 1.28em;
+}
+.panel-bienvenida b {
+  color: #00a877;
+}
