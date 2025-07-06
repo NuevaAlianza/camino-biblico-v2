@@ -2,8 +2,8 @@ let rpgCiclos = {};
 let cicloActual = obtenerSemanaAnio();
 let datosCiclo = null; // Datos del ciclo actual: título, descripcion, niveles...
 let progresoRPG = null;
+let usuarioActual = null; // NUEVO: Definir global para acceder usuario
 
-// Configurable: preguntas por nivel (ej: nivel 1=5, 2=5, 3=4, 4=4, 5=3)
 const preguntasPorNivel = [5, 5, 4, 4, 3];
 
 // --- 1. Carga de datos y ciclo actual ---
@@ -40,18 +40,67 @@ function mostrarSinCiclo() {
   document.getElementById("btn-continuar").style.display = "none";
 }
 
-function inicializarPanelInicio() {
-  document.getElementById("titulo-ciclo").textContent = datosCiclo.titulo || "Trivia Bíblica RPG";
-  document.getElementById("descripcion-ciclo").textContent = datosCiclo.descripcion || "";
-  document.getElementById("mensaje-rpg").textContent =
-    "Recuerda: solo tienes 3 vidas para demostrar tu valía. ¿Listo para el reto?";
+// --- 2b. Panel bienvenida: XP y ranking parroquia ---
+async function mostrarStatsBienvenida() {
+  const bienvenida = document.getElementById("bienvenida-stats");
+  // 1. Obtener usuario actual de Supabase Auth
+  if (!usuarioActual) {
+    // Si no existe, intenta obtenerlo
+    const { data: sessionData } = await supabase.auth.getSession();
+    usuarioActual = sessionData?.session?.user;
+    if (!usuarioActual) {
+      bienvenida.innerHTML = "";
+      return;
+    }
+  }
+  // 2. XP total acumulada
+  const { data: xpRows } = await supabase
+    .from("rpg_progreso")
+    .select("xp")
+    .eq("user_id", usuarioActual.id);
+  const xpTotal = xpRows ? xpRows.reduce((a, b) => a + (b.xp || 0), 0) : 0;
+
+  // 3. Ranking en parroquia
+  const parroquia = usuarioActual.user_metadata?.parroquia || null;
+  let rankingHTML = "";
+  if (parroquia) {
+    // Trae todos los usuarios de la parroquia y suma su XP
+    const { data: parroquiaRows } = await supabase
+      .from("rpg_progreso")
+      .select("user_id, xp")
+      .eq("parroquia", parroquia);
+    // Suma XP total por user
+    const rankingMap = {};
+    (parroquiaRows || []).forEach(r => {
+      if (!rankingMap[r.user_id]) rankingMap[r.user_id] = 0;
+      rankingMap[r.user_id] += r.xp || 0;
+    });
+    // Ordena por XP desc
+    const rankingArray = Object.entries(rankingMap)
+      .map(([user_id, xp]) => ({ user_id, xp }))
+      .sort((a, b) => b.xp - a.xp);
+    const miRanking = rankingArray.findIndex(r => r.user_id === usuarioActual.id) + 1;
+    rankingHTML = `
+      <p>En tu parroquia eres el <b>#${miRanking > 0 ? miRanking : '-'}</b> de ${rankingArray.length}.</p>
+      <p>¡Veamos si hoy avanzas al #1! 🚀</p>
+    `;
+  }
+  // Renderiza el panel
+  bienvenida.innerHTML = `
+    <div class="panel-mensaje panel-bienvenida">
+      <h2>¡Bienvenido!</h2>
+      <p>Hasta hoy has acumulado <b>${xpTotal}</b> XP.</p>
+      ${rankingHTML}
+    </div>
+  `;
 }
 
 // --- 3. Supabase: cargar y guardar progreso ---
 async function cargarProgresoRPG() {
   if (window.supabase) {
     const { data: sessionData } = await supabase.auth.getSession();
-    const userId = sessionData?.session?.user?.id;
+    usuarioActual = sessionData?.session?.user; // Actualiza usuario global
+    const userId = usuarioActual?.id;
     if (!userId) return null;
     const { data } = await supabase
       .from("rpg_progreso")
@@ -69,8 +118,9 @@ async function cargarProgresoRPG() {
 async function guardarProgresoRPG({ nivel, rango, xp, completado }) {
   if (window.supabase) {
     const { data: sessionData } = await supabase.auth.getSession();
-    const userId = sessionData?.session?.user?.id;
-    const meta = sessionData?.session?.user?.user_metadata || {};
+    usuarioActual = sessionData?.session?.user;
+    const userId = usuarioActual?.id;
+    const meta = usuarioActual?.user_metadata || {};
     if (!userId) return;
     await supabase.from("rpg_progreso").upsert([{
       user_id: userId,
@@ -92,9 +142,16 @@ async function guardarProgresoRPG({ nivel, rango, xp, completado }) {
   localStorage.setItem("rpg_progreso", JSON.stringify(p));
 }
 
-
 // --- 4. Estado interno de la partida (RAM) ---
 let juegoActual = null;
+
+async function inicializarPanelInicio() {
+  await mostrarStatsBienvenida(); // <-- Mostrar XP y ranking
+  document.getElementById("titulo-ciclo").textContent = datosCiclo.titulo || "Trivia Bíblica RPG";
+  document.getElementById("descripcion-ciclo").textContent = datosCiclo.descripcion || "";
+  document.getElementById("mensaje-rpg").textContent =
+    "Recuerda: solo tienes 3 vidas para demostrar tu valía. ¿Listo para el reto?";
+}
 
 async function inicializarRPG() {
   progresoRPG = await cargarProgresoRPG();
@@ -190,11 +247,10 @@ function mostrarNivel() {
         juegoActual.pregunta = 0;
         juegoActual.preguntasNivel = null;
         mostrarMensajeNivelPersonalizado(
-  juegoActual.nivel,
-  juegoActual.vidas,
-  mostrarNivel
-);
-
+          juegoActual.nivel,
+          juegoActual.vidas,
+          mostrarNivel
+        );
       }
       return;
     }
@@ -240,11 +296,10 @@ function mostrarNivel() {
               terminarAventura(true);
             } else {
               mostrarMensajeNivelPersonalizado(
-  juegoActual.nivel,
-  juegoActual.vidas,
-  mostrarNivel
-);
-
+                juegoActual.nivel,
+                juegoActual.vidas,
+                mostrarNivel
+              );
             }
           } else {
             mostrarPregunta();
@@ -306,6 +361,8 @@ function mostrarLogros() {
     <button onclick="window.location.reload()">Volver</button>
   `;
 }
+
+// -- Mensaje personalizado al pasar nivel (felicitación y tip) --
 const tipsPorNivel = [
   "Recuerda leer con atención las opciones antes de responder.",
   "Algunas preguntas tienen pistas en los detalles de la pregunta.",
@@ -324,7 +381,6 @@ function mostrarMensajeNivelPersonalizado(nivel, vidas, callback) {
   const msg = mensajes[nivel-1] || "¡Sigue así!";
   const tip = tipsPorNivel[nivel-1] || "";
 
-  // Render
   document.getElementById("juego-rpg").innerHTML = `
     <div class="panel-mensaje-nivel">
       <h2>🎉 ¡Felicidades!</h2>
