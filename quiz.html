@@ -8,19 +8,26 @@
 </head>
 <body>
 
- <div class="cabecera-quiz">
-  <div class="seleccion-tema">
-    <label for="categoria">Categoría:</label>
-    <select id="categoria">
-      <option value="">-- Elige una categoría --</option>
-    </select>
-    <label for="tema">Tema:</label>
-    <select id="tema" disabled>
-      <option value="">-- Elige un tema --</option>
-    </select>
-    <button id="iniciar" disabled>Iniciar Quiz</button>
-  </div>
+<div class="cabecera-quiz">
+  <form class="seleccion-tema-v2" id="seleccion-tema-form" autocomplete="off" onsubmit="return false;">
+    <div class="campos-flex">
+      <div class="campo-form">
+        <label for="categoria">Categoría</label>
+        <select id="categoria" required>
+          <option value="">-- Elige una categoría --</option>
+        </select>
+      </div>
+      <div class="campo-form">
+        <label for="tema">Tema</label>
+        <select id="tema" disabled required>
+          <option value="">-- Elige un tema --</option>
+        </select>
+      </div>
+    </div>
+    <button id="iniciar" disabled type="submit">🎬 Iniciar Quiz</button>
+  </form>
 </div>
+
 
 
     <!-- Zona de juego -->
