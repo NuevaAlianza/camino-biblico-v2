@@ -1,8 +1,4 @@
-
-        <br>${tip}
-      </div>
-      <button id="btn-seguir-nivel">Continuar</button>
-    </div>let rpgCiclos = {};
+let rpgCiclos = {};
 let cicloActual = obtenerSemanaAnio();
 let datosCiclo = null;
 let progresoRPG = null;
