@@ -1,5 +1,5 @@
 // =======================
-// quiz.js
+// quiz.js – Camino Bíblico
 // =======================
 
 // Variables globales
@@ -14,6 +14,8 @@ let intervalo;
 const categoriaSelect    = document.getElementById("categoria");
 const temaSelect         = document.getElementById("tema");
 const iniciarBtn         = document.getElementById("iniciar");
+const seleccionForm      = document.getElementById("seleccion-tema-form");
+
 const juego              = document.getElementById("juego");
 const preguntaEl         = document.getElementById("pregunta");
 const opcionesEl         = document.getElementById("opciones");
@@ -25,7 +27,6 @@ const reiniciarBtn       = document.getElementById("reiniciar");
 const volverBtn          = document.getElementById("volver");
 const conteoPreguntaEl   = document.getElementById("conteo-pregunta");
 const barraProgreso      = document.getElementById("progreso");
-// Si quieres mostrar el tiempo, desoculta el contadorEl en el HTML y aquí:
 const contadorEl         = document.getElementById("contador");
 
 // Sonidos
@@ -39,6 +40,14 @@ const sonidoIncorrecto = new Audio("assets/sonidos/incorrecto.mp3");
 function reproducirSonido(audio) {
   audio.currentTime = 0;
   audio.play();
+}
+
+// ===============================
+// 1. Selección de categoría y tema
+// ===============================
+
+function actualizarBotonIniciar() {
+  iniciarBtn.disabled = !(categoriaSelect.value && temaSelect.value);
 }
 
 // Carga el JSON de preguntas y popula categorías
@@ -55,13 +64,13 @@ fetch("datos/quiz.json")
     });
   });
 
-// Filtrar temas por categoría
+// Cambiar categoría → carga temas
 categoriaSelect.addEventListener("change", () => {
   temaSelect.innerHTML = '<option value="">-- Elige un tema --</option>';
   const categoria = categoriaSelect.value;
   if (!categoria) {
     temaSelect.disabled = true;
-    iniciarBtn.disabled = true;
+    actualizarBotonIniciar();
     return;
   }
   const temas = [...new Set(datos
@@ -75,21 +84,20 @@ categoriaSelect.addEventListener("change", () => {
     temaSelect.appendChild(option);
   });
   temaSelect.disabled = false;
-  iniciarBtn.disabled = true;
+  actualizarBotonIniciar();
 });
 
-// Habilitar botón iniciar
-temaSelect.addEventListener("change", () => {
-  iniciarBtn.disabled = temaSelect.value === "";
-});
+// Cambiar tema → habilita botón si ambos select tienen valor
+temaSelect.addEventListener("change", actualizarBotonIniciar);
 
-// Iniciar quiz
-iniciarBtn.addEventListener("click", () => {
+// Usar evento submit del form para iniciar quiz
+seleccionForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  if (iniciarBtn.disabled) return;
   reproducirSonido(sonidoClick);
   const categoria = categoriaSelect.value;
   const tema      = temaSelect.value;
-  if (!categoria) return alert("Selecciona una categoría");
-  if (!tema)      return alert("Selecciona un tema");
+  if (!categoria || !tema) return;
 
   preguntas = datos
     .filter(item => item.categoria === categoria && item.tema === tema)
@@ -99,13 +107,16 @@ iniciarBtn.addEventListener("click", () => {
   preguntaActual = 0;
   puntaje        = 0;
 
-  document.querySelector(".seleccion-tema").classList.add("oculto");
+  document.querySelector(".seleccion-tema-v2").classList.add("oculto");
   resultadoEl.classList.add("oculto");
   juego.classList.remove("oculto");
   mostrarPregunta();
 });
 
-// Mostrar cada pregunta
+// =========================
+// 2. Lógica de juego / Quiz
+// =========================
+
 function mostrarPregunta() {
   resetearEstado();
   reproducirSonido(sonidoInicio);
@@ -177,7 +188,10 @@ function seleccionarOpcion(opcion, actual) {
   }, 6000);
 }
 
-// Mostrar resultado al finalizar
+// ====================
+// 3. Resultado final
+// ====================
+
 function mostrarResultado() {
   juego.classList.add("oculto");
   resultadoEl.classList.remove("oculto");
@@ -222,7 +236,9 @@ function mostrarResultado() {
   }
 }
 
-// Temporizador
+// ==================
+// 4. Temporizador
+// ==================
 function resetearEstado() {
   opcionesEl.innerHTML = "";
   comentarioEl.classList.add("oculto");
@@ -255,9 +271,11 @@ function detenerTemporizador() {
   clearInterval(intervalo);
 }
 
-// Botones reiniciar y volver
+// =======================
+// 5. Botones reinicio/nav
+// =======================
 reiniciarBtn.addEventListener("click", () => {
-  document.querySelector(".seleccion-tema").classList.remove("oculto");
+  document.querySelector(".seleccion-tema-v2").classList.remove("oculto");
   resultadoEl.classList.add("oculto");
 });
 
@@ -265,7 +283,9 @@ volverBtn.addEventListener("click", () => {
   window.location.href = "index.html";
 });
 
-// Progreso local
+// ===============================
+// 6. Guardado de progreso local
+// ===============================
 function guardarProgreso(tipo, tema, puntaje, total) {
   const fecha = new Date().toISOString();
 
@@ -297,7 +317,9 @@ function guardarProgreso(tipo, tema, puntaje, total) {
   localStorage.setItem("progreso", JSON.stringify(progreso));
 }
 
-// Sincronización con Supabase
+// ===============================
+// 7. Sincronización con Supabase
+// ===============================
 async function guardarProgresoEnNube() {
   const { data: sessionData } = await supabase.auth.getSession();
   const userId = sessionData?.session?.user?.id;
@@ -350,3 +372,4 @@ async function guardarProgresoEnNube() {
     console.log("✅ Historial guardado en Supabase.");
   }
 }
+
