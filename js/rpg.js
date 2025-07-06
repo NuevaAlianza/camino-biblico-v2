@@ -19,6 +19,7 @@ fetch('datos/rpg-preguntas.json')
     await mostrarStatsBienvenida(); // Panel superior (XP, ranking)
     inicializarPanelInicio();
     inicializarRPG();
+     debugRankingParroquia();
   });
 
 // --- 2. Funciones utilitarias ---
