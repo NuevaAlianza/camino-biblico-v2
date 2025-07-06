@@ -393,3 +393,35 @@ function mostrarMensajeNivelPersonalizado(nivel, vidas, callback) {
   `;
   document.getElementById("btn-seguir-nivel").onclick = callback;
 }
+// --- DEBUG: Ver ranking parroquia (elimina después de probar) ---
+async function debugRankingParroquia() {
+  const { data: sessionData } = await supabase.auth.getSession();
+  const user = sessionData?.session?.user;
+  if (!user) return;
+
+  const parroquia = user.user_metadata?.parroquia || null;
+  if (!parroquia) return;
+
+  const { data: parroquiaRows, error } = await supabase
+    .from("rpg_progreso")
+    .select("user_id, xp")
+    .eq("parroquia", parroquia);
+
+  if (error) {
+    console.error("Error al consultar ranking parroquia:", error.message);
+    return;
+  }
+
+  // Suma XP por usuario
+  const rankingMap = {};
+  (parroquiaRows || []).forEach(r => {
+    if (!rankingMap[r.user_id]) rankingMap[r.user_id] = 0;
+    rankingMap[r.user_id] += r.xp || 0;
+  });
+  const rankingArray = Object.entries(rankingMap)
+    .map(([user_id, xp]) => ({ user_id, xp }))
+    .sort((a, b) => b.xp - a.xp);
+
+  // Mostramos todo en consola
+  console.log("Ranking parroquia DEBUG:", rankingArray, "Parroquia:", parroquia, "Tu user_id:", user.id);
+}
