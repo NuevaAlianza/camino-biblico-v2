@@ -1,21 +1,26 @@
-let rpgCiclos = {};
+
+        <br>${tip}
+      </div>
+      <button id="btn-seguir-nivel">Continuar</button>
+    </div>let rpgCiclos = {};
 let cicloActual = obtenerSemanaAnio();
-let datosCiclo = null; // Datos del ciclo actual: título, descripcion, niveles...
+let datosCiclo = null;
 let progresoRPG = null;
-let usuarioActual = null; // NUEVO: Definir global para acceder usuario
+let usuarioActual = null; // Usuario global
 
 const preguntasPorNivel = [5, 5, 4, 4, 3];
 
 // --- 1. Carga de datos y ciclo actual ---
 fetch('datos/rpg-preguntas.json')
   .then(res => res.json())
-  .then(data => {
+  .then(async data => {
     rpgCiclos = data.ciclos || {};
     datosCiclo = rpgCiclos[cicloActual];
     if (!datosCiclo) {
       mostrarSinCiclo();
       return;
     }
+    await mostrarStatsBienvenida(); // Panel superior (XP, ranking)
     inicializarPanelInicio();
     inicializarRPG();
   });
@@ -23,10 +28,10 @@ fetch('datos/rpg-preguntas.json')
 // --- 2. Funciones utilitarias ---
 function obtenerSemanaAnio() {
   const d = new Date();
-  d.setHours(0,0,0,0);
-  d.setDate(d.getDate() + 4 - (d.getDay()||7));
-  const yearStart = new Date(d.getFullYear(),0,1);
-  return d.getFullYear() + "-S" + Math.ceil((((d - yearStart) / 86400000) + 1)/7);
+  d.setHours(0, 0, 0, 0);
+  d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+  const yearStart = new Date(d.getFullYear(), 0, 1);
+  return d.getFullYear() + "-S" + Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
 }
 
 function mostrarSinCiclo() {
@@ -44,16 +49,14 @@ function mostrarSinCiclo() {
 async function mostrarStatsBienvenida() {
   const bienvenida = document.getElementById("bienvenida-stats");
   // 1. Obtener usuario actual de Supabase Auth
+  const { data: sessionData } = await supabase.auth.getSession();
+  usuarioActual = sessionData?.session?.user;
   if (!usuarioActual) {
-    // Si no existe, intenta obtenerlo
-    const { data: sessionData } = await supabase.auth.getSession();
-    usuarioActual = sessionData?.session?.user;
-    if (!usuarioActual) {
-      bienvenida.innerHTML = "";
-      return;
-    }
+    bienvenida.innerHTML = "";
+    return;
   }
-  // 2. XP total acumulada
+
+  // 2. XP total acumulada (suma todas sus filas)
   const { data: xpRows } = await supabase
     .from("rpg_progreso")
     .select("xp")
@@ -64,7 +67,6 @@ async function mostrarStatsBienvenida() {
   const parroquia = usuarioActual.user_metadata?.parroquia || null;
   let rankingHTML = "";
   if (parroquia) {
-    // Trae todos los usuarios de la parroquia y suma su XP
     const { data: parroquiaRows } = await supabase
       .from("rpg_progreso")
       .select("user_id, xp")
@@ -146,7 +148,7 @@ async function guardarProgresoRPG({ nivel, rango, xp, completado }) {
 let juegoActual = null;
 
 async function inicializarPanelInicio() {
-  await mostrarStatsBienvenida(); // <-- Mostrar XP y ranking
+  // NO vuelvas a llamar a mostrarStatsBienvenida aquí (ya se llama al inicio)
   document.getElementById("titulo-ciclo").textContent = datosCiclo.titulo || "Trivia Bíblica RPG";
   document.getElementById("descripcion-ciclo").textContent = datosCiclo.descripcion || "";
   document.getElementById("mensaje-rpg").textContent =
@@ -388,8 +390,7 @@ function mostrarMensajeNivelPersonalizado(nivel, vidas, callback) {
       <p>Has alcanzado el <b>nivel ${nivel}</b>.<br>
       Te quedan <b>${vidas}</b> ${vidas === 1 ? "vida" : "vidas"}.</p>
       <div class="tip-box">
-        <strong>Tip para este nivel:</strong>
-        <br>${tip}
+        <strong>Tip para este nivel:</strong><br>${tip}
       </div>
       <button id="btn-seguir-nivel">Continuar</button>
     </div>
