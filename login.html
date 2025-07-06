@@ -5,41 +5,58 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login – Camino Bíblico</title>
 
-<!-- SDK de Supabase -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-<!-- Configuración de Supabase (en la raíz) -->
-<script src="supabase.js"></script>
-<!-- Scripts propios -->
-<script src="js/auth.js"></script>
-<script src="js/progreso.js"></script>
-
-
-
+  <!-- SDK de Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="supabase.js"></script>
+  
   <style>
     body { font-family: Arial, sans-serif; padding: 2rem; max-width: 400px; margin: auto; }
     h2 { margin-top: 2rem; }
     label, input, select { display: block; width: 100%; margin-bottom: 1rem; }
-    button { padding: 0.5rem 1rem; }
+    button { padding: 0.5rem 1rem; margin-bottom: 1rem;}
     #mensaje { margin-top: 1rem; color: green; font-weight: bold; }
+    #toggle-registro { background: none; border: none; color: #0074D9; text-decoration: underline; cursor: pointer; margin-bottom: 2rem; }
+    #registro-form { display: none; }
+    .error { color: #b30000; }
   </style>
 </head>
 <body>
 
   <h1>Camino Bíblico</h1>
 
-  <h2>Registro</h2>
+  <button id="toggle-registro" type="button">¿No tienes cuenta? Registrarse</button>
+
   <form id="registro-form">
+    <h2>Registro</h2>
     <input type="email" id="reg-email" placeholder="Correo electrónico" required />
-    <input type="password" id="reg-password" placeholder="Contraseña" required />
+    <input type="password" id="reg-password" placeholder="Contraseña" required minlength="6" />
     <input type="text" id="reg-nombre" placeholder="Nombre completo" required />
-    <input type="text" id="reg-pais" placeholder="País" />
-    <input type="text" id="reg-ciudad" placeholder="Ciudad" />
+    
+    <input list="paises" id="reg-pais" placeholder="País" required autocomplete="country">
+    <datalist id="paises">
+      <option value="República Dominicana">
+      <option value="México">
+      <option value="Colombia">
+      <option value="Estados Unidos">
+      <option value="España">
+      <!-- Agrega tus países aquí -->
+    </datalist>
+    
+    <input list="ciudades" id="reg-ciudad" placeholder="Ciudad" required autocomplete="address-level2">
+    <datalist id="ciudades">
+      <option value="Santo Domingo">
+      <option value="Santiago">
+      <option value="La Vega">
+      <option value="Puerto Plata">
+      <!-- Agrega tus ciudades aquí -->
+    </datalist>
+    
     <input type="text" id="reg-parroquia" placeholder="Parroquia" />
     <button type="submit">Registrarse</button>
   </form>
 
-  <h2>Iniciar sesión</h2>
   <form id="login-form">
+    <h2>Iniciar sesión</h2>
     <input type="email" id="login-email" placeholder="Correo electrónico" required />
     <input type="password" id="login-password" placeholder="Contraseña" required />
     <button type="submit">Entrar</button>
@@ -47,6 +64,97 @@
 
   <div id="mensaje"></div>
 
+  <script>
+    // --- Alternar Registro/Login ---
+    const registroForm = document.getElementById("registro-form");
+    const loginForm = document.getElementById("login-form");
+    const toggleBtn = document.getElementById("toggle-registro");
+    let mostrandoRegistro = false;
+
+    toggleBtn.onclick = () => {
+      mostrandoRegistro = !mostrandoRegistro;
+      registroForm.style.display = mostrandoRegistro ? "block" : "none";
+      loginForm.style.display = mostrandoRegistro ? "none" : "block";
+      toggleBtn.textContent = mostrandoRegistro 
+        ? "¿Ya tienes cuenta? Iniciar sesión" 
+        : "¿No tienes cuenta? Registrarse";
+      document.getElementById("mensaje").textContent = "";
+    };
+
+    // Mostrar login por defecto
+    registroForm.style.display = "none";
+    loginForm.style.display = "block";
+
+    // --- Validación para País/Ciudad ---
+    function validarLista(valor, listaSelector) {
+      const opciones = Array.from(document.querySelectorAll(`${listaSelector} option`))
+        .map(opt => opt.value.trim().toLowerCase());
+      return opciones.includes(valor.trim().toLowerCase());
+    }
+
+    // --- Registro ---
+    registroForm.onsubmit = async e => {
+      e.preventDefault();
+      const email = document.getElementById("reg-email").value.trim();
+      const password = document.getElementById("reg-password").value.trim();
+      const nombre = document.getElementById("reg-nombre").value.trim();
+      const pais = document.getElementById("reg-pais").value.trim();
+      const ciudad = document.getElementById("reg-ciudad").value.trim();
+      const parroquia = document.getElementById("reg-parroquia").value.trim();
+
+      // Validaciones extra (puedes agregar más según tus reglas)
+      if (!validarLista(pais, "#paises")) {
+        mostrarMensaje("Selecciona un país válido de la lista.", true);
+        document.getElementById("reg-pais").focus();
+        return false;
+      }
+      if (!validarLista(ciudad, "#ciudades")) {
+        mostrarMensaje("Selecciona una ciudad válida de la lista.", true);
+        document.getElementById("reg-ciudad").focus();
+        return false;
+      }
+
+      try {
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: {
+              nombre,
+              pais,
+              ciudad,
+              parroquia
+            }
+          }
+        });
+        if (error) throw error;
+        mostrarMensaje("¡Registro exitoso! Revisa tu correo para verificar la cuenta.", false);
+        registroForm.reset();
+      } catch (err) {
+        mostrarMensaje("Error: " + err.message, true);
+      }
+    };
+
+    // --- Login ---
+    loginForm.onsubmit = async e => {
+      e.preventDefault();
+      const email = document.getElementById("login-email").value.trim();
+      const password = document.getElementById("login-password").value.trim();
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        mostrarMensaje("¡Bienvenido!", false);
+        setTimeout(() => window.location.href = "menu.html", 800);
+      } catch (err) {
+        mostrarMensaje("Error: " + err.message, true);
+      }
+    };
+
+    function mostrarMensaje(msg, error = false) {
+      const mensajeDiv = document.getElementById("mensaje");
+      mensajeDiv.textContent = msg;
+      mensajeDiv.className = error ? "error" : "";
+    }
+  </script>
 </body>
 </html>
-
