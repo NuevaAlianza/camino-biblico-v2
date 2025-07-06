@@ -5,64 +5,149 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Quiz Comentado – Camino Bíblico</title>
   <link rel="stylesheet" href="css/quiz.css" />
+  <style>
+    :root {
+      --color-fondo: #181c2c;
+      --color-tarjeta: #f8fafd;
+      --color-correcto: #43e97b;
+      --color-incorrecto: #ff5a5f;
+      --color-neutro: #e0e6ed;
+      --color-boton: #6a82fb;
+      --color-titulo: #6a82fb;
+      --color-barra-tiempo: linear-gradient(90deg, #6a82fb 0%, #fc5c7d 100%);
+      --sombra: 0 4px 24px rgba(32,32,64,0.15);
+    }
+    body {
+      background: var(--color-fondo);
+      color: #222;
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Segoe UI', 'Montserrat', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* --- Selección modernizada --- */
+    .cabecera-quiz {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin: 2.3rem 0 0.6rem 0;
+    }
+    .seleccion-tema-v2 {
+      display: flex;
+      flex-direction: column;
+      gap: 1.3rem;
+      align-items: center;
+      background: #f8fafd;
+      border-radius: 1.2rem;
+      box-shadow: 0 2px 12px #6a82fb14;
+      padding: 2rem 1.1rem 1.2rem 1.1rem;
+      margin-bottom: 2.5rem;
+      max-width: 430px;
+      width: 98vw;
+    }
+    .campos-flex {
+      display: flex;
+      gap: 1.4rem;
+      width: 100%;
+      justify-content: center;
+    }
+    .campo-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      min-width: 160px;
+    }
+    .seleccion-tema-v2 label {
+      font-weight: bold;
+      color: #4453ab;
+      font-size: 1.15rem;
+    }
+    .seleccion-tema-v2 select {
+      padding: 0.7rem 0.7rem;
+      border-radius: 0.9rem;
+      border: 1px solid #bfcfff;
+      background: #eef3ff;
+      font-size: 1.07rem;
+      font-weight: 500;
+      box-shadow: 0 1px 4px #aac6ff22;
+    }
+    .seleccion-tema-v2 button[type="submit"] {
+      margin-top: 1.1rem;
+      padding: 0.98rem 2.2rem;
+      border-radius: 1.1rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      background: linear-gradient(90deg, #6a82fb 0%, #fc5c7d 100%);
+      color: #fff;
+      border: none;
+      box-shadow: 0 2px 12px #6a82fb26;
+      cursor: pointer;
+      transition: background 0.17s, transform 0.13s;
+    }
+    .seleccion-tema-v2 button[disabled] {
+      background: #d3d7e6;
+      color: #bbb;
+      cursor: not-allowed;
+    }
+    .seleccion-tema-v2 button[type="submit"]:hover:enabled {
+      background: #4154c8;
+      transform: scale(1.04);
+    }
+    .oculto { display: none !important; }
+    /* --- El resto de tus estilos quiz.css originales... --- */
+  </style>
 </head>
 <body>
 
-<div class="cabecera-quiz">
-  <form class="seleccion-tema-v2" id="seleccion-tema-form" autocomplete="off" onsubmit="return false;">
-    <div class="campos-flex">
-      <div class="campo-form">
-        <label for="categoria">Categoría</label>
-        <select id="categoria" required>
-          <option value="">-- Elige una categoría --</option>
-        </select>
+  <div class="cabecera-quiz">
+    <form class="seleccion-tema-v2" id="seleccion-tema-form" autocomplete="off" onsubmit="return false;">
+      <div class="campos-flex">
+        <div class="campo-form">
+          <label for="categoria">Categoría</label>
+          <select id="categoria" required>
+            <option value="">-- Elige una categoría --</option>
+          </select>
+        </div>
+        <div class="campo-form">
+          <label for="tema">Tema</label>
+          <select id="tema" disabled required>
+            <option value="">-- Elige un tema --</option>
+          </select>
+        </div>
       </div>
-      <div class="campo-form">
-        <label for="tema">Tema</label>
-        <select id="tema" disabled required>
-          <option value="">-- Elige un tema --</option>
-        </select>
-      </div>
+      <button id="iniciar" disabled type="submit">🎬 Iniciar Quiz</button>
+    </form>
+  </div>
+
+  <!-- Zona de juego -->
+  <div id="juego" class="oculto">
+    <div id="barra-tiempo" class="barra-tiempo">
+      <div id="progreso"></div>
     </div>
-    <button id="iniciar" disabled type="submit">🎬 Iniciar Quiz</button>
-  </form>
-</div>
+    <div id="contador" class="contador oculto">Tiempo: 58s</div>
+    <div id="conteo-pregunta" class="conteo-pregunta"></div>
+    <div id="pregunta" class="pregunta"></div>
+    <div id="opciones" class="opciones"></div>
+    <div id="comentario" class="comentario oculto"></div>
+  </div>
 
-
-
-    <!-- Zona de juego -->
-    <div id="juego" class="oculto">
-      <div id="barra-tiempo" class="barra-tiempo">
-        <div id="progreso"></div>
-      </div>
-      <!-- El contador es opcional. Si NO lo quieres, bórralo. 
-           Si quieres dejarlo pero oculto, ponle la clase oculto -->
-      <div id="contador" class="contador oculto">Tiempo: 58s</div>
-
-      <div id="conteo-pregunta" class="conteo-pregunta"></div>
-      <div id="pregunta" class="pregunta"></div>
-      <div id="opciones" class="opciones"></div>
-      <div id="comentario" class="comentario oculto"></div>
-    </div>
-
-    <!-- Resultado final -->
-    <div id="resultado" class="oculto resultado">
-      <div id="detalle-resultado"></div>
-      <div id="mensaje-resultado"></div> <!-- Mensaje adicional si lo deseas -->
-      <button id="ver-coleccionables" class="oculto">Ver coleccionables</button>
-      <button id="reiniciar">Reiniciar Quiz</button>
-      <button id="volver">Volver al inicio</button>
-    </div>
+  <!-- Resultado final -->
+  <div id="resultado" class="oculto resultado">
+    <div id="detalle-resultado"></div>
+    <div id="mensaje-resultado"></div>
+    <button id="ver-coleccionables" class="oculto">Ver coleccionables</button>
+    <button id="reiniciar">Reiniciar Quiz</button>
+    <button id="volver">Volver al inicio</button>
   </div>
 
   <!-- SDK UMD de Supabase (primero) -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-  <!-- Tu archivo de configuración (en la raíz) -->
   <script src="supabase.js"></script>
-  <!-- Tus scripts propios -->
   <script src="js/auth.js"></script>
   <script src="js/progreso.js"></script>
   <script src="js/quiz.js"></script>
-
 </body>
 </html>
