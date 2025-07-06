@@ -81,3 +81,18 @@ body {
 .panel-bienvenida b {
   color: #00a877;
 }
+#bienvenida-stats {
+  max-width: 410px;
+  margin: 1.2em auto 0.8em auto;
+  padding: 1.1em 1.2em 1.1em 1.2em;
+  background: #fffbe8;
+  border-radius: 1.3em;
+  box-shadow: 0 2px 14px #e0d1a880;
+  color: #64450c;
+  text-align: center;
+  font-size: 1.09em;
+}
+#bienvenida-stats .panel-bienvenida h2 {
+  margin-top: 0;
+  font-size: 1.35em;
+}
