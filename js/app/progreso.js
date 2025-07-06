@@ -1,13 +1,13 @@
 let coleccionablesData = {};
 let progresoGlobal = {};
 let usuarioActual = null;
-let rankingData = { global: null, pais: null, ciudad: null, parroquia: null };
 
 // --- 1. Cargar progreso, usuario y datos de categorías ---
 document.addEventListener("DOMContentLoaded", async () => {
   // 1.1 Obtener sesión y metadata
   const { data: sessionData } = await supabase.auth.getSession();
   usuarioActual = sessionData?.session?.user;
+  if (!usuarioActual) return; // No logueado
   const meta = usuarioActual?.user_metadata || {};
   const pais = meta.pais || "N/A";
   const ciudad = meta.ciudad || "N/A";
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // 1.2 Cargar categorías y temas (JSON completo)
   coleccionablesData = await fetch('./datos/coleccionables.json').then(res => res.json());
 
-  // 1.3 Cargar progreso individual
+  // 1.3 Cargar progreso individual de quizzes comentados
   const { data: progresoRows } = await supabase
     .from("progreso")
     .select("*")
@@ -48,20 +48,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 // --- 2. Mini dashboard animado ---
 function mostrarDashboardAnimado() {
   const cont = document.getElementById("progreso-resumen");
-  // Calcular TOTAL de temas desde JSON (dinámico)
   let totalTemas = 0;
   for (const categoria in coleccionablesData) {
     if (categoria.toLowerCase() === "logros") continue;
-    const temas = coleccionablesData[categoria];
-    totalTemas += Object.keys(temas).length;
+    totalTemas += Object.keys(coleccionablesData[categoria]).length;
   }
-  // Jugados
   const categorias = Object.values(progresoGlobal.categorias || {});
   const temasJugados = categorias.reduce((a, b) => a + Object.keys(b).length, 0);
-  // Nota promedio
   const notas = categorias.flatMap(cat => Object.values(cat).map(x => (x.nota || "").toUpperCase()));
   const notasNum = notas.map(n => n === "A" ? 3 : n === "B" ? 2 : n === "C" ? 1 : 0);
-  const notaProm = notasNum.length ? (notasNum.reduce((a,b)=>a+b,0) / notasNum.length) : 0;
+  const notaProm = notasNum.length ? (notasNum.reduce((a, b) => a + b, 0) / notasNum.length) : 0;
   let letraProm = "-";
   if (notaProm >= 2.5) letraProm = "A";
   else if (notaProm >= 1.5) letraProm = "B";
@@ -74,7 +70,7 @@ function mostrarDashboardAnimado() {
         <h2>Resumen general</h2>
         <p><b>${temasJugados}</b> de <b>${totalTemas}</b> temas jugados</p>
         <p>Nota promedio: <b>${letraProm}</b></p>
-        <div class="dashboard-bar"><div class="dashboard-bar-inner" style="width:${(temasJugados/totalTemas)*100}%"></div></div>
+        <div class="dashboard-bar"><div class="dashboard-bar-inner" style="width:${(temasJugados / totalTemas) * 100}%"></div></div>
       </div>
     </div>
   `;
@@ -87,19 +83,16 @@ function mostrarBarrasPorCategoria() {
   for (const categoria in coleccionablesData) {
     if (categoria.toLowerCase() === "logros") continue;
     const temasTotales = Object.keys(coleccionablesData[categoria]).length;
-
-    // Buscar la categoría en progresoGlobal, insensible a mayúsculas/acentos
     const progresoCats = Object.keys(progresoGlobal.categorias || {});
     const catKey = progresoCats.find(
       c => c.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase() ===
-           categoria.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
+        categoria.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
     );
     const temasJ = catKey ? progresoGlobal.categorias[catKey] : {};
     const jugados = Object.keys(temasJ).length;
-
     const notas = Object.values(temasJ).map(x => (x.nota || "").toUpperCase());
     const notasNum = notas.map(n => n === "A" ? 3 : n === "B" ? 2 : n === "C" ? 1 : 0);
-    const prom = notasNum.length ? (notasNum.reduce((a,b)=>a+b,0)/notasNum.length) : 0;
+    const prom = notasNum.length ? (notasNum.reduce((a, b) => a + b, 0) / notasNum.length) : 0;
     let letra = "-";
     if (prom >= 2.5) letra = "A";
     else if (prom >= 1.5) letra = "B";
@@ -109,14 +102,13 @@ function mostrarBarrasPorCategoria() {
       <div class="categoria-bar-row" title="Has completado ${jugados} de ${temasTotales} temas. Promedio: ${letra}">
         <div class="categoria-nombre">${categoria}</div>
         <div class="categoria-bar-outer">
-          <div class="categoria-bar-inner" style="width:0%" data-meta="${(jugados/temasTotales)*100}"></div>
+          <div class="categoria-bar-inner" style="width:0%" data-meta="${(jugados / temasTotales) * 100}"></div>
         </div>
         <div class="categoria-bar-meta">${jugados}/${temasTotales} <span>${letra}</span></div>
       </div>
     `;
   }
   cont.innerHTML = html;
-  // Animar las barras después de insertar
   setTimeout(() => {
     document.querySelectorAll('.categoria-bar-inner').forEach(bar => {
       bar.style.width = bar.dataset.meta + "%";
@@ -124,8 +116,7 @@ function mostrarBarrasPorCategoria() {
   }, 120);
 }
 
-
-// --- 4. Ranking visual ---
+// --- 4. Ranking visual (con debug de arrays) ---
 async function mostrarRanking({ pais, ciudad, parroquia }) {
   const cont = document.getElementById("progreso-ranking");
   cont.innerHTML = `<h3>Tu Ranking</h3><div id="rankings"></div>`;
@@ -149,7 +140,6 @@ async function mostrarRanking({ pais, ciudad, parroquia }) {
       if (!xpPorUsuario[row.user_id]) xpPorUsuario[row.user_id] = 0;
       xpPorUsuario[row.user_id] += row.xp || 0;
     });
-    // Convertir a array ordenado
     return Object.entries(xpPorUsuario)
       .map(([user_id, xp]) => ({ user_id, xp }))
       .sort((a, b) => b.xp - a.xp);
@@ -157,12 +147,15 @@ async function mostrarRanking({ pais, ciudad, parroquia }) {
 
   // Ranking global
   const global = await queryRanking();
-  // Ranking por país
   const porPais = await queryRanking("pais", pais);
-  // Ranking por ciudad
   const porCiudad = await queryRanking("ciudad", ciudad);
-  // Ranking por parroquia
   const porParroquia = await queryRanking("parroquia", parroquia);
+
+  // --- Debug para ver en consola ---
+  console.log("Ranking Global:", global);
+  console.log("Ranking País:", porPais, "Pais:", pais);
+  console.log("Ranking Ciudad:", porCiudad, "Ciudad:", ciudad);
+  console.log("Ranking Parroquia:", porParroquia, "Parroquia:", parroquia);
 
   // Busca posición del usuario actual en cada ranking
   const posGlobal = global.findIndex(r => r.user_id === usuarioActual.id) + 1;
@@ -192,16 +185,14 @@ function mostrarHistorialPartidas() {
   cont.innerHTML = html;
 }
 
-// --- 6. Logros rápidos visuales (ejemplo, puedes expandir) ---
+// --- 6. Logros rápidos visuales ---
 function mostrarLogrosRapidos() {
   const cont = document.getElementById("progreso-logros");
-  // Ejemplo de logros rápidos: 5 A, 10 A, una categoría toda A...
   let totalA = 0, categoriasA = 0;
   for (const cat in progresoGlobal.categorias) {
     const temas = progresoGlobal.categorias[cat];
     const numA = Object.values(temas).filter(t => t.nota === "A").length;
     totalA += numA;
-    // ¿Toda la categoría en A?
     const allA = Object.values(temas).length &&
       Object.values(temas).every(t => t.nota === "A");
     if (allA && Object.values(temas).length > 0) categoriasA++;
@@ -211,7 +202,7 @@ function mostrarLogrosRapidos() {
     <div class="logros-grid">
       <div class="logro-card">🏅 <div>${totalA} temas <b>A</b></div></div>
       <div class="logro-card">🥇 <div>${categoriasA} categoría(s) <b>todas A</b></div></div>
-      <!-- Aquí puedes agregar más logros -->
     </div>
   `;
 }
+
