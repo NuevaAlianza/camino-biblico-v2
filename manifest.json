@@ -1,6 +1,6 @@
 {
-  "name": "Nueva Alianza 2",
-  "short_name": "Nueva Alianza",
+  "name": "Camino Biblico",
+  "short_name": "Camino biblico",
   "description": "Juega, aprende y progresa en tu Camino Bíblico.",
   "start_url": "./index.html",
   "display": "standalone",
