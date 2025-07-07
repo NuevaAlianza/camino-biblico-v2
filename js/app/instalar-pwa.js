@@ -27,3 +27,4 @@ installBtn?.addEventListener('click', async () => {
 window.addEventListener('appinstalled', () => {
   installBtn.style.display = 'none';
 });
+ 
