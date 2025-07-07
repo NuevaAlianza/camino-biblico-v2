@@ -28,80 +28,117 @@
       align-items: center;
     }
 
-    /* --- Selección modernizada --- */
     .cabecera-quiz {
       width: 100%;
       display: flex;
       justify-content: center;
-      margin: 2.3rem 0 0.6rem 0;
+      margin-top: 1.2rem;
+      margin-bottom: 0.6rem;
+      transition: opacity 0.5s, max-height 0.5s, margin 0.5s;
+      opacity: 1;
+      max-height: 250px;
+      overflow: hidden;
+    }
+    .cabecera-quiz.oculto {
+      opacity: 0;
+      max-height: 0;
+      margin: 0 !important;
+      pointer-events: none;
     }
     .seleccion-tema-v2 {
+      background: #222446;
+      border-radius: 1.3rem;
+      box-shadow: 0 2px 16px #6a82fb20;
+      padding: 1.4rem 0.8rem 1.2rem 0.8rem;
+      max-width: 430px;
+      width: 99vw;
       display: flex;
       flex-direction: column;
-      gap: 1.3rem;
-      align-items: center;
-      background: #f8fafd;
-      border-radius: 1.2rem;
-      box-shadow: 0 2px 12px #6a82fb14;
-      padding: 2rem 1.1rem 1.2rem 1.1rem;
-      margin-bottom: 2.5rem;
-      max-width: 430px;
-      width: 98vw;
+      align-items: stretch;
+      gap: 0.4rem;
     }
     .campos-flex {
       display: flex;
-      gap: 1.4rem;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.4rem;
       width: 100%;
       justify-content: center;
     }
     .campo-form {
+      flex: 1 1 120px;
+      min-width: 120px;
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
-      min-width: 160px;
+      gap: 0.13rem;
     }
-    .seleccion-tema-v2 label {
-      font-weight: bold;
-      color: #4453ab;
-      font-size: 1.15rem;
-    }
-    .seleccion-tema-v2 select {
-      padding: 0.7rem 0.7rem;
-      border-radius: 0.9rem;
-      border: 1px solid #bfcfff;
-      background: #eef3ff;
+    .campo-form label {
+      color: #9db3fa;
       font-size: 1.07rem;
-      font-weight: 500;
-      box-shadow: 0 1px 4px #aac6ff22;
+      font-weight: bold;
+      margin-bottom: 0.1rem;
+      letter-spacing: 0.01em;
     }
-    .seleccion-tema-v2 button[type="submit"] {
+    .campo-form select {
+      border: none;
+      border-radius: 0.8rem;
+      padding: 0.64rem 0.6rem;
+      font-size: 1.08rem;
+      background: #f8fafd;
+      color: #27306c;
+      box-shadow: 0 2px 6px #6a82fb15;
+      margin-bottom: 0;
+      outline: none;
+      transition: box-shadow 0.2s, border 0.2s;
+    }
+    .campo-form select:focus {
+      box-shadow: 0 0 0 2px #6a82fb80;
+      border: 1.5px solid #6a82fb55;
+    }
+
+    .seleccion-tema-v2 button#iniciar {
       margin-top: 1.1rem;
-      padding: 0.98rem 2.2rem;
-      border-radius: 1.1rem;
-      font-size: 1.1rem;
-      font-weight: 600;
-      background: linear-gradient(90deg, #6a82fb 0%, #fc5c7d 100%);
+      background: var(--color-boton);
       color: #fff;
       border: none;
-      box-shadow: 0 2px 12px #6a82fb26;
+      border-radius: 1.1rem;
+      padding: 0.9rem 0.7rem;
+      font-size: 1.19rem;
+      font-weight: bold;
+      letter-spacing: 0.02em;
       cursor: pointer;
-      transition: background 0.17s, transform 0.13s;
+      box-shadow: 0 2px 10px #6a82fb32;
+      transition: background 0.19s, transform 0.13s;
+      width: 100%;
     }
-    .seleccion-tema-v2 button[disabled] {
-      background: #d3d7e6;
-      color: #bbb;
+    .seleccion-tema-v2 button#iniciar:disabled {
+      background: #b1b6cf;
       cursor: not-allowed;
+      color: #f2f2f2;
     }
-    .seleccion-tema-v2 button[type="submit"]:hover:enabled {
-      background: #4154c8;
-      transform: scale(1.04);
+    .seleccion-tema-v2 button#iniciar:hover:not(:disabled) {
+      background: #4656c3;
+      transform: scale(1.045);
     }
     .oculto { display: none !important; }
-    /* --- El resto de tus estilos quiz.css originales... --- */
+
+    @media (max-width: 480px) {
+      .campos-flex {
+        flex-direction: column;
+        gap: 0.3rem;
+      }
+      .cabecera-quiz {
+        margin-top: 1.2rem;
+      }
+      .seleccion-tema-v2 {
+        padding: 0.7rem 0.4rem 0.6rem 0.4rem;
+        max-width: 99vw;
+      }
+    }
+    /* Aquí debajo sigue tu quiz.css original */
   </style>
 </head>
 <body>
-
   <div class="cabecera-quiz">
     <form class="seleccion-tema-v2" id="seleccion-tema-form" autocomplete="off" onsubmit="return false;">
       <div class="campos-flex">
@@ -121,8 +158,6 @@
       <button id="iniciar" disabled type="submit">🎬 Iniciar Quiz</button>
     </form>
   </div>
-
-  <!-- Zona de juego -->
   <div id="juego" class="oculto">
     <div id="barra-tiempo" class="barra-tiempo">
       <div id="progreso"></div>
@@ -133,8 +168,6 @@
     <div id="opciones" class="opciones"></div>
     <div id="comentario" class="comentario oculto"></div>
   </div>
-
-  <!-- Resultado final -->
   <div id="resultado" class="oculto resultado">
     <div id="detalle-resultado"></div>
     <div id="mensaje-resultado"></div>
@@ -142,8 +175,6 @@
     <button id="reiniciar">Reiniciar Quiz</button>
     <button id="volver">Volver al inicio</button>
   </div>
-
-  <!-- SDK UMD de Supabase (primero) -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script src="supabase.js"></script>
   <script src="js/auth.js"></script>
