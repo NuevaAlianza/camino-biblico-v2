@@ -183,7 +183,6 @@ function mostrarPersonajes(categoriaActual) {
         };
       });
     } else if (categoriaActual === "Logros") {
-      // --- Construir logros al vuelo ---
       temas = {};
       const progreso = progresoGlobal || { categorias: {}, historial: [] };
       const progresoCategorias = progreso.categorias || {};
@@ -293,14 +292,29 @@ function mostrarPersonajes(categoriaActual) {
     contenedor.classList.add("fade-in");
   }, 150);
 
-  // Scroll de categorías (opcional)
+  // --- Swipe móvil para cambiar de categoría ---
+  // Todas las categorías posibles (incluyendo Logros y Temporadas)
   const todas = [...Object.keys(coleccionablesData), "Logros", "Temporadas"];
   const i = todas.indexOf(categoriaActual);
+  let x0 = null;
+  vistaPersonajes.ontouchstart = (e) => { x0 = e.touches[0].clientX; };
+  vistaPersonajes.ontouchend = (e) => {
+    if (x0 === null) return;
+    let dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 45) {
+      if (dx < 0 && i < todas.length - 1) mostrarPersonajes(todas[i + 1]);
+      else if (dx > 0 && i > 0) mostrarPersonajes(todas[i - 1]);
+    }
+    x0 = null;
+  };
+
+  // Scroll por rueda en PC (opcional)
   vistaPersonajes.onwheel = (e) => {
     if (e.deltaY > 30 && i < todas.length - 1) mostrarPersonajes(todas[i + 1]);
     else if (e.deltaY < -30 && i > 0) mostrarPersonajes(todas[i - 1]);
   };
 }
+
 // --- Swipe móvil para cambiar categoría ---
 let x0 = null;
 vistaPersonajes.ontouchstart = (e) => { x0 = e.touches[0].clientX; };
