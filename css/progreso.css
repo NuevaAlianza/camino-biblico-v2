@@ -182,3 +182,62 @@
   from { opacity: 0; transform: scale(.93);}
   to   { opacity: 1; transform: scale(1);}
 }
+.ranking-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.1rem;
+  margin: 1.2em 0 0.3em 0;
+  justify-content: center;
+}
+.ranking-card {
+  background: #f8faff;
+  border-radius: 1.2em;
+  box-shadow: 0 4px 14px #8ed2f72a, 0 1px 4px #88bbe420;
+  padding: 1em 1.2em;
+  min-width: 130px;
+  flex: 1 1 130px;
+  max-width: 170px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: box-shadow 0.17s;
+  border: 2px solid #e1eaff;
+}
+.ranking-card .ranking-emoji {
+  font-size: 1.9em;
+  margin-bottom: 0.2em;
+}
+.ranking-card .ranking-label {
+  font-weight: 600;
+  color: #2262a7;
+  margin-bottom: 0.22em;
+  font-size: 1.06em;
+  letter-spacing: 0.03em;
+}
+.ranking-card .ranking-pos {
+  font-size: 1.45em;
+  font-weight: 700;
+  color: #2a9d8f;
+  margin-bottom: 0.1em;
+}
+.ranking-card .ranking-total {
+  font-size: 0.98em;
+  color: #7486b0;
+  margin-bottom: 0.12em;
+}
+.ranking-card .ranking-extra {
+  font-size: 0.98em;
+  color: #a4b2d1;
+  margin-top: 0.05em;
+}
+
+.ranking-card.global   { border-color: #2a9d8f33; }
+.ranking-card.pais     { border-color: #f4a26144; }
+.ranking-card.ciudad   { border-color: #e76f51; }
+.ranking-card.parroquia{ border-color: #ada7ff; }
+
+@media (max-width: 700px) {
+  .ranking-grid { flex-direction: column; align-items: stretch; }
+  .ranking-card { max-width: 98vw; min-width: 0; }
+}
