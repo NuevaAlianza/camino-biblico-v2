@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // --- Render visual ---
   mostrarDashboardAnimado();
-  mostrarBarrasPorCategoria();
+ // mostrarBarrasPorCategoria();//
   await mostrarRanking({ pais, ciudad, parroquia });
   mostrarHistorialPartidas();
   mostrarLogrosRapidos();
@@ -76,45 +76,7 @@ function mostrarDashboardAnimado() {
   `;
 }
 
-// --- 3. Barras visuales por categoría ---
-function mostrarBarrasPorCategoria() {
-  const cont = document.getElementById("progreso-categorias");
-  let html = `<h3>Progreso por categoría</h3>`;
-  for (const categoria in coleccionablesData) {
-    if (categoria.toLowerCase() === "logros") continue;
-    const temasTotales = Object.keys(coleccionablesData[categoria]).length;
-    const progresoCats = Object.keys(progresoGlobal.categorias || {});
-    const catKey = progresoCats.find(
-      c => c.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase() ===
-        categoria.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
-    );
-    const temasJ = catKey ? progresoGlobal.categorias[catKey] : {};
-    const jugados = Object.keys(temasJ).length;
-    const notas = Object.values(temasJ).map(x => (x.nota || "").toUpperCase());
-    const notasNum = notas.map(n => n === "A" ? 3 : n === "B" ? 2 : n === "C" ? 1 : 0);
-    const prom = notasNum.length ? (notasNum.reduce((a, b) => a + b, 0) / notasNum.length) : 0;
-    let letra = "-";
-    if (prom >= 2.5) letra = "A";
-    else if (prom >= 1.5) letra = "B";
-    else if (prom > 0) letra = "C";
 
-    html += `
-      <div class="categoria-bar-row" title="Has completado ${jugados} de ${temasTotales} temas. Promedio: ${letra}">
-        <div class="categoria-nombre">${categoria}</div>
-        <div class="categoria-bar-outer">
-          <div class="categoria-bar-inner" style="width:0%" data-meta="${(jugados / temasTotales) * 100}"></div>
-        </div>
-        <div class="categoria-bar-meta">${jugados}/${temasTotales} <span>${letra}</span></div>
-      </div>
-    `;
-  }
-  cont.innerHTML = html;
-  setTimeout(() => {
-    document.querySelectorAll('.categoria-bar-inner').forEach(bar => {
-      bar.style.width = bar.dataset.meta + "%";
-    });
-  }, 120);
-}
 
 // --- 4. Ranking visual (con debug de arrays) ---
 async function mostrarRanking({ pais, ciudad, parroquia }) {
