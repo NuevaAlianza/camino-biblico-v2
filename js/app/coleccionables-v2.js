@@ -352,3 +352,19 @@ document.getElementById("volver-resumen").addEventListener("click", () => {
   document.getElementById("vista-personajes").classList.add("oculto");
   document.getElementById("resumen-categorias").classList.remove("oculto");
 });
+// Delegación de evento para cerrar el modal (funciona aunque el botón se regenere)
+document.addEventListener("click", function(e) {
+  // Cierra si haces click en el botón
+  if (e.target && e.target.id === "cerrar-modal") {
+    cerrarModal();
+  }
+  // Cierra si haces click fuera del contenido del modal (en el fondo)
+  if (e.target && e.target.id === "modal-detalle") {
+    cerrarModal();
+  }
+});
+
+// Extra: permite cerrar el modal con la tecla Escape
+document.addEventListener("keydown", function(e) {
+  if (e.key === "Escape") cerrarModal();
+});
