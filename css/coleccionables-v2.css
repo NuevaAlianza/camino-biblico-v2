@@ -152,7 +152,7 @@ body {
   .galeria-coleccionables { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 480px) {
-  .galeria-coleccionables { grid-template-columns: 1fr; }
+  .galeria-coleccionables { grid-template-columns: 1fr 1fr; }
   .tarjeta-coleccionable { min-height: 180px; padding: 0.7rem 0.3rem; }
 }
 .progreso-row {
