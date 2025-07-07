@@ -372,4 +372,22 @@ async function guardarProgresoEnNube() {
     console.log("✅ Historial guardado en Supabase.");
   }
 }
+// Habilita/deshabilita botón siempre que cambie categoría o tema
+categoriaSelect.addEventListener("change", actualizarBotonIniciar);
+temaSelect.addEventListener("change", actualizarBotonIniciar);
+
+// Si la categoría cambia, forzar limpiar y desactivar el tema
+categoriaSelect.addEventListener("change", () => {
+  if (!categoriaSelect.value) {
+    temaSelect.value = "";
+    temaSelect.disabled = true;
+  }
+  actualizarBotonIniciar();
+});
+
+// Cada vez que se agreguen temas, asegúrate que se habilita bien:
+categoriaSelect.addEventListener("change", () => {
+  // ...ya tienes esto, pero asegúrate que:
+  temaSelect.disabled = temaSelect.options.length <= 1;
+});
 
