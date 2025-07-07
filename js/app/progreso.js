@@ -78,7 +78,7 @@ function mostrarDashboardAnimado() {
 
 
 
-// --- 4. Ranking visual (con debug de arrays) ---
+// --- 4. Ranking visual moderno ---
 async function mostrarRanking({ pais, ciudad, parroquia }) {
   const cont = document.getElementById("progreso-ranking");
   cont.innerHTML = `<h3>Tu Ranking</h3><div id="rankings"></div>`;
@@ -107,17 +107,11 @@ async function mostrarRanking({ pais, ciudad, parroquia }) {
       .sort((a, b) => b.xp - a.xp);
   };
 
-  // Ranking global
+  // Ranking global y por filtros
   const global = await queryRanking();
   const porPais = await queryRanking("pais", pais);
   const porCiudad = await queryRanking("ciudad", ciudad);
   const porParroquia = await queryRanking("parroquia", parroquia);
-
-  // --- Debug para ver en consola ---
-  console.log("Ranking Global:", global);
-  console.log("Ranking País:", porPais, "Pais:", pais);
-  console.log("Ranking Ciudad:", porCiudad, "Ciudad:", ciudad);
-  console.log("Ranking Parroquia:", porParroquia, "Parroquia:", parroquia);
 
   // Busca posición del usuario actual en cada ranking
   const posGlobal = global.findIndex(r => r.user_id === usuarioActual.id) + 1;
@@ -125,15 +119,40 @@ async function mostrarRanking({ pais, ciudad, parroquia }) {
   const posCiudad = porCiudad.findIndex(r => r.user_id === usuarioActual.id) + 1;
   const posParroquia = porParroquia.findIndex(r => r.user_id === usuarioActual.id) + 1;
 
+  // Tarjetas visuales
   document.getElementById("rankings").innerHTML = `
-    <div class="ranking-panel">
-      <p>🌎 Global: <b>#${posGlobal > 0 ? posGlobal : '-'}</b> de ${global.length}</p>
-      <p>🇩🇴 País: <b>#${posPais > 0 ? posPais : '-'}</b> de ${porPais.length} (${pais})</p>
-      <p>🏙️ Ciudad: <b>#${posCiudad > 0 ? posCiudad : '-'}</b> de ${porCiudad.length} (${ciudad})</p>
-      <p>⛪ Parroquia: <b>#${posParroquia > 0 ? posParroquia : '-'}</b> de ${porParroquia.length} (${parroquia})</p>
+    <div class="ranking-grid">
+      <div class="ranking-card global">
+        <div class="ranking-emoji">🌎</div>
+        <div class="ranking-label">Global</div>
+        <div class="ranking-pos">#${posGlobal > 0 ? posGlobal : '-'}</div>
+        <div class="ranking-total">de ${global.length}</div>
+      </div>
+      <div class="ranking-card pais">
+        <div class="ranking-emoji">🇩🇴</div>
+        <div class="ranking-label">País</div>
+        <div class="ranking-pos">#${posPais > 0 ? posPais : '-'}</div>
+        <div class="ranking-total">de ${porPais.length}</div>
+        <div class="ranking-extra">${pais}</div>
+      </div>
+      <div class="ranking-card ciudad">
+        <div class="ranking-emoji">🏙️</div>
+        <div class="ranking-label">Ciudad</div>
+        <div class="ranking-pos">#${posCiudad > 0 ? posCiudad : '-'}</div>
+        <div class="ranking-total">de ${porCiudad.length}</div>
+        <div class="ranking-extra">${ciudad}</div>
+      </div>
+      <div class="ranking-card parroquia">
+        <div class="ranking-emoji">⛪</div>
+        <div class="ranking-label">Parroquia</div>
+        <div class="ranking-pos">#${posParroquia > 0 ? posParroquia : '-'}</div>
+        <div class="ranking-total">de ${porParroquia.length}</div>
+        <div class="ranking-extra">${parroquia}</div>
+      </div>
     </div>
   `;
 }
+
 
 // --- 5. Historial de partidas ---
 function mostrarHistorialPartidas() {
