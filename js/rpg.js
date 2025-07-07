@@ -41,7 +41,7 @@ function mostrarSinCiclo() {
   document.getElementById("btn-continuar").style.display = "none";
 }
 
-// --- 2b. Panel bienvenida: XP y ranking global/país/ciudad/parroquia ---
+// --- 2b. Panel bienvenida: SOLO XP y ranking parroquia ---
 async function mostrarStatsBienvenida() {
   const bienvenida = document.getElementById("bienvenida-stats");
   // 1. Obtener usuario actual de Supabase Auth
@@ -59,67 +59,8 @@ async function mostrarStatsBienvenida() {
     .eq("user_id", usuarioActual.id);
   const xpTotal = xpRows ? xpRows.reduce((a, b) => a + (b.xp || 0), 0) : 0;
 
-  // 3. Obtener metadatos de usuario
-  const pais = usuarioActual.user_metadata?.pais || null;
-  const ciudad = usuarioActual.user_metadata?.ciudad || null;
+  // 3. Parroquia ranking
   const parroquia = usuarioActual.user_metadata?.parroquia || null;
-
-  // --- GLOBAL ---
-  const { data: globalRows } = await supabase
-    .from("rpg_progreso")
-    .select("user_id, xp")
-    .eq("completado", true);
-  const globalMap = {};
-  (globalRows || []).forEach(r => {
-    if (!globalMap[r.user_id]) globalMap[r.user_id] = 0;
-    globalMap[r.user_id] += r.xp || 0;
-  });
-  const globalArray = Object.entries(globalMap)
-    .map(([user_id, xp]) => ({ user_id, xp }))
-    .sort((a, b) => b.xp - a.xp);
-  const globalRanking = globalArray.findIndex(r => r.user_id === usuarioActual.id) + 1;
-
-  // --- PAÍS ---
-  let paisHTML = "";
-  if (pais) {
-    const { data: paisRows } = await supabase
-      .from("rpg_progreso")
-      .select("user_id, xp")
-      .eq("pais", pais)
-      .eq("completado", true);
-    const paisMap = {};
-    (paisRows || []).forEach(r => {
-      if (!paisMap[r.user_id]) paisMap[r.user_id] = 0;
-      paisMap[r.user_id] += r.xp || 0;
-    });
-    const paisArray = Object.entries(paisMap)
-      .map(([user_id, xp]) => ({ user_id, xp }))
-      .sort((a, b) => b.xp - a.xp);
-    const miPaisRank = paisArray.findIndex(r => r.user_id === usuarioActual.id) + 1;
-    paisHTML = `<p>🇩🇴 País: <b>#${miPaisRank > 0 ? miPaisRank : '-'}</b> de ${paisArray.length} (${pais})</p>`;
-  }
-
-  // --- CIUDAD ---
-  let ciudadHTML = "";
-  if (ciudad) {
-    const { data: ciudadRows } = await supabase
-      .from("rpg_progreso")
-      .select("user_id, xp")
-      .eq("ciudad", ciudad)
-      .eq("completado", true);
-    const ciudadMap = {};
-    (ciudadRows || []).forEach(r => {
-      if (!ciudadMap[r.user_id]) ciudadMap[r.user_id] = 0;
-      ciudadMap[r.user_id] += r.xp || 0;
-    });
-    const ciudadArray = Object.entries(ciudadMap)
-      .map(([user_id, xp]) => ({ user_id, xp }))
-      .sort((a, b) => b.xp - a.xp);
-    const miCiudadRank = ciudadArray.findIndex(r => r.user_id === usuarioActual.id) + 1;
-    ciudadHTML = `<p>🏙️ Ciudad: <b>#${miCiudadRank > 0 ? miCiudadRank : '-'}</b> de ${ciudadArray.length} (${ciudad})</p>`;
-  }
-
-  // --- PARROQUIA ---
   let parroquiaHTML = "";
   if (parroquia) {
     const { data: parroquiaRows } = await supabase
@@ -136,22 +77,22 @@ async function mostrarStatsBienvenida() {
       .map(([user_id, xp]) => ({ user_id, xp }))
       .sort((a, b) => b.xp - a.xp);
     const miParroquiaRank = parroquiaArray.findIndex(r => r.user_id === usuarioActual.id) + 1;
-    parroquiaHTML = `<p>⛪ Parroquia: <b>#${miParroquiaRank > 0 ? miParroquiaRank : '-'}</b> de ${parroquiaArray.length} (${parroquia})</p>`;
+    parroquiaHTML = `<div class="rpg-parroquia">⛪ Parroquia: <b>#${miParroquiaRank > 0 ? miParroquiaRank : '-'}</b> de ${parroquiaArray.length} (${parroquia})</div>`;
+  } else {
+    parroquiaHTML = `<div class="rpg-parroquia">No tienes parroquia registrada.</div>`;
   }
 
-  // --- Renderiza el panel multi-ranking ---
+  // --- Renderiza el panel compacto ---
   bienvenida.innerHTML = `
-    <div class="panel-mensaje panel-bienvenida">
-      <h2>¡Bienvenido!</h2>
-      <p>Hasta hoy has acumulado <b>${xpTotal}</b> XP.</p>
-      <p>🌎 Global: <b>#${globalRanking > 0 ? globalRanking : '-'}</b> de ${globalArray.length}</p>
-      ${paisHTML}
-      ${ciudadHTML}
+    <div class="panel-bienvenida">
+      <div class="rpg-bienvenido">¡Bienvenido!</div>
+      <div class="rpg-xp">Hasta hoy has acumulado <b>${xpTotal}</b> XP.</div>
       ${parroquiaHTML}
-      <p>¡Veamos si hoy avanzas al #1! 🚀</p>
+      <div class="rpg-avanza">¡Veamos si hoy avanzas al #1! 🚀</div>
     </div>
   `;
 }
+
 
 // --- 3. Supabase: cargar y guardar progreso ---
 async function cargarProgresoRPG() {
