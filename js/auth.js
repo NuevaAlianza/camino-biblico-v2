@@ -1,3 +1,12 @@
+function normalizar(str) {
+  return (str || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim();
+}
+
+
 // --- 1. Detección de confirmación de correo (token en hash) ---
 if (window.location.hash && window.location.hash.includes('access_token')) {
   const hash = window.location.hash.substring(1);
@@ -58,39 +67,41 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Registro de usuario con metadata en Auth
-  if (registroForm) {
-    registroForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
+// Registro de usuario con metadata en Auth
+if (registroForm) {
+  registroForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-      const email = document.getElementById('reg-email').value;
-      const password = document.getElementById('reg-password').value;
-      const nombre = document.getElementById('reg-nombre').value;
-      const pais = document.getElementById('reg-pais').value;
-      const ciudad = document.getElementById('reg-ciudad').value;
-      const parroquia = document.getElementById('reg-parroquia').value;
+    const email = document.getElementById('reg-email').value;
+    const password = document.getElementById('reg-password').value;
+    const nombre = document.getElementById('reg-nombre').value;
+    // --- normaliza todo lo que se compara en ranking y XP ---
+    const pais = normalizar(document.getElementById('reg-pais').value);
+    const ciudad = normalizar(document.getElementById('reg-ciudad').value);
+    const parroquia = normalizar(document.getElementById('reg-parroquia').value);
 
-      mensaje.textContent = "Procesando...";
+    mensaje.textContent = "Procesando...";
 
-      // Registro usando metadata de Auth
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: { nombre, pais, ciudad, parroquia }
-        }
-      });
-
-      if (error) {
-        console.error("❌ Error en signUp:", error);
-        mensaje.textContent = `Error: ${error.message}`;
-        return;
+    // Registro usando metadata de Auth
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { nombre, pais, ciudad, parroquia }
       }
-
-      mensaje.textContent = "Registro exitoso. Revisa tu correo para confirmar tu cuenta.";
-      registroForm.reset();
     });
-  }
+
+    if (error) {
+      console.error("❌ Error en signUp:", error);
+      mensaje.textContent = `Error: ${error.message}`;
+      return;
+    }
+
+    mensaje.textContent = "Registro exitoso. Revisa tu correo para confirmar tu cuenta.";
+    registroForm.reset();
+  });
+}
+
 
   // Login
   if (loginForm) {
