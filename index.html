@@ -18,6 +18,15 @@
     button { padding: 0.5rem 1rem; }
     #mensaje { margin-top: 1rem; color: green; font-weight: bold; }
   </style>
+
+  <!-- Favicon e iconos -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/icon-192.png">
+
+  <!-- Manifest & theme-color -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ead196">
 </head>
 <body>
 
@@ -42,6 +51,11 @@
   </form>
 
   <div id="mensaje"></div>
+
+  <!-- Botón de instalación PWA -->
+  <button id="btn-instalar-pwa" style="display:none;position:fixed;bottom:2rem;right:2rem;z-index:1200;">
+    📲 Instalar App
+  </button>
 
   <!-- CONFIRMACIÓN DE CUENTA -->
   <script>
@@ -83,45 +97,10 @@
     }
   </script>
 
-  <!-- Favicon -->
-<link rel="icon" type="image/png" sizes="32x32" href="assets/img/icon_192x192.png">
-<link rel="icon" type="image/png" sizes="192x192" href="assets/img/icon_192x192.png">
-<link rel="apple-touch-icon" sizes="180x180" href="assets/img/icon_192x192.png">
-
-<!-- Manifest -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#ead196">
-let deferredPrompt;
-const installBtn = document.getElementById('btn-instalar-pwa');
-
-window.addEventListener('beforeinstallprompt', (e) => {
-  // Previene el mini-infobar automático
-  e.preventDefault();
-  deferredPrompt = e;
-  installBtn.style.display = 'inline-block';
-});
-
-installBtn?.addEventListener('click', async () => {
-  if (!deferredPrompt) return;
-  installBtn.disabled = true;
-  deferredPrompt.prompt();
-  const { outcome } = await deferredPrompt.userChoice;
-  // (Opcional) Puedes ocultar el botón si ya se instaló
-  if (outcome === 'accepted') {
-    installBtn.textContent = "¡Instalado!";
-    setTimeout(() => installBtn.style.display = "none", 2500);
-  } else {
-    installBtn.disabled = false;
-  }
-  deferredPrompt = null;
-});
-
-// Si la app ya está instalada, oculta el botón
-window.addEventListener('appinstalled', () => {
-  installBtn.style.display = 'none';
-});
- 
+  <!-- Instalar PWA -->
+  <script src="js/app/instalar-pwa.js"></script>
 
 </body>
 </html>
+
 
