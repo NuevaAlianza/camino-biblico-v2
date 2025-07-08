@@ -56,10 +56,19 @@ const FILES_TO_CACHE = [
 self.addEventListener('install', (e) => {
   e.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(FILES_TO_CACHE))
+      .then(async cache => {
+        for (const url of FILES_TO_CACHE) {
+          try {
+            await cache.add(url);
+          } catch (err) {
+            console.error('Error cacheando', url, err);
+          }
+        }
+      })
       .then(() => self.skipWaiting())
   );
 });
+
 
 // --- Activación: elimina cachés viejos ---
 self.addEventListener('activate', (e) => {
