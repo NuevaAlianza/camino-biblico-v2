@@ -5,6 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login – Camino Bíblico</title>
 
+  <!-- Favicon e Iconos -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/icon-192.png">
+
+  <!-- Manifest y PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ead196">
+
+  <!-- APPLE/Safari iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Camino Bíblico">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <!-- iOS Splash (opcional: agregar más tamaños si tienes splash personalizados) -->
+  <link rel="apple-touch-startup-image" href="assets/icons/icon-512.png">
+
+  <!-- Android Chrome: nombre corto para home -->
+  <meta name="application-name" content="Camino Bíblico">
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <!-- Color navegador Windows -->
+  <meta name="msapplication-TileColor" content="#ead196">
+
   <!-- SDK de Supabase y configuración -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script src="supabase.js"></script>
@@ -18,20 +41,10 @@
     button { padding: 0.5rem 1rem; }
     #mensaje { margin-top: 1rem; color: green; font-weight: bold; }
   </style>
-
-  <!-- Favicon e iconos -->
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-192.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/icon-192.png">
-
-  <!-- Manifest & theme-color -->
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#ead196">
 </head>
 <body>
 
   <h1>Camino Bíblico</h1>
-
   <h2>Registro</h2>
   <form id="registro-form">
     <input type="email" id="reg-email" placeholder="Correo electrónico" required />
@@ -102,5 +115,4 @@
 
 </body>
 </html>
-
 
