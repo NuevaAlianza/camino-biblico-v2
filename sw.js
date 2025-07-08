@@ -46,7 +46,7 @@ const FILES_TO_CACHE = [
   // Iconos e imágenes clave
   './assets/icons/icon-192.png',
   './assets/icons/icon-512.png',
-  './assets/icons/favicon.png',
+  './assets/icons/favicon.ico',
   './assets/icons/icon-maskable.png',
 ];
 
