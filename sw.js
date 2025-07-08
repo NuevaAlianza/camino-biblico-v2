@@ -45,10 +45,10 @@ const FILES_TO_CACHE = [
   '/assets/sonidos/correcto.mp3',
   '/assets/sonidos/incorrecto.mp3',
   // Iconos e imágenes clave
-  '/assets/img/icon_192x192.png',
-  '/assets/img/icon_512x512.png',
-  '/assets/img/favicon.png',
-  '/assets/img/icon-maskable.png',
+  '/assets/icons/icon-192.png',
+  '/assets/icons/icon-512.png.png',
+  '/assets/icons/favicon.png',
+  '/assets/iconsicon-maskable.png',
   // Agrega aquí cualquier imagen extra clave
 ];
 
