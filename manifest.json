@@ -9,6 +9,24 @@
   "theme_color": "#7b6f4d",
   "orientation": "portrait",
   "lang": "es",
+  "id": "/",
+  "dir": "ltr",
+  "categories": ["education", "bible", "religion"],
+  "launch_handler": {
+    "client_mode": "focus-existing"
+  },
+  "screenshots": [
+    {
+      "src": "assets/img/captura1.png",
+      "sizes": "640x480",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/img/captura2.png",
+      "sizes": "640x480",
+      "type": "image/png"
+    }
+  ],
   "icons": [
     {
       "src": "assets/icons/icon-192.png",
