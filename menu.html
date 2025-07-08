@@ -6,6 +6,15 @@
   <title>Menú Principal – Camino Bíblico</title>
   <link rel="stylesheet" href="css/estilos.css" />
   <link rel="stylesheet" href="css/menu.css" />
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/icon_192x192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/img/icon_192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/icon_192x192.png">
+
+  <!-- Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ead196">
 </head>
 <body>
   <main class="menu">
@@ -37,14 +46,13 @@
         Trivia Bíblica RPG
       </button>
     </nav>
-  
-<button id="btn-instalar-pwa" style="display:none;position:fixed;bottom:2rem;right:2rem;z-index:1200;">
-  📲 Instalar App
-</button>
+
+    <!-- Botón de instalación PWA -->
+    <button id="btn-instalar-pwa" style="display:none;position:fixed;bottom:2rem;right:2rem;z-index:1200;">
+      📲 Instalar App
+    </button>
 
     <button id="btn-logout"><span class="emoji">📕</span>Cerrar sesión</button>
-  
-
   </main>
   
   <!-- SCRIPTS AL FINAL, SOLO UNA VEZ -->
@@ -103,53 +111,17 @@
         }
       });
   </script>
+  <!-- Instalar PWA solo como archivo externo -->
   <script src="./js/app/instalar-pwa.js"></script>
-
-  <!-- Favicon -->
-<link rel="icon" type="image/png" sizes="32x32" href="assets/img/icon_192x192.png">
-<link rel="icon" type="image/png" sizes="192x192" href="assets/img/icon_192x192.png">
-<link rel="apple-touch-icon" sizes="180x180" href="assets/img/icon_192x192.png">
-
-<!-- Manifest -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#ead196">
-let deferredPrompt;
-const installBtn = document.getElementById('btn-instalar-pwa');
-
-window.addEventListener('beforeinstallprompt', (e) => {
-  // Previene el mini-infobar automático
-  e.preventDefault();
-  deferredPrompt = e;
-  installBtn.style.display = 'inline-block';
-});
-
-installBtn?.addEventListener('click', async () => {
-  if (!deferredPrompt) return;
-  installBtn.disabled = true;
-  deferredPrompt.prompt();
-  const { outcome } = await deferredPrompt.userChoice;
-  // (Opcional) Puedes ocultar el botón si ya se instaló
-  if (outcome === 'accepted') {
-    installBtn.textContent = "¡Instalado!";
-    setTimeout(() => installBtn.style.display = "none", 2500);
-  } else {
-    installBtn.disabled = false;
-  }
-  deferredPrompt = null;
-});
-
-// Si la app ya está instalada, oculta el botón
-window.addEventListener('appinstalled', () => {
-  installBtn.style.display = 'none';
-});
- 
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js')
-    .then(reg => console.log('✅ Service Worker registrado', reg.scope))
-    .catch(err => console.error('❌ Error al registrar SW:', err));
-}
-</script>
+  <!-- Registro del Service Worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js')
+        .then(reg => console.log('✅ Service Worker registrado', reg.scope))
+        .catch(err => console.error('❌ Error al registrar SW:', err));
+    }
+  </script>
 </body>
 </html>
+
 
