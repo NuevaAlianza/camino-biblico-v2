@@ -241,3 +241,137 @@
   .ranking-grid { flex-direction: column; align-items: stretch; }
   .ranking-card { max-width: 98vw; min-width: 0; }
 }
+/* -------- Nivel/Título (progreso-nivel) -------- */
+#progreso-nivel {
+  margin: 2.2rem 0 1.3rem 0;
+  background: linear-gradient(120deg, #f8f6f1 80%, #ffe3bb 100%);
+  border-radius: 1.25em;
+  box-shadow: 0 3px 12px #f4a26111;
+  padding: 1.1em 1em 1.2em 1em;
+  display: flex;
+  align-items: center;
+  gap: 1.4em;
+  min-height: 82px;
+  animation: fadeInScale .8s;
+}
+
+.nivel-titulo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 1.15em;
+  gap: 0.35em;
+  width: 100%;
+}
+
+.nivel-label {
+  font-weight: bold;
+  color: #7b4d08;
+  font-size: 1.11em;
+  margin-right: 0.4em;
+}
+.nivel-num {
+  font-size: 1.42em;
+  font-weight: 900;
+  background: linear-gradient(70deg, #f4a261, #e76f51 80%);
+  color: #fff;
+  border-radius: 0.5em;
+  padding: 0.1em 0.6em;
+  margin-right: 0.5em;
+  letter-spacing: 0.01em;
+  box-shadow: 0 1px 8px #f4a26133;
+  display: inline-block;
+}
+.nivel-titulo-nombre {
+  font-size: 1.1em;
+  font-weight: 600;
+  color: #2a9d8f;
+  margin-bottom: 0.1em;
+  margin-left: 0.1em;
+  letter-spacing: 0.01em;
+}
+.nivel-progreso {
+  font-size: 0.98em;
+  color: #8b701b;
+  margin-top: 0.08em;
+}
+.nivel-premio {
+  margin-top: 0.38em;
+  font-size: 1.02em;
+  font-weight: bold;
+  color: #cf7114;
+  background: #ffeab0;
+  border-radius: 0.55em;
+  padding: 0.22em 0.8em;
+  box-shadow: 0 2px 6px #ffd07e22;
+  display: inline-block;
+}
+
+/* -------- Ranking Subgrupo (progreso-ranking-subgrupo) -------- */
+#progreso-ranking-subgrupo {
+  margin: 1.8rem 0 2.2rem 0;
+  background: linear-gradient(99deg, #e7f2fa 80%, #fff4e3 100%);
+  border-radius: 1.1em;
+  box-shadow: 0 3px 9px #5eaaff12;
+  padding: 1.1em 0.8em 1em 0.8em;
+  font-size: 1.04em;
+}
+
+.ranking-subgrupo-list {
+  margin: 0.7em 0 0.3em 0;
+}
+.ranking-row {
+  display: flex;
+  align-items: center;
+  gap: 1.1em;
+  padding: 0.25em 0.1em 0.2em 0.1em;
+  border-bottom: 1px solid #c7e5f3;
+}
+.ranking-row:last-child { border-bottom: none; }
+.ranking-row .pos {
+  font-weight: bold;
+  font-size: 1.1em;
+  color: #0077b6;
+  width: 2.4em;
+  display: inline-block;
+}
+.ranking-row .nombre {
+  flex: 1.7;
+  color: #353564;
+  font-size: 1.06em;
+}
+.ranking-row .xp {
+  font-weight: 600;
+  color: #00916e;
+  font-size: 0.97em;
+}
+.ranking-row.actual {
+  background: linear-gradient(90deg, #ffedb3 30%, #c2f3e5 100%);
+  border-radius: 0.7em;
+  box-shadow: 0 1.5px 6px #f4a2611a;
+  font-weight: 700;
+}
+.ranking-row .tuyo {
+  font-size: 0.93em;
+  color: #cf7114;
+  margin-left: 0.9em;
+}
+.posicion-propia {
+  margin-top: 0.5em;
+  font-size: 0.99em;
+  color: #227f6e;
+  font-weight: bold;
+}
+
+/* Responsive para nuevas secciones */
+@media (max-width: 700px) {
+  #progreso-nivel,
+  #progreso-ranking-subgrupo {
+    padding: 1em 0.4em 1.1em 0.4em;
+    min-height: 0;
+  }
+  .nivel-titulo {
+    font-size: 1em;
+  }
+  .ranking-row .nombre { font-size: 1em; }
+}
