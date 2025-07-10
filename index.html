@@ -46,15 +46,32 @@
 
   <h1>Camino Bíblico</h1>
   <h2>Registro</h2>
-  <form id="registro-form">
-    <input type="email" id="reg-email" placeholder="Correo electrónico" required />
-    <input type="password" id="reg-password" placeholder="Contraseña" required />
-    <input type="text" id="reg-nombre" placeholder="Nombre completo" required />
-    <input type="text" id="reg-pais" placeholder="País" />
-    <input type="text" id="reg-ciudad" placeholder="Ciudad" />
-    <input type="text" id="reg-parroquia" placeholder="Parroquia" />
-    <button type="submit">Registrarse</button>
-  </form>
+<form id="registro-form">
+  <input type="email" id="reg-email" placeholder="Correo electrónico" required />
+  <input type="password" id="reg-password" placeholder="Contraseña" required />
+  <input type="text" id="reg-nombre" placeholder="Nombre completo" required />
+  <input type="text" id="reg-pais" placeholder="País" />
+  <input type="text" id="reg-ciudad" placeholder="Ciudad" />
+  <input type="text" id="reg-parroquia" placeholder="Parroquia" />
+  <select id="reg-subgrupo" required>
+    <option value="">-- Elige un subgrupo --</option>
+    <option value="coro">Coro</option>
+    <option value="catequesis1">Catequesis 1</option>
+    <option value="catequesis2">Catequesis 2</option>
+    <option value="catequesis3">Catequesis 3</option>
+    <option value="catequesis4">Catequesis 4</option>
+    <option value="catequesis5">Catequesis 5</option>
+    <option value="catequesis6">Catequesis 6</option>
+    <option value="grupo1">Grupo 1</option>
+    <option value="grupo2">Grupo 2</option>
+    <option value="grupo3">Grupo 3</option>
+    <option value="grupo4">Grupo 4</option>
+    <option value="grupo5">Grupo 5</option>
+    <option value="grupo6">Grupo 6</option>
+    <option value="consejo">Consejo parroquial</option>
+  </select>
+  <button type="submit">Registrarse</button>
+</form>
 
   <h2>Iniciar sesión</h2>
   <form id="login-form">
