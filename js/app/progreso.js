@@ -187,3 +187,89 @@ function mostrarLogrosRapidos() {
   `;
 }
 
+function obtenerNivelPorA(totalA) {
+  if (totalA >= 60) return { nivel: 11, titulo: "Campeón Legendario" };
+  if (totalA >= 51) return { nivel: 10, titulo: "Maestro" };
+  if (totalA >= 41) return { nivel: 9, titulo: "Discípulo Fiel" };
+  if (totalA >= 36) return { nivel: 8, titulo: "Maestro Joven" };
+  if (totalA >= 31) return { nivel: 7, titulo: "Sabio en Camino" };
+  if (totalA >= 26) return { nivel: 6, titulo: "Perseverante" };
+  if (totalA >= 21) return { nivel: 5, titulo: "Investigador" };
+  if (totalA >= 16) return { nivel: 4, titulo: "Estudioso" };
+  if (totalA >= 11) return { nivel: 3, titulo: "Explorador" };
+  if (totalA >= 6)  return { nivel: 2, titulo: "Aprendiz" };
+  if (totalA >= 0)  return { nivel: 1, titulo: "Principiante" };
+  return { nivel: 0, titulo: "Sin nivel" };
+}
+
+// En tu dashboard o resumen:
+function mostrarNivelTitulo(totalA) {
+  const { nivel, titulo } = obtenerNivelPorA(totalA);
+  const cont = document.getElementById("progreso-nivel");
+  cont.innerHTML = `
+    <div class="nivel-titulo">
+      <span class="nivel-label">Nivel:</span>
+      <span class="nivel-num">${nivel}</span>
+      <span class="nivel-titulo-nombre">${titulo}</span>
+      <div class="nivel-progreso">Coleccionables A: <b>${totalA}</b> / 60</div>
+      ${nivel === 11 ? `<div class="nivel-premio">🏆 ¡Coleccionable especial desbloqueado!</div>` : ""}
+    </div>
+  `;
+}
+// Asume que ya tienes usuarioActual y que usuarioActual.subgrupo_id está disponible
+async function mostrarRankingSubgrupo() {
+  const cont = document.getElementById("progreso-ranking-subgrupo");
+  if (!usuarioActual?.subgrupo_id) {
+    cont.innerHTML = "<div>No tienes subgrupo asignado.</div>";
+    return;
+  }
+  const { data: subgrupoRanking, error } = await supabase
+    .from("usuarios")
+    .select("id, nombre, subgrupo_id, subgrupos(nombre), rpg_progreso(xp)")
+    .eq("subgrupo_id", usuarioActual.subgrupo_id);
+
+  if (error) {
+    cont.innerHTML = "<div>Error al cargar ranking de subgrupo.</div>";
+    return;
+  }
+
+  // Calcular XP total por usuario y ordenar
+  const ranking = subgrupoRanking.map(u => ({
+    id: u.id,
+    nombre: u.nombre,
+    xp: (u.rpg_progreso || []).reduce((a, b) => a + (b.xp || 0), 0),
+    subgrupo: u.subgrupos?.nombre || ""
+  })).sort((a, b) => b.xp - a.xp);
+
+  // Buscar posición actual
+  const posUsuario = ranking.findIndex(r => r.id === usuarioActual.id) + 1;
+
+  cont.innerHTML = `
+    <h3>Ranking de tu subgrupo (${ranking[0]?.subgrupo || ""})</h3>
+    <div class="ranking-subgrupo-list">
+      ${ranking.map((r, i) => `
+        <div class="ranking-row${r.id === usuarioActual.id ? " actual" : ""}">
+          <span class="pos">#${i+1}</span>
+          <span class="nombre">${r.nombre || "Anónimo"}</span>
+          <span class="xp">${r.xp} XP</span>
+          ${r.id === usuarioActual.id ? "<span class='tuyo'>(Tú)</span>" : ""}
+        </div>
+      `).join("")}
+    </div>
+    <div class="posicion-propia">Tu puesto: #${posUsuario} de ${ranking.length}</div>
+  `;
+}
+// Al final del DOMContentLoaded, después de cargar progreso y usuario:
+document.addEventListener("DOMContentLoaded", async () => {
+  // ...tu código actual...
+
+  // Calcula el totalA (cantidad de "A") como ya lo haces
+  let totalA = 0;
+  for (const cat in progresoGlobal.categorias) {
+    const temas = progresoGlobal.categorias[cat];
+    totalA += Object.values(temas).filter(t => t.nota === "A").length;
+  }
+
+  mostrarNivelTitulo(totalA);
+  await mostrarRankingSubgrupo();
+});
