@@ -98,36 +98,47 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
   if (meta.subgrupo) subgrupoSelect.value = meta.subgrupo;
 
-  // 4. Guardar cambios
-  document.getElementById('perfil-form').onsubmit = async e => {
-    e.preventDefault();
-    mensajeDiv.textContent = "";
-    const nombre = document.getElementById('nombre').value.trim();
-    const parroquiaId = parroquiaSelect.value;
-    const parroquiaObj = parroquias.find(p => p.id == parroquiaId);
-    const parroquiaNombre = parroquiaObj ? parroquiaObj.nombre_mostrar : "";
-    const subgrupo = subgrupoSelect.value;
+// 4. Guardar cambios
+document.getElementById('perfil-form').onsubmit = async e => {
+  e.preventDefault();
+  mensajeDiv.textContent = "";
+  const nombre = document.getElementById('nombre').value.trim();
+  const parroquiaId = parroquiaSelect.value;
+  const parroquiaObj = parroquias.find(p => p.id == parroquiaId);
+  const parroquiaNombre = parroquiaObj ? parroquiaObj.nombre_mostrar : "";
+  const subgrupo = subgrupoSelect.value;
 
-    // Actualiza metadatos en Auth
-    let { error: errorMeta } = await supabase.auth.updateUser({
-      data: {
-        nombre,
-        parroquia: parroquiaNombre,
-        subgrupo
-      }
-    });
-
-    // (Opcional) Si tienes tabla usuarios personalizada, actualiza también ahí
-
-    if (errorMeta) {
-      mensajeDiv.textContent = "Error al actualizar: " + errorMeta.message;
-      mensajeDiv.className = "mensaje error";
-    } else {
-      mensajeDiv.textContent = "¡Perfil actualizado!";
-      mensajeDiv.className = "mensaje";
+  // Actualiza metadatos en Auth
+  let { error: errorMeta } = await supabase.auth.updateUser({
+    data: {
+      nombre,
+      parroquia: parroquiaNombre,
+      subgrupo
     }
-  };
-});
+  });
+
+  // --- ACTUALIZA TABLA USUARIOS PERSONALIZADA ---
+  let { error: errorUsuario } = await supabase
+    .from('usuarios')
+    .upsert([{
+      id: user.id,
+      email: user.email,
+      nombre: nombre,
+      pais: meta.pais || "",
+      ciudad: meta.ciudad || "",
+      parroquia: parroquiaNombre,
+      subgrupo: subgrupo
+    }], { onConflict: ['id'] });
+
+  if (errorMeta || errorUsuario) {
+    mensajeDiv.textContent = "Error al actualizar: " + (errorMeta?.message || "") + (errorUsuario?.message || "");
+    mensajeDiv.className = "mensaje error";
+  } else {
+    mensajeDiv.textContent = "¡Perfil actualizado!";
+    mensajeDiv.className = "mensaje";
+  }
+};
+
 </script>
 </body>
 </html>
