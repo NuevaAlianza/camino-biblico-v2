@@ -290,4 +290,29 @@ h2 {
   background-color: #f4a261;
   color: #fff;
 }
+#btn-trivia-flash {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 50;
+  background: linear-gradient(120deg, #e9f5ff 60%, #fff4e3 100%);
+  border-radius: 50%;
+  color: #236e5e;
+  font-size: 2.2rem;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px #3fa6db29;
+  border: 2.5px solid #c3ecfd;
+  transition: box-shadow 0.15s, background 0.15s, transform 0.15s;
+  cursor: pointer;
+  text-decoration: none;
+}
+#btn-trivia-flash:hover {
+  box-shadow: 0 7px 26px #aaf8dc51;
+  background: #bff9e2;
+  transform: scale(1.09);
+}
 
