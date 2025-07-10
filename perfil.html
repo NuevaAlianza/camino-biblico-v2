@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mi Perfil – Camino Bíblico</title>
+  <link rel="stylesheet" href="css/estilos.css" />
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 420px; margin: 2rem auto; padding: 1.5rem; }
+    h2 { margin-bottom: 1.5rem; }
+    label { font-weight: bold; }
+    input, select { display: block; width: 100%; margin-bottom: 1.2rem; padding: 0.65em 0.5em; font-size: 1em; }
+    button { padding: 0.6em 1.3em; }
+    .mensaje { margin-bottom: 1.2rem; color: #168; font-weight: bold; }
+    .error { color: #b30000; }
+  </style>
+  <!-- Supabase JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="supabase.js"></script>
+</head>
+<body>
+  <h2>Editar Perfil</h2>
+  <div class="mensaje" id="mensaje"></div>
+  <form id="perfil-form">
+    <label for="nombre">Nombre</label>
+    <input type="text" id="nombre" required />
+    <label for="parroquia">Parroquia</label>
+    <select id="parroquia" required>
+      <option value="">-- Elige tu parroquia --</option>
+    </select>
+    <label for="subgrupo">Subgrupo</label>
+    <select id="subgrupo" required>
+      <option value="">-- Elige un subgrupo --</option>
+      <option value="coro">Coro</option>
+      <option value="catequesis1">Catequesis 1</option>
+      <option value="catequesis2">Catequesis 2</option>
+      <option value="catequesis3">Catequesis 3</option>
+      <option value="catequesis4">Catequesis 4</option>
+      <option value="catequesis5">Catequesis 5</option>
+      <option value="catequesis6">Catequesis 6</option>
+      <option value="grupo1">Grupo 1</option>
+      <option value="grupo2">Grupo 2</option>
+      <option value="grupo3">Grupo 3</option>
+      <option value="grupo4">Grupo 4</option>
+      <option value="grupo5">Grupo 5</option>
+      <option value="grupo6">Grupo 6</option>
+      <option value="consejo">Consejo parroquial</option>
+    </select>
+    <button type="submit">Guardar Cambios</button>
+  </form>
+  <a href="menu.html">← Volver al menú</a>
+
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  // 1. Obtener usuario actual y parroquias
+  let parroquias = [];
+  const parroquiaSelect = document.getElementById('parroquia');
+  const subgrupoSelect = document.getElementById('subgrupo');
+  const mensajeDiv = document.getElementById('mensaje');
+
+  // Cargar sesión y metadatos
+  const { data: sessionData } = await supabase.auth.getSession();
+  const user = sessionData?.session?.user;
+  if (!user) {
+    mensajeDiv.textContent = "Debes iniciar sesión para editar tu perfil.";
+    mensajeDiv.className = "mensaje error";
+    document.getElementById('perfil-form').style.display = "none";
+    return;
+  }
+  const meta = user.user_metadata || {};
+
+  // 2. Cargar parroquias existentes
+  const { data: parroquiasData, error } = await supabase
+    .from("parroquias")
+    .select("id, nombre_mostrar")
+    .order("nombre_mostrar", { ascending: true });
+  if (error || !parroquiasData) {
+    mensajeDiv.textContent = "No se pudieron cargar las parroquias.";
+    mensajeDiv.className = "mensaje error";
+    return;
+  }
+  parroquias = parroquiasData;
+  parroquias.forEach(p => {
+    const opt = document.createElement('option');
+    opt.value = p.id;
+    opt.textContent = p.nombre_mostrar;
+    parroquiaSelect.appendChild(opt);
+  });
+
+  // 3. Rellenar datos del usuario
+  document.getElementById('nombre').value = meta.nombre || "";
+  // Busca parroquia actual por nombre, si existe
+  if (meta.parroquia) {
+    const actual = parroquias.find(p => 
+      p.nombre_mostrar.toLowerCase() === meta.parroquia.toLowerCase()
+    );
+    if (actual) parroquiaSelect.value = actual.id;
+  }
+  if (meta.subgrupo) subgrupoSelect.value = meta.subgrupo;
+
+  // 4. Guardar cambios
+  document.getElementById('perfil-form').onsubmit = async e => {
+    e.preventDefault();
+    mensajeDiv.textContent = "";
+    const nombre = document.getElementById('nombre').value.trim();
+    const parroquiaId = parroquiaSelect.value;
+    const parroquiaObj = parroquias.find(p => p.id == parroquiaId);
+    const parroquiaNombre = parroquiaObj ? parroquiaObj.nombre_mostrar : "";
+    const subgrupo = subgrupoSelect.value;
+
+    // Actualiza metadatos en Auth
+    let { error: errorMeta } = await supabase.auth.updateUser({
+      data: {
+        nombre,
+        parroquia: parroquiaNombre,
+        subgrupo
+      }
+    });
+
+    // (Opcional) Si tienes tabla usuarios personalizada, actualiza también ahí
+
+    if (errorMeta) {
+      mensajeDiv.textContent = "Error al actualizar: " + errorMeta.message;
+      mensajeDiv.className = "mensaje error";
+    } else {
+      mensajeDiv.textContent = "¡Perfil actualizado!";
+      mensajeDiv.className = "mensaje";
+    }
+  };
+});
+</script>
+</body>
+</html>
