@@ -303,7 +303,7 @@ function mostrarPanelResumenUsuario(xpTotal, puestoGlobal, puestoParroquia) {
       <div><b>Nivel:</b> ${nivel} <span class="titulo-nivel">(${titulo})</span></div>
       <div><b>Coleccionables “A”:</b> ${totalA}</div>
       <div class="progreso-cabecera-btns">
-        <button onclick="window.location.href='coleccionables.html'">Ver coleccionables</button>
+        <button onclick="window.location.href='coleccionables-v2.html'">Ver coleccionables</button>
         <button onclick="window.location.href='ranking.html'">Ver mi ranking</button>
       </div>
     </div>
