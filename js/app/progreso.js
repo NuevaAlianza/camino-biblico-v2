@@ -273,3 +273,44 @@ document.addEventListener("DOMContentLoaded", async () => {
   mostrarNivelTitulo(totalA);
   await mostrarRankingSubgrupo();
 });
+
+function mostrarPanelResumenUsuario(xpTotal, puestoGlobal, puestoParroquia) {
+  const cont = document.getElementById("progreso-nivel");
+  const nombre = usuarioActual?.user_metadata?.nombre || usuarioActual?.email || "Sin nombre";
+  const ultimaFecha = progresoGlobal.historial.length
+    ? new Date(progresoGlobal.historial[progresoGlobal.historial.length - 1].fecha).toLocaleDateString()
+    : "-";
+  const totalA = Object.values(progresoGlobal.categorias || {})
+    .flatMap(cat => Object.values(cat).filter(t => t.nota === "A")).length;
+  const { nivel, titulo } = obtenerNivelPorA(totalA);
+
+  // Simple animación (fade-in, puedes mejorarla con CSS)
+  cont.innerHTML = `
+    <div class="panel-mi-progreso fade-in">
+      <div><b>👤 Usuario:</b> ${nombre}</div>
+      <div><b>📅 Última participación:</b> ${ultimaFecha}</div>
+      <div><b>🟡 XP total:</b> <span class="xp-anim">${xpTotal}</span></div>
+      <div><b>🌍 Puesto global:</b> #${puestoGlobal}</div>
+      <div><b>⛪ Puesto parroquia:</b> ${puestoParroquia}</div>
+      <div><b>Nivel:</b> ${nivel} <span class="titulo-nivel">(${titulo})</span></div>
+      <div><b>Coleccionables “A”:</b> ${totalA}</div>
+      <div class="progreso-cabecera-btns">
+        <button onclick="window.location.href='coleccionables.html'">Ver coleccionables</button>
+        <button onclick="window.location.href='ranking.html'">Ver mi ranking</button>
+      </div>
+    </div>
+  `;
+  // Animación de XP (sube el número suavemente)
+  const elXP = cont.querySelector('.xp-anim');
+  let xpAnim = 0;
+  const step = Math.ceil(xpTotal / 40) || 1;
+  const anim = setInterval(() => {
+    xpAnim += step;
+    if (xpAnim >= xpTotal) {
+      elXP.textContent = xpTotal;
+      clearInterval(anim);
+    } else {
+      elXP.textContent = xpAnim;
+    }
+  }, 18);
+}
