@@ -106,8 +106,10 @@ async function mostrarRanking({ pais, ciudad, parroquia }) {
   // --- 2. Consulta XP Trivia Flash ---
   const queryTrivia = async (campo, valor) => {
     let q = supabase
+    
       .from("trivia_flash")
-      .select("usuario_id, xp_obtenido");
+       .select("user_id, xp_obtenido")
+
     if (campo && valor && valor !== "N/A") {
       // No siempre hay país/ciudad/parroquia en trivia_flash, omite filtro si no existe
     }
