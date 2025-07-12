@@ -36,10 +36,22 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   // 3. Cargar preguntas quiz (AJUSTA según tu estructura real)
+ let preguntasQuiz = [];
+
+async function cargarPreguntasQuiz() {
   if (!preguntasQuiz.length) {
-    preguntasQuiz = await fetch('../datos/quiz.json').then(r=>r.json());
-    // Ajusta si necesitas transformar formato
+    try {
+      // Ajusta la ruta según dónde esté tu HTML respecto a /datos/
+      const response = await fetch('datos/quiz.json');
+      if (!response.ok) throw new Error('No se pudo cargar quiz.json');
+      preguntasQuiz = await response.json();
+    } catch (error) {
+      console.error('Error al cargar quiz.json:', error);
+      preguntasQuiz = []; // O algún valor por defecto
+    }
   }
+}
+
 
   // 4. Seleccionar 5 preguntas aleatorias
   let preguntasSeleccionadas = [];
