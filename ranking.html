@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ranking – Camino Bíblico</title>
+  <link rel="stylesheet" href="css/estilos.css" />
+  <link rel="stylesheet" href="css/ranking.css" />
+</head>
+<body>
+  <main class="ranking-main">
+    <h1>🏆 Ranking de Camino Bíblico</h1>
+    <div class="ranking-tabs">
+      <button id="btn-ranking-global" class="tab-active">Global</button>
+      <button id="btn-ranking-ciudad">Ciudad</button>
+      <button id="btn-ranking-parroquia">Parroquia</button>
+    </div>
+
+    <section id="ranking-panel">
+      <!-- Aquí se cargará el ranking seleccionado -->
+    </section>
+  </main>
+  <a href="menu.html" id="btn-inicio" title="Volver al inicio">🏠</a>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="supabase.js"></script>
+  <script src="js/app/ranking.js"></script>
+</body>
+</html>
