@@ -1,8 +1,7 @@
 let usuarioActual = null;
-let preguntasQuiz = []; // Aquí deberías cargar tus preguntas quiz
+let preguntasQuiz = []; // Global
 
-// -- Día permitido (miércoles=3, sábado=6) --
-const diasPermitidos = [3, 6];
+const diasPermitidos = [3, 6]; // miércoles y sábado
 
 document.addEventListener("DOMContentLoaded", async () => {
   // 1. Obtener sesión y usuario
@@ -22,7 +21,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // 2. Verificar si ya jugó hoy
   const hoyStr = hoy.toISOString().slice(0,10);
-  const { data: jugoHoy, error } = await supabase
+  const { data: jugoHoy } = await supabase
     .from("trivia_flash")
     .select("id")
     .eq("usuario_id", usuarioActual.id)
@@ -35,29 +34,24 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  // 3. Cargar preguntas quiz (AJUSTA según tu estructura real)
- let preguntasQuiz = [];
-
-async function cargarPreguntasQuiz() {
+  // 3. Cargar preguntas quiz
+  await cargarPreguntasQuiz();
   if (!preguntasQuiz.length) {
-    try {
-      // Ajusta la ruta según dónde esté tu HTML respecto a /datos/
-      const response = await fetch('datos/quiz.json');
-      if (!response.ok) throw new Error('No se pudo cargar quiz.json');
-      preguntasQuiz = await response.json();
-    } catch (error) {
-      console.error('Error al cargar quiz.json:', error);
-      preguntasQuiz = []; // O algún valor por defecto
-    }
+    document.getElementById("trivia-flash-estado").innerHTML = "<b>No hay preguntas disponibles. Contacta al administrador.</b>";
+    return;
   }
-}
+  if (preguntasQuiz.length < 5) {
+    document.getElementById("trivia-flash-estado").innerHTML = "<b>Se requieren al menos 5 preguntas para jugar. Agrega más preguntas al sistema.</b>";
+    return;
+  }
 
-
-  // 4. Seleccionar 5 preguntas aleatorias
+  // 4. Seleccionar 5 preguntas aleatorias únicas
   let preguntasSeleccionadas = [];
-  while (preguntasSeleccionadas.length < 5) {
+  const usados = new Set();
+  while (preguntasSeleccionadas.length < 5 && usados.size < preguntasQuiz.length) {
     const idx = Math.floor(Math.random() * preguntasQuiz.length);
-    if (!preguntasSeleccionadas.includes(preguntasQuiz[idx])) {
+    if (!usados.has(idx)) {
+      usados.add(idx);
       preguntasSeleccionadas.push(preguntasQuiz[idx]);
     }
   }
@@ -65,6 +59,20 @@ async function cargarPreguntasQuiz() {
   // 5. Iniciar juego
   iniciarTriviaFlash(preguntasSeleccionadas);
 });
+
+async function cargarPreguntasQuiz() {
+  if (!preguntasQuiz.length) {
+    try {
+      // Ajusta la ruta según tu estructura de carpetas
+      const response = await fetch('datos/quiz.json');
+      if (!response.ok) throw new Error('No se pudo cargar quiz.json');
+      preguntasQuiz = await response.json();
+    } catch (error) {
+      console.error('Error al cargar quiz.json:', error);
+      preguntasQuiz = [];
+    }
+  }
+}
 
 function iniciarTriviaFlash(preguntas) {
   let actual = 0;
@@ -128,8 +136,6 @@ function iniciarTriviaFlash(preguntas) {
     }]);
 
     // Suma XP a rpg_progreso
-    // Aquí debes obtener el registro de la semana y sumarle el XP (ajusta según tu lógica de ciclos)
-    // Este ejemplo asume un ciclo semanal basado en fecha (ajusta si usas otro sistema):
     const ciclo = obtenerCicloActual();
     const { data: row } = await supabase
       .from("rpg_progreso")
@@ -180,7 +186,7 @@ async function mostrarHistorial() {
   document.getElementById("trivia-flash-historial").innerHTML = `
     <h3>Historial Trivia Flash</h3>
     <ul>
-      ${intentos.map(i=>`
+      ${(intentos || []).map(i=>`
         <li>${i.fecha}: ${i.aciertos} correctas, ${i.xp_obtenido} XP</li>
       `).join("")}
     </ul>
