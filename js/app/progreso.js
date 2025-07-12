@@ -103,28 +103,28 @@ async function mostrarRanking({ pais, ciudad, parroquia }) {
     return xpPorUsuario;
   };
 
-  // --- 2. Consulta XP Trivia Flash ---
-  const queryTrivia = async (campo, valor) => {
-    let q = supabase
-    
-      .from("trivia_flash")
-       .select("user_id, xp_obtenido")
+// --- 2. Consulta XP Trivia Flash ---
+const queryTrivia = async (campo, valor) => {
+  let q = supabase
+    .from("trivia_flash")
+    .select("user_id, xp_obtenido");
 
-    if (campo && valor && valor !== "N/A") {
-      // No siempre hay país/ciudad/parroquia en trivia_flash, omite filtro si no existe
-    }
-    const { data, error } = await q;
-    if (error) {
-      console.error("Error ranking Trivia:", error.message);
-      return [];
-    }
-    const xpPorUsuario = {};
-    (data || []).forEach(row => {
-      if (!xpPorUsuario[row.usuario_id]) xpPorUsuario[row.usuario_id] = 0;
-      xpPorUsuario[row.usuario_id] += row.xp_obtenido || 0;
-    });
-    return xpPorUsuario;
-  };
+  // Trivia Flash no guarda país/ciudad, así que ignora filtros
+  // pero puedes dejar el argumento para mantener la firma igual
+
+  const { data, error } = await q;
+  if (error) {
+    console.error("Error ranking Trivia:", error.message);
+    return [];
+  }
+  const xpPorUsuario = {};
+  (data || []).forEach(row => {
+    if (!xpPorUsuario[row.user_id]) xpPorUsuario[row.user_id] = 0;
+    xpPorUsuario[row.user_id] += row.xp_obtenido || 0;
+  });
+  return xpPorUsuario;
+};
+
 
   // --- 3. Carga y combina ambos rankings ---
   // Global
