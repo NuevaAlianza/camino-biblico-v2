@@ -83,7 +83,7 @@ async function mostrarRanking({ pais, ciudad, parroquia }) {
   const cont = document.getElementById("progreso-ranking");
   cont.innerHTML = `<h3>Tu Ranking</h3><div id="rankings"></div>`;
 
-  // --- Consulta todos los registros (filtro según corresponde) ---
+  // Consulta todos los registros (filtro según corresponde)
   const queryRanking = async (campo, valor) => {
     let q = supabase
       .from("rpg_progreso")
@@ -113,11 +113,15 @@ async function mostrarRanking({ pais, ciudad, parroquia }) {
   const porCiudad = await queryRanking("ciudad", ciudad);
   const porParroquia = await queryRanking("parroquia", parroquia);
 
-  // Busca posición del usuario actual en cada ranking
+  // Busca posición y XP del usuario actual en cada ranking
+  const miUsuario = global.find(r => r.user_id === usuarioActual.id);
+  const xpTotal = miUsuario ? miUsuario.xp : 0;
+
   const posGlobal = global.findIndex(r => r.user_id === usuarioActual.id) + 1;
   const posPais = porPais.findIndex(r => r.user_id === usuarioActual.id) + 1;
   const posCiudad = porCiudad.findIndex(r => r.user_id === usuarioActual.id) + 1;
   const posParroquia = porParroquia.findIndex(r => r.user_id === usuarioActual.id) + 1;
+  const puestoParroquia = posParroquia > 0 ? `#${posParroquia} de ${porParroquia.length}` : "-";
 
   // Tarjetas visuales
   document.getElementById("rankings").innerHTML = `
@@ -151,7 +155,11 @@ async function mostrarRanking({ pais, ciudad, parroquia }) {
       </div>
     </div>
   `;
+
+  // Llama al panel resumen con los datos justos
+  mostrarPanelResumenUsuario(xpTotal, posGlobal, puestoParroquia);
 }
+
 
 
 // --- 5. Historial de partidas ---
