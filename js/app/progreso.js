@@ -83,40 +83,85 @@ async function mostrarRanking({ pais, ciudad, parroquia }) {
   const cont = document.getElementById("progreso-ranking");
   cont.innerHTML = `<h3>Tu Ranking</h3><div id="rankings"></div>`;
 
-  // Consulta todos los registros (filtro según corresponde)
-  const queryRanking = async (campo, valor) => {
+  // --- 1. Consulta XP RPG ---
+  const queryRPG = async (campo, valor) => {
     let q = supabase
       .from("rpg_progreso")
       .select("user_id, xp, pais, ciudad, parroquia")
       .eq("completado", true);
     if (campo && valor && valor !== "N/A") q = q.eq(campo, valor);
-
     const { data, error } = await q;
     if (error) {
-      console.error("Error al consultar ranking:", error.message);
+      console.error("Error ranking RPG:", error.message);
       return [];
     }
-    // Agrupar por usuario, sumar XP total
     const xpPorUsuario = {};
     (data || []).forEach(row => {
       if (!xpPorUsuario[row.user_id]) xpPorUsuario[row.user_id] = 0;
       xpPorUsuario[row.user_id] += row.xp || 0;
     });
-    return Object.entries(xpPorUsuario)
-      .map(([user_id, xp]) => ({ user_id, xp }))
-      .sort((a, b) => b.xp - a.xp);
+    return xpPorUsuario;
   };
 
-  // Ranking global y por filtros
-  const global = await queryRanking();
-  const porPais = await queryRanking("pais", pais);
-  const porCiudad = await queryRanking("ciudad", ciudad);
-  const porParroquia = await queryRanking("parroquia", parroquia);
+  // --- 2. Consulta XP Trivia Flash ---
+  const queryTrivia = async (campo, valor) => {
+    let q = supabase
+      .from("trivia_flash")
+      .select("usuario_id, xp_obtenido");
+    if (campo && valor && valor !== "N/A") {
+      // No siempre hay país/ciudad/parroquia en trivia_flash, omite filtro si no existe
+    }
+    const { data, error } = await q;
+    if (error) {
+      console.error("Error ranking Trivia:", error.message);
+      return [];
+    }
+    const xpPorUsuario = {};
+    (data || []).forEach(row => {
+      if (!xpPorUsuario[row.usuario_id]) xpPorUsuario[row.usuario_id] = 0;
+      xpPorUsuario[row.usuario_id] += row.xp_obtenido || 0;
+    });
+    return xpPorUsuario;
+  };
 
-  // Busca posición y XP del usuario actual en cada ranking
+  // --- 3. Carga y combina ambos rankings ---
+  // Global
+  const xpRPGGlobal = await queryRPG();
+  const xpTriviaGlobal = await queryTrivia();
+  const usuarios = new Set([...Object.keys(xpRPGGlobal), ...Object.keys(xpTriviaGlobal)]);
+  const global = [...usuarios].map(user_id => ({
+    user_id,
+    xp: (xpRPGGlobal[user_id] || 0) + (xpTriviaGlobal[user_id] || 0)
+  })).sort((a, b) => b.xp - a.xp);
+
+  // País
+  const xpRPGPais = await queryRPG("pais", pais);
+  const xpTriviaPais = await queryTrivia(); // Trivia Flash no tiene país/ciudad, así que filtra en el renderizado
+  const usuariosPais = Object.keys(xpRPGPais); // Solo los que tienen RPG en ese país
+  const porPais = usuariosPais.map(user_id => ({
+    user_id,
+    xp: (xpRPGPais[user_id] || 0) + (xpTriviaPais[user_id] || 0)
+  })).sort((a, b) => b.xp - a.xp);
+
+  // Ciudad
+  const xpRPGCiudad = await queryRPG("ciudad", ciudad);
+  const usuariosCiudad = Object.keys(xpRPGCiudad);
+  const porCiudad = usuariosCiudad.map(user_id => ({
+    user_id,
+    xp: (xpRPGCiudad[user_id] || 0) + (xpTriviaGlobal[user_id] || 0)
+  })).sort((a, b) => b.xp - a.xp);
+
+  // Parroquia
+  const xpRPGParroquia = await queryRPG("parroquia", parroquia);
+  const usuariosParroquia = Object.keys(xpRPGParroquia);
+  const porParroquia = usuariosParroquia.map(user_id => ({
+    user_id,
+    xp: (xpRPGParroquia[user_id] || 0) + (xpTriviaGlobal[user_id] || 0)
+  })).sort((a, b) => b.xp - a.xp);
+
+  // --- 4. Posiciones y XP del usuario actual ---
   const miUsuario = global.find(r => r.user_id === usuarioActual.id);
   const xpTotal = miUsuario ? miUsuario.xp : 0;
-
   const posGlobal = global.findIndex(r => r.user_id === usuarioActual.id) + 1;
   const posPais = porPais.findIndex(r => r.user_id === usuarioActual.id) + 1;
   const posCiudad = porCiudad.findIndex(r => r.user_id === usuarioActual.id) + 1;
@@ -156,7 +201,7 @@ async function mostrarRanking({ pais, ciudad, parroquia }) {
     </div>
   `;
 
-  // Llama al panel resumen con los datos justos
+  // Panel resumen usuario
   mostrarPanelResumenUsuario(xpTotal, posGlobal, puestoParroquia);
 }
 
