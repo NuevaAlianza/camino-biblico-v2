@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const { data: jugoHoy } = await supabase
     .from("trivia_flash")
     .select("id")
-    .eq("usuario_id", usuarioActual.id)
+    .eq("user_id", usuarioActual.id)
     .eq("fecha", hoyStr)
     .maybeSingle();
 
@@ -127,13 +127,22 @@ function iniciarTriviaFlash(preguntas) {
     `;
 
     // Guarda intento en trivia_flash
-    await supabase.from("trivia_flash").insert([{
-      usuario_id: usuarioActual.id,
+    const { error } = await supabase.from("trivia_flash").insert([{
+      user_id: usuarioActual.id,
       fecha: new Date().toISOString().slice(0,10),
       aciertos,
       xp_obtenido: xp,
       preguntas: respuestas
     }]);
+    if (error) {
+      console.error("Error al guardar trivia_flash:", error);
+      document.getElementById("trivia-flash-resultado").innerHTML += `
+        <div class="trivia-flash-resultado-msg error">❌ Hubo un error al guardar tu intento.<br>
+        Por favor, contacta a soporte o revisa la consola.<br>
+        <pre>${error.message}</pre>
+        </div>`;
+      return;
+    }
 
     // Suma XP a rpg_progreso
     const ciclo = obtenerCicloActual();
@@ -179,7 +188,7 @@ async function mostrarHistorial() {
   const { data: intentos } = await supabase
     .from("trivia_flash")
     .select("*")
-    .eq("usuario_id", usuarioActual.id)
+    .eq("user_id", usuarioActual.id)
     .order("fecha", { ascending: false })
     .limit(6);
 
