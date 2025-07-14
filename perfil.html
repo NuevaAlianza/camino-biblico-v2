@@ -30,20 +30,6 @@
     <label for="subgrupo">Subgrupo</label>
     <select id="subgrupo" required>
       <option value="">-- Elige un subgrupo --</option>
-      <option value="coro">Coro</option>
-      <option value="catequesis1">Catequesis 1</option>
-      <option value="catequesis2">Catequesis 2</option>
-      <option value="catequesis3">Catequesis 3</option>
-      <option value="catequesis4">Catequesis 4</option>
-      <option value="catequesis5">Catequesis 5</option>
-      <option value="catequesis6">Catequesis 6</option>
-      <option value="grupo1">Grupo 1</option>
-      <option value="grupo2">Grupo 2</option>
-      <option value="grupo3">Grupo 3</option>
-      <option value="grupo4">Grupo 4</option>
-      <option value="grupo5">Grupo 5</option>
-      <option value="grupo6">Grupo 6</option>
-      <option value="consejo">Consejo parroquial</option>
     </select>
     <button type="submit">Guardar Cambios</button>
   </form>
@@ -52,11 +38,12 @@
 <script>
 document.addEventListener('DOMContentLoaded', async () => {
   let parroquias = [];
+  let subgrupos = [];
   const parroquiaSelect = document.getElementById('parroquia');
   const subgrupoSelect = document.getElementById('subgrupo');
   const mensajeDiv = document.getElementById('mensaje');
 
-  // 1. Obtener usuario actual
+  // Cargar sesión y metadatos
   const { data: sessionData } = await supabase.auth.getSession();
   const user = sessionData?.session?.user;
   if (!user) {
@@ -67,13 +54,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
   const meta = user.user_metadata || {};
 
-  // 2. Cargar parroquias
-  const { data: parroquiasData, error } = await supabase
+  // 1. Cargar parroquias
+  const { data: parroquiasData, error: errorParroquias } = await supabase
     .from("parroquias")
     .select("id, nombre_mostrar, ciudad_mostrar, pais_mostrar")
     .order("nombre_mostrar", { ascending: true });
-
-  if (error || !parroquiasData || parroquiasData.length === 0) {
+  if (errorParroquias || !parroquiasData) {
     mensajeDiv.textContent = "No se pudieron cargar las parroquias.";
     mensajeDiv.className = "mensaje error";
     return;
@@ -86,18 +72,53 @@ document.addEventListener('DOMContentLoaded', async () => {
     parroquiaSelect.appendChild(opt);
   });
 
-  // 3. Rellenar datos del usuario
+  // 2. Rellenar nombre y parroquia actuales
   document.getElementById('nombre').value = meta.nombre || "";
-  // Busca parroquia actual por nombre, si existe
   if (meta.parroquia) {
     const actual = parroquias.find(p => 
       p.nombre_mostrar.toLowerCase() === meta.parroquia.toLowerCase()
     );
     if (actual) parroquiaSelect.value = actual.id;
   }
-  if (meta.subgrupo) subgrupoSelect.value = meta.subgrupo;
 
-  // 4. Guardar cambios
+  // 3. Función para cargar subgrupos segun parroquia seleccionada
+  async function cargarSubgrupos(parroquiaId, subgrupoPrevio = null) {
+    subgrupoSelect.innerHTML = '<option value="">-- Elige un subgrupo --</option>';
+    if (!parroquiaId) return;
+    const { data: subgruposData, error: errorSub } = await supabase
+      .from("subgrupos")
+      .select("id, nombre")
+      .eq("parroquia_id", parroquiaId)
+      .order("nombre", { ascending: true });
+    if (errorSub) {
+      subgrupoSelect.innerHTML = '<option value="">(Error cargando subgrupos)</option>';
+      return;
+    }
+    subgrupos = subgruposData;
+    subgrupos.forEach(sg => {
+      const opt = document.createElement('option');
+      opt.value = sg.id;
+      opt.textContent = sg.nombre;
+      subgrupoSelect.appendChild(opt);
+    });
+    // Selecciona el subgrupo si está guardado en perfil
+    if (subgrupoPrevio) {
+      const encontrado = subgrupos.find(sg => String(sg.id) === String(subgrupoPrevio));
+      if (encontrado) subgrupoSelect.value = encontrado.id;
+    }
+  }
+
+  // 4. Al cambiar parroquia, cargar subgrupos
+  parroquiaSelect.addEventListener('change', e => {
+    cargarSubgrupos(e.target.value);
+  });
+
+  // 5. Al cargar, también carga subgrupo guardado (si existe)
+  let subgrupoPrevio = null;
+  if (meta.subgrupo) subgrupoPrevio = meta.subgrupo;
+  if (parroquiaSelect.value) cargarSubgrupos(parroquiaSelect.value, subgrupoPrevio);
+
+  // 6. Guardar cambios
   document.getElementById('perfil-form').onsubmit = async e => {
     e.preventDefault();
     mensajeDiv.textContent = "";
@@ -105,9 +126,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     const parroquiaId = parroquiaSelect.value;
     const parroquiaObj = parroquias.find(p => p.id == parroquiaId);
     const parroquiaNombre = parroquiaObj ? parroquiaObj.nombre_mostrar : "";
-    const subgrupo = subgrupoSelect.value;
     const parroquiaCiudad = parroquiaObj ? parroquiaObj.ciudad_mostrar : "";
     const parroquiaPais = parroquiaObj ? parroquiaObj.pais_mostrar : "";
+    const subgrupoId = subgrupoSelect.value;
+    const subgrupoObj = subgrupos.find(sg => String(sg.id) === String(subgrupoId));
+    const subgrupoNombre = subgrupoObj ? subgrupoObj.nombre : "";
 
     // Actualiza metadatos en Auth
     let { error: errorMeta } = await supabase.auth.updateUser({
@@ -116,11 +139,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         parroquia: parroquiaNombre,
         ciudad: parroquiaCiudad,
         pais: parroquiaPais,
-        subgrupo
+        subgrupo: subgrupoId
       }
     });
 
-    // Actualiza también tabla usuarios
+    // Actualiza tabla usuarios
     let { error: errorUsuario } = await supabase
       .from('usuarios')
       .upsert([{
@@ -130,7 +153,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         pais: parroquiaPais,
         ciudad: parroquiaCiudad,
         parroquia: parroquiaNombre,
-        subgrupo: subgrupo
+        subgrupo: subgrupoId
       }], { onConflict: ['id'] });
 
     if (errorMeta || errorUsuario) {
@@ -141,6 +164,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       mensajeDiv.className = "mensaje";
     }
   };
+
 });
 </script>
 </body>
