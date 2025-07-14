@@ -1,3 +1,117 @@
+
+
+
+// --- Referencias DOM ---
+const btnComenzar = document.getElementById("btn-comenzar");
+const inicio = document.getElementById("inicio");
+const juego = document.getElementById("juego");
+const final = document.getElementById("final");
+const preguntaDiv = document.getElementById("pregunta");
+const opcionesDiv = document.getElementById("opciones");
+const conteoPregunta = document.getElementById("conteo-pregunta");
+const puntajeFinal = document.getElementById("puntaje-final");
+const imagenColeccionable = document.getElementById("imagen-coleccionable");
+const barraTiempo = document.getElementById("barra-tiempo");
+const progresoBar = document.getElementById("progreso");
+const contador = document.getElementById("contador");
+
+// --- Variables globales ---
+let datosTemporada = null;
+let idTemporada = null;
+let preguntas = [];
+let indicePregunta = 0;
+let puntaje = 0;
+let tiempoRestante = 58;
+let timer = null;
+
+// --- 1. Cargar temporadas y buscar activa ---
+fetch('./datos/temporadas.json')
+  .then(res => res.json())
+  .then(temporadas => {
+    const hoy = new Date();
+    datosTemporada = temporadas.find(t => {
+      const ini = new Date(t.fecha_inicio);
+      const fin = new Date(t.fecha_fin);
+      return hoy >= ini && hoy <= fin;
+    });
+    if (!datosTemporada) {
+      btnComenzar.disabled = true;
+      document.getElementById("descripcion-temporada").textContent = "No hay temporada activa en este momento.";
+      return;
+    }
+    idTemporada = datosTemporada.id;
+    preguntas = datosTemporada.preguntas;
+    document.getElementById("titulo-temporada").textContent = datosTemporada.titulo;
+    document.getElementById("descripcion-temporada").textContent = datosTemporada.descripcion;
+  });
+
+// --- 2. Comenzar quiz ---
+btnComenzar.addEventListener("click", () => {
+  if (!datosTemporada || !preguntas.length) {
+    alert("No hay preguntas para esta temporada.");
+    return;
+  }
+  inicio.classList.add("oculto");
+  juego.classList.remove("oculto");
+  final.classList.add("oculto");
+  indicePregunta = 0;
+  puntaje = 0;
+  mostrarPregunta();
+});
+
+// --- 3. Mostrar pregunta actual ---
+function mostrarPregunta() {
+  if (timer) clearInterval(timer);
+  tiempoRestante = 58;
+  actualizarBarraTiempo();
+  timer = setInterval(() => {
+    tiempoRestante--;
+    actualizarBarraTiempo();
+    if (tiempoRestante <= 0) {
+      clearInterval(timer);
+      indicePregunta++;
+      mostrarPregunta();
+    }
+  }, 1000);
+
+  if (indicePregunta >= preguntas.length) {
+    clearInterval(timer);
+    finalizarJuego();
+    return;
+  }
+  const p = preguntas[indicePregunta];
+  preguntaDiv.textContent = p.pregunta;
+  opcionesDiv.innerHTML = "";
+  let opciones = [p.respuesta, p.opcion_1, p.opcion_2, p.opcion_3]
+    .sort(() => Math.random() - 0.5); // Aleatorizar
+
+  opciones.forEach(op => {
+    const btn = document.createElement("button");
+    btn.textContent = op;
+    btn.onclick = () => {
+      clearInterval(timer);
+      if (op === p.respuesta) puntaje++;
+      indicePregunta++;
+      mostrarPregunta();
+    };
+    opcionesDiv.appendChild(btn);
+  });
+  conteoPregunta.textContent = `Pregunta ${indicePregunta + 1} de ${preguntas.length}`;
+}
+
+// --- 4. Barra y contador de tiempo ---
+function actualizarBarraTiempo() {
+  contador.textContent = `Tiempo: ${tiempoRestante}s`;
+  progresoBar.style.width = `${(tiempoRestante / 58) * 100}%`;
+  if (tiempoRestante > 30) progresoBar.style.background = '#2a9d8f';
+  else if (tiempoRestante > 10) progresoBar.style.background = '#e9c46a';
+  else progresoBar.style.background = '#e76f51';
+}
+
+// --- 5. Finalizar juego (usa tu código ya existente) ---
+// Pega aquí tu función finalizarJuego y guardarProgresoEnNubeTemporada, **tal cual la tienes**.
+
+
 // ...todo tu código previo sin cambios...
 
 function finalizarJuego() {
