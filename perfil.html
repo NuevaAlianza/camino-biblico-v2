@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     cargarSubgrupos(e.target.value, null);
   });
 
-  async function cargarSubgrupos(parroquiaId, subgrupoIdSeleccionado) {
+  function cargarSubgrupos(parroquiaId, subgrupoIdSeleccionado) {
     subgrupoSelect.innerHTML = '<option value="">-- Elige un subgrupo --</option>';
     if (!parroquiaId) {
       subgrupoSelect.disabled = true;
