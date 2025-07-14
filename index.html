@@ -4,132 +4,170 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login – Camino Bíblico</title>
-
-  <!-- Favicon e Iconos -->
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-192.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/icon-192.png">
-
-  <!-- Manifest y PWA -->
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#ead196">
-
-  <!-- APPLE/Safari iOS -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Camino Bíblico">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <!-- iOS Splash (opcional: agregar más tamaños si tienes splash personalizados) -->
-  <link rel="apple-touch-startup-image" href="assets/icons/icon-512.png">
-
-  <!-- Android Chrome: nombre corto para home -->
-  <meta name="application-name" content="Camino Bíblico">
-  <meta name="mobile-web-app-capable" content="yes">
-
-  <!-- Color navegador Windows -->
-  <meta name="msapplication-TileColor" content="#ead196">
-
-  <!-- SDK de Supabase y configuración -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script src="supabase.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/progreso.js"></script>
-
   <style>
-    body { font-family: Arial, sans-serif; padding: 2rem; max-width: 400px; margin: auto; }
-    h2 { margin-top: 2rem; }
+    body { font-family: Arial, sans-serif; padding: 2rem; max-width: 420px; margin: auto; background: #f9f8f6;}
+    h1 { text-align: center; margin-bottom: 2.5rem;}
+    section { background: #fff; border-radius: 1.3em; box-shadow: 0 2px 12px #ead19624; padding: 2rem 1.2rem; margin-bottom: 2rem;}
+    h2 { font-size: 1.22em; margin-bottom: 1.2rem;}
     label, input, select { display: block; width: 100%; margin-bottom: 1rem; }
-    button { padding: 0.5rem 1rem; }
-    #mensaje { margin-top: 1rem; color: green; font-weight: bold; }
+    button { padding: 0.6rem 1.1rem; font-weight: bold; font-size: 1.1em; border-radius: 9px; border: none; background: #ead196; color: #444;}
+    button[type="button"] { background: none; color: #1a5a8c; text-decoration: underline; padding: 0; margin-top: -0.6em;}
+    #mensaje { margin-top: 1.3rem; color: #1a6e34; font-weight: bold; text-align: center;}
+    .error { color: #b30000 !important;}
+    #registro-form { display: none; }
+    .swapper { text-align: center; margin-bottom: 1.3rem;}
+    .oculto { display: none !important;}
   </style>
 </head>
 <body>
 
   <h1>Camino Bíblico</h1>
-  <h2>Registro</h2>
-<form id="registro-form">
-  <input type="email" id="reg-email" placeholder="Correo electrónico" required />
-  <input type="password" id="reg-password" placeholder="Contraseña" required />
-  <input type="text" id="reg-nombre" placeholder="Nombre completo" required />
-  <input type="text" id="reg-pais" placeholder="País" />
-  <input type="text" id="reg-ciudad" placeholder="Ciudad" />
-  <input type="text" id="reg-parroquia" placeholder="Parroquia" />
-  <select id="reg-subgrupo" required>
-    <option value="">-- Elige un subgrupo --</option>
-    <option value="coro">Coro</option>
-    <option value="catequesis1">Catequesis 1</option>
-    <option value="catequesis2">Catequesis 2</option>
-    <option value="catequesis3">Catequesis 3</option>
-    <option value="catequesis4">Catequesis 4</option>
-    <option value="catequesis5">Catequesis 5</option>
-    <option value="catequesis6">Catequesis 6</option>
-    <option value="grupo1">Grupo 1</option>
-    <option value="grupo2">Grupo 2</option>
-    <option value="grupo3">Grupo 3</option>
-    <option value="grupo4">Grupo 4</option>
-    <option value="grupo5">Grupo 5</option>
-    <option value="grupo6">Grupo 6</option>
-    <option value="consejo">Consejo parroquial</option>
-  </select>
-  <button type="submit">Registrarse</button>
-</form>
+  
+  <section id="login-area">
+    <h2>Iniciar sesión</h2>
+    <form id="login-form">
+      <input type="email" id="login-email" placeholder="Correo electrónico" required />
+      <input type="password" id="login-password" placeholder="Contraseña" required />
+      <button type="submit">Entrar</button>
+    </form>
+    <div class="swapper">
+      <button id="toggle-registro" type="button">¿No tienes cuenta? Registrarse</button>
+    </div>
+  </section>
 
-  <h2>Iniciar sesión</h2>
-  <form id="login-form">
-    <input type="email" id="login-email" placeholder="Correo electrónico" required />
-    <input type="password" id="login-password" placeholder="Contraseña" required />
-    <button type="submit">Entrar</button>
-  </form>
+  <section id="registro-area" class="oculto">
+    <h2>Registro</h2>
+    <form id="registro-form">
+      <input type="email" id="reg-email" placeholder="Correo electrónico" required />
+      <input type="password" id="reg-password" placeholder="Contraseña" required minlength="6" />
+      <input type="text" id="reg-nombre" placeholder="Nombre completo" required />
+      <input type="text" id="reg-pais" placeholder="País" required />
+      <input type="text" id="reg-ciudad" placeholder="Ciudad" required />
+      <input type="text" id="reg-parroquia" placeholder="Parroquia" required />
+      <select id="reg-subgrupo" required>
+        <option value="">-- Elige un subgrupo --</option>
+        <option value="coro">Coro</option>
+        <option value="catequesis1">Catequesis 1</option>
+        <option value="catequesis2">Catequesis 2</option>
+        <option value="catequesis3">Catequesis 3</option>
+        <option value="catequesis4">Catequesis 4</option>
+        <option value="catequesis5">Catequesis 5</option>
+        <option value="catequesis6">Catequesis 6</option>
+        <option value="grupo1">Grupo 1</option>
+        <option value="grupo2">Grupo 2</option>
+        <option value="grupo3">Grupo 3</option>
+        <option value="grupo4">Grupo 4</option>
+        <option value="grupo5">Grupo 5</option>
+        <option value="grupo6">Grupo 6</option>
+        <option value="consejo">Consejo parroquial</option>
+      </select>
+      <button type="submit">Registrarse</button>
+    </form>
+    <div class="swapper">
+      <button id="toggle-login" type="button">¿Ya tienes cuenta? Iniciar sesión</button>
+    </div>
+  </section>
 
   <div id="mensaje"></div>
 
-  <!-- Botón de instalación PWA -->
-  <button id="btn-instalar-pwa" style="display:none;position:fixed;bottom:2rem;right:2rem;z-index:1200;">
-    📲 Instalar App
-  </button>
-
-  <!-- CONFIRMACIÓN DE CUENTA -->
   <script>
-    // --- 1. Detección de confirmación de correo (token en hash) ---
-    if (window.location.hash && window.location.hash.includes('access_token')) {
-      document.body.innerHTML = `<h2>Confirmando tu cuenta...</h2><p>Un momento, estamos validando tu usuario.</p>`;
-      const hash = window.location.hash.substring(1);
-      const params = new URLSearchParams(hash);
+    // Alternar áreas
+    const loginArea = document.getElementById("login-area");
+    const registroArea = document.getElementById("registro-area");
+    const registroForm = document.getElementById("registro-form");
+    const loginForm = document.getElementById("login-form");
+    const toggleBtn = document.getElementById("toggle-registro");
+    const toggleLoginBtn = document.getElementById("toggle-login");
+    const mensajeDiv = document.getElementById("mensaje");
 
-      const access_token = params.get('access_token');
-      const refresh_token = params.get('refresh_token');
-      const token_type = params.get('token_type') || 'bearer';
+    function mostrarLogin() {
+      loginArea.classList.remove("oculto");
+      registroArea.classList.add("oculto");
+      mensajeDiv.textContent = "";
+    }
+    function mostrarRegistro() {
+      loginArea.classList.add("oculto");
+      registroArea.classList.remove("oculto");
+      mensajeDiv.textContent = "";
+    }
+    mostrarLogin();
 
-      if (access_token && refresh_token) {
-        // Espera a que supabase esté definido
-        const checkSupabase = () => {
-          if (window.supabase) {
-            supabase.auth.setSession({
-              access_token,
-              refresh_token,
-              token_type
-            }).then(({ error }) => {
-              if (!error) {
-                window.location.hash = '';
-                // Mensaje rápido antes de ir a menú
-                document.body.innerHTML = `<h2>¡Cuenta confirmada!</h2><p>Redirigiendo...</p>`;
-                setTimeout(() => window.location.href = "menu.html", 900);
-              } else {
-                alert("Ocurrió un problema al confirmar tu correo. Intenta iniciar sesión normalmente.");
-                window.location.href = "index.html";
-              }
-            });
-          } else {
-            setTimeout(checkSupabase, 50);
+    toggleBtn.onclick = mostrarRegistro;
+    toggleLoginBtn.onclick = mostrarLogin;
+
+    // REGISTRO
+    registroForm.onsubmit = async e => {
+      e.preventDefault();
+      const email = document.getElementById("reg-email").value.trim();
+      const password = document.getElementById("reg-password").value.trim();
+      const nombre = document.getElementById("reg-nombre").value.trim();
+      const pais = document.getElementById("reg-pais").value.trim();
+      const ciudad = document.getElementById("reg-ciudad").value.trim();
+      const parroquia = document.getElementById("reg-parroquia").value.trim();
+      const subgrupo = document.getElementById("reg-subgrupo").value;
+
+      try {
+        // REGISTRO EN SUPABASE AUTH
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: {
+              nombre,
+              pais,
+              ciudad,
+              parroquia,
+              subgrupo
+            }
           }
-        };
-        checkSupabase();
+        });
+        if (error) throw error;
+
+        // LLENAR TABLA USUARIOS PERSONALIZADA (si se creó user)
+        const user = data?.user;
+        // En algunos casos user está en data.user, en otros en data.user.user (Supabase v2). Por seguridad:
+        const userId = user?.id || user?.user?.id;
+        if (userId) {
+          await supabase.from('usuarios').upsert([{
+            id: userId,
+            email: email,
+            nombre: nombre,
+            pais: pais,
+            ciudad: ciudad,
+            parroquia: parroquia,
+            subgrupo: subgrupo
+          }], { onConflict: ['id'] });
+        }
+
+        mostrarMensaje("¡Registro exitoso! Revisa tu correo para verificar la cuenta.", false);
+        registroForm.reset();
+        setTimeout(mostrarLogin, 1600);
+      } catch (err) {
+        mostrarMensaje("Error: " + err.message, true);
       }
+    };
+
+    // LOGIN
+    loginForm.onsubmit = async e => {
+      e.preventDefault();
+      const email = document.getElementById("login-email").value.trim();
+      const password = document.getElementById("login-password").value.trim();
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        mostrarMensaje("¡Bienvenido!", false);
+        setTimeout(() => window.location.href = "menu.html", 900);
+      } catch (err) {
+        mostrarMensaje("Error: " + err.message, true);
+      }
+    };
+
+    function mostrarMensaje(msg, error = false) {
+      mensajeDiv.textContent = msg;
+      mensajeDiv.className = error ? "error" : "";
     }
   </script>
-
-  <!-- Instalar PWA -->
-  <script src="js/app/instalar-pwa.js"></script>
-
 </body>
 </html>
-
