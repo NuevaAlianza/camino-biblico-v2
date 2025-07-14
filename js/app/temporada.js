@@ -143,7 +143,7 @@ function finalizarJuego() {
 
   puntajeFinal.textContent = `Puntaje: ${puntaje} de ${max}`;
 
-  guardarProgreso();           // Guardado local
+
   guardarProgresoEnNubeTemporada(); // <-- NUEVO, guardado en la nube
 }
 
