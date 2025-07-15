@@ -145,59 +145,61 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // --- 5. Guardar cambios ---
   document.getElementById('perfil-form').onsubmit = async e => {
-  e.preventDefault();
-  mensajeDiv.textContent = "";
+    e.preventDefault();
+    mensajeDiv.textContent = "";
 
-  const parroquiaId = parroquiaSelect.value;
-  const subgrupoId = subgrupoSelect.value;
+    const parroquiaId = parroquiaSelect.value;
+    const subgrupoId = subgrupoSelect.value;
 
-  // Busca los nombres de la parroquia y subgrupo
-  const parroquiaObj = parroquias.find(p => String(p.id) === String(parroquiaId));
-  const parroquiaNombre = parroquiaObj ? parroquiaObj.nombre_mostrar : "";
-  const ciudad = parroquiaObj ? parroquiaObj.ciudad_mostrar : "";
-  const pais = parroquiaObj ? parroquiaObj.pais_mostrar : "";
+    // Busca los nombres de la parroquia y subgrupo
+    const parroquiaObj = parroquias.find(p => String(p.id) === String(parroquiaId));
+    const parroquiaNombre = parroquiaObj ? parroquiaObj.nombre_mostrar : "";
+    const ciudad = parroquiaObj ? parroquiaObj.ciudad_mostrar : "";
+    const pais = parroquiaObj ? parroquiaObj.pais_mostrar : "";
 
-  const subgrupoObj = subgrupos.find(sg => String(sg.id) === String(subgrupoId));
-  const subgrupoNombre = subgrupoObj ? subgrupoObj.nombre : "";
+    const subgrupoObj = subgrupos.find(sg => String(sg.id) === String(subgrupoId));
+    const subgrupoNombre = subgrupoObj ? subgrupoObj.nombre : "";
 
-  if (!parroquiaId || !subgrupoId) {
-    mensajeDiv.textContent = "Selecciona parroquia y subgrupo.";
-    mensajeDiv.className = "mensaje error";
-    return;
-  }
-
-  // Actualiza metadatos en Auth (si lo deseas, o puedes omitir)
-  let { error: errorMeta } = await supabase.auth.updateUser({
-    data: {
-      parroquia: parroquiaId,
-      subgrupo: subgrupoId,
-      ciudad: ciudad,
-      pais: pais
+    if (!parroquiaId || !subgrupoId) {
+      mensajeDiv.textContent = "Selecciona parroquia y subgrupo.";
+      mensajeDiv.className = "mensaje error";
+      return;
     }
-  });
 
-  // Guarda en la tabla usuarios tanto los ID como los nombres
-  let { error: errorUsuario } = await supabase
-    .from('usuarios')
-    .upsert([{
-      id: user.id,
-      email: user.email,
-      parroquia: parroquiaNombre,
-      parroquia_id: parroquiaId,
-      ciudad: ciudad,
-      pais: pais,
-      subgrupo: subgrupoNombre,
-      subgrupo_id: subgrupoId
-    }], { onConflict: ['id'] });
+    // Actualiza metadatos en Auth (opcional)
+    let { error: errorMeta } = await supabase.auth.updateUser({
+      data: {
+        parroquia: parroquiaId,
+        subgrupo: subgrupoId,
+        ciudad: ciudad,
+        pais: pais
+      }
+    });
 
-  if (errorMeta || errorUsuario) {
-    mensajeDiv.textContent = "Error al actualizar: " + (errorMeta?.message || "") + (errorUsuario?.message || "");
-    mensajeDiv.className = "mensaje error";
-  } else {
-    mensajeDiv.textContent = "¡Perfil actualizado!";
-    mensajeDiv.className = "mensaje";
-  }
-};
+    // Guarda en la tabla usuarios tanto los ID como los nombres
+    let { error: errorUsuario } = await supabase
+      .from('usuarios')
+      .upsert([{
+        id: user.id,
+        email: user.email,
+        parroquia: parroquiaNombre,
+        parroquia_id: parroquiaId,
+        ciudad: ciudad,
+        pais: pais,
+        subgrupo: subgrupoNombre,
+        subgrupo_id: subgrupoId
+      }], { onConflict: ['id'] });
+
+    if (errorMeta || errorUsuario) {
+      mensajeDiv.textContent = "Error al actualizar: " + (errorMeta?.message || "") + (errorUsuario?.message || "");
+      mensajeDiv.className = "mensaje error";
+    } else {
+      mensajeDiv.textContent = "¡Perfil actualizado!";
+      mensajeDiv.className = "mensaje";
+    }
+  }; // <-- FIN del onsubmit
+
+}); // <-- FIN del DOMContentLoaded
 </script>
 </body>
 </html>
