@@ -144,48 +144,59 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   // --- 5. Guardar cambios ---
-  document.getElementById('perfil-form').onsubmit = async e => {
-    e.preventDefault();
-    mensajeDiv.textContent = "";
-    const parroquiaId = parroquiaSelect.value;
-    const subgrupoId = subgrupoSelect.value;
-    const ciudad = ciudadInput.value;
-    const pais = paisInput.value;
-    if (!parroquiaId || !subgrupoId) {
-      mensajeDiv.textContent = "Selecciona parroquia y subgrupo.";
-      mensajeDiv.className = "mensaje error";
-      return;
+document.getElementById('perfil-form').onsubmit = async e => {
+  e.preventDefault();
+  mensajeDiv.textContent = "";
+
+  const parroquiaId = parroquiaSelect.value;
+  const subgrupoId = subgrupoSelect.value;
+
+  // Busca los nombres según el ID seleccionado
+  const parroquiaObj = parroquias.find(p => String(p.id) === String(parroquiaId));
+  const parroquiaNombre = parroquiaObj ? parroquiaObj.nombre_mostrar : "";
+  const ciudad = parroquiaObj ? parroquiaObj.ciudad_mostrar : "";
+  const pais = parroquiaObj ? parroquiaObj.pais_mostrar : "";
+
+  const subgrupoObj = subgrupos.find(sg => String(sg.id) === String(subgrupoId));
+  const subgrupoNombre = subgrupoObj ? subgrupoObj.nombre : "";
+
+  if (!parroquiaNombre || !subgrupoNombre) {
+    mensajeDiv.textContent = "Selecciona parroquia y subgrupo.";
+    mensajeDiv.className = "mensaje error";
+    return;
+  }
+
+  // Actualiza metadatos en Auth (opcional, puedes dejarlo igual)
+  let { error: errorMeta } = await supabase.auth.updateUser({
+    data: {
+      parroquia: parroquiaNombre,
+      ciudad: ciudad,
+      pais: pais,
+      subgrupo: subgrupoNombre
     }
+  });
 
-    let { error: errorMeta } = await supabase.auth.updateUser({
-      data: {
-        parroquia: parroquiaId,
-        subgrupo: subgrupoId,
-        ciudad: ciudad,
-        pais: pais
-      }
-    });
+  // Guarda SOLO LOS NOMBRES en la tabla usuarios
+  let { error: errorUsuario } = await supabase
+    .from('usuarios')
+    .upsert([{
+      id: user.id,
+      email: user.email,
+      parroquia: parroquiaNombre,   // ← SOLO NOMBRE
+      ciudad: ciudad,
+      pais: pais,
+      subgrupo: subgrupoNombre     // ← SOLO NOMBRE
+    }], { onConflict: ['id'] });
 
-    let { error: errorUsuario } = await supabase
-      .from('usuarios')
-      .upsert([{
-        id: user.id,
-        email: user.email,
-        parroquia: parroquiaId,
-        subgrupo: subgrupoId,
-        ciudad: ciudad,
-        pais: pais
-      }], { onConflict: ['id'] });
+  if (errorMeta || errorUsuario) {
+    mensajeDiv.textContent = "Error al actualizar: " + (errorMeta?.message || "") + (errorUsuario?.message || "");
+    mensajeDiv.className = "mensaje error";
+  } else {
+    mensajeDiv.textContent = "¡Perfil actualizado!";
+    mensajeDiv.className = "mensaje";
+  }
+};
 
-    if (errorMeta || errorUsuario) {
-      mensajeDiv.textContent = "Error al actualizar: " + (errorMeta?.message || "") + (errorUsuario?.message || "");
-      mensajeDiv.className = "mensaje error";
-    } else {
-      mensajeDiv.textContent = "¡Perfil actualizado!";
-      mensajeDiv.className = "mensaje";
-    }
-  };
-});
 </script>
 </body>
 </html>
