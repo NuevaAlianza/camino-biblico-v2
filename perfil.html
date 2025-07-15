@@ -106,6 +106,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   nombreInput.value = usuarioData?.nombre || meta.nombre || "";
 
   if (usuarioData?.parroquia) {
+    // Busca el ID según el nombre guardado (en caso de actualización desde antiguo)
     parroquiaSelect.value = parroquias.find(p => p.nombre_mostrar === usuarioData.parroquia)?.id || "";
     // Rellenar ciudad y país según parroquia seleccionada
     const parroquiaSel = parroquias.find(p => String(p.id) === String(parroquiaSelect.value));
@@ -133,7 +134,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const subgruposFiltrados = subgrupos.filter(sg => String(sg.parroquia_id) === String(parroquiaId));
     subgruposFiltrados.forEach(sg => {
       const opt = document.createElement('option');
-      opt.value = sg.nombre; // Guardar el NOMBRE, no el id
+      opt.value = sg.nombre; // Guarda el nombre
       opt.textContent = sg.nombre;
       subgrupoSelect.appendChild(opt);
     });
@@ -143,7 +144,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // --- 5. Guardar cambios ---
+  // --- 4. Guardar cambios ---
   document.getElementById('perfil-form').onsubmit = async e => {
     e.preventDefault();
     mensajeDiv.textContent = "";
@@ -151,7 +152,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const parroquiaId = parroquiaSelect.value;
     const subgrupoNombre = subgrupoSelect.value;
 
-    // Busca los nombres de la parroquia y subgrupo
+    // Busca los nombres según el ID seleccionado
     const parroquiaObj = parroquias.find(p => String(p.id) === String(parroquiaId));
     const parroquiaNombre = parroquiaObj ? parroquiaObj.nombre_mostrar : "";
     const ciudad = parroquiaObj ? parroquiaObj.ciudad_mostrar : "";
