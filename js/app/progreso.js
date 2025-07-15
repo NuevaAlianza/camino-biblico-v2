@@ -43,6 +43,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   await mostrarRanking({ pais, ciudad, parroquia });
   mostrarHistorialPartidas();
   mostrarLogrosRapidos();
+
+// <-- Aquí la llamada al nuevo ranking de parroquia:
+  await mostrarRankingParroquiaAvanzado();
 });
 
 // --- 2. Mini dashboard animado ---
@@ -368,4 +371,101 @@ function mostrarPanelResumenUsuario(xpTotal, puestoGlobal, puestoParroquia) {
       elXP.textContent = xpAnim;
     }
   }, 18);
+}
+async function mostrarRankingParroquiaAvanzado() {
+  const cont = document.getElementById("progreso-ranking-parroquia");
+  cont.innerHTML = "<div>Cargando ranking parroquial...</div>";
+
+  // 1. Traer todos los usuarios y sus XP (rpg_progreso)
+  const { data: usuarios, error } = await supabase
+    .from("usuarios")
+    .select("id, nombre, parroquia_id, parroquia_nombre, subgrupo, rpg_progreso(xp)");
+
+  if (error) {
+    cont.innerHTML = "<div>Error al cargar datos de parroquias.</div>";
+    return;
+  }
+
+  // 2. Calcular XP total y XP promedio por parroquia (solo usuarios activos)
+  const parroquias = {};
+  usuarios.forEach(u => {
+    const xp = (u.rpg_progreso || []).reduce((a, b) => a + (b.xp || 0), 0);
+    if (!parroquias[u.parroquia_id]) {
+      parroquias[u.parroquia_id] = {
+        nombre: u.parroquia_nombre,
+        usuarios: [],
+        xpTotal: 0,
+        activos: 0 // Solo los que tienen xp > 0
+      };
+    }
+    parroquias[u.parroquia_id].usuarios.push({...u, xp});
+    parroquias[u.parroquia_id].xpTotal += xp;
+    if (xp > 0) parroquias[u.parroquia_id].activos++;
+  });
+
+  // Calcula XP promedio SOLO de miembros activos
+  Object.values(parroquias).forEach(p => {
+    p.xpPromedio = p.activos ? p.xpTotal / p.activos : 0;
+  });
+
+  // Arrays ordenados por XP total y XP promedio
+  const parroquiasArr = Object.values(parroquias);
+  const xpTotalRank = [...parroquiasArr].sort((a, b) => b.xpTotal - a.xpTotal);
+  const xpPromRank = [...parroquiasArr].sort((a, b) => b.xpPromedio - a.xpPromedio);
+
+  // Encuentra tu parroquia
+  const miParroquiaID = usuarioActual?.user_metadata?.parroquia_id || usuarioActual?.parroquia_id;
+  const posTotal = xpTotalRank.findIndex(p => p.usuarios.some(u => u.parroquia_id === miParroquiaID)) + 1;
+  const posProm = xpPromRank.findIndex(p => p.usuarios.some(u => u.parroquia_id === miParroquiaID)) + 1;
+  const miParroquiaTotal = xpTotalRank[posTotal - 1];
+  const miParroquiaProm = xpPromRank[posProm - 1];
+
+  // 3. Subgrupos de tu parroquia (solo miembros activos)
+  const usuariosMiParroquia = miParroquiaTotal ? miParroquiaTotal.usuarios.filter(u => u.xp > 0) : [];
+  const subgrupos = {};
+  usuariosMiParroquia.forEach(u => {
+    const nombre = u.subgrupo || "Sin subgrupo";
+    if (!subgrupos[nombre]) subgrupos[nombre] = { xpTotal: 0, count: 0 };
+    subgrupos[nombre].xpTotal += u.xp;
+    subgrupos[nombre].count++;
+  });
+  // Promedios de subgrupos (solo los que tengan miembros activos)
+  const subgruposArr = Object.entries(subgrupos)
+    .map(([nombre, sg]) => ({
+      nombre,
+      xpPromedio: sg.count ? sg.xpTotal / sg.count : 0,
+      count: sg.count
+    }))
+    .sort((a, b) => b.xpPromedio - a.xpPromedio);
+
+  // 4. Render visual avanzado
+  cont.innerHTML = `
+    <div class="ranking-parroquia-tarjeta">
+      <h3>🏆 Parroquia: <b>${miParroquiaTotal?.nombre || "Sin parroquia"}</b></h3>
+      <div>
+        <b>XP total:</b> <span>${miParroquiaTotal?.xpTotal || 0}</span>
+        &nbsp;–&nbsp; Puesto <b>#${posTotal > 0 ? posTotal : '-'}</b> de ${xpTotalRank.length}
+      </div>
+      <div>
+        <b>XP promedio:</b> <span>${miParroquiaProm?.xpPromedio?.toFixed(1) || 0}</span>
+        &nbsp;–&nbsp; Puesto <b>#${posProm > 0 ? posProm : '-'}</b> de ${xpPromRank.length}
+      </div>
+      <div class="ranking-nota">(El promedio y ranking solo consideran miembros activos de cada parroquia)</div>
+    </div>
+    <div class="subgrupos-ranking">
+      <h4>🧑‍🤝‍🧑 Subgrupos de tu parroquia (XP promedio)</h4>
+      <ul>
+        ${subgruposArr.length
+          ? subgruposArr.map((sg, idx) => `
+            <li>
+              <b>#${idx+1}</b> ${sg.nombre} – 
+              <span>${sg.xpPromedio.toFixed(1)} XP</span>
+              <small>(${sg.count} miembro${sg.count > 1 ? "s" : ""})</small>
+            </li>
+          `).join("")
+          : "<li>No hay miembros activos en subgrupos.</li>"
+        }
+      </ul>
+    </div>
+  `;
 }
