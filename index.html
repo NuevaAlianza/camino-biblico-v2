@@ -22,9 +22,8 @@
   </style>
 </head>
 <body>
-
   <h1>Camino Bíblico</h1>
-  
+
   <section id="login-area">
     <h2>Iniciar sesión</h2>
     <form id="login-form">
@@ -43,26 +42,18 @@
       <input type="email" id="reg-email" placeholder="Correo electrónico" required />
       <input type="password" id="reg-password" placeholder="Contraseña" required minlength="6" />
       <input type="text" id="reg-nombre" placeholder="Nombre completo" required />
-      <input type="text" id="reg-pais" placeholder="País" required />
-      <input type="text" id="reg-ciudad" placeholder="Ciudad" required />
-      <input type="text" id="reg-parroquia" placeholder="Parroquia" required />
+
+      <select id="reg-parroquia" required>
+        <option value="">-- Elige una parroquia --</option>
+      </select>
+
+      <input type="text" id="reg-pais" placeholder="País" readonly />
+      <input type="text" id="reg-ciudad" placeholder="Ciudad" readonly />
+
       <select id="reg-subgrupo" required>
         <option value="">-- Elige un subgrupo --</option>
-        <option value="coro">Coro</option>
-        <option value="catequesis1">Catequesis 1</option>
-        <option value="catequesis2">Catequesis 2</option>
-        <option value="catequesis3">Catequesis 3</option>
-        <option value="catequesis4">Catequesis 4</option>
-        <option value="catequesis5">Catequesis 5</option>
-        <option value="catequesis6">Catequesis 6</option>
-        <option value="grupo1">Grupo 1</option>
-        <option value="grupo2">Grupo 2</option>
-        <option value="grupo3">Grupo 3</option>
-        <option value="grupo4">Grupo 4</option>
-        <option value="grupo5">Grupo 5</option>
-        <option value="grupo6">Grupo 6</option>
-        <option value="consejo">Consejo parroquial</option>
       </select>
+
       <button type="submit">Registrarse</button>
     </form>
     <div class="swapper">
@@ -72,8 +63,10 @@
 
   <div id="mensaje"></div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="supabase.js"></script>
   <script>
-    // Alternar áreas
+    // Alternar áreas login/registro
     const loginArea = document.getElementById("login-area");
     const registroArea = document.getElementById("registro-area");
     const registroForm = document.getElementById("registro-form");
@@ -97,77 +90,151 @@
     toggleBtn.onclick = mostrarRegistro;
     toggleLoginBtn.onclick = mostrarLogin;
 
+    // Cargar parroquias y subgrupos al registro
+    document.addEventListener("DOMContentLoaded", async () => {
+      const parroquiaSelect = document.getElementById("reg-parroquia");
+      const ciudadInput = document.getElementById("reg-ciudad");
+      const paisInput = document.getElementById("reg-pais");
+      const subgrupoSelect = document.getElementById("reg-subgrupo");
+
+      // 1. Cargar parroquias en el select
+      const { data: parroquias, error: parroquiasError } = await supabase
+        .from("parroquias")
+        .select("id, nombre_mostrar, ciudad_mostrar, pais_mostrar");
+
+      if (parroquiasError) {
+        mensajeDiv.textContent = "Error al cargar parroquias.";
+        mensajeDiv.className = "error";
+        return;
+      }
+
+      parroquias.forEach(p => {
+        const opt = document.createElement("option");
+        opt.value = p.id;
+        opt.textContent = p.nombre_mostrar;
+        // Guardamos ciudad y país en data-atributos del option
+        opt.dataset.ciudad = p.ciudad_mostrar;
+        opt.dataset.pais = p.pais_mostrar;
+        parroquiaSelect.appendChild(opt);
+      });
+
+      // 2. Evento: Al cambiar parroquia, autocompletar ciudad/país y cargar subgrupos
+      parroquiaSelect.onchange = async function() {
+        const id = parroquiaSelect.value;
+        subgrupoSelect.innerHTML = '<option value="">-- Elige un subgrupo --</option>';
+        ciudadInput.value = "";
+        paisInput.value = "";
+
+        if (!id) return;
+
+        // Autocompletar ciudad y país
+        const selected = parroquiaSelect.options[parroquiaSelect.selectedIndex];
+        ciudadInput.value = selected.dataset.ciudad || "";
+        paisInput.value = selected.dataset.pais || "";
+
+        // Cargar subgrupos de esa parroquia
+        const { data: subgrupos, error: subgrupoError } = await supabase
+          .from("subgrupos")
+          .select("id, nombre")
+          .eq("parroquia_id", id);
+
+        if (!subgrupoError && subgrupos.length > 0) {
+          subgrupos.forEach(sg => {
+            const opt = document.createElement("option");
+            opt.value = sg.nombre; // Puedes usar sg.id si prefieres
+            opt.textContent = sg.nombre;
+            subgrupoSelect.appendChild(opt);
+          });
+        } else {
+          const opt = document.createElement("option");
+          opt.value = "";
+          opt.textContent = "Sin subgrupo";
+          subgrupoSelect.appendChild(opt);
+        }
+      };
+    });
+
     // REGISTRO
-    registroForm.onsubmit = async e => {
+    registroForm.onsubmit = async function(e) {
       e.preventDefault();
+      mensajeDiv.textContent = "";
+
       const email = document.getElementById("reg-email").value.trim();
       const password = document.getElementById("reg-password").value.trim();
       const nombre = document.getElementById("reg-nombre").value.trim();
+      const parroquiaSelect = document.getElementById("reg-parroquia");
+      const parroquia_id = parroquiaSelect.value;
+      const parroquia_nombre = parroquiaSelect.options[parroquiaSelect.selectedIndex].textContent;
       const pais = document.getElementById("reg-pais").value.trim();
       const ciudad = document.getElementById("reg-ciudad").value.trim();
-      const parroquia = document.getElementById("reg-parroquia").value.trim();
       const subgrupo = document.getElementById("reg-subgrupo").value;
 
+      if (!parroquia_id || !pais || !ciudad || !subgrupo) {
+        mensajeDiv.textContent = "Completa todos los campos.";
+        mensajeDiv.className = "error";
+        return;
+      }
+
       try {
-        // REGISTRO EN SUPABASE AUTH
+        // 1. Crear usuario en Supabase Auth (user_metadata)
         const { data, error } = await supabase.auth.signUp({
           email,
           password,
           options: {
             data: {
               nombre,
+              parroquia_id,
+              parroquia_nombre,
               pais,
               ciudad,
-              parroquia,
               subgrupo
             }
           }
         });
         if (error) throw error;
 
-        // LLENAR TABLA USUARIOS PERSONALIZADA (si se creó user)
+        // 2. Insertar en la tabla usuarios (si quieres guardar redundancia)
         const user = data?.user;
-        // En algunos casos user está en data.user, en otros en data.user.user (Supabase v2). Por seguridad:
         const userId = user?.id || user?.user?.id;
         if (userId) {
-          await supabase.from('usuarios').upsert([{
+          await supabase.from("usuarios").upsert([{
             id: userId,
             email: email,
             nombre: nombre,
+            parroquia_id: parroquia_id,
+            parroquia_nombre: parroquia_nombre,
             pais: pais,
             ciudad: ciudad,
-            parroquia: parroquia,
             subgrupo: subgrupo
           }], { onConflict: ['id'] });
         }
 
-        mostrarMensaje("¡Registro exitoso! Revisa tu correo para verificar la cuenta.", false);
+        mensajeDiv.textContent = "¡Registro exitoso! Revisa tu correo para verificar la cuenta.";
+        mensajeDiv.className = "";
         registroForm.reset();
         setTimeout(mostrarLogin, 1600);
       } catch (err) {
-        mostrarMensaje("Error: " + err.message, true);
+        mensajeDiv.textContent = "Error: " + (err.message || err.error_description || "Error desconocido");
+        mensajeDiv.className = "error";
       }
     };
 
     // LOGIN
-    loginForm.onsubmit = async e => {
+    loginForm.onsubmit = async function(e) {
       e.preventDefault();
       const email = document.getElementById("login-email").value.trim();
       const password = document.getElementById("login-password").value.trim();
       try {
         const { data, error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
-        mostrarMensaje("¡Bienvenido!", false);
+        mensajeDiv.textContent = "¡Bienvenido!";
+        mensajeDiv.className = "";
         setTimeout(() => window.location.href = "menu.html", 900);
       } catch (err) {
-        mostrarMensaje("Error: " + err.message, true);
+        mensajeDiv.textContent = "Error: " + (err.message || err.error_description || "Error desconocido");
+        mensajeDiv.className = "error";
       }
     };
-
-    function mostrarMensaje(msg, error = false) {
-      mensajeDiv.textContent = msg;
-      mensajeDiv.className = error ? "error" : "";
-    }
   </script>
 </body>
 </html>
