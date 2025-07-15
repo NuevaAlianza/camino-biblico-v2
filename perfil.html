@@ -10,6 +10,7 @@
     h2 { margin-bottom: 1.5rem; }
     label { font-weight: bold; }
     input, select { display: block; width: 100%; margin-bottom: 1.2rem; padding: 0.65em 0.5em; font-size: 1em; }
+    .readonly-campo { background: #f1f1f1; color: #444; border: none; font-weight: bold; padding: 0.7em 0.4em; border-radius: 6px; }
     button { padding: 0.6em 1.3em; }
     .mensaje { margin-bottom: 1.2rem; color: #168; font-weight: bold; }
     .error { color: #b30000; }
@@ -23,7 +24,13 @@
   <div class="mensaje" id="mensaje"></div>
   <form id="perfil-form">
     <label for="nombre">Nombre</label>
-    <input type="text" id="nombre" required />
+    <div id="nombre" class="readonly-campo"></div>
+
+    <label for="pais">País</label>
+    <input type="text" id="pais" required />
+
+    <label for="ciudad">Ciudad</label>
+    <input type="text" id="ciudad" required />
 
     <label for="parroquia">Parroquia</label>
     <select id="parroquia" required>
@@ -47,7 +54,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const subgrupoSelect = document.getElementById('subgrupo');
   const mensajeDiv = document.getElementById('mensaje');
 
-  // --- Obtener sesión y usuario actual ---
+  // Obtener sesión y usuario actual
   const { data: sessionData } = await supabase.auth.getSession();
   const user = sessionData?.session?.user;
   if (!user) {
@@ -58,7 +65,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
   const meta = user.user_metadata || {};
 
-  // --- 1. Cargar parroquias desde BD ---
+  // 1. Cargar parroquias desde BD
   let { data: parroquiasData, error: parroquiasError } = await supabase
     .from("parroquias")
     .select("id, nombre_mostrar, ciudad_mostrar, pais_mostrar")
@@ -76,7 +83,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     parroquiaSelect.appendChild(opt);
   });
 
-  // --- 2. Cargar subgrupos desde BD (todos) ---
+  // 2. Cargar subgrupos desde BD (todos)
   let { data: subgruposData, error: subgruposError } = await supabase
     .from("subgrupos")
     .select("id, nombre, parroquia_id");
@@ -87,22 +94,26 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
   subgrupos = subgruposData;
 
-  // --- 3. Rellenar datos del usuario actual ---
-  // Consulta a la tabla usuarios para obtener parroquia y subgrupo ID
+  // 3. Rellenar datos del usuario actual
   let { data: usuarioData } = await supabase
     .from("usuarios")
-    .select("nombre, parroquia, subgrupo")
+    .select("nombre, pais, ciudad, parroquia, subgrupo")
     .eq("id", user.id)
     .maybeSingle();
-  // Si no existe aún, usamos el metadata o dejamos vacío
-  document.getElementById('nombre').value = usuarioData?.nombre || meta.nombre || "";
+
+  // Mostramos el nombre solo como texto
+  document.getElementById('nombre').textContent = usuarioData?.nombre || meta.nombre || "";
+
+  // Inputs editables
+  document.getElementById('pais').value = usuarioData?.pais || meta.pais || "";
+  document.getElementById('ciudad').value = usuarioData?.ciudad || meta.ciudad || "";
 
   if (usuarioData?.parroquia) {
     parroquiaSelect.value = usuarioData.parroquia;
     cargarSubgrupos(usuarioData.parroquia, usuarioData.subgrupo);
   }
 
-  // --- 4. Cuando se cambia parroquia, carga los subgrupos asociados ---
+  // Cuando se cambia parroquia, carga los subgrupos asociados
   parroquiaSelect.addEventListener('change', (e) => {
     cargarSubgrupos(e.target.value, null);
   });
@@ -126,11 +137,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // --- 5. Guardar cambios ---
+  // Guardar cambios
   document.getElementById('perfil-form').onsubmit = async e => {
     e.preventDefault();
     mensajeDiv.textContent = "";
-    const nombre = document.getElementById('nombre').value.trim();
+    const pais = document.getElementById('pais').value.trim();
+    const ciudad = document.getElementById('ciudad').value.trim();
     const parroquiaId = parroquiaSelect.value;
     const subgrupoId = subgrupoSelect.value;
 
@@ -143,9 +155,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Actualiza metadatos en Auth (solo para mostrar en la app, lo principal es la tabla usuarios)
     let { error: errorMeta } = await supabase.auth.updateUser({
       data: {
-        nombre,
-        parroquia: parroquiaId, // ahora es id
-        subgrupo: subgrupoId    // ahora es id
+        pais,
+        ciudad,
+        parroquia: parroquiaId,
+        subgrupo: subgrupoId
       }
     });
 
@@ -155,7 +168,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       .upsert([{
         id: user.id,
         email: user.email,
-        nombre: nombre,
+        pais: pais,
+        ciudad: ciudad,
         parroquia: parroquiaId,
         subgrupo: subgrupoId
       }], { onConflict: ['id'] });
