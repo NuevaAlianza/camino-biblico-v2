@@ -6,14 +6,129 @@
   <title>Mi Perfil – Camino Bíblico</title>
   <link rel="stylesheet" href="css/estilos.css" />
   <style>
-    body { font-family: Arial, sans-serif; max-width: 420px; margin: 2rem auto; padding: 1.5rem; }
-    h2 { margin-bottom: 1.5rem; }
-    label { font-weight: bold; }
-    input, select { display: block; width: 100%; margin-bottom: 1.2rem; padding: 0.65em 0.5em; font-size: 1em; }
-    button { padding: 0.6em 1.3em; }
-    .mensaje { margin-bottom: 1.2rem; color: #168; font-weight: bold; }
-    .error { color: #b30000; }
-    input[readonly] { background: #f2f2f2; }
+    body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  padding: 2rem 0.5rem;
+  background: linear-gradient(120deg, #f9f8f6 70%, #ffe5b4 100%);
+  color: #3d3a2f;
+  max-width: 420px;
+  margin: auto;
+  min-height: 100vh;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  font-size: 2.1rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+section {
+  background: #fffdfa;
+  border-radius: 1.3em;
+  box-shadow: 0 2px 14px #ead19642;
+  padding: 2rem 1.3rem 1.3rem 1.3rem;
+  margin-bottom: 2rem;
+  transition: box-shadow 0.18s;
+}
+
+h2 {
+  font-size: 1.22em;
+  margin-bottom: 1.2rem;
+  font-weight: 600;
+  color: #a97722;
+}
+
+label {
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+  color: #6e6246;
+}
+
+input, select {
+  display: block;
+  width: 100%;
+  margin-bottom: 1.1rem;
+  padding: 0.7rem 0.8rem;
+  border: 1.5px solid #ead196b0;
+  border-radius: 9px;
+  background: #fff9f1;
+  font-size: 1.05rem;
+  color: #473e28;
+  transition: border-color 0.18s;
+}
+input:focus, select:focus {
+  outline: none;
+  border-color: #edc96a;
+  background: #fffbe9;
+}
+
+button {
+  padding: 0.75rem 1.25rem;
+  font-weight: bold;
+  font-size: 1.13em;
+  border-radius: 11px;
+  border: none;
+  background: linear-gradient(90deg, #f3cd7a, #fad493 80%);
+  color: #473e28;
+  margin-top: 0.1rem;
+  margin-bottom: 0.1rem;
+  box-shadow: 0 2px 8px #f3cd7a33;
+  cursor: pointer;
+  transition: background 0.17s, box-shadow 0.18s;
+}
+button:hover,
+button:focus {
+  background: linear-gradient(90deg, #fad493 60%, #f3cd7a 100%);
+  box-shadow: 0 4px 12px #f3cd7a45;
+}
+
+button[type="button"] {
+  background: none;
+  color: #1a5a8c;
+  text-decoration: underline;
+  padding: 0;
+  margin-top: -0.6em;
+  font-size: 1em;
+  box-shadow: none;
+}
+
+#mensaje {
+  margin-top: 1.4rem;
+  font-size: 1.07em;
+  color: #267e47;
+  font-weight: bold;
+  text-align: center;
+  transition: color 0.14s;
+}
+.error {
+  color: #cc2222 !important;
+}
+
+.swapper {
+  text-align: center;
+  margin-bottom: 1.3rem;
+}
+
+.oculto {
+  display: none !important;
+}
+
+input[readonly] {
+  background: #f5eeda !important;
+  color: #89723d;
+  border-style: dashed;
+}
+
+/* Responsive design */
+@media (max-width: 540px) {
+  body { padding: 1.1rem 0.4rem; }
+  section { padding: 1.4rem 0.5rem 0.8rem 0.5rem; }
+  h1 { font-size: 1.35rem; }
+  button, input, select { font-size: 1rem; }
+}
+
   </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script src="supabase.js"></script>
