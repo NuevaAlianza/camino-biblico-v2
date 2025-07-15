@@ -99,22 +99,21 @@ document.addEventListener('DOMContentLoaded', async () => {
   // --- 3. Rellenar datos del usuario actual ---
   let { data: usuarioData } = await supabase
     .from("usuarios")
-    .select("nombre, parroquia, ciudad, pais, subgrupo")
+    .select("nombre, parroquia, subgrupo")
     .eq("id", user.id)
     .maybeSingle();
 
   nombreInput.value = usuarioData?.nombre || meta.nombre || "";
 
   if (usuarioData?.parroquia) {
-    // Busca el ID según el nombre guardado (en caso de actualización desde antiguo)
-    parroquiaSelect.value = parroquias.find(p => p.nombre_mostrar === usuarioData.parroquia)?.id || "";
-    // Rellenar ciudad y país según parroquia seleccionada
-    const parroquiaSel = parroquias.find(p => String(p.id) === String(parroquiaSelect.value));
+    parroquiaSelect.value = usuarioData.parroquia;
+    // Rellenar ciudad y país según parroquia
+    const parroquiaSel = parroquias.find(p => String(p.id) === String(usuarioData.parroquia));
     if (parroquiaSel) {
       ciudadInput.value = parroquiaSel.ciudad_mostrar;
       paisInput.value = parroquiaSel.pais_mostrar;
     }
-    cargarSubgrupos(parroquiaSelect.value, usuarioData.subgrupo);
+    cargarSubgrupos(usuarioData.parroquia, usuarioData.subgrupo);
   }
 
   parroquiaSelect.addEventListener('change', (e) => {
@@ -125,7 +124,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     cargarSubgrupos(parroquiaId, null);
   });
 
-  function cargarSubgrupos(parroquiaId, subgrupoNombreSeleccionado) {
+  function cargarSubgrupos(parroquiaId, subgrupoIdSeleccionado) {
     subgrupoSelect.innerHTML = '<option value="">-- Elige un subgrupo --</option>';
     if (!parroquiaId) {
       subgrupoSelect.disabled = true;
@@ -134,56 +133,48 @@ document.addEventListener('DOMContentLoaded', async () => {
     const subgruposFiltrados = subgrupos.filter(sg => String(sg.parroquia_id) === String(parroquiaId));
     subgruposFiltrados.forEach(sg => {
       const opt = document.createElement('option');
-      opt.value = sg.nombre; // Guarda el nombre
+      opt.value = sg.id;
       opt.textContent = sg.nombre;
       subgrupoSelect.appendChild(opt);
     });
     subgrupoSelect.disabled = subgruposFiltrados.length === 0;
-    if (subgrupoNombreSeleccionado) {
-      subgrupoSelect.value = subgrupoNombreSeleccionado;
+    if (subgrupoIdSeleccionado) {
+      subgrupoSelect.value = subgrupoIdSeleccionado;
     }
   }
 
-  // --- 4. Guardar cambios ---
+  // --- 5. Guardar cambios ---
   document.getElementById('perfil-form').onsubmit = async e => {
     e.preventDefault();
     mensajeDiv.textContent = "";
-
     const parroquiaId = parroquiaSelect.value;
-    const subgrupoNombre = subgrupoSelect.value;
-
-    // Busca los nombres según el ID seleccionado
-    const parroquiaObj = parroquias.find(p => String(p.id) === String(parroquiaId));
-    const parroquiaNombre = parroquiaObj ? parroquiaObj.nombre_mostrar : "";
-    const ciudad = parroquiaObj ? parroquiaObj.ciudad_mostrar : "";
-    const pais = parroquiaObj ? parroquiaObj.pais_mostrar : "";
-
-    if (!parroquiaNombre || !subgrupoNombre) {
+    const subgrupoId = subgrupoSelect.value;
+    const ciudad = ciudadInput.value;
+    const pais = paisInput.value;
+    if (!parroquiaId || !subgrupoId) {
       mensajeDiv.textContent = "Selecciona parroquia y subgrupo.";
       mensajeDiv.className = "mensaje error";
       return;
     }
 
-    // Actualiza metadatos en Auth (opcional)
     let { error: errorMeta } = await supabase.auth.updateUser({
       data: {
-        parroquia: parroquiaNombre,
+        parroquia: parroquiaId,
+        subgrupo: subgrupoId,
         ciudad: ciudad,
-        pais: pais,
-        subgrupo: subgrupoNombre
+        pais: pais
       }
     });
 
-    // Guarda solo los nombres en la tabla usuarios
     let { error: errorUsuario } = await supabase
       .from('usuarios')
       .upsert([{
         id: user.id,
         email: user.email,
-        parroquia: parroquiaNombre,
+        parroquia: parroquiaId,
+        subgrupo: subgrupoId,
         ciudad: ciudad,
-        pais: pais,
-        subgrupo: subgrupoNombre
+        pais: pais
       }], { onConflict: ['id'] });
 
     if (errorMeta || errorUsuario) {
