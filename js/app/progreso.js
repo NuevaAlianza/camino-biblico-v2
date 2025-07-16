@@ -68,8 +68,8 @@ async function mostrarRankingGlobal(userId) {
     .order("xp_global", { ascending: false })
     .limit(10);
 
-  let html = `<h3>Top 10 Global</h3><ol>`;
-  rankingGlobal.forEach((u, i) => {
+  let html = `<h3>Top 10 Global</h3><ol style="text-align:center;">`;
+  (rankingGlobal || []).forEach((u, i) => {
     html += `<li${u.user_id === userId ? ' class="yo"' : ''}>#${i+1} ${u.nombre || u.user_id.slice(0,8)} – ${u.xp_global} XP</li>`;
   });
   html += `</ol>`;
@@ -89,7 +89,7 @@ async function mostrarRankingSemanalParroquia() {
   // Consulta usando sólo la fecha
   const { data: progresoSemana, error } = await supabase
     .from("rpg_progreso")
-    .select("user_id, xp, parroquia, parroquia_id, fecha_juego")
+    .select("user_id, xp, parroquia, fecha_juego")
     .gte("fecha_juego", fechaFiltro);
 
   if (error) {
@@ -98,10 +98,10 @@ async function mostrarRankingSemanalParroquia() {
     return;
   }
 
-  // Resto del procesamiento igual...
+  // Procesa por parroquia
   const parroquias = {};
   (progresoSemana || []).forEach(row => {
-    const id = row.parroquia_id || "SinID";
+    const id = row.parroquia || "SinID";
     if (!parroquias[id]) parroquias[id] = { nombre: row.parroquia || "Sin nombre", xp: 0, count: 0 };
     parroquias[id].xp += row.xp || 0;
     parroquias[id].count++;
@@ -111,7 +111,7 @@ async function mostrarRankingSemanalParroquia() {
     .map(p => ({ ...p, xpPromedio: p.count ? p.xp / p.count : 0 }))
     .sort((a, b) => b.xpPromedio - a.xpPromedio);
 
-  let html = `<h3>Ranking semanal parroquial (XP promedio)</h3><ol>`;
+  let html = `<h3>Ranking semanal parroquial (XP promedio)</h3><ol style="text-align:center;">`;
   ranking.forEach((p, i) => {
     html += `<li>#${i + 1} ${p.nombre} – ${p.xpPromedio.toFixed(1)} XP/promedio (${p.count} jugador${p.count === 1 ? '' : 'es'})</li>`;
   });
@@ -119,23 +119,7 @@ async function mostrarRankingSemanalParroquia() {
   document.getElementById("progreso-ranking-parroquia").innerHTML = html;
 }
 
-
-  // 6. Ordena por XP promedio
-  const ranking = Object.values(parroquias)
-    .map(p => ({ ...p, xpPromedio: p.count ? p.xp/p.count : 0 }))
-    .sort((a, b) => b.xpPromedio - a.xpPromedio);
-
-  // 7. Renderiza el ranking
-  let html = `<h3>Ranking semanal parroquial (XP promedio)</h3><ol>`;
-  ranking.forEach((p, i) => {
-    html += `<li>#${i+1} ${p.nombre} – ${p.xpPromedio.toFixed(1)} XP/promedio (${p.count} jugador${p.count === 1 ? '' : 'es'})</li>`;
-  });
-  html += "</ol>";
-  document.getElementById("progreso-ranking-parroquia").innerHTML = html;
-}
-
-
-// --- 4. (Opcional) Historial de partidas (solo últimos 10) ---
+// --- 4. Historial de partidas (solo últimos 10) ---
 async function mostrarHistorialPartidas(userId) {
   const { data: partidas } = await supabase
     .from("progreso")
@@ -144,7 +128,7 @@ async function mostrarHistorialPartidas(userId) {
     .order("fecha", { ascending: false })
     .limit(10);
 
-  let html = `<h3>Historial reciente</h3><ul>`;
+  let html = `<h3>Historial reciente</h3><ul style="text-align:center;">`;
   (partidas || []).forEach(part => {
     html += `<li>${part.tipo} – ${part.clave || ""} <span>${part.nota || "-"} (${part.porcentaje || "-"}%)</span> <small>${new Date(part.fecha).toLocaleDateString()}</small></li>`;
   });
