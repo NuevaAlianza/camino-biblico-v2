@@ -78,21 +78,28 @@ async function mostrarRankingGlobal(userId) {
 
 // --- 3. Ranking Semanal por Parroquia (XP promedio) ---
 async function mostrarRankingSemanalParroquia() {
-  // Inicio de semana (lunes)
+  // 1. Calcula el inicio de la semana (lunes)
   const hoy = new Date();
   const primerDiaSemana = new Date(hoy.setDate(hoy.getDate() - hoy.getDay() + 1));
   primerDiaSemana.setHours(0,0,0,0);
 
-  // Solo fecha para filtro
-  const fechaFiltro = primerDiaSemana.toISOString();
+  // 2. Formato de fecha compatible con Supabase/PostgREST: "YYYY-MM-DDTHH:MM:SS+00:00"
+  const fechaFiltro = primerDiaSemana.toISOString().slice(0,19) + '+00:00';
 
-  // Consulta directa a rpg_progreso de la semana
-  const { data: progresoSemana } = await supabase
+  // 3. Consulta a rpg_progreso usando el filtro corregido
+  const { data: progresoSemana, error } = await supabase
     .from("rpg_progreso")
     .select("user_id, xp, parroquia, parroquia_id, fecha_juego")
     .gte("fecha_juego", fechaFiltro);
 
-  // Agrupa por parroquia
+  // 4. Manejo de error
+  if (error) {
+    console.error("Error al consultar rpg_progreso:", error);
+    document.getElementById("progreso-ranking-parroquia").innerHTML = `<p>Error al cargar ranking parroquial.</p>`;
+    return;
+  }
+
+  // 5. Agrupa por parroquia
   const parroquias = {};
   (progresoSemana || []).forEach(row => {
     const id = row.parroquia_id || "SinID";
@@ -101,19 +108,20 @@ async function mostrarRankingSemanalParroquia() {
     parroquias[id].count++;
   });
 
-  // Ordena por XP promedio
+  // 6. Ordena por XP promedio
   const ranking = Object.values(parroquias)
     .map(p => ({ ...p, xpPromedio: p.count ? p.xp/p.count : 0 }))
     .sort((a, b) => b.xpPromedio - a.xpPromedio);
 
-  // Renderiza el ranking
+  // 7. Renderiza el ranking
   let html = `<h3>Ranking semanal parroquial (XP promedio)</h3><ol>`;
   ranking.forEach((p, i) => {
-    html += `<li>#${i+1} ${p.nombre} – ${p.xpPromedio.toFixed(1)} XP/promedio (${p.count} jugadores)</li>`;
+    html += `<li>#${i+1} ${p.nombre} – ${p.xpPromedio.toFixed(1)} XP/promedio (${p.count} jugador${p.count === 1 ? '' : 'es'})</li>`;
   });
   html += "</ol>";
   document.getElementById("progreso-ranking-parroquia").innerHTML = html;
 }
+
 
 // --- 4. (Opcional) Historial de partidas (solo últimos 10) ---
 async function mostrarHistorialPartidas(userId) {
