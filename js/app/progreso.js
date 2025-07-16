@@ -83,23 +83,22 @@ async function mostrarRankingSemanalParroquia() {
   const primerDiaSemana = new Date(hoy.setDate(hoy.getDate() - hoy.getDay() + 1));
   primerDiaSemana.setHours(0,0,0,0);
 
-  // 2. Formato de fecha compatible con Supabase/PostgREST: "YYYY-MM-DDTHH:MM:SS+00:00"
-  const fechaFiltro = primerDiaSemana.toISOString().slice(0,19) + '+00:00';
+  // Usa sólo la fecha en formato "YYYY-MM-DD"
+  const fechaFiltro = primerDiaSemana.toISOString().slice(0, 10);
 
-  // 3. Consulta a rpg_progreso usando el filtro corregido
+  // Consulta usando sólo la fecha
   const { data: progresoSemana, error } = await supabase
     .from("rpg_progreso")
     .select("user_id, xp, parroquia, parroquia_id, fecha_juego")
     .gte("fecha_juego", fechaFiltro);
 
-  // 4. Manejo de error
   if (error) {
     console.error("Error al consultar rpg_progreso:", error);
     document.getElementById("progreso-ranking-parroquia").innerHTML = `<p>Error al cargar ranking parroquial.</p>`;
     return;
   }
 
-  // 5. Agrupa por parroquia
+  // Resto del procesamiento igual...
   const parroquias = {};
   (progresoSemana || []).forEach(row => {
     const id = row.parroquia_id || "SinID";
@@ -107,6 +106,19 @@ async function mostrarRankingSemanalParroquia() {
     parroquias[id].xp += row.xp || 0;
     parroquias[id].count++;
   });
+
+  const ranking = Object.values(parroquias)
+    .map(p => ({ ...p, xpPromedio: p.count ? p.xp / p.count : 0 }))
+    .sort((a, b) => b.xpPromedio - a.xpPromedio);
+
+  let html = `<h3>Ranking semanal parroquial (XP promedio)</h3><ol>`;
+  ranking.forEach((p, i) => {
+    html += `<li>#${i + 1} ${p.nombre} – ${p.xpPromedio.toFixed(1)} XP/promedio (${p.count} jugador${p.count === 1 ? '' : 'es'})</li>`;
+  });
+  html += "</ol>";
+  document.getElementById("progreso-ranking-parroquia").innerHTML = html;
+}
+
 
   // 6. Ordena por XP promedio
   const ranking = Object.values(parroquias)
