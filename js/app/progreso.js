@@ -1,3 +1,33 @@
+let usuarioActual = null; // Declaración global
+
+document.addEventListener("DOMContentLoaded", async () => {
+  // 1. Obtener la sesión del usuario
+  const { data: sessionData } = await supabase.auth.getSession();
+  usuarioActual = sessionData?.session?.user;
+
+  if (!usuarioActual) {
+    // Muestra mensaje si no está logueado y detiene el resto del código
+    document.getElementById("progreso-resumen").innerHTML = "<p>Inicia sesión para ver tu progreso.</p>";
+    // Puedes ocultar otras secciones si quieres:
+    document.getElementById("progreso-ranking").style.display = "none";
+    document.getElementById("progreso-ranking-parroquia").style.display = "none";
+    document.getElementById("progreso-historial").style.display = "none";
+    return;
+  }
+
+  // Si hay usuario, muestra todas las secciones (por si estaban ocultas)
+  document.getElementById("progreso-ranking").style.display = "";
+  document.getElementById("progreso-ranking-parroquia").style.display = "";
+  document.getElementById("progreso-historial").style.display = "";
+
+  // 2. Ahora puedes llamar seguro a tus funciones
+  await mostrarDashboardResumen();
+  await mostrarRankingGlobal();
+  await mostrarRankingSemanalParroquia();
+  await mostrarHistorialPartidas();
+});
+
+
 // --- 1. Dashboard Resumen ---
 async function mostrarDashboardResumen() {
   const { data: [resumen], error } = await supabase
