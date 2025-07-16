@@ -4,7 +4,7 @@ let datosCiclo = null;
 let progresoRPG = null;
 let usuarioActual = null; // Usuario global
 
-const preguntasPorNivel = [5, 5, 4, 4, 3];
+const preguntasPorNivel = [5, 4, 3, 3, 3];
 
 // --- 1. Carga de datos y ciclo actual ---
 fetch('datos/rpg-preguntas.json')
@@ -279,7 +279,7 @@ function mostrarNivel() {
         const correcta = p.opciones[btn.dataset.i] === p.respuesta;
         if (correcta) {
           btn.classList.add("acierto");
-          juegoActual.xp += juegoActual.nivel * 10;
+          juegoActual.xp += juegoActual.nivel * 1;
         } else {
           btn.classList.add("fallo");
           juegoActual.vidas--;
