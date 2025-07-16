@@ -5,35 +5,33 @@ document.addEventListener("DOMContentLoaded", async () => {
   const { data: sessionData } = await supabase.auth.getSession();
   usuarioActual = sessionData?.session?.user;
 
-  if (!usuarioActual) {
-    // Muestra mensaje si no está logueado y detiene el resto del código
+  // Valida user id correctamente (según estructura de supabase.auth)
+  const userId = usuarioActual?.id || usuarioActual?.user?.id;
+  if (!userId) {
     document.getElementById("progreso-resumen").innerHTML = "<p>Inicia sesión para ver tu progreso.</p>";
-    // Puedes ocultar otras secciones si quieres:
     document.getElementById("progreso-ranking").style.display = "none";
     document.getElementById("progreso-ranking-parroquia").style.display = "none";
     document.getElementById("progreso-historial").style.display = "none";
     return;
   }
 
-  // Si hay usuario, muestra todas las secciones (por si estaban ocultas)
   document.getElementById("progreso-ranking").style.display = "";
   document.getElementById("progreso-ranking-parroquia").style.display = "";
   document.getElementById("progreso-historial").style.display = "";
 
-  // 2. Ahora puedes llamar seguro a tus funciones
-  await mostrarDashboardResumen();
-  await mostrarRankingGlobal();
+  // Llama funciones pasando userId si es necesario
+  await mostrarDashboardResumen(userId);
+  await mostrarRankingGlobal(userId);
   await mostrarRankingSemanalParroquia();
-  await mostrarHistorialPartidas();
+  await mostrarHistorialPartidas(userId);
 });
 
-
 // --- 1. Dashboard Resumen ---
-async function mostrarDashboardResumen() {
+async function mostrarDashboardResumen(userId) {
   const { data: [resumen], error } = await supabase
     .from("resumen_ranking")
     .select("*")
-    .eq("user_id", usuarioActual.id);
+    .eq("user_id", userId);
 
   if (error || !resumen) {
     document.getElementById("progreso-resumen").innerHTML = "<p>Error cargando tu progreso.</p>";
@@ -53,6 +51,7 @@ async function mostrarDashboardResumen() {
     </div>
   `;
 }
+
 function calcularLetraProm(n) {
   if (n >= 95) return "A";
   if (n >= 85) return "B";
@@ -62,7 +61,7 @@ function calcularLetraProm(n) {
 }
 
 // --- 2. Ranking Global (Top 10 XP) ---
-async function mostrarRankingGlobal() {
+async function mostrarRankingGlobal(userId) {
   const { data: rankingGlobal } = await supabase
     .from("resumen_ranking")
     .select("user_id, nombre, xp_global")
@@ -71,7 +70,7 @@ async function mostrarRankingGlobal() {
 
   let html = `<h3>Top 10 Global</h3><ol>`;
   rankingGlobal.forEach((u, i) => {
-    html += `<li${u.user_id === usuarioActual.id ? ' class="yo"' : ''}>#${i+1} ${u.nombre || u.user_id.slice(0,8)} – ${u.xp_global} XP</li>`;
+    html += `<li${u.user_id === userId ? ' class="yo"' : ''}>#${i+1} ${u.nombre || u.user_id.slice(0,8)} – ${u.xp_global} XP</li>`;
   });
   html += `</ol>`;
   document.getElementById("progreso-ranking").innerHTML = html;
@@ -84,11 +83,14 @@ async function mostrarRankingSemanalParroquia() {
   const primerDiaSemana = new Date(hoy.setDate(hoy.getDate() - hoy.getDay() + 1));
   primerDiaSemana.setHours(0,0,0,0);
 
+  // Solo fecha para filtro
+  const fechaFiltro = primerDiaSemana.toISOString().split("T")[0];
+
   // Consulta directa a rpg_progreso de la semana
   const { data: progresoSemana } = await supabase
     .from("rpg_progreso")
     .select("user_id, xp, parroquia, parroquia_id, fecha_juego")
-    .gte("fecha_juego", primerDiaSemana.toISOString());
+    .gte("fecha_juego", fechaFiltro);
 
   // Agrupa por parroquia
   const parroquias = {};
@@ -114,11 +116,11 @@ async function mostrarRankingSemanalParroquia() {
 }
 
 // --- 4. (Opcional) Historial de partidas (solo últimos 10) ---
-async function mostrarHistorialPartidas() {
+async function mostrarHistorialPartidas(userId) {
   const { data: partidas } = await supabase
     .from("progreso")
     .select("tipo, clave, nota, porcentaje, fecha")
-    .eq("user_id", usuarioActual.id)
+    .eq("user_id", userId)
     .order("fecha", { ascending: false })
     .limit(10);
 
@@ -129,12 +131,3 @@ async function mostrarHistorialPartidas() {
   html += "</ul>";
   document.getElementById("progreso-historial").innerHTML = html;
 }
-
-// --- 5. (Opcional) Llama todo al cargar la página ---
-document.addEventListener("DOMContentLoaded", async () => {
-  // Aquí asume que tienes usuarioActual cargado
-  await mostrarDashboardResumen();
-  await mostrarRankingGlobal();
-  await mostrarRankingSemanalParroquia();
-  await mostrarHistorialPartidas();
-});
