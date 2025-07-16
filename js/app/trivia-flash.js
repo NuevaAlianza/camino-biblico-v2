@@ -112,9 +112,9 @@ function iniciarTriviaFlash(preguntas) {
   async function finalizarTrivia() {
     document.getElementById("trivia-flash-juego").innerHTML = "";
     let xp = 0;
-    if (aciertos === 5) xp = 50;
-    else if (aciertos === 4) xp = 20;
-    else if (aciertos === 3) xp = 5;
+    if (aciertos === 5) xp = 10;
+    else if (aciertos === 4) xp = 5;
+    else if (aciertos === 3) xp = 2;
 
     document.getElementById("trivia-flash-resultado").innerHTML = `
       <div class="trivia-flash-resultado-msg">
@@ -126,6 +126,16 @@ function iniciarTriviaFlash(preguntas) {
       </div>
     `;
 
+// Antes del insert
+console.log({
+  user_id: usuarioActual.id,
+  fecha: new Date().toISOString().slice(0,10),
+  aciertos,
+  xp_obtenido: xp,
+  preguntas: respuestas
+});
+
+    
     // Guarda intento en trivia_flash
     const { error } = await supabase.from("trivia_flash").insert([{
       user_id: usuarioActual.id,
