@@ -1,6 +1,6 @@
 // --- sw.js (service worker) ---
 
-const CACHE_VERSION = 'v2'; // Cambia este número cuando actualices archivos
+const CACHE_VERSION = 'v3'; // Cambia este número cuando actualices archivos
 const CACHE_NAME = `camino-biblico-${CACHE_VERSION}`;
 const FILES_TO_CACHE = [
   './index.html',
@@ -12,6 +12,10 @@ const FILES_TO_CACHE = [
   './mi-progreso.html',
   './login.html',
   './manifest.json',
+  './perfil.html',
+  './aleatorio.html',
+
+'./trivia-flash.html',
   // CSS
   './css/estilos.css',
   './css/coleccionables-v2.css',
@@ -31,6 +35,8 @@ const FILES_TO_CACHE = [
   './js/rpg.js',
   './js/app/instalar-pwa.js',
   './supabase.js',
+  './js/app/trivia-flash.js',
+  './js/app/temporada.js',  
   // Datos JSON
   './datos/coleccionables.json',
   './datos/quiz.json',
