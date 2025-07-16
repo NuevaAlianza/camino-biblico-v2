@@ -84,7 +84,7 @@ async function mostrarRankingSemanalParroquia() {
   primerDiaSemana.setHours(0,0,0,0);
 
   // Solo fecha para filtro
-  const fechaFiltro = primerDiaSemana.toISOString().split("T")[0];
+  const fechaFiltro = primerDiaSemana.toISOString();
 
   // Consulta directa a rpg_progreso de la semana
   const { data: progresoSemana } = await supabase
