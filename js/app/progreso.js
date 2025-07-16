@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   await mostrarRankingSemanalParroquia();
   await mostrarRankingSubgrupo(userId);
   await mostrarHistorialPartidas(userId);
-});
+  });
 
 // --- Dashboard Resumen ---
 async function mostrarDashboardResumen(userId) {
@@ -175,47 +175,58 @@ async function mostrarRankingSemanalParroquia() {
 }
 
 // --- Ranking de subgrupo ---
-async function mostrarRankingSubgrupo(userId) {
-  // Buscar usuario para saber subgrupo
-  const { data: [usuario] } = await supabase
-    .from("usuarios")
-    .select("id, nombre, subgrupo_id, subgrupos(nombre)")
-    .eq("id", userId);
+async function mostrarRankingSubgrupo() {
+  const cont = document.getElementById("progreso-ranking-subgrupo");
+  cont.innerHTML = "<div>Cargando ranking de subgrupo...</div>";
 
-  if (!usuario?.subgrupo_id) {
-    document.getElementById("progreso-ranking-subgrupo").innerHTML = "<div>No tienes subgrupo asignado.</div>";
+  // 1. Verifica subgrupo_id numérico válido
+  const subgrupoId = usuarioActual?.subgrupo_id || usuarioActual?.user_metadata?.subgrupo_id;
+  if (!subgrupoId || isNaN(Number(subgrupoId))) {
+    cont.innerHTML = "<div>No tienes subgrupo asignado.</div>";
     return;
   }
-  // Ranking subgrupo: suma XP RPG de cada usuario en el subgrupo
-  const { data: miembros } = await supabase
+
+  // 2. Consulta miembros del subgrupo y nombre
+  const { data: miembros, error } = await supabase
     .from("usuarios")
     .select("id, nombre, subgrupo_id, rpg_progreso(xp), subgrupos(nombre)")
-    .eq("subgrupo_id", usuario.subgrupo_id);
+    .eq("subgrupo_id", Number(subgrupoId));
 
+  if (error || !miembros || miembros.length === 0) {
+    cont.innerHTML = "<div>No hay datos de tu subgrupo.</div>";
+    return;
+  }
+
+  // 3. Saca nombre del subgrupo
+  const subgrupoNombre = miembros[0]?.subgrupos?.nombre || "(Sin nombre)";
+
+  // 4. Calcula XP de cada usuario
   const ranking = miembros.map(u => ({
     id: u.id,
-    nombre: u.nombre,
-    xp: (u.rpg_progreso || []).reduce((a, b) => a + (b.xp || 0), 0),
-    subgrupo: u.subgrupos?.nombre || ""
+    nombre: u.nombre || u.id.slice(0,8),
+    xp: (u.rpg_progreso || []).reduce((a, b) => a + (b.xp || 0), 0)
   })).sort((a, b) => b.xp - a.xp);
 
-  const posUsuario = ranking.findIndex(r => r.id === userId) + 1;
+  // 5. Posición del usuario actual
+  const miPos = ranking.findIndex(r => r.id === usuarioActual.id) + 1;
 
-  document.getElementById("progreso-ranking-subgrupo").innerHTML = `
-    <h3>Ranking de tu subgrupo (${ranking[0]?.subgrupo || ""})</h3>
+  // 6. Render
+  cont.innerHTML = `
+    <h3>Ranking de tu subgrupo <span style="color:#2a9d8f;">${subgrupoNombre}</span></h3>
     <div class="ranking-subgrupo-list">
       ${ranking.map((r, i) => `
-        <div class="ranking-row${r.id === userId ? " actual" : ""}">
-          <span class="pos">#${i + 1}</span>
-          <span class="nombre">${r.nombre || "Anónimo"}</span>
+        <div class="ranking-row${r.id === usuarioActual.id ? " actual" : ""}">
+          <span class="pos">#${i+1}</span>
+          <span class="nombre">${r.nombre}</span>
           <span class="xp">${r.xp} XP</span>
-          ${r.id === userId ? "<span class='tuyo'>(Tú)</span>" : ""}
+          ${r.id === usuarioActual.id ? "<span class='tuyo'>(Tú)</span>" : ""}
         </div>
       `).join("")}
     </div>
-    <div class="posicion-propia">Tu puesto: #${posUsuario} de ${ranking.length}</div>
+    <div class="posicion-propia">Tu puesto: #${miPos} de ${ranking.length}</div>
   `;
 }
+
 
 // --- Historial de partidas (solo últimos 10) ---
 async function mostrarHistorialPartidas(userId) {
