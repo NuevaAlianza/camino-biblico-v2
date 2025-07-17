@@ -212,11 +212,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   subgrupos = subgruposData;
 
   // --- 3. Rellenar datos del usuario actual ---
-  let { data: usuarioData } = await supabase
-    .from("usuarios")
-    .select("nombre, parroquia, ciudad, pais, subgrupo")
-    .eq("id", user.id)
-    .maybeSingle();
+ let { data: usuarioData } = await supabase
+  .from("usuarios")
+  .select("nombre, parroquia, ciudad, pais, subgrupo_id")
+  .eq("id", user.id)
+  .maybeSingle();
+
 
   nombreInput.value = usuarioData?.nombre || meta.nombre || "";
 
