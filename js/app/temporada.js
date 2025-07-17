@@ -1,6 +1,3 @@
-
-
-
 // --- Referencias DOM ---
 const btnComenzar = document.getElementById("btn-comenzar");
 const inicio = document.getElementById("inicio");
@@ -43,6 +40,7 @@ fetch('./datos/temporadas.json')
     preguntas = datosTemporada.preguntas;
     document.getElementById("titulo-temporada").textContent = datosTemporada.titulo;
     document.getElementById("descripcion-temporada").textContent = datosTemporada.descripcion;
+    document.getElementById("fecha-temporada").textContent = `${formatoFecha(datosTemporada.fecha_inicio)} – ${formatoFecha(datosTemporada.fecha_fin)}`;
   });
 
 // --- 2. Comenzar quiz ---
@@ -79,40 +77,41 @@ function mostrarPregunta() {
     finalizarJuego();
     return;
   }
+
   const p = preguntas[indicePregunta];
   preguntaDiv.textContent = p.pregunta;
-// Animación de aparición
-preguntaDiv.classList.remove("fade-in");
-void preguntaDiv.offsetWidth;
-preguntaDiv.classList.add("fade-in");
 
-opcionesCont.classList.remove("fade-in");
-void opcionesCont.offsetWidth;
-opcionesCont.classList.add("fade-in");
+  opcionesDiv.innerHTML = "";
 
-opcionesDiv.innerHTML = "";
+  let opciones = [p.respuesta, p.opcion_1, p.opcion_2, p.opcion_3].sort(() => Math.random() - 0.5);
 
-let opciones = [p.respuesta, p.opcion_1, p.opcion_2, p.opcion_3].sort(() => Math.random() - 0.5);
+  // Contenedor de opciones con clase para el CSS
+  const opcionesCont = document.createElement("div");
+  opcionesCont.className = "trivia-opciones";
 
-// Contenedor de opciones con clase para el CSS
-const opcionesCont = document.createElement("div");
-opcionesCont.className = "trivia-opciones";
+  opciones.forEach(op => {
+    const btn = document.createElement("button");
+    btn.className = "trivia-opcion-btn";
+    btn.textContent = op;
+    btn.onclick = () => {
+      clearInterval(timer);
+      if (op === p.respuesta) puntaje++;
+      indicePregunta++;
+      mostrarPregunta();
+    };
+    opcionesCont.appendChild(btn);
+  });
 
-opciones.forEach(op => {
-  const btn = document.createElement("button");
-  btn.className = "trivia-opcion-btn";
-  btn.textContent = op;
-  btn.onclick = () => {
-    clearInterval(timer);
-    if (op === p.respuesta) puntaje++;
-    indicePregunta++;
-    mostrarPregunta();
-  };
-  opcionesCont.appendChild(btn);
-});
+  opcionesDiv.appendChild(opcionesCont);
 
-opcionesDiv.appendChild(opcionesCont);
+  // ---- Animación de aparición (después de crear opcionesCont) ----
+  preguntaDiv.classList.remove("fade-in");
+  void preguntaDiv.offsetWidth;
+  preguntaDiv.classList.add("fade-in");
 
+  opcionesCont.classList.remove("fade-in");
+  void opcionesCont.offsetWidth;
+  opcionesCont.classList.add("fade-in");
 
   conteoPregunta.textContent = `Pregunta ${indicePregunta + 1} de ${preguntas.length}`;
 }
@@ -126,12 +125,7 @@ function actualizarBarraTiempo() {
   else progresoBar.style.background = '#e76f51';
 }
 
-// --- 5. Finalizar juego (usa tu código ya existente) ---
-// Pega aquí tu función finalizarJuego y guardarProgresoEnNubeTemporada, **tal cual la tienes**.
-
-
-// ...todo tu código previo sin cambios...
-
+// --- 5. Finalizar juego ---
 function finalizarJuego() {
   juego.classList.add("oculto");
   final.classList.remove("oculto");
@@ -161,20 +155,17 @@ function finalizarJuego() {
 
   puntajeFinal.textContent = `Puntaje: ${puntaje} de ${max}`;
 
-
-  guardarProgresoEnNubeTemporada(); // <-- NUEVO, guardado en la nube
+  guardarProgresoEnNubeTemporada();
 }
 
-// --------- NUEVA FUNCIÓN: guardar en Supabase solo este avance de temporada -----------
+// --- 6. Guardar progreso en Supabase ---
 async function guardarProgresoEnNubeTemporada() {
-  // Asegúrate de que supabase esté disponible (por si acaso)
   if (typeof supabase === "undefined") return;
 
   const { data: sessionData } = await supabase.auth.getSession();
   const userId = sessionData?.session?.user?.id;
   if (!userId) return;
 
-  // Datos principales para la tabla "progreso"
   const tipo = "temporada";
   const clave = idTemporada;
   const porcentaje = Math.round((puntaje / datosTemporada.puntaje_maximo) * 100);
@@ -183,7 +174,6 @@ async function guardarProgresoEnNubeTemporada() {
   else if (puntaje >= datosTemporada.umbral_coleccionable - 2) nota = "B";
   else nota = "C";
 
-  // Guarda o actualiza el progreso de la temporada para este usuario
   const { error } = await supabase
     .from("progreso")
     .upsert([{
@@ -199,4 +189,12 @@ async function guardarProgresoEnNubeTemporada() {
   } else {
     console.log("✅ Progreso de temporada guardado en Supabase.");
   }
+}
+
+// --- 7. Utilidad para formato fecha bonita ---
+function formatoFecha(fechaISO) {
+  const fecha = new Date(fechaISO);
+  return fecha.toLocaleDateString("es-ES", {
+    day: '2-digit', month: 'short', year: 'numeric'
+  });
 }
