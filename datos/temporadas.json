@@ -1,4 +1,3 @@
-
 [
   {
     "id": "T1",
@@ -125,112 +124,112 @@
       "imagen_b": "assets/img/coleccionables/generica_b.png",
       "imagen_c": "assets/img/coleccionables/generica_c.png"
     },
-  "preguntas": [
-  {
-    "pregunta": "¿Qué es el cáliz?",
-    "respuesta": "Un vaso sagrado donde se consagra el vino",
-    "opcion_1": "Un recipiente para el agua bendita",
-    "opcion_2": "Una bandeja para hostias",
-    "opcion_3": "Un portavelas litúrgico"
-  },
-  {
-    "pregunta": "¿Para qué sirve la patena?",
-    "respuesta": "Para colocar la hostia durante la consagración",
-    "opcion_1": "Para guardar las reliquias",
-    "opcion_2": "Para sostener el cirio pascual",
-    "opcion_3": "Para recoger las ofrendas"
-  },
-  {
-    "pregunta": "¿Qué nombre recibe la tela que cubre el altar?",
-    "respuesta": "Mantel",
-    "opcion_1": "Palio",
-    "opcion_2": "Estola",
-    "opcion_3": "Casulla"
-  },
-  {
-    "pregunta": "¿Qué es el corporal?",
-    "respuesta": "Un lienzo cuadrado donde se coloca el cáliz y la hostia",
-    "opcion_1": "Una prenda del sacerdote",
-    "opcion_2": "Una alfombra sagrada",
-    "opcion_3": "Una vela consagrada"
-  },
-  {
-    "pregunta": "¿Qué contiene el sagrario?",
-    "respuesta": "Las hostias consagradas",
-    "opcion_1": "El vino para la misa",
-    "opcion_2": "Las reliquias de los santos",
-    "opcion_3": "El incienso y el carbón"
-  },
-  {
-    "pregunta": "¿Qué es el incensario?",
-    "respuesta": "Un recipiente para quemar incienso",
-    "opcion_1": "Un soporte para velas",
-    "opcion_2": "Un vaso de vino",
-    "opcion_3": "Un estuche de rosarios"
-  },
-  {
-    "pregunta": "¿Qué se coloca en la credencia?",
-    "respuesta": "Los utensilios litúrgicos para la misa",
-    "opcion_1": "Las ofrendas de los fieles",
-    "opcion_2": "Imágenes religiosas",
-    "opcion_3": "Vestiduras sacerdotales"
-  },
-  {
-    "pregunta": "¿Qué es la hostia?",
-    "respuesta": "El pan consagrado que se convierte en el Cuerpo de Cristo",
-    "opcion_1": "Un símbolo decorativo",
-    "opcion_2": "Una oración litúrgica",
-    "opcion_3": "Un libro sagrado"
-  },
-  {
-    "pregunta": "¿Qué es la píxide?",
-    "respuesta": "Un recipiente pequeño para llevar hostias consagradas",
-    "opcion_1": "Un libro litúrgico",
-    "opcion_2": "Una vela especial",
-    "opcion_3": "Una campana ceremonial"
-  },
-  {
-    "pregunta": "¿Cuál es el uso de la campanilla durante la misa?",
-    "respuesta": "Anunciar momentos importantes como la consagración",
-    "opcion_1": "Marcar el inicio del ofertorio",
-    "opcion_2": "Recordar el silencio",
-    "opcion_3": "Acompañar el canto"
-  },
-  {
-    "pregunta": "Es un lienzo pequeño que se usa para limpiar el cáliz después de la comunión. ¿Cómo se llama?",
-    "respuesta": "Purificador",
-    "opcion_1": "Corporal",
-    "opcion_2": "Manutergio",
-    "opcion_3": "Velo"
-  },
-  {
-    "pregunta": "Se usa para cubrir el cáliz antes y después de la misa. ¿Cómo se llama?",
-    "respuesta": "Velo del cáliz",
-    "opcion_1": "Purificador",
-    "opcion_2": "Estola",
-    "opcion_3": "Palia"
-  },
-  {
-    "pregunta": "¿Dónde se guarda el Santísimo Sacramento en el templo?",
-    "respuesta": "En el sagrario",
-    "opcion_1": "En el ambón",
-    "opcion_2": "En el cáliz",
-    "opcion_3": "En la custodia"
-  },
-  {
-    "pregunta": "¿Qué representa simbólicamente el altar durante la celebración eucarística?",
-    "respuesta": "A Cristo, piedra viva y sacrificio",
-    "opcion_1": "Al pueblo reunido",
-    "opcion_2": "A los apóstoles",
-    "opcion_3": "A la cruz"
-  },
-  {
-    "pregunta": "Recipiente donde el sacerdote lleva la comunión a los enfermos. ¿Cuál es?",
-    "respuesta": "Píxide",
-    "opcion_1": "Vinajera",
-    "opcion_2": "Cáliz",
-    "opcion_3": "Copón"
- }
+    "preguntas": [
+      {
+        "pregunta": "¿Qué es el cáliz?",
+        "respuesta": "Un vaso sagrado donde se consagra el vino",
+        "opcion_1": "Un recipiente para el agua bendita",
+        "opcion_2": "Una bandeja para hostias",
+        "opcion_3": "Un portavelas litúrgico"
+      },
+      {
+        "pregunta": "¿Para qué sirve la patena?",
+        "respuesta": "Para colocar la hostia durante la consagración",
+        "opcion_1": "Para guardar las reliquias",
+        "opcion_2": "Para sostener el cirio pascual",
+        "opcion_3": "Para recoger las ofrendas"
+      },
+      {
+        "pregunta": "¿Qué nombre recibe la tela que cubre el altar?",
+        "respuesta": "Mantel",
+        "opcion_1": "Palio",
+        "opcion_2": "Estola",
+        "opcion_3": "Casulla"
+      },
+      {
+        "pregunta": "¿Qué es el corporal?",
+        "respuesta": "Un lienzo cuadrado donde se coloca el cáliz y la hostia",
+        "opcion_1": "Una prenda del sacerdote",
+        "opcion_2": "Una alfombra sagrada",
+        "opcion_3": "Una vela consagrada"
+      },
+      {
+        "pregunta": "¿Qué contiene el sagrario?",
+        "respuesta": "Las hostias consagradas",
+        "opcion_1": "El vino para la misa",
+        "opcion_2": "Las reliquias de los santos",
+        "opcion_3": "El incienso y el carbón"
+      },
+      {
+        "pregunta": "¿Qué es el incensario?",
+        "respuesta": "Un recipiente para quemar incienso",
+        "opcion_1": "Un soporte para velas",
+        "opcion_2": "Un vaso de vino",
+        "opcion_3": "Un estuche de rosarios"
+      },
+      {
+        "pregunta": "¿Qué se coloca en la credencia?",
+        "respuesta": "Los utensilios litúrgicos para la misa",
+        "opcion_1": "Las ofrendas de los fieles",
+        "opcion_2": "Imágenes religiosas",
+        "opcion_3": "Vestiduras sacerdotales"
+      },
+      {
+        "pregunta": "¿Qué es la hostia?",
+        "respuesta": "El pan consagrado que se convierte en el Cuerpo de Cristo",
+        "opcion_1": "Un símbolo decorativo",
+        "opcion_2": "Una oración litúrgica",
+        "opcion_3": "Un libro sagrado"
+      },
+      {
+        "pregunta": "¿Qué es la píxide?",
+        "respuesta": "Un recipiente pequeño para llevar hostias consagradas",
+        "opcion_1": "Un libro litúrgico",
+        "opcion_2": "Una vela especial",
+        "opcion_3": "Una campana ceremonial"
+      },
+      {
+        "pregunta": "¿Cuál es el uso de la campanilla durante la misa?",
+        "respuesta": "Anunciar momentos importantes como la consagración",
+        "opcion_1": "Marcar el inicio del ofertorio",
+        "opcion_2": "Recordar el silencio",
+        "opcion_3": "Acompañar el canto"
+      },
+      {
+        "pregunta": "Es un lienzo pequeño que se usa para limpiar el cáliz después de la comunión. ¿Cómo se llama?",
+        "respuesta": "Purificador",
+        "opcion_1": "Corporal",
+        "opcion_2": "Manutergio",
+        "opcion_3": "Velo"
+      },
+      {
+        "pregunta": "Se usa para cubrir el cáliz antes y después de la misa. ¿Cómo se llama?",
+        "respuesta": "Velo del cáliz",
+        "opcion_1": "Purificador",
+        "opcion_2": "Estola",
+        "opcion_3": "Palia"
+      },
+      {
+        "pregunta": "¿Dónde se guarda el Santísimo Sacramento en el templo?",
+        "respuesta": "En el sagrario",
+        "opcion_1": "En el ambón",
+        "opcion_2": "En el cáliz",
+        "opcion_3": "En la custodia"
+      },
+      {
+        "pregunta": "¿Qué representa simbólicamente el altar durante la celebración eucarística?",
+        "respuesta": "A Cristo, piedra viva y sacrificio",
+        "opcion_1": "Al pueblo reunido",
+        "opcion_2": "A los apóstoles",
+        "opcion_3": "A la cruz"
+      },
+      {
+        "pregunta": "Recipiente donde el sacerdote lleva la comunión a los enfermos. ¿Cuál es?",
+        "respuesta": "Píxide",
+        "opcion_1": "Vinajera",
+        "opcion_2": "Cáliz",
+        "opcion_3": "Copón"
+      }
     ]
   },
   {
@@ -247,110 +246,337 @@
       "imagen_b": "assets/img/coleccionables/generica_b.png",
       "imagen_c": "assets/img/coleccionables/generica_c.png"
     },
-   "preguntas": [
-  {
-    "pregunta": "¿Cuál era el nombre completo del Santo Cura de Ars?",
-    "respuesta": "Juan María Vianney",
-    "opcion_1": "Juan Pablo Vianney",
-    "opcion_2": "Juan Bautista María",
-    "opcion_3": "Mariano Vianney"
+    "preguntas": [
+      {
+        "pregunta": "¿Cuál era el nombre completo del Santo Cura de Ars?",
+        "respuesta": "Juan María Vianney",
+        "opcion_1": "Juan Pablo Vianney",
+        "opcion_2": "Juan Bautista María",
+        "opcion_3": "Mariano Vianney"
+      },
+      {
+        "pregunta": "¿En qué país nació el Santo Cura de Ars?",
+        "respuesta": "Francia",
+        "opcion_1": "España",
+        "opcion_2": "Italia",
+        "opcion_3": "Portugal"
+      },
+      {
+        "pregunta": "¿Qué gran dificultad enfrentó Juan María Vianney en el seminario?",
+        "respuesta": "Las materias académicas, especialmente el latín",
+        "opcion_1": "Falta de fe",
+        "opcion_2": "Problemas de salud",
+        "opcion_3": "Persecución política"
+      },
+      {
+        "pregunta": "¿Cómo fue considerado su nombramiento como párroco en Ars?",
+        "respuesta": "Fue enviado a un pueblo pequeño y espiritualmente decaído",
+        "opcion_1": "Fue asignado como obispo",
+        "opcion_2": "Lo rechazó al principio",
+        "opcion_3": "Fue elegido por votación popular"
+      },
+      {
+        "pregunta": "¿Qué sacramento promovía especialmente el Cura de Ars?",
+        "respuesta": "La confesión",
+        "opcion_1": "La confirmación",
+        "opcion_2": "El matrimonio",
+        "opcion_3": "La unción de los enfermos"
+      },
+      {
+        "pregunta": "¿Cuántas horas al día podía pasar confesando?",
+        "respuesta": "Hasta 16 horas",
+        "opcion_1": "6 horas",
+        "opcion_2": "8 horas",
+        "opcion_3": "10 horas"
+      },
+      {
+        "pregunta": "¿Cómo vivía el Santo Cura de Ars?",
+        "respuesta": "Con gran sencillez y austeridad",
+        "opcion_1": "Con apoyo económico del gobierno",
+        "opcion_2": "En una casa cómoda y moderna",
+        "opcion_3": "En comunidad religiosa"
+      },
+      {
+        "pregunta": "¿Qué hizo el Cura de Ars para renovar la fe de su parroquia?",
+        "respuesta": "Predicaba con fuerza, oraba y se sacrificaba por sus fieles",
+        "opcion_1": "Reformó los edificios",
+        "opcion_2": "Escribió una encíclica",
+        "opcion_3": "Cerró las puertas del templo"
+      },
+      {
+        "pregunta": "¿Qué lo hizo famoso fuera de su parroquia?",
+        "respuesta": "Miles de peregrinos acudían a confesarse con él",
+        "opcion_1": "Escribió muchos libros",
+        "opcion_2": "Fundó una orden religiosa",
+        "opcion_3": "Viajó por toda Europa predicando"
+      },
+      {
+        "pregunta": "¿A qué santo acudía con frecuencia en oración el Cura de Ars?",
+        "respuesta": "San Francisco de Asís",
+        "opcion_1": "San Benito",
+        "opcion_2": "San Ignacio de Loyola",
+        "opcion_3": "San Agustín"
+      },
+      {
+        "pregunta": "¿Qué batalla espiritual constante enfrentó en Ars?",
+        "respuesta": "Ataques del demonio",
+        "opcion_1": "Desacuerdos con el obispo",
+        "opcion_2": "Falta de vocaciones",
+        "opcion_3": "Enfermedades graves"
+      },
+      {
+        "pregunta": "¿Qué obra de caridad fundó el Santo Cura de Ars?",
+        "respuesta": "La Providencia, un hogar para niñas pobres",
+        "opcion_1": "Un hospital para ancianos",
+        "opcion_2": "Una escuela para sacerdotes",
+        "opcion_3": "Un refugio para peregrinos"
+      },
+      {
+        "pregunta": "¿Cuál era su mayor anhelo en los últimos años de vida?",
+        "respuesta": "Retirarse a la oración y penitencia",
+        "opcion_1": "Ser nombrado obispo",
+        "opcion_2": "Viajar a Tierra Santa",
+        "opcion_3": "Fundar un nuevo santuario"
+      },
+      {
+        "pregunta": "¿Qué lo detuvo de abandonar Ars varias veces?",
+        "respuesta": "El amor a sus fieles y su sentido del deber",
+        "opcion_1": "Una orden directa del Papa",
+        "opcion_2": "Su enfermedad",
+        "opcion_3": "El miedo al escándalo"
+      },
+      {
+        "pregunta": "¿Cuál es su título dentro de la Iglesia?",
+        "respuesta": "Patrono de los párrocos",
+        "opcion_1": "Doctor de la Iglesia",
+        "opcion_2": "Padre de la caridad",
+        "opcion_3": "Apóstol del Rosario"
+      }
+    ]
   },
   {
-    "pregunta": "¿En qué país nació el Santo Cura de Ars?",
-    "respuesta": "Francia",
-    "opcion_1": "España",
-    "opcion_2": "Italia",
-    "opcion_3": "Portugal"
-  },
-  {
-    "pregunta": "¿Qué gran dificultad enfrentó Juan María Vianney en el seminario?",
-    "respuesta": "Las materias académicas, especialmente el latín",
-    "opcion_1": "Falta de fe",
-    "opcion_2": "Problemas de salud",
-    "opcion_3": "Persecución política"
-  },
-  {
-    "pregunta": "¿Cómo fue considerado su nombramiento como párroco en Ars?",
-    "respuesta": "Fue enviado a un pueblo pequeño y espiritualmente decaído",
-    "opcion_1": "Fue asignado como obispo",
-    "opcion_2": "Lo rechazó al principio",
-    "opcion_3": "Fue elegido por votación popular"
-  },
-  {
-    "pregunta": "¿Qué sacramento promovía especialmente el Cura de Ars?",
-    "respuesta": "La confesión",
-    "opcion_1": "La confirmación",
-    "opcion_2": "El matrimonio",
-    "opcion_3": "La unción de los enfermos"
-  },
-  {
-    "pregunta": "¿Cuántas horas al día podía pasar confesando?",
-    "respuesta": "Hasta 16 horas",
-    "opcion_1": "6 horas",
-    "opcion_2": "8 horas",
-    "opcion_3": "10 horas"
-  },
-  {
-    "pregunta": "¿Cómo vivía el Santo Cura de Ars?",
-    "respuesta": "Con gran sencillez y austeridad",
-    "opcion_1": "Con apoyo económico del gobierno",
-    "opcion_2": "En una casa cómoda y moderna",
-    "opcion_3": "En comunidad religiosa"
-  },
-  {
-    "pregunta": "¿Qué hizo el Cura de Ars para renovar la fe de su parroquia?",
-    "respuesta": "Predicaba con fuerza, oraba y se sacrificaba por sus fieles",
-    "opcion_1": "Reformó los edificios",
-    "opcion_2": "Escribió una encíclica",
-    "opcion_3": "Cerró las puertas del templo"
-  },
-  {
-    "pregunta": "¿Qué lo hizo famoso fuera de su parroquia?",
-    "respuesta": "Miles de peregrinos acudían a confesarse con él",
-    "opcion_1": "Escribió muchos libros",
-    "opcion_2": "Fundó una orden religiosa",
-    "opcion_3": "Viajó por toda Europa predicando"
-  },
-  {
-    "pregunta": "¿A qué santo acudía con frecuencia en oración el Cura de Ars?",
-    "respuesta": "San Francisco de Asís",
-    "opcion_1": "San Benito",
-    "opcion_2": "San Ignacio de Loyola",
-    "opcion_3": "San Agustín"
-  },
-  {
-    "pregunta": "¿Qué batalla espiritual constante enfrentó en Ars?",
-    "respuesta": "Ataques del demonio",
-    "opcion_1": "Desacuerdos con el obispo",
-    "opcion_2": "Falta de vocaciones",
-    "opcion_3": "Enfermedades graves"
-  },
-  {
-    "pregunta": "¿Qué obra de caridad fundó el Santo Cura de Ars?",
-    "respuesta": "La Providencia, un hogar para niñas pobres",
-    "opcion_1": "Un hospital para ancianos",
-    "opcion_2": "Una escuela para sacerdotes",
-    "opcion_3": "Un refugio para peregrinos"
-  },
-  {
-    "pregunta": "¿Cuál era su mayor anhelo en los últimos años de vida?",
-    "respuesta": "Retirarse a la oración y penitencia",
-    "opcion_1": "Ser nombrado obispo",
-    "opcion_2": "Viajar a Tierra Santa",
-    "opcion_3": "Fundar un nuevo santuario"
-  },
-  {
-    "pregunta": "¿Qué lo detuvo de abandonar Ars varias veces?",
-    "respuesta": "El amor a sus fieles y su sentido del deber",
-    "opcion_1": "Una orden directa del Papa",
-    "opcion_2": "Su enfermedad",
-    "opcion_3": "El miedo al escándalo"
-  },
-  {
-    "pregunta": "¿Cuál es su título dentro de la Iglesia?",
-    "respuesta": "Patrono de los párrocos",
-    "opcion_1": "Doctor de la Iglesia",
-    "opcion_2": "Padre de la caridad",
-    "opcion_3": "Apóstol del Rosario"
+    "id": "T5",
+    "titulo": " Grupos Religiosos / Sociales",
+    "descripcion": "Ers capaz de definir correctamente estos 9 Grupos, Suerte.",
+    "fecha_inicio": "2025-08-08",
+    "fecha_fin": "2025-08-13",
+    "puntaje_maximo": 9,
+    "umbral_coleccionable": 8,
+    "coleccionable": {
+      "nombre": "Temporada 4 – Cura de Ars",
+      "imagen_a": "assets/img/coleccionables/temporada4_a.png",
+      "imagen_b": "assets/img/coleccionables/generica_b.png",
+      "imagen_c": "assets/img/coleccionables/generica_c.png"
+    },
+    "preguntas": [
+      [
+        {
+          "pregunta": "¿Cuál era el grupo religioso judío muy estricto en el cumplimiento de la Ley y las tradiciones, influyente entre el pueblo y famosos por sus discusiones con Jesús?",
+          "respuesta": "Fariseos",
+          "opcion_1": "Saduceos",
+          "opcion_2": "Herodianos",
+          "opcion_3": "Galileos"
+        },
+        {
+          "pregunta": "¿Cómo se llamaba el grupo de sacerdotes ricos y poderosos que controlaban el Templo y no creían en la resurrección ni en ángeles?",
+          "respuesta": "Saduceos",
+          "opcion_1": "Fariseos",
+          "opcion_2": "Publicanos",
+          "opcion_3": "Zelotes"
+        },
+        {
+          "pregunta": "¿Quiénes eran los expertos en la Ley de Moisés, encargados de copiar, interpretar y enseñar las Escrituras?",
+          "respuesta": "Escribas",
+          "opcion_1": "Fariseos",
+          "opcion_2": "Nazarenos",
+          "opcion_3": "Galileos"
+        },
+        {
+          "pregunta": "¿Cómo se llamaba el grupo que apoyaba a la familia de Herodes y colaboraba con los romanos en el gobierno de Judea?",
+          "respuesta": "Herodianos",
+          "opcion_1": "Saduceos",
+          "opcion_2": "Fariseos",
+          "opcion_3": "Nazarenos"
+        },
+        {
+          "pregunta": "¿Quiénes eran los judíos nacionalistas radicales, dispuestos a usar la violencia para liberar a Israel del dominio romano?",
+          "respuesta": "Zelotes",
+          "opcion_1": "Samaritanos",
+          "opcion_2": "Publicanos",
+          "opcion_3": "Herodianos"
+        },
+        {
+          "pregunta": "¿Cuál era el pueblo vecino de los judíos, con creencias religiosas diferentes, y con quienes los judíos se evitaban mutuamente?",
+          "respuesta": "Samaritanos",
+          "opcion_1": "Galileos",
+          "opcion_2": "Publicanos",
+          "opcion_3": "Zelotes"
+        },
+        {
+          "pregunta": "¿Cómo se llamaba a los recaudadores de impuestos para los romanos, vistos como traidores y pecadores por muchos judíos?",
+          "respuesta": "Publicanos",
+          "opcion_1": "Saduceos",
+          "opcion_2": "Escribas",
+          "opcion_3": "Galileos"
+        },
+        {
+          "pregunta": "¿Quiénes eran los habitantes de la región norte de Israel, entre los que se encontraban muchos apóstoles y el mismo Jesús?",
+          "respuesta": "Galileos",
+          "opcion_1": "Fariseos",
+          "opcion_2": "Samaritanos",
+          "opcion_3": "Nazarenos"
+        },
+        {
+          "pregunta": "¿Con qué nombre se identificaba a los primeros seguidores de Jesús de Nazaret?",
+          "respuesta": "Nazarenos",
+          "opcion_1": "Galileos",
+          "opcion_2": "Herodianos",
+          "opcion_3": "Escribas"
+        },
+        {
+          "id": "T6",
+          "titulo": "¿A qué grupo pertenece…?",
+          "descripcion": "Pon a prueba tu conocimiento: ¿a qué grupo religioso o social pertenece cada personaje bíblico?",
+          "fecha_inicio": "2025-08-15",
+          "fecha_fin": "2025-08-22",
+          "puntaje_maximo": 13,
+          "umbral_coleccionable": 12,
+          "coleccionable": {
+            "nombre": "Temporada 6 – Personajes y Grupos",
+            "imagen_a": "assets/img/coleccionables/temporada6_a.png",
+            "imagen_b": "assets/img/coleccionables/generica_b.png",
+            "imagen_c": "assets/img/coleccionables/generica_c.png"
+          },
+          "preguntas": [
+            {
+              "pregunta": "¿A qué grupo religioso pertenecía Nicodemo?",
+              "respuesta": "Fariseos",
+              "opcion_1": "Saduceos",
+              "opcion_2": "Herodianos",
+              "opcion_3": "Zelotes"
+            },
+            {
+              "pregunta": "¿A qué grupo pertenecía Gamaliel, el maestro de Pablo?",
+              "respuesta": "Fariseos",
+              "opcion_1": "Escribas",
+              "opcion_2": "Nazarenos",
+              "opcion_3": "Samaritanos"
+            },
+            {
+              "pregunta": "¿A qué grupo pertenecía Simón el fariseo, que invitó a Jesús a su casa?",
+              "respuesta": "Fariseos",
+              "opcion_1": "Saduceos",
+              "opcion_2": "Herodianos",
+              "opcion_3": "Nazarenos"
+            },
+            {
+              "pregunta": "¿A qué grupo pertenecía Pablo antes de ser apóstol?",
+              "respuesta": "Fariseos",
+              "opcion_1": "Nazarenos",
+              "opcion_2": "Zelotes",
+              "opcion_3": "Saduceos"
+            },
+            {
+              "pregunta": "¿A qué grupo pertenecía Caifás, sumo sacerdote en tiempos de Jesús?",
+              "respuesta": "Saduceos",
+              "opcion_1": "Fariseos",
+              "opcion_2": "Publicanos",
+              "opcion_3": "Galileos"
+            },
+            {
+              "pregunta": "¿A qué grupo pertenecía Anás, suegro de Caifás?",
+              "respuesta": "Saduceos",
+              "opcion_1": "Fariseos",
+              "opcion_2": "Herodianos",
+              "opcion_3": "Nazarenos"
+            },
+            {
+              "pregunta": "¿A qué grupo pertenecía Esdras, reformador y maestro de la Ley?",
+              "respuesta": "Escribas",
+              "opcion_1": "Fariseos",
+              "opcion_2": "Nazarenos",
+              "opcion_3": "Saduceos"
+            },
+            {
+              "pregunta": "¿A qué grupo pertenecía el escriba que reconoció el mandamiento más importante?",
+              "respuesta": "Escribas",
+              "opcion_1": "Publicanos",
+              "opcion_2": "Samaritanos",
+              "opcion_3": "Herodianos"
+            },
+            {
+              "pregunta": "¿A qué grupo se identifica Simón llamado 'el Zelote', apóstol de Jesús?",
+              "respuesta": "Zelotes",
+              "opcion_1": "Saduceos",
+              "opcion_2": "Herodianos",
+              "opcion_3": "Nazarenos"
+            },
+            {
+              "pregunta": "¿A qué grupo pertenecía Barrabás, el preso liberado en vez de Jesús?",
+              "respuesta": "Zelotes",
+              "opcion_1": "Fariseos",
+              "opcion_2": "Publicanos",
+              "opcion_3": "Samaritanos"
+            },
+            {
+              "pregunta": "¿A qué grupo pertenecía Mateo antes de seguir a Jesús?",
+              "respuesta": "Publicanos",
+              "opcion_1": "Fariseos",
+              "opcion_2": "Samaritanos",
+              "opcion_3": "Zelotes"
+            },
+            {
+              "pregunta": "¿A qué grupo pertenecía Zaqueo, el jefe de los recaudadores en Jericó?",
+              "respuesta": "Publicanos",
+              "opcion_1": "Galileos",
+              "opcion_2": "Herodianos",
+              "opcion_3": "Fariseos"
+            },
+            {
+              "pregunta": "¿A qué grupo pertenecía la mujer con la que Jesús habló en el pozo?",
+              "respuesta": "Samaritanos",
+              "opcion_1": "Galileos",
+              "opcion_2": "Nazarenos",
+              "opcion_3": "Saduceos"
+            },
+            {
+              "pregunta": "¿A qué grupo pertenecía Simón el Mago (Hechos 8), convertido en Samaria?",
+              "respuesta": "Samaritanos",
+              "opcion_1": "Zelotes",
+              "opcion_2": "Herodianos",
+              "opcion_3": "Nazarenos"
+            },
+            {
+              "pregunta": "¿A qué grupo pertenecía el buen samaritano de la parábola?",
+              "respuesta": "Samaritanos",
+              "opcion_1": "Herodianos",
+              "opcion_2": "Publicanos",
+              "opcion_3": "Fariseos"
+            },
+            {
+              "pregunta": "¿A qué grupo político-religioso se asocia a los que colaboraban con el poder de Herodes?",
+              "respuesta": "Herodianos",
+              "opcion_1": "Escribas",
+              "opcion_2": "Galileos",
+              "opcion_3": "Zelotes"
+            },
+            {
+              "pregunta": "¿A qué grupo pertenecía Jesús y la mayoría de sus primeros discípulos según su región?",
+              "respuesta": "Galileos",
+              "opcion_1": "Samaritanos",
+              "opcion_2": "Nazarenos",
+              "opcion_3": "Fariseos"
+            },
+            {
+              "pregunta": "¿Con qué nombre se identificaban los primeros seguidores de Jesús?",
+              "respuesta": "Nazarenos",
+              "opcion_1": "Galileos",
+              "opcion_2": "Herodianos",
+              "opcion_3": "Saduceos"
+            }
+          ]
+        }
+      ]
+    ]
   }
-]}]
+]
