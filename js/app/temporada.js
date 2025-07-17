@@ -81,21 +81,39 @@ function mostrarPregunta() {
   }
   const p = preguntas[indicePregunta];
   preguntaDiv.textContent = p.pregunta;
-  opcionesDiv.innerHTML = "";
-  let opciones = [p.respuesta, p.opcion_1, p.opcion_2, p.opcion_3]
-    .sort(() => Math.random() - 0.5); // Aleatorizar
+// Animación de aparición
+preguntaDiv.classList.remove("fade-in");
+void preguntaDiv.offsetWidth;
+preguntaDiv.classList.add("fade-in");
 
-  opciones.forEach(op => {
-    const btn = document.createElement("button");
-    btn.textContent = op;
-    btn.onclick = () => {
-      clearInterval(timer);
-      if (op === p.respuesta) puntaje++;
-      indicePregunta++;
-      mostrarPregunta();
-    };
-    opcionesDiv.appendChild(btn);
-  });
+opcionesCont.classList.remove("fade-in");
+void opcionesCont.offsetWidth;
+opcionesCont.classList.add("fade-in");
+
+opcionesDiv.innerHTML = "";
+
+let opciones = [p.respuesta, p.opcion_1, p.opcion_2, p.opcion_3].sort(() => Math.random() - 0.5);
+
+// Contenedor de opciones con clase para el CSS
+const opcionesCont = document.createElement("div");
+opcionesCont.className = "trivia-opciones";
+
+opciones.forEach(op => {
+  const btn = document.createElement("button");
+  btn.className = "trivia-opcion-btn";
+  btn.textContent = op;
+  btn.onclick = () => {
+    clearInterval(timer);
+    if (op === p.respuesta) puntaje++;
+    indicePregunta++;
+    mostrarPregunta();
+  };
+  opcionesCont.appendChild(btn);
+});
+
+opcionesDiv.appendChild(opcionesCont);
+
+
   conteoPregunta.textContent = `Pregunta ${indicePregunta + 1} de ${preguntas.length}`;
 }
 
