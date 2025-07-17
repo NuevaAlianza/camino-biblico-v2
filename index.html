@@ -250,7 +250,7 @@ input[readonly] {
         if (!subgrupoError && subgrupos.length > 0) {
           subgrupos.forEach(sg => {
             const opt = document.createElement("option");
-            opt.value = sg.nombre; // Puedes usar sg.id si prefieres
+            opt.value = sg.id; // Usa el ID numérico
             opt.textContent = sg.nombre;
             subgrupoSelect.appendChild(opt);
           });
@@ -296,7 +296,7 @@ input[readonly] {
               parroquia_nombre,
               pais,
               ciudad,
-              subgrupo
+             subgrupo_id // GUARDAR EL ID EN METADATA
             }
           }
         });
@@ -314,7 +314,7 @@ input[readonly] {
             parroquia_nombre: parroquia_nombre,
             pais: pais,
             ciudad: ciudad,
-            subgrupo: subgrupo
+           subgrupo_id // GUARDAR EL ID EN LA TABLA
           }], { onConflict: ['id'] });
         }
 
