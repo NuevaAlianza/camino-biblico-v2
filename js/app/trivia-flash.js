@@ -1,7 +1,8 @@
 let usuarioActual = null;
 let preguntasQuiz = []; // Global
 
-const diasPermitidos = [3, 6]; // miércoles y sábado
+const diasPermitidos = [1, 3, 6]; // lunes, miércoles y sábado
+
 
 document.addEventListener("DOMContentLoaded", async () => {
   // 1. Obtener sesión y usuario
@@ -15,7 +16,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   const hoy = new Date();
   const diaSemana = hoy.getDay();
   if (!diasPermitidos.includes(diaSemana)) {
-    document.getElementById("trivia-flash-estado").innerHTML = `<b>Trivia Flash disponible solo miércoles y sábado.<br>Hoy es ${["domingo","lunes","martes","miércoles","jueves","viernes","sábado"][diaSemana]}.</b>`;
+   document.getElementById("trivia-flash-estado").innerHTML =
+  `<b>Trivia Flash disponible solo lunes, miércoles y sábado.<br>
+   Hoy es ${["domingo","lunes","martes","miércoles","jueves","viernes","sábado"][diaSemana]}.</b>`;
+
     return;
   }
 
