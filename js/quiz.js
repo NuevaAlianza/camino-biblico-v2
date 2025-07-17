@@ -280,7 +280,7 @@ reiniciarBtn.addEventListener("click", () => {
 });
 
 volverBtn.addEventListener("click", () => {
-  window.location.href = "index.html";
+  window.location.href = "menu.html";
 });
 
 // ===============================
