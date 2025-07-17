@@ -287,12 +287,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Actualiza metadatos en Auth (opcional)
     let { error: errorMeta } = await supabase.auth.updateUser({
-      data: {
-        parroquia: parroquiaNombre,
-        ciudad: ciudad,
-        pais: pais,
-        subgrupo: subgrupoId // puedes guardar el id aquí o el nombre si prefieres
-      }
+     data: {
+  parroquia: parroquiaNombre,
+  ciudad: ciudad,
+  pais: pais,
+  subgrupo_id: parseInt(subgrupoId, 10) // ← aquí el campo se llama subgrupo_id y es id numérico
+}
+
     });
 
     // Guarda el nombre de parroquia (text) y el id de subgrupo (int4) en la tabla usuarios
@@ -305,7 +306,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         parroquia: parroquiaNombre, // ← SOLO NOMBRE (text)
         ciudad: ciudad,
         pais: pais,
-        subgrupo: parseInt(subgrupoId, 10) // ← SOLO ID (int4)
+        subgrupo_id: parseInt(subgrupoId, 10) // ← SOLO ID (int4)
       }], { onConflict: ['id'] });
 
     if (errorMeta || errorUsuario) {
