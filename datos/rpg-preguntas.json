@@ -318,7 +318,214 @@
         "pregunta": "¿Qué apóstol llevó el Evangelio a Etiopía, según la tradición?",
         "opciones": ["Felipe", "Bartolomé", "Santiago", "Judas Tadeo"],
         "respuesta": "Felipe"
+      },
+{
+  "ciclos": {
+    "2025-S30": {
+      "titulo": "Semana 30 – Frases célebres de Jesús",
+      "descripcion": "¿Reconoces a quién o a qué grupo Jesús (u otro personaje) dirigió estas palabras?",
+      "niveles": {
+        "1": [
+          {
+            "pregunta": "¿A quién le dijo Jesús: «Hoy ha llegado la salvación a esta casa»?",
+            "opciones": ["Zaqueo", "Pedro", "Nicodemo", "Lázaro"],
+            "respuesta": "Zaqueo"
+          },
+          {
+            "pregunta": "¿A quién dijo Jesús: «Ven y sígueme»?",
+            "opciones": ["Mateo", "Judas", "Zaqueo", "Pilato"],
+            "respuesta": "Mateo"
+          },
+          {
+            "pregunta": "¿A quién le dijo Jesús: «No llores» antes de resucitar a su hijo?",
+            "opciones": ["La viuda de Naín", "María Magdalena", "Marta", "La samaritana"],
+            "respuesta": "La viuda de Naín"
+          },
+          {
+            "pregunta": "¿A quién dijo Jesús: «Tampoco yo te condeno. Vete y no peques más»?",
+            "opciones": ["La mujer adúltera", "La hemorroísa", "La samaritana", "Marta"],
+            "respuesta": "La mujer adúltera"
+          },
+          {
+            "pregunta": "¿A quién le dijo Jesús: «Tú eres Pedro y sobre esta piedra edificaré mi Iglesia»?",
+            "opciones": ["Simón", "Juan", "Mateo", "Andrés"],
+            "respuesta": "Simón"
+          },
+          {
+            "pregunta": "¿A quién le dijo Jesús: «Ven, camina sobre el agua»?",
+            "opciones": ["Pedro", "Juan", "Tomás", "Felipe"],
+            "respuesta": "Pedro"
+          },
+          {
+            "pregunta": "¿A quién le dijo Jesús: «Tu fe te ha salvado» después de recobrar la vista?",
+            "opciones": ["Bartimeo", "Zaqueo", "Pedro", "Jairo"],
+            "respuesta": "Bartimeo"
+          },
+          {
+            "pregunta": "¿A quién le dijo el ángel: «Llena eres de gracia, el Señor está contigo»?",
+            "opciones": ["María", "Marta", "Elisabet", "Ana"],
+            "respuesta": "María"
+          },
+          {
+            "pregunta": "¿A quién dijo Jesús: «Marta, Marta, te preocupas por muchas cosas...»?",
+            "opciones": ["Marta", "María Magdalena", "María (madre)", "La samaritana"],
+            "respuesta": "Marta"
+          },
+          {
+            "pregunta": "¿A quién dijo Jesús: «Hoy estarás conmigo en el paraíso»?",
+            "opciones": ["El buen ladrón", "Pedro", "Judas", "Pablo"],
+            "respuesta": "El buen ladrón"
+          }
+        ],
+        "2": [
+          {
+            "pregunta": "¿A quién le dijo Jesús: «El agua que yo le daré se convertirá en manantial de vida eterna»?",
+            "opciones": ["La samaritana", "La mujer adúltera", "María Magdalena", "La viuda de Naín"],
+            "respuesta": "La samaritana"
+          },
+          {
+            "pregunta": "¿A quién dijo Jesús: «No temas, sólo ten fe»?",
+            "opciones": ["Jairo", "Pedro", "Santiago", "Tomás"],
+            "respuesta": "Jairo"
+          },
+          {
+            "pregunta": "¿A quién dijo Jesús: «Tú eres el Cristo, el Hijo de Dios vivo» y lo alabó por esa confesión?",
+            "opciones": ["Pedro", "Juan", "Tomás", "Felipe"],
+            "respuesta": "Pedro"
+          },
+          {
+            "pregunta": "¿A quién dijo Jesús: «¿Por qué me llamas bueno?»",
+            "opciones": ["El joven rico", "Pedro", "Nicodemo", "Simón el fariseo"],
+            "respuesta": "El joven rico"
+          },
+          {
+            "pregunta": "¿A quién le dijo Jesús: «¿Dónde están los que te condenaban?»",
+            "opciones": ["La mujer adúltera", "María Magdalena", "La hemorroísa", "La viuda"],
+            "respuesta": "La mujer adúltera"
+          },
+          {
+            "pregunta": "¿A quién le dijo Jesús: «No he venido a llamar a justos, sino a pecadores»?",
+            "opciones": ["A los fariseos", "A los discípulos", "A los escribas", "A la multitud"],
+            "respuesta": "A los fariseos"
+          },
+          {
+            "pregunta": "¿A quién le dijo Jesús: «¿Crees esto?» refiriéndose a la resurrección de Lázaro?",
+            "opciones": ["Marta", "María Magdalena", "Pedro", "Marta y María"],
+            "respuesta": "Marta"
+          },
+          {
+            "pregunta": "¿A quién le dijo Jesús: «Levántate, toma tu camilla y anda»?",
+            "opciones": ["El paralítico de Cafarnaúm", "Bartimeo", "Jairo", "El ciego de Siloé"],
+            "respuesta": "El paralítico de Cafarnaúm"
+          },
+          {
+            "pregunta": "¿A quién le dijo Jesús: «¡Saulo, Saulo! ¿Por qué me persigues?»?",
+            "opciones": ["Pablo", "Pedro", "Felipe", "Santiago"],
+            "respuesta": "Pablo"
+          },
+          {
+            "pregunta": "¿A quién le dijo Jesús: «Hija, tu fe te ha salvado»?",
+            "opciones": ["La hemorroísa", "La mujer adúltera", "Marta", "La viuda de Naín"],
+            "respuesta": "La hemorroísa"
+          }
+        ],
+        "3": [
+          {
+            "pregunta": "¿A quién le dijo Jesús: «¿También ustedes quieren irse?» cuando muchos discípulos se fueron?",
+            "opciones": ["A los Doce", "A la multitud", "A los fariseos", "A los escribas"],
+            "respuesta": "A los Doce"
+          },
+          {
+            "pregunta": "¿A quién le dijo Jesús: «Antes que cante el gallo, me habrás negado tres veces»?",
+            "opciones": ["Pedro", "Juan", "Tomás", "Andrés"],
+            "respuesta": "Pedro"
+          },
+          {
+            "pregunta": "¿A quién le dijo Jesús: «Hoy mismo me negarás tres veces»?",
+            "opciones": ["Pedro", "Tomás", "Judas", "Felipe"],
+            "respuesta": "Pedro"
+          },
+          {
+            "pregunta": "¿A quién le dijo Jesús: «Lázaro, sal fuera»?",
+            "opciones": ["Lázaro", "Jairo", "Bartimeo", "El paralítico"],
+            "respuesta": "Lázaro"
+          },
+          {
+            "pregunta": "¿A quién le dijo Jesús: «Mujer, grande es tu fe»?",
+            "opciones": ["La cananea", "La samaritana", "La hemorroísa", "Marta"],
+            "respuesta": "La cananea"
+          },
+          {
+            "pregunta": "¿A quién le dijo Jesús: «Bienaventurados los que creen sin ver»?",
+            "opciones": ["Tomás", "Pedro", "Felipe", "Juan"],
+            "respuesta": "Tomás"
+          }
+        ],
+        "4": [
+          {
+            "pregunta": "¿A quién le dijo Jesús: «¿Quién es mi madre y quiénes son mis hermanos?»",
+            "opciones": ["A la multitud", "A María y sus hermanos", "A los discípulos", "A los fariseos"],
+            "respuesta": "A la multitud"
+          },
+          {
+            "pregunta": "¿A quién le dijo Jesús: «No sólo de pan vive el hombre»?",
+            "opciones": ["Al diablo en el desierto", "A Pedro", "A Juan", "A la multitud"],
+            "respuesta": "Al diablo en el desierto"
+          },
+          {
+            "pregunta": "¿A quién le dijo Jesús: «Padre, en tus manos encomiendo mi espíritu»?",
+            "opciones": ["Al Padre", "A Pedro", "A María", "A Juan"],
+            "respuesta": "Al Padre"
+          },
+          {
+            "pregunta": "¿A quién le dijo Jesús: «Mujer, he ahí a tu hijo»?",
+            "opciones": ["A María", "A Marta", "A la samaritana", "A la hemorroísa"],
+            "respuesta": "A María"
+          },
+          {
+            "pregunta": "¿A quién le dijo Jesús: «No te he condenado; vete y no peques más»?",
+            "opciones": ["La mujer adúltera", "María Magdalena", "La hemorroísa", "La cananea"],
+            "respuesta": "La mujer adúltera"
+          },
+          {
+            "pregunta": "¿A quién le dijo Jesús: «Paz a ustedes» después de resucitar?",
+            "opciones": ["A los discípulos", "A María Magdalena", "A los fariseos", "A los Doce"],
+            "respuesta": "A los discípulos"
+          }
+        ],
+        "5": [
+          {
+            "pregunta": "¿A quién le dijo Jesús: «Mujer, grande es tu fe. Que te suceda como deseas»?",
+            "opciones": ["La mujer cananea", "María Magdalena", "Marta", "La hemorroísa"],
+            "respuesta": "La mujer cananea"
+          },
+          {
+            "pregunta": "¿A quién le dijo Jesús: «Marta, sólo una cosa es necesaria»?",
+            "opciones": ["Marta", "María Magdalena", "La samaritana", "La viuda de Naín"],
+            "respuesta": "Marta"
+          },
+          {
+            "pregunta": "¿A quién le dijo Jesús: «Recobra la vista; tu fe te ha salvado»?",
+            "opciones": ["Bartimeo", "El ciego de Siloé", "El paralítico", "Lázaro"],
+            "respuesta": "Bartimeo"
+          },
+          {
+            "pregunta": "¿A quién le dijo Jesús: «¡Sal fuera!» y volvió a la vida?",
+            "opciones": ["Lázaro", "La hija de Jairo", "El hijo de la viuda", "Bartimeo"],
+            "respuesta": "Lázaro"
+          },
+          {
+            "pregunta": "¿A quién le dijo Jesús: «Levántate, toma tu lecho y anda»?",
+            "opciones": ["El paralítico de Betesda", "Bartimeo", "La hemorroísa", "La samaritana"],
+            "respuesta": "El paralítico de Betesda"
+          },
+          {
+            "pregunta": "¿A quién le dijo Jesús: «No tengas miedo; basta que tengas fe»?",
+            "opciones": ["Jairo", "Pedro", "Tomás", "Felipe"],
+            "respuesta": "Jairo"
+           }
+        ]
       }
-    ]
+    }
   }
-}}}
+}]}}}}
