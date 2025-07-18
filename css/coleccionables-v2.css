@@ -199,3 +199,11 @@ body {
   gap: 1rem;             /* Opcional, espacio entre tarjetas */
 }
 
+.categorias-contenedor {
+  touch-action: pan-x;
+  -ms-overflow-style: none;  /* Para IE y Edge antiguos */
+  scrollbar-width: none;     /* Oculta scrollbar en Firefox */
+}
+.categorias-contenedor::-webkit-scrollbar {
+  display: none;             /* Oculta scrollbar en Chrome/Safari */
+}
