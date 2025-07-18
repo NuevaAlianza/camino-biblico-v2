@@ -7,7 +7,7 @@ let datos = [];
 let preguntas = [];
 let preguntaActual = 0;
 let puntaje = 0;
-let tiempo = 58;
+let tiempo = 35;
 let intervalo;
 
 // Elementos del DOM
@@ -243,16 +243,16 @@ function resetearEstado() {
   opcionesEl.innerHTML = "";
   comentarioEl.classList.add("oculto");
   barraProgreso.style.width = "100%";
-  // contadorEl.textContent = "Tiempo: 58s"; // solo si lo usas
+  // contadorEl.textContent = "Tiempo: 35s"; // solo si lo usas
 }
 
 function iniciarTemporizador() {
-  tiempo = 58;
+  tiempo = 35;
   barraProgreso.style.width = "100%";
   // contadorEl.textContent = `Tiempo: ${tiempo}s`; // solo si lo usas
   intervalo = setInterval(() => {
     tiempo--;
-    const pct = (tiempo / 58) * 100;
+    const pct = (tiempo / 35) * 100;
     barraProgreso.style.width = `${pct}%`;
 
     // contadorEl.textContent = `Tiempo: ${tiempo}s`; // solo si lo usas
