@@ -307,15 +307,17 @@ registroForm.onsubmit = async function(e) {
     const userId = user?.id || user?.user?.id;
     if (userId) {
       await supabase.from("usuarios").upsert([{
-        id: userId,
-        email: email,
-        nombre: nombre,
-        parroquia_id: parroquia_id,
-        parroquia_nombre: parroquia_nombre,
-        pais: pais,
-        ciudad: ciudad,
-        subgrupo_id: parseInt(subgrupo, 10) // ← igual aquí, como número
-      }], { onConflict: ['id'] });
+  id: userId,
+  email: email,
+  nombre: nombre,
+  parroquia: parroquia_nombre,        // (nombre de la parroquia en texto)
+  parroquia_id: parseInt(parroquia_id, 10), // (id numérico, opcional si lo usas)
+  pais: pais,
+  ciudad: ciudad,
+  subgrupo_id: parseInt(subgrupo, 10) // (id numérico del subgrupo)
+  // subgrupo: parseInt(subgrupo, 10) // ← Solo si existe y lo usas en la tabla (opcional)
+}], { onConflict: ['id'] });
+
     }
 
     mensajeDiv.textContent = "¡Registro exitoso! Revisa tu correo para verificar la cuenta.";
