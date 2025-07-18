@@ -192,4 +192,10 @@ body {
   color: #222;
   letter-spacing: 1px;
 }
+.categorias-contenedor {
+  display: flex;
+  overflow-x: auto;      /* ¡Esto permite scroll horizontal! */
+  -webkit-overflow-scrolling: touch; /* Suaviza el scroll en iOS */
+  gap: 1rem;             /* Opcional, espacio entre tarjetas */
+}
 
