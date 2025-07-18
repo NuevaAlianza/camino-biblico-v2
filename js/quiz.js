@@ -36,6 +36,10 @@ const sonidoFin        = new Audio("assets/sonidos/end.mp3");
 const sonidoClick      = new Audio("assets/sonidos/click.mp3");
 const sonidoCorrecto   = new Audio("assets/sonidos/correcto.mp3");
 const sonidoIncorrecto = new Audio("assets/sonidos/incorrecto.mp3");
+const sonidoNotaA = new Audio("assets/sonidos/nota_a.mp3");
+const sonidoNotaB = new Audio("assets/sonidos/nota_b.mp3");
+const sonidoNotaC = new Audio("assets/sonidos/nota_c.mp3");
+
 
 function reproducirSonido(audio) {
   audio.currentTime = 0;
@@ -218,6 +222,15 @@ function mostrarResultado() {
   else if (porcentaje >= 75) nota = "B";
   else if (porcentaje >= 60) nota = "C";
   else if (porcentaje >= 40) nota = "D";
+
+// Reproducir sonido según nota
+if (nota === "A") {
+  sonidoNotaA.currentTime = 0; sonidoNotaA.play();
+} else if (nota === "B") {
+  sonidoNotaB.currentTime = 0; sonidoNotaB.play();
+} else if (nota === "C") {
+  sonidoNotaC.currentTime = 0; sonidoNotaC.play();
+}
 
   const btnColeccionable = document.getElementById("ver-coleccionables");
   // Limpia listeners viejos
