@@ -263,70 +263,71 @@ input[readonly] {
       };
     });
 
-    // REGISTRO
-    registroForm.onsubmit = async function(e) {
-      e.preventDefault();
-      mensajeDiv.textContent = "";
+ // REGISTRO
+registroForm.onsubmit = async function(e) {
+  e.preventDefault();
+  mensajeDiv.textContent = "";
 
-      const email = document.getElementById("reg-email").value.trim();
-      const password = document.getElementById("reg-password").value.trim();
-      const nombre = document.getElementById("reg-nombre").value.trim();
-      const parroquiaSelect = document.getElementById("reg-parroquia");
-      const parroquia_id = parroquiaSelect.value;
-      const parroquia_nombre = parroquiaSelect.options[parroquiaSelect.selectedIndex].textContent;
-      const pais = document.getElementById("reg-pais").value.trim();
-      const ciudad = document.getElementById("reg-ciudad").value.trim();
-      const subgrupo = document.getElementById("reg-subgrupo").value;
+  const email = document.getElementById("reg-email").value.trim();
+  const password = document.getElementById("reg-password").value.trim();
+  const nombre = document.getElementById("reg-nombre").value.trim();
+  const parroquiaSelect = document.getElementById("reg-parroquia");
+  const parroquia_id = parroquiaSelect.value;
+  const parroquia_nombre = parroquiaSelect.options[parroquiaSelect.selectedIndex].textContent;
+  const pais = document.getElementById("reg-pais").value.trim();
+  const ciudad = document.getElementById("reg-ciudad").value.trim();
+  const subgrupo = document.getElementById("reg-subgrupo").value;
 
-      if (!parroquia_id || !pais || !ciudad || !subgrupo) {
-        mensajeDiv.textContent = "Completa todos los campos.";
-        mensajeDiv.className = "error";
-        return;
-      }
+  if (!parroquia_id || !pais || !ciudad || !subgrupo) {
+    mensajeDiv.textContent = "Completa todos los campos.";
+    mensajeDiv.className = "error";
+    return;
+  }
 
-      try {
-        // 1. Crear usuario en Supabase Auth (user_metadata)
-        const { data, error } = await supabase.auth.signUp({
-          email,
-          password,
-          options: {
-            data: {
-              nombre,
-              parroquia_id,
-              parroquia_nombre,
-              pais,
-              ciudad,
-             subgrupo_id // GUARDAR EL ID EN METADATA
-            }
-          }
-        });
-        if (error) throw error;
-
-        // 2. Insertar en la tabla usuarios (si quieres guardar redundancia)
-        const user = data?.user;
-        const userId = user?.id || user?.user?.id;
-        if (userId) {
-          await supabase.from("usuarios").upsert([{
-            id: userId,
-            email: email,
-            nombre: nombre,
-            parroquia_id: parroquia_id,
-            parroquia_nombre: parroquia_nombre,
-            pais: pais,
-            ciudad: ciudad,
-           subgrupo_id // GUARDAR EL ID EN LA TABLA
-          }], { onConflict: ['id'] });
+  try {
+    // 1. Crear usuario en Supabase Auth (user_metadata)
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          nombre,
+          parroquia_id,
+          parroquia_nombre,
+          pais,
+          ciudad,
+          subgrupo_id: parseInt(subgrupo, 10) // ← nombre correcto y como número
         }
-
-        mensajeDiv.textContent = "¡Registro exitoso! Revisa tu correo para verificar la cuenta.";
-        mensajeDiv.className = "";
-        registroForm.reset();
-        setTimeout(mostrarLogin, 1600);
-      } catch (err) {
-        mensajeDiv.textContent = "Error: " + (err.message || err.error_description || "Error desconocido");
-        mensajeDiv.className = "error";
       }
-    };
+    });
+    if (error) throw error;
+
+    // 2. Insertar en la tabla usuarios (si quieres guardar redundancia)
+    const user = data?.user;
+    const userId = user?.id || user?.user?.id;
+    if (userId) {
+      await supabase.from("usuarios").upsert([{
+        id: userId,
+        email: email,
+        nombre: nombre,
+        parroquia_id: parroquia_id,
+        parroquia_nombre: parroquia_nombre,
+        pais: pais,
+        ciudad: ciudad,
+        subgrupo_id: parseInt(subgrupo, 10) // ← igual aquí, como número
+      }], { onConflict: ['id'] });
+    }
+
+    mensajeDiv.textContent = "¡Registro exitoso! Revisa tu correo para verificar la cuenta.";
+    mensajeDiv.className = "";
+    registroForm.reset();
+    setTimeout(mostrarLogin, 1600);
+  } catch (err) {
+    mensajeDiv.textContent = "Error: " + (err.message || err.error_description || "Error desconocido");
+    mensajeDiv.className = "error";
+  }
+};
+
 
     // LOGIN
     loginForm.onsubmit = async function(e) {
