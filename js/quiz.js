@@ -339,21 +339,25 @@ async function guardarProgresoEnNube() {
   else if (porcentaje >= 40) nota = "D";
 
   // Guarda progreso (último intento, una fila por usuario-tipo-clave)
-  const { error } = await supabase
-    .from("progreso")
-    .upsert([{
-      user_id: userId,
-      tipo,
-      clave,
-      nota,
-      porcentaje,
-      fecha: new Date().toISOString()
-    }]);
-  if (error) {
-    console.error("❌ Error al guardar progreso en nube:", error.message);
-  } else {
-    console.log("✅ Progreso guardado en Supabase.");
-  }
+ const { error } = await supabase
+  .from("progreso")
+  .upsert([{
+    user_id: userId,
+    tipo,
+    clave,
+    nota,
+    porcentaje,
+    fecha: new Date().toISOString()
+  }], {
+    onConflict: ['user_id', 'tipo', 'clave']
+  });
+
+if (error) {
+  console.error("❌ Error al guardar progreso en nube:", error.message);
+} else {
+  console.log("✅ Progreso guardado en Supabase.");
+}
+
 
   // Guarda historial (todas las sesiones, cada intento)
   const { error: histError } = await supabase
