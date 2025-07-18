@@ -18,7 +18,7 @@ let idTemporada = null;
 let preguntas = [];
 let indicePregunta = 0;
 let puntaje = 0;
-let tiempoRestante = 58;
+let tiempoRestante = 35;
 let timer = null;
 
 // --- 1. Cargar temporadas y buscar activa ---
@@ -60,7 +60,7 @@ btnComenzar.addEventListener("click", () => {
 // --- 3. Mostrar pregunta actual ---
 function mostrarPregunta() {
   if (timer) clearInterval(timer);
-  tiempoRestante = 58;
+  tiempoRestante = 35;
   actualizarBarraTiempo();
   timer = setInterval(() => {
     tiempoRestante--;
@@ -119,8 +119,8 @@ function mostrarPregunta() {
 // --- 4. Barra y contador de tiempo ---
 function actualizarBarraTiempo() {
   contador.textContent = `Tiempo: ${tiempoRestante}s`;
-  progresoBar.style.width = `${(tiempoRestante / 58) * 100}%`;
-  if (tiempoRestante > 30) progresoBar.style.background = '#2a9d8f';
+  progresoBar.style.width = `${(tiempoRestante / 35) * 100}%`;
+  if (tiempoRestante > 19) progresoBar.style.background = '#2a9d8f';
   else if (tiempoRestante > 10) progresoBar.style.background = '#e9c46a';
   else progresoBar.style.background = '#e76f51';
 }
@@ -175,15 +175,18 @@ async function guardarProgresoEnNubeTemporada() {
   else nota = "C";
 
   const { error } = await supabase
-    .from("progreso")
-    .upsert([{
-      user_id: userId,
-      tipo,
-      clave,
-      nota,
-      porcentaje,
-      fecha: new Date().toISOString()
-    }]);
+  .from("progreso")
+  .upsert([{
+    user_id: userId,
+    tipo,
+    clave,
+    nota,
+    porcentaje,
+    fecha: new Date().toISOString()
+  }], {
+    onConflict: ['user_id', 'tipo', 'clave']  // <-- Esto hace que actualice si ya existe
+  });
+
   if (error) {
     console.error("❌ Error al guardar progreso de temporada:", error.message);
   } else {
