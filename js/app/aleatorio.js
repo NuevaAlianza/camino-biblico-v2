@@ -5,7 +5,7 @@ let preguntasData = [];
 // --- SONIDOS ---
 const sonidoInicio = new Audio('assets/sonidos/inicio.mp3');
 const sonidoCorrecto = new Audio('assets/sonidos/correcto.mp3');
-const sonidoIncorrecto = new Audio('assets/sonidos/incorecto.mp3');
+const sonidoIncorrecto = new Audio('assets/sonidos/incorrecto.mp3');
 const sonidoFondo = new Audio('assets/sonidos/background.mp3');
 sonidoFondo.volume = 0.4;
 
