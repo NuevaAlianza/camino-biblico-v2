@@ -175,28 +175,22 @@ async function mostrarRankingSemanalParroquia() {
 }
 
 // --- Ranking de subgrupo ---
-// --- Ranking de subgrupo (versión robusta) ---
+// --- Ranking de subgrupo (solo ID) ---
 async function mostrarRankingSubgrupo() {
   const cont = document.getElementById("progreso-ranking-subgrupo");
   cont.innerHTML = "<div>Cargando ranking de subgrupo...</div>";
 
-  // 1. Obtén SIEMPRE el subgrupo_id directo desde la tabla usuarios
-  const { data: usuario, error: errorUsuario } = await supabase
-    .from("usuarios")
-    .select("subgrupo_id")
-    .eq("id", usuarioActual.id)
-    .maybeSingle();
-
-  const subgrupoId = usuario?.subgrupo_id;
+  // 1. Verifica subgrupo_id numérico válido
+  const subgrupoId = usuarioActual?.subgrupo_id || usuarioActual?.user_metadata?.subgrupo_id;
   if (!subgrupoId || isNaN(Number(subgrupoId))) {
     cont.innerHTML = "<div>No tienes subgrupo asignado.</div>";
     return;
   }
 
-  // 2. Consulta miembros del subgrupo y nombre
+  // 2. Consulta miembros del subgrupo
   const { data: miembros, error } = await supabase
     .from("usuarios")
-    .select("id, nombre, subgrupo_id, rpg_progreso(xp), subgrupos(nombre)")
+    .select("id, nombre, subgrupo_id, rpg_progreso(xp)")
     .eq("subgrupo_id", Number(subgrupoId));
 
   if (error || !miembros || miembros.length === 0) {
@@ -204,13 +198,13 @@ async function mostrarRankingSubgrupo() {
     return;
   }
 
-  // 3. Saca nombre del subgrupo
-  const subgrupoNombre = miembros[0]?.subgrupos?.nombre || "(Sin nombre)";
+  // 3. El nombre de subgrupo será el ID (por simplicidad)
+  const subgrupoNombre = subgrupoId;
 
   // 4. Calcula XP de cada usuario
   const ranking = miembros.map(u => ({
     id: u.id,
-    nombre: u.nombre || u.id.slice(0, 8),
+    nombre: u.nombre || u.id.slice(0,8),
     xp: (u.rpg_progreso || []).reduce((a, b) => a + (b.xp || 0), 0)
   })).sort((a, b) => b.xp - a.xp);
 
@@ -219,11 +213,11 @@ async function mostrarRankingSubgrupo() {
 
   // 6. Render
   cont.innerHTML = `
-    <h3>Ranking de tu subgrupo <span style="color:#2a9d8f;">${subgrupoNombre}</span></h3>
+    <h3>Ranking de tu subgrupo <span style="color:#2a9d8f;">#${subgrupoNombre}</span></h3>
     <div class="ranking-subgrupo-list">
       ${ranking.map((r, i) => `
         <div class="ranking-row${r.id === usuarioActual.id ? " actual" : ""}">
-          <span class="pos">#${i + 1}</span>
+          <span class="pos">#${i+1}</span>
           <span class="nombre">${r.nombre}</span>
           <span class="xp">${r.xp} XP</span>
           ${r.id === usuarioActual.id ? "<span class='tuyo'>(Tú)</span>" : ""}
