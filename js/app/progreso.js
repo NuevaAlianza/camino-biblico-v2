@@ -22,23 +22,22 @@ document.addEventListener("DOMContentLoaded", async () => {
   await mostrarHistorialPartidas(userId);
 });
 
-function ocultarTodosLosRankings() {
-  document.getElementById("progreso-ranking").style.display = "none";
-  document.getElementById("progreso-ranking-parroquia").style.display = "none";
-  document.getElementById("progreso-ranking-subgrupo").style.display = "none";
-  document.getElementById("progreso-historial").style.display = "none";
-  document.getElementById("progreso-nivel").style.display = "none";
-  document.getElementById("progreso-logros").style.display = "none";
+function ocultarTodosLosSlidesRanking() {
+  document.getElementById("slide-ranking-global").style.display = "none";
+  document.getElementById("slide-ranking-parroquia").style.display = "none";
+  document.getElementById("slide-ranking-subgrupo").style.display = "none";
+  document.getElementById("slide-historial").style.display = "none";
+  document.getElementById("slide-logros").style.display = "none";
 }
 
-function mostrarTodosLosRankings() {
-  document.getElementById("progreso-ranking").style.display = "";
-  document.getElementById("progreso-ranking-parroquia").style.display = "";
-  document.getElementById("progreso-ranking-subgrupo").style.display = "";
-  document.getElementById("progreso-historial").style.display = "";
-  document.getElementById("progreso-nivel").style.display = "";
-  document.getElementById("progreso-logros").style.display = "";
+function mostrarTodosLosSlidesRanking() {
+  document.getElementById("slide-ranking-global").style.display = "";
+  document.getElementById("slide-ranking-parroquia").style.display = "";
+  document.getElementById("slide-ranking-subgrupo").style.display = "";
+  document.getElementById("slide-historial").style.display = "";
+  document.getElementById("slide-logros").style.display = "";
 }
+
 
 // --- Dashboard Resumen ---
 async function mostrarDashboardResumen(userId) {
@@ -254,3 +253,34 @@ async function mostrarHistorialPartidas(userId) {
   html += "</ul>";
   document.getElementById("progreso-historial").innerHTML = html;
 }
+// --- SLIDER DE SECCIONES ---
+const slideIds = [
+  "slide-ranking-global",
+  "slide-ranking-parroquia",
+  "slide-ranking-subgrupo",
+  "slide-historial",
+  "slide-logros"
+];
+let progresoSlideActual = 0;
+
+function mostrarSlideProgreso(idx) {
+  slideIds.forEach((id, i) => {
+    const slide = document.getElementById(id);
+    if (!slide) return;
+    slide.classList.toggle("visible", i === idx);
+  });
+
+  // Actualiza los bullets
+  const bullets = document.getElementById("progreso-bullets");
+  if (bullets) {
+    bullets.innerHTML = slideIds.map((_, i) =>
+      `<button type="button" class="${i === idx ? 'active' : ''}" onclick="mostrarSlideProgreso(${i})"></button>`
+    ).join("");
+  }
+  progresoSlideActual = idx;
+}
+
+// Hace visible el primero al cargar
+document.addEventListener("DOMContentLoaded", () => mostrarSlideProgreso(0));
+// Expón función global para los bullets
+window.mostrarSlideProgreso = mostrarSlideProgreso;
