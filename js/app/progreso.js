@@ -6,12 +6,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   usuarioActual = sessionData?.session?.user;
   const userId = usuarioActual?.id || usuarioActual?.user?.id;
   if (!userId) {
-    ocultarTodosLosRankings();
+    ocultarTodosLosSlidesRanking();
     document.getElementById("progreso-resumen").innerHTML = "<p>Inicia sesión para ver tu progreso.</p>";
     return;
   }
-
-  
 
   // Render
   await mostrarDashboardResumen(userId);
@@ -37,7 +35,6 @@ function mostrarTodosLosSlidesRanking() {
   document.getElementById("slide-historial").style.display = "";
   document.getElementById("slide-logros").style.display = "";
 }
-
 
 // --- Dashboard Resumen ---
 async function mostrarDashboardResumen(userId) {
@@ -113,20 +110,20 @@ async function mostrarNivelYLogros(userId) {
       ${nivel === 11 ? `<div class="nivel-premio">🏆 ¡Coleccionable especial desbloqueado!</div>` : ""}
     </div>
   `;
-}
-const logrosSlide = document.getElementById("slide-logros");
-if (logrosSlide) {
-  logrosSlide.innerHTML = `
-    <h3>Logros rápidos</h3>
-    <div class="logros-grid">
-      <div class="logro-card">🏅 <div>${totalA} temas <b>A</b></div></div>
-      <div class="logro-card">🥇 <div>Nivel <b>${nivel}</b>: ${titulo}</div></div>
-    </div>
-  `;
-} else {
-  console.warn('No se encontró el elemento #slide-logros');
-}
 
+  const logrosSlide = document.getElementById("slide-logros");
+  if (logrosSlide) {
+    logrosSlide.innerHTML = `
+      <h3>Logros rápidos</h3>
+      <div class="logros-grid">
+        <div class="logro-card">🏅 <div>${totalA} temas <b>A</b></div></div>
+        <div class="logro-card">🥇 <div>Nivel <b>${nivel}</b>: ${titulo}</div></div>
+      </div>
+    `;
+  } else {
+    console.warn('No se encontró el elemento #slide-logros');
+  }
+}
 
 // --- Ranking Global (Top 10 XP) ---
 async function mostrarRankingGlobal(userId) {
@@ -141,7 +138,7 @@ async function mostrarRankingGlobal(userId) {
     html += `<li${u.user_id === userId ? ' class="yo"' : ''}>#${i + 1} ${u.nombre || u.user_id.slice(0, 8)} – ${u.xp_global} XP</li>`;
   });
   html += `</ol>`;
-  document.getElementById("progreso-ranking").innerHTML = html;
+  document.getElementById("slide-ranking-global").innerHTML = html;
 }
 
 // --- Ranking parroquial (XP promedio por parroquia) ---
@@ -153,7 +150,7 @@ async function mostrarRankingParroquia(userId) {
     .not("parroquia_id", "is", null);
 
   if (!parroquiasAll || parroquiasAll.length === 0) {
-    document.getElementById("progreso-ranking-parroquia").innerHTML = "<p>No hay datos parroquiales aún.</p>";
+    document.getElementById("slide-ranking-parroquia").innerHTML = "<p>No hay datos parroquiales aún.</p>";
     return;
   }
 
@@ -185,7 +182,7 @@ async function mostrarRankingParroquia(userId) {
     html += `<li>#${i + 1} ${p.nombre} – ${p.xpPromedio.toFixed(1)} XP/promedio (${p.count} jugador${p.count === 1 ? '' : 'es'})</li>`;
   });
   html += "</ol>";
-  document.getElementById("progreso-ranking-parroquia").innerHTML = html;
+  document.getElementById("slide-ranking-parroquia").innerHTML = html;
 }
 
 // --- Ranking de subgrupo (XP total por subgrupo) ---
@@ -197,7 +194,7 @@ async function mostrarRankingSubgrupo(userId) {
     .eq("user_id", userId);
 
   const subgrupoId = resumenPropio?.subgrupo;
-  const cont = document.getElementById("progreso-ranking-subgrupo");
+  const cont = document.getElementById("slide-ranking-subgrupo");
   cont.innerHTML = "<div>Cargando ranking de subgrupo...</div>";
 
   if (!subgrupoId) {
@@ -256,8 +253,9 @@ async function mostrarHistorialPartidas(userId) {
     html += `<li>${part.tipo} – ${part.clave || ""} <span>${part.nota || "-"} (${part.porcentaje || "-"}%)</span> <small>${new Date(part.fecha).toLocaleDateString()}</small></li>`;
   });
   html += "</ul>";
-  document.getElementById("progreso-historial").innerHTML = html;
+  document.getElementById("slide-historial").innerHTML = html;
 }
+
 // --- SLIDER DE SECCIONES ---
 const slideIds = [
   "slide-ranking-global",
@@ -289,4 +287,3 @@ function mostrarSlideProgreso(idx) {
 document.addEventListener("DOMContentLoaded", () => mostrarSlideProgreso(0));
 // Expón función global para los bullets
 window.mostrarSlideProgreso = mostrarSlideProgreso;
-}
