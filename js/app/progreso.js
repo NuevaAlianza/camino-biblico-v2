@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  mostrarTodosLosRankings();
+  
 
   // Render
   await mostrarDashboardResumen(userId);
