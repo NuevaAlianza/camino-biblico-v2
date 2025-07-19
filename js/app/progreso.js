@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   await mostrarNivelYLogros(userId);
   await mostrarRankingGlobal(userId);
   await mostrarRankingParroquia(userId);
+  await mostrarRankingSubgruposParroquia(userId); // <-- aquí
   await mostrarRankingSubgrupo(userId);
   await mostrarHistorialPartidas(userId);
 });
@@ -260,6 +261,7 @@ async function mostrarHistorialPartidas(userId) {
 const slideIds = [
   "slide-ranking-global",
   "slide-ranking-parroquia",
+  "slide-ranking-subgrupos-parroquia", // <-- Aquí lo agregas
   "slide-ranking-subgrupo",
   "slide-historial",
   "slide-logros"
@@ -287,3 +289,67 @@ function mostrarSlideProgreso(idx) {
 document.addEventListener("DOMContentLoaded", () => mostrarSlideProgreso(0));
 // Expón función global para los bullets
 window.mostrarSlideProgreso = mostrarSlideProgreso;
+
+// --- Ranking de subgrupos por parroquia ---
+async function mostrarRankingSubgruposParroquia(userId) {
+  // 1. Saca tu parroquia
+  const { data: [miResumen] } = await supabase
+    .from("resumen_ranking")
+    .select("parroquia_id, parroquia_nombre, subgrupo")
+    .eq("user_id", userId);
+
+  const parroquiaId = miResumen?.parroquia_id;
+  if (!parroquiaId) {
+    document.getElementById("slide-ranking-subgrupos-parroquia").innerHTML = "<p>No tienes parroquia asignada.</p>";
+    return;
+  }
+
+  // 2. Saca todos los usuarios de la parroquia
+  const { data: miembros } = await supabase
+    .from("resumen_ranking")
+    .select("subgrupo, xp_global, nombre, user_id")
+    .eq("parroquia_id", parroquiaId);
+
+  if (!miembros || miembros.length === 0) {
+    document.getElementById("slide-ranking-subgrupos-parroquia").innerHTML = "<p>No hay datos para tu parroquia.</p>";
+    return;
+  }
+
+  // 3. Agrupa usuarios por subgrupo
+  const subgrupoMap = {};
+  miembros.forEach(m => {
+    if (!m.subgrupo) return;
+    if (!subgrupoMap[m.subgrupo]) {
+      subgrupoMap[m.subgrupo] = { xp: 0, count: 0, miembros: [], subgrupo: m.subgrupo };
+    }
+    subgrupoMap[m.subgrupo].xp += m.xp_global || 0;
+    subgrupoMap[m.subgrupo].count += 1;
+    subgrupoMap[m.subgrupo].miembros.push(m);
+  });
+
+  // 4. Convierte en array y ordena
+  const ranking = Object.values(subgrupoMap)
+    .map(sg => ({
+      subgrupo: sg.subgrupo,
+      xpPromedio: sg.count ? sg.xp / sg.count : 0,
+      count: sg.count
+    }))
+    .sort((a, b) => b.xpPromedio - a.xpPromedio);
+
+  // 5. Renderiza
+  let html = `<h3>Ranking de subgrupos – ${miResumen.parroquia_nombre || 'Parroquia'}</h3><ol style="text-align:center;">`;
+  ranking.forEach((sg, i) => {
+    html += `<li>#${i + 1} Subgrupo ${sg.subgrupo} – ${sg.xpPromedio.toFixed(1)} XP/promedio (${sg.count} miembro${sg.count === 1 ? '' : 's'})</li>`;
+  });
+  html += "</ol>";
+
+  // Mostrar tu puesto
+  const miSubgrupo = miResumen.subgrupo;
+  const miPos = ranking.findIndex(r => r.subgrupo == miSubgrupo) + 1;
+  if (miPos) {
+    html += `<div class="posicion-propia">Tu subgrupo: #${miPos} de ${ranking.length}</div>`;
+  }
+
+  document.getElementById("slide-ranking-subgrupos-parroquia").innerHTML = html;
+}
+
