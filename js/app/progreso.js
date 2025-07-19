@@ -175,12 +175,19 @@ async function mostrarRankingSemanalParroquia() {
 }
 
 // --- Ranking de subgrupo ---
+// --- Ranking de subgrupo (versión robusta) ---
 async function mostrarRankingSubgrupo() {
   const cont = document.getElementById("progreso-ranking-subgrupo");
   cont.innerHTML = "<div>Cargando ranking de subgrupo...</div>";
 
-  // 1. Verifica subgrupo_id numérico válido
-  const subgrupoId = usuarioActual?.subgrupo_id || usuarioActual?.user_metadata?.subgrupo_id;
+  // 1. Obtén SIEMPRE el subgrupo_id directo desde la tabla usuarios
+  const { data: usuario, error: errorUsuario } = await supabase
+    .from("usuarios")
+    .select("subgrupo_id")
+    .eq("id", usuarioActual.id)
+    .maybeSingle();
+
+  const subgrupoId = usuario?.subgrupo_id;
   if (!subgrupoId || isNaN(Number(subgrupoId))) {
     cont.innerHTML = "<div>No tienes subgrupo asignado.</div>";
     return;
@@ -203,7 +210,7 @@ async function mostrarRankingSubgrupo() {
   // 4. Calcula XP de cada usuario
   const ranking = miembros.map(u => ({
     id: u.id,
-    nombre: u.nombre || u.id.slice(0,8),
+    nombre: u.nombre || u.id.slice(0, 8),
     xp: (u.rpg_progreso || []).reduce((a, b) => a + (b.xp || 0), 0)
   })).sort((a, b) => b.xp - a.xp);
 
@@ -216,7 +223,7 @@ async function mostrarRankingSubgrupo() {
     <div class="ranking-subgrupo-list">
       ${ranking.map((r, i) => `
         <div class="ranking-row${r.id === usuarioActual.id ? " actual" : ""}">
-          <span class="pos">#${i+1}</span>
+          <span class="pos">#${i + 1}</span>
           <span class="nombre">${r.nombre}</span>
           <span class="xp">${r.xp} XP</span>
           ${r.id === usuarioActual.id ? "<span class='tuyo'>(Tú)</span>" : ""}
