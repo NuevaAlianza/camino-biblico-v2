@@ -113,7 +113,7 @@ async function mostrarNivelYLogros(userId) {
       ${nivel === 11 ? `<div class="nivel-premio">🏆 ¡Coleccionable especial desbloqueado!</div>` : ""}
     </div>
   `;
-
+}
 const logrosSlide = document.getElementById("slide-logros");
 if (logrosSlide) {
   logrosSlide.innerHTML = `
