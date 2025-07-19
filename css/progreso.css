@@ -388,3 +388,52 @@
 .subgrupos-ranking ul { list-style: none; padding: 0; }
 .subgrupos-ranking li { margin-bottom: 0.28em; font-size: 1em; }
 .subgrupos-ranking h4 { margin-bottom: 0.7em; color: #a97722; }
+
+.progreso-slider {
+  position: relative;
+  margin: 1.4rem auto 2rem auto;
+  max-width: 540px;
+  background: #fffdfa;
+  border-radius: 1em;
+  box-shadow: 0 2px 12px #ead19622;
+  overflow: hidden;
+}
+
+.progreso-slide {
+  display: none;
+  padding: 2rem 1rem 1.6rem 1rem;
+  min-height: 260px;
+  transition: opacity 0.3s;
+}
+
+.progreso-slide.visible {
+  display: block;
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.progreso-bullets {
+  display: flex;
+  justify-content: center;
+  gap: 0.7em;
+  padding: 1rem 0 0.4rem 0;
+}
+
+.progreso-bullets button {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: none;
+  background: #ead196bb;
+  transition: background 0.2s;
+  cursor: pointer;
+  outline: none;
+}
+.progreso-bullets button.active {
+  background: #a97722;
+}
+
