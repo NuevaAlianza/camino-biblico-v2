@@ -114,13 +114,14 @@ async function mostrarNivelYLogros(userId) {
     </div>
   `;
 
-  document.getElementById("progreso-logros").innerHTML = `
-    <h3>Logros rápidos</h3>
-    <div class="logros-grid">
-      <div class="logro-card">🏅 <div>${totalA} temas <b>A</b></div></div>
-      <div class="logro-card">🥇 <div>Nivel <b>${nivel}</b>: ${titulo}</div></div>
-    </div>
-  `;
+  document.getElementById("slide-logros").innerHTML = `
+  <h3>Logros rápidos</h3>
+  <div class="logros-grid">
+    <div class="logro-card">🏅 <div>${totalA} temas <b>A</b></div></div>
+    <div class="logro-card">🥇 <div>Nivel <b>${nivel}</b>: ${titulo}</div></div>
+  </div>
+`;
+
 }
 
 // --- Ranking Global (Top 10 XP) ---
