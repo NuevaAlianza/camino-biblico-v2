@@ -289,3 +289,4 @@ function mostrarSlideProgreso(idx) {
 document.addEventListener("DOMContentLoaded", () => mostrarSlideProgreso(0));
 // Expón función global para los bullets
 window.mostrarSlideProgreso = mostrarSlideProgreso;
+}
