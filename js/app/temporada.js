@@ -151,6 +151,18 @@ function finalizarJuego() {
     imgSrc = datosTemporada.coleccionable.imagen_a;
     mensajeExtra = `<p style="color:#2a9d8f; font-weight:600; margin-top:1rem;">🏆 ¡Excelente! Has desbloqueado el coleccionable especial.</p>`;
     botonDescarga = `<a href="${imgSrc}" download style="display:inline-block; margin-top:1rem; background:#e9c46a; padding:0.5rem 1rem; border-radius:0.5rem; color:#333; text-decoration:none; font-weight:bold; font-size:0.9rem;">📥 Descargar</a>`;
+   // --- AGREGA ESTO ---
+    setTimeout(() => {
+      confetti({
+        particleCount: 180,
+        spread: 85,
+        origin: { y: 0.7 },
+        zIndex: 2000
+      });
+    }, 400); // Sale tras mostrar el coleccionable
+    // --- FIN BLOQUE CONFETI ---
+  
+  
   } else if (nota === "B") {
     imgSrc = datosTemporada.coleccionable.imagen_b;
   } else {
@@ -163,6 +175,28 @@ function finalizarJuego() {
     ${botonDescarga}
   `;
   puntajeFinal.textContent = `Puntaje: ${puntaje} de ${max}`;
+
+    let botonCompartir = `
+    <button id="btn-compartir-temporada" class="btn-principal" style="margin-top:0.8rem;">
+      Compartir mi resultado
+    </button>
+  `;
+
+  imagenColeccionable.innerHTML = `
+    <img src="${imgSrc}" alt="Coleccionable desbloqueado" style="max-width:100%; border-radius:1rem;">
+    ${mensajeExtra}
+    ${botonDescarga}
+    ${botonCompartir}
+  `;
+  setTimeout(() => {
+    const btnCompartir = document.getElementById('btn-compartir-temporada');
+    if (btnCompartir) {
+      btnCompartir.onclick = function() {
+        compartirResultadoTemporada(nota, puntaje, datosTemporada.titulo);
+      };
+    }
+  }, 20);
+
 
   guardarProgresoEnNubeTemporada();
 }
@@ -216,4 +250,19 @@ function mostrarSolo(elementoMostrado) {
   [inicio, juego, final].forEach(el => el.classList.add("oculto"));
   // Muestra solo la sección correspondiente
   elementoMostrado.classList.remove("oculto");
+}
+function compartirResultadoTemporada(nota, puntaje, tituloTemporada) {
+  const mensaje = `¡Acabo de completar la temporada "${tituloTemporada}" en Camino Bíblico!\n\n`
+    + `Puntaje: ${puntaje}\nNota: ${nota}\n`
+    + `¿Te atreves a superarme?\n${window.location.href}`;
+  if (navigator.share) {
+    navigator.share({
+      title: `Temporada "${tituloTemporada}" – Camino Bíblico`,
+      text: mensaje,
+      url: window.location.href
+    });
+  } else {
+    navigator.clipboard.writeText(mensaje);
+    alert("¡Resultado copiado! Pega en WhatsApp, Telegram o donde quieras.");
+  }
 }
