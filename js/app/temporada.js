@@ -42,7 +42,7 @@ fetch('./datos/temporadas.json')
     document.getElementById("titulo-temporada").textContent = datosTemporada.titulo;
     document.getElementById("descripcion-temporada").textContent = datosTemporada.descripcion;
     document.getElementById("fecha-temporada").textContent = `${formatoFecha(datosTemporada.fecha_inicio)} – ${formatoFecha(datosTemporada.fecha_fin)}`;
-    mostrarSolo(inicio); // Solo muestra la sección de inicio
+    mostrarSolo(inicio); // Muestra solo pantalla de inicio al cargar
   });
 
 // --- 2. Comenzar quiz ---
@@ -51,6 +51,7 @@ btnComenzar.addEventListener("click", () => {
     alert("No hay preguntas para esta temporada.");
     return;
   }
+  btnComenzar.disabled = true; // Previene doble click
   indicePregunta = 0;
   puntaje = 0;
   quizFinalizado = false;
@@ -60,7 +61,7 @@ btnComenzar.addEventListener("click", () => {
 
 // --- 3. Mostrar pregunta actual ---
 function mostrarPregunta() {
-  if (quizFinalizado) return; // Evita avances de más
+  if (quizFinalizado) return; // Evita avances extras
 
   // Si terminó el quiz
   if (indicePregunta >= preguntas.length) {
@@ -73,7 +74,7 @@ function mostrarPregunta() {
   tiempoRestante = 35;
   actualizarBarraTiempo();
 
-  // Inicia el temporizador
+  // Inicia temporizador
   timer = setInterval(() => {
     tiempoRestante--;
     actualizarBarraTiempo();
@@ -86,7 +87,7 @@ function mostrarPregunta() {
     }
   }, 1000);
 
-  // Renderiza la pregunta y opciones
+  // Renderiza pregunta y opciones
   const p = preguntas[indicePregunta];
   preguntaDiv.textContent = p.pregunta;
   opcionesDiv.innerHTML = "";
@@ -108,8 +109,7 @@ function mostrarPregunta() {
 
       if (op === p.respuesta) puntaje++;
       indicePregunta++;
-      // Pequeño delay opcional para fluidez visual
-      setTimeout(() => mostrarPregunta(), 280);
+      setTimeout(() => mostrarPregunta(), 260); // Delay visual
     };
     opcionesCont.appendChild(btn);
   });
@@ -151,7 +151,6 @@ function finalizarJuego() {
     imgSrc = datosTemporada.coleccionable.imagen_a;
     mensajeExtra = `<p style="color:#2a9d8f; font-weight:600; margin-top:1rem;">🏆 ¡Excelente! Has desbloqueado el coleccionable especial.</p>`;
     botonDescarga = `<a href="${imgSrc}" download style="display:inline-block; margin-top:1rem; background:#e9c46a; padding:0.5rem 1rem; border-radius:0.5rem; color:#333; text-decoration:none; font-weight:bold; font-size:0.9rem;">📥 Descargar</a>`;
-   // --- AGREGA ESTO ---
     setTimeout(() => {
       confetti({
         particleCount: 180,
@@ -159,24 +158,16 @@ function finalizarJuego() {
         origin: { y: 0.7 },
         zIndex: 2000
       });
-    }, 400); // Sale tras mostrar el coleccionable
-    // --- FIN BLOQUE CONFETI ---
-  
-  
+    }, 400);
   } else if (nota === "B") {
     imgSrc = datosTemporada.coleccionable.imagen_b;
   } else {
     imgSrc = datosTemporada.coleccionable.imagen_c;
   }
 
-  imagenColeccionable.innerHTML = `
-    <img src="${imgSrc}" alt="Coleccionable desbloqueado" style="max-width:100%; border-radius:1rem;">
-    ${mensajeExtra}
-    ${botonDescarga}
-  `;
   puntajeFinal.textContent = `Puntaje: ${puntaje} de ${max}`;
 
-    let botonCompartir = `
+  let botonCompartir = `
     <button id="btn-compartir-temporada" class="btn-principal" style="margin-top:0.8rem;">
       Compartir mi resultado
     </button>
@@ -188,6 +179,7 @@ function finalizarJuego() {
     ${botonDescarga}
     ${botonCompartir}
   `;
+
   setTimeout(() => {
     const btnCompartir = document.getElementById('btn-compartir-temporada');
     if (btnCompartir) {
@@ -196,7 +188,6 @@ function finalizarJuego() {
       };
     }
   }, 20);
-
 
   guardarProgresoEnNubeTemporada();
 }
@@ -244,13 +235,18 @@ function formatoFecha(fechaISO) {
   });
 }
 
-// --- 8. Función para mostrar solo una sección ---
+// --- 8. Función para mostrar solo una sección, con animación ---
 function mostrarSolo(elementoMostrado) {
-  // Oculta todas las secciones
-  [inicio, juego, final].forEach(el => el.classList.add("oculto"));
-  // Muestra solo la sección correspondiente
+  [inicio, juego, final].forEach(el => {
+    el.classList.add("oculto");
+    el.classList.remove("fade-in");
+  });
   elementoMostrado.classList.remove("oculto");
+  void elementoMostrado.offsetWidth;
+  elementoMostrado.classList.add("fade-in");
 }
+
+// --- 9. Compartir resultado ---
 function compartirResultadoTemporada(nota, puntaje, tituloTemporada) {
   const mensaje = `¡Acabo de completar la temporada "${tituloTemporada}" en Camino Bíblico!\n\n`
     + `Puntaje: ${puntaje}\nNota: ${nota}\n`
