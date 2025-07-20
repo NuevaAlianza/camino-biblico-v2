@@ -1,6 +1,6 @@
 // --- sw.js (service worker) ---
 
-const CACHE_VERSION = 'v6'; // Cambia este número cuando actualices archivos
+const CACHE_VERSION = 'v6.1'; // Cambia este número cuando actualices archivos
 const CACHE_NAME = `camino-biblico-${CACHE_VERSION}`;
 const FILES_TO_CACHE = [
   './index.html',
