@@ -27,8 +27,8 @@
     "id": "T2",
     "titulo": "Nueva Alianza",
     "descripcion": "Una Comunidad, que tanto conoces de ella, Ánimo.",
-    "fecha_inicio": "2025-06-15",
-    "fecha_fin": "2025-06-30",
+    "fecha_inicio": "2025-07-20",
+    "fecha_fin": "2025-07-25",
     "puntaje_maximo": 10,
     "umbral_coleccionable": 9,
     "coleccionable": {
@@ -247,7 +247,7 @@
       "imagen_c": "assets/img/coleccionables/generica_c.png"
     },
     "preguntas": [
-      {
+       {
         "pregunta": "¿Cuál era el nombre completo del Santo Cura de Ars?",
         "respuesta": "Juan María Vianney",
         "opcion_1": "Juan Pablo Vianney",
@@ -356,99 +356,100 @@
   },
   {
     "id": "T5",
-    "titulo": " Grupos Religiosos / Sociales",
-    "descripcion": "Ers capaz de definir correctamente estos 9 Grupos, Suerte.",
+    "titulo": "Grupos Religiosos / Sociales",
+    "descripcion": "¿Eres capaz de definir correctamente estos 9 Grupos? Suerte.",
     "fecha_inicio": "2025-08-08",
     "fecha_fin": "2025-08-13",
     "puntaje_maximo": 9,
     "umbral_coleccionable": 8,
     "coleccionable": {
-      "nombre": "Temporada 4 – Cura de Ars",
-      "imagen_a": "assets/img/coleccionables/temporada4_a.png",
+      "nombre": "Temporada 5 – Grupos Religiosos",
+      "imagen_a": "assets/img/coleccionables/temporada5_a.png",
       "imagen_b": "assets/img/coleccionables/generica_b.png",
       "imagen_c": "assets/img/coleccionables/generica_c.png"
     },
     "preguntas": [
-      [
-        {
-          "pregunta": "¿Cuál era el grupo religioso judío muy estricto en el cumplimiento de la Ley y las tradiciones, influyente entre el pueblo y famosos por sus discusiones con Jesús?",
-          "respuesta": "Fariseos",
-          "opcion_1": "Saduceos",
-          "opcion_2": "Herodianos",
-          "opcion_3": "Galileos"
-        },
-        {
-          "pregunta": "¿Cómo se llamaba el grupo de sacerdotes ricos y poderosos que controlaban el Templo y no creían en la resurrección ni en ángeles?",
-          "respuesta": "Saduceos",
-          "opcion_1": "Fariseos",
-          "opcion_2": "Publicanos",
-          "opcion_3": "Zelotes"
-        },
-        {
-          "pregunta": "¿Quiénes eran los expertos en la Ley de Moisés, encargados de copiar, interpretar y enseñar las Escrituras?",
-          "respuesta": "Escribas",
-          "opcion_1": "Fariseos",
-          "opcion_2": "Nazarenos",
-          "opcion_3": "Galileos"
-        },
-        {
-          "pregunta": "¿Cómo se llamaba el grupo que apoyaba a la familia de Herodes y colaboraba con los romanos en el gobierno de Judea?",
-          "respuesta": "Herodianos",
-          "opcion_1": "Saduceos",
-          "opcion_2": "Fariseos",
-          "opcion_3": "Nazarenos"
-        },
-        {
-          "pregunta": "¿Quiénes eran los judíos nacionalistas radicales, dispuestos a usar la violencia para liberar a Israel del dominio romano?",
-          "respuesta": "Zelotes",
-          "opcion_1": "Samaritanos",
-          "opcion_2": "Publicanos",
-          "opcion_3": "Herodianos"
-        },
-        {
-          "pregunta": "¿Cuál era el pueblo vecino de los judíos, con creencias religiosas diferentes, y con quienes los judíos se evitaban mutuamente?",
-          "respuesta": "Samaritanos",
-          "opcion_1": "Galileos",
-          "opcion_2": "Publicanos",
-          "opcion_3": "Zelotes"
-        },
-        {
-          "pregunta": "¿Cómo se llamaba a los recaudadores de impuestos para los romanos, vistos como traidores y pecadores por muchos judíos?",
-          "respuesta": "Publicanos",
-          "opcion_1": "Saduceos",
-          "opcion_2": "Escribas",
-          "opcion_3": "Galileos"
-        },
-        {
-          "pregunta": "¿Quiénes eran los habitantes de la región norte de Israel, entre los que se encontraban muchos apóstoles y el mismo Jesús?",
-          "respuesta": "Galileos",
-          "opcion_1": "Fariseos",
-          "opcion_2": "Samaritanos",
-          "opcion_3": "Nazarenos"
-        },
-        {
-          "pregunta": "¿Con qué nombre se identificaba a los primeros seguidores de Jesús de Nazaret?",
-          "respuesta": "Nazarenos",
-          "opcion_1": "Galileos",
-          "opcion_2": "Herodianos",
-          "opcion_3": "Escribas"
-        },
-        {
-          "id": "T6",
-          "titulo": "¿A qué grupo pertenece…?",
-          "descripcion": "Pon a prueba tu conocimiento: ¿a qué grupo religioso o social pertenece cada personaje bíblico?",
-          "fecha_inicio": "2025-08-15",
-          "fecha_fin": "2025-08-22",
-          "puntaje_maximo": 13,
-          "umbral_coleccionable": 12,
-          "coleccionable": {
-            "nombre": "Temporada 6 – Personajes y Grupos",
-            "imagen_a": "assets/img/coleccionables/temporada6_a.png",
-            "imagen_b": "assets/img/coleccionables/generica_b.png",
-            "imagen_c": "assets/img/coleccionables/generica_c.png"
-          },
-          "preguntas": [
-            {
+      {
+        "pregunta": "¿Cuál era el grupo religioso judío muy estricto en el cumplimiento de la Ley y las tradiciones, influyente entre el pueblo y famosos por sus discusiones con Jesús?",
+        "respuesta": "Fariseos",
+        "opcion_1": "Saduceos",
+        "opcion_2": "Herodianos",
+        "opcion_3": "Galileos"
+      },
+      {
+        "pregunta": "¿Cómo se llamaba el grupo de sacerdotes ricos y poderosos que controlaban el Templo y no creían en la resurrección ni en ángeles?",
+        "respuesta": "Saduceos",
+        "opcion_1": "Fariseos",
+        "opcion_2": "Publicanos",
+        "opcion_3": "Zelotes"
+      },
+      {
+        "pregunta": "¿Quiénes eran los expertos en la Ley de Moisés, encargados de copiar, interpretar y enseñar las Escrituras?",
+        "respuesta": "Escribas",
+        "opcion_1": "Fariseos",
+        "opcion_2": "Nazarenos",
+        "opcion_3": "Galileos"
+      },
+      {
+        "pregunta": "¿Cómo se llamaba el grupo que apoyaba a la familia de Herodes y colaboraba con los romanos en el gobierno de Judea?",
+        "respuesta": "Herodianos",
+        "opcion_1": "Saduceos",
+        "opcion_2": "Fariseos",
+        "opcion_3": "Nazarenos"
+      },
+      {
+        "pregunta": "¿Quiénes eran los judíos nacionalistas radicales, dispuestos a usar la violencia para liberar a Israel del dominio romano?",
+        "respuesta": "Zelotes",
+        "opcion_1": "Samaritanos",
+        "opcion_2": "Publicanos",
+        "opcion_3": "Herodianos"
+      },
+      {
+        "pregunta": "¿Cuál era el pueblo vecino de los judíos, con creencias religiosas diferentes, y con quienes los judíos se evitaban mutuamente?",
+        "respuesta": "Samaritanos",
+        "opcion_1": "Galileos",
+        "opcion_2": "Publicanos",
+        "opcion_3": "Zelotes"
+      },
+      {
+        "pregunta": "¿Cómo se llamaba a los recaudadores de impuestos para los romanos, vistos como traidores y pecadores por muchos judíos?",
+        "respuesta": "Publicanos",
+        "opcion_1": "Saduceos",
+        "opcion_2": "Escribas",
+        "opcion_3": "Galileos"
+      },
+      {
+        "pregunta": "¿Quiénes eran los habitantes de la región norte de Israel, entre los que se encontraban muchos apóstoles y el mismo Jesús?",
+        "respuesta": "Galileos",
+        "opcion_1": "Fariseos",
+        "opcion_2": "Samaritanos",
+        "opcion_3": "Nazarenos"
+      },
+      {
+        "pregunta": "¿Con qué nombre se identificaba a los primeros seguidores de Jesús de Nazaret?",
+        "respuesta": "Nazarenos",
+        "opcion_1": "Galileos",
+        "opcion_2": "Herodianos",
+        "opcion_3": "Escribas"
+      }
+    ]
+  },
+  {
+    "id": "T6",
+    "titulo": "¿A qué grupo pertenece…?",
+    "descripcion": "Pon a prueba tu conocimiento: ¿a qué grupo religioso o social pertenece cada personaje bíblico?",
+    "fecha_inicio": "2025-08-15",
+    "fecha_fin": "2025-08-22",
+    "puntaje_maximo": 13,
+    "umbral_coleccionable": 12,
+    "coleccionable": {
+      "nombre": "Temporada 6 – Personajes y Grupos",
+      "imagen_a": "assets/img/coleccionables/temporada6_a.png",
+      "imagen_b": "assets/img/coleccionables/generica_b.png",
+      "imagen_c": "assets/img/coleccionables/generica_c.png"
+    },
+    "preguntas": [
+      {
               "pregunta": "¿A qué grupo religioso pertenecía Nicodemo?",
               "respuesta": "Fariseos",
               "opcion_1": "Saduceos",
@@ -574,9 +575,6 @@
               "opcion_2": "Herodianos",
               "opcion_3": "Saduceos"
             }
-          ]
-        }
-      ]
     ]
   }
 ]
