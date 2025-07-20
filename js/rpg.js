@@ -6,6 +6,91 @@ let usuarioActual = null; // Usuario global
 
 const preguntasPorNivel = [5, 4, 3, 3, 3];
 
+// === TEMPORIZADOR CIRCULAR + EMOJI ANIMADO ===
+const EMOJIS_RPG = [
+  { emoji: "😌", hasta: 21 }, // 25-21
+  { emoji: "🙂", hasta: 16 }, // 20-16
+  { emoji: "😐", hasta: 11 }, // 15-11
+  { emoji: "😯", hasta: 6 },  // 10-6
+  { emoji: "😱", hasta: 0 }   // 5-0
+];
+let temporizadorActivo = null;
+
+function crearTemporizadorPregunta(duracion, onTimeout, onTick, onEmojiChange) {
+  let tiempoRestante = duracion;
+  let intervalo;
+  let emojiActual = "";
+
+  function actualizarTemporizador() {
+    // Actualiza círculo SVG
+    const circulo = document.getElementById("timer-circular");
+    const radio = 40, circunferencia = 2 * Math.PI * radio;
+    const progreso = tiempoRestante / duracion;
+    if (circulo) {
+      circulo.style.strokeDasharray = `${circunferencia}`;
+      circulo.style.strokeDashoffset = `${circunferencia * (1 - progreso)}`;
+    }
+
+    // Emoji animado
+    const emojiObj = EMOJIS_RPG.find(e => tiempoRestante > e.hasta) || EMOJIS_RPG[EMOJIS_RPG.length - 1];
+    if (emojiObj && emojiActual !== emojiObj.emoji) {
+      emojiActual = emojiObj.emoji;
+      const emojiDiv = document.getElementById("emoji-animado");
+      if (emojiDiv) {
+        emojiDiv.textContent = emojiActual;
+        // Efecto shake sólo en 😱
+        emojiDiv.className = "emoji-animado" + (emojiActual === "😱" ? " shake" : "");
+        if (onEmojiChange) onEmojiChange(emojiActual);
+      }
+    }
+    // Texto de tiempo
+    const texto = document.getElementById("timer-text");
+    if (texto) texto.textContent = tiempoRestante + "s";
+
+    if (onTick) onTick(tiempoRestante);
+  }
+
+  actualizarTemporizador();
+
+  intervalo = setInterval(() => {
+    tiempoRestante--;
+    actualizarTemporizador();
+    if (tiempoRestante <= 0) {
+      clearInterval(intervalo);
+      if (onTimeout) onTimeout();
+    }
+  }, 1000);
+
+  temporizadorActivo = {
+    detener: () => clearInterval(intervalo),
+    getTiempo: () => tiempoRestante
+  };
+  return temporizadorActivo;
+}
+
+function limpiarTemporizadorPregunta() {
+  if (temporizadorActivo && temporizadorActivo.detener) temporizadorActivo.detener();
+  temporizadorActivo = null;
+}
+
+// === FUNCIONES DE SONIDO ===
+function reproducirSonido(nombre) {
+  try {
+    const audio = new Audio("assets/sonidos/" + nombre);
+    audio.play();
+  } catch (e) {
+    // Si no existe, ignora
+  }
+}
+
+// Usar nombres como: start.mp3, halfway.mp3, warning.mp3, correct.mp3, wrong1.mp3, ...
+// Recuerda colocar los audios en assets/sonidos/
+function sonidoFalloAleatorio() {
+  const opciones = ["wrong1.mp3", "wrong2.mp3", "wrong3.mp3", "wrong4.mp3"];
+  const i = Math.floor(Math.random() * opciones.length);
+  return opciones[i];
+}
+
 // --- 1. Carga de datos y ciclo actual ---
 fetch('datos/rpg-preguntas.json')
   .then(res => res.json())
@@ -92,6 +177,7 @@ async function mostrarStatsBienvenida() {
     </div>
   `;
 }
+
 function normalizar(str) {
   return (str || "")
     .normalize("NFD")
@@ -99,7 +185,6 @@ function normalizar(str) {
     .toLowerCase()
     .trim();
 }
-
 
 // --- 3. Supabase: cargar y guardar progreso ---
 async function cargarProgresoRPG() {
@@ -261,6 +346,13 @@ function mostrarNivel() {
     }
 
     juego.innerHTML = `
+      <div class="temporizador-panel">
+        <svg width="90" height="90" class="temporizador-svg">
+          <circle cx="45" cy="45" r="40" stroke="#f4a261" stroke-width="7" fill="none" id="timer-circular"/>
+        </svg>
+        <span id="emoji-animado" class="emoji-animado">😌</span>
+        <div id="timer-text" class="timer-text">25s</div>
+      </div>
       <div class="panel-pregunta">
         <div class="rpg-info">
           <span class="rpg-nivel">Nivel: ${juegoActual.nivel}</span>
@@ -274,14 +366,48 @@ function mostrarNivel() {
       </div>
     `;
 
+    limpiarTemporizadorPregunta();
+    reproducirSonido("start.mp3");
+    crearTemporizadorPregunta(
+      25,
+      () => { // onTimeout
+        // Si termina el tiempo: cuenta como fallo
+        juegoActual.vidas--;
+        if (juegoActual.vidas <= 0) {
+          terminarAventura();
+        } else {
+          // Animación shake a las vidas
+          const vidasEl = document.querySelector('.rpg-vidas');
+          if (vidasEl) {
+            vidasEl.classList.add("shake");
+            setTimeout(() => vidasEl.classList.remove("shake"), 400);
+          }
+          // Muestra la siguiente pregunta (sin sumar punto)
+          juegoActual.pregunta++;
+          mostrarPregunta();
+        }
+      },
+      (tiempoRestante) => { // onTick
+        if (tiempoRestante === 13) reproducirSonido("halfway.mp3");
+        if (tiempoRestante === 5) reproducirSonido("warning.mp3");
+      },
+      (emoji) => {
+        // (Opcional) Podrías poner animaciones adicionales según el emoji, si quieres
+      }
+    );
+
     document.querySelectorAll('.rpg-btn-op').forEach(btn => {
       btn.onclick = () => {
+        limpiarTemporizadorPregunta(); // ¡Detiene el tiempo al responder!
         const correcta = p.opciones[btn.dataset.i] === p.respuesta;
         if (correcta) {
           btn.classList.add("acierto");
+          animarAcierto(btn);
+          reproducirSonido("correct.mp3");
           juegoActual.xp += juegoActual.nivel * 1;
         } else {
           btn.classList.add("fallo");
+          reproducirSonido(sonidoFalloAleatorio());
           juegoActual.vidas--;
           const vidasEl = document.querySelector('.rpg-vidas');
           if (vidasEl) {
@@ -333,9 +459,14 @@ async function terminarAventura(ganoTodo = false) {
     <p>XP ganada: ${juegoActual.xp}</p>
     <div class="msg-epico">⚡️ Has completado el reto semanal. Vuelve la próxima semana para una nueva aventura.</div>
     <button onclick="window.location.reload()">Volver al inicio</button>
+    <button id="btn-compartir-resultado" class="compartir-btn">Compartir resultado</button>
   `;
   document.getElementById("btn-comenzar").style.display = "none";
   document.getElementById("btn-continuar").style.display = "none";
+  setTimeout(() => {
+    const btn = document.getElementById("btn-compartir-resultado");
+    if (btn) btn.onclick = () => compartirResultadoRPG(rango, juegoActual.xp, ganoTodo);
+  }, 50);
 }
 
 // --- 8. Otros ---
@@ -347,7 +478,6 @@ function obtenerRango(nivel, ganoTodo) {
   if (nivel === 2) return "Principiante";
   return "Principiante";
 }
-
 
 function mezclarArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -400,5 +530,29 @@ function mostrarMensajeNivelPersonalizado(nivel, vidas, callback) {
     </div>
   `;
   document.getElementById("btn-seguir-nivel").onclick = callback;
+}
+
+// Para efecto "bounce" al acertar (en el botón)
+function animarAcierto(btn) {
+  btn.classList.add("acierto-anim");
+  setTimeout(() => btn.classList.remove("acierto-anim"), 500);
+}
+
+// Compartir resultado
+function compartirResultadoRPG(rango, xp, completado) {
+  let mensaje = `¡He jugado la Trivia Bíblica RPG!\nObtuve el rango: ${rango}\nXP ganada: ${xp}\n¿Te atreves a superarme?`;
+  if (completado) mensaje = "¡Completé la Trivia Bíblica RPG! 🏆\n" + mensaje;
+
+  if (navigator.share) {
+    navigator.share({
+      title: 'Mi resultado en Trivia Bíblica RPG',
+      text: mensaje,
+      url: window.location.href
+    });
+  } else {
+    // Si no soporta compartir, copia el texto
+    navigator.clipboard.writeText(mensaje);
+    alert("¡Resultado copiado! Puedes pegarlo en WhatsApp, Telegram o donde quieras.");
+  }
 }
 
