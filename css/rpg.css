@@ -96,3 +96,87 @@ body {
   margin-top: 0;
   font-size: 1.35em;
 }
+/* ----------- TEMPORIZADOR Y EMOJI ANIMADO ----------- */
+.temporizador-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.1em;
+  margin-bottom: 1.2em;
+  min-height: 100px;
+}
+.temporizador-svg {
+  width: 88px; height: 88px;
+  display: block;
+  background: transparent;
+}
+#timer-circular {
+  transition: stroke-dashoffset 0.7s cubic-bezier(0.44,0,0.56,1);
+  stroke-linecap: round;
+  filter: drop-shadow(0 1px 5px #f4d06133);
+}
+.emoji-animado {
+  font-size: 2.7em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6em;
+  height: 1.6em;
+  transition: transform 0.25s cubic-bezier(0.55, 0, 0.45, 1);
+}
+.emoji-animado.shake {
+  animation: shake 0.4s;
+}
+.timer-text {
+  font-size: 1.4em;
+  font-family: 'Georgia', serif;
+  font-weight: bold;
+  color: #79541a;
+  min-width: 2.6em;
+  text-align: center;
+  letter-spacing: 1px;
+}
+/* ----------- ANIMACIONES OPCIONES ----------- */
+@keyframes bounce {
+  0% { transform: scale(1);}
+  30% { transform: scale(1.18);}
+  60% { transform: scale(0.95);}
+  100% { transform: scale(1);}
+}
+.acierto-anim {
+  animation: bounce 0.45s;
+}
+
+/* ----------- BOTÓN COMPARTIR RESULTADO ----------- */
+.compartir-btn {
+  margin-top: 1.2em;
+  background: #8dcc46;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 1em;
+  padding: 0.75em 1.7em;
+  font-size: 1.08em;
+  box-shadow: 0 2px 8px #7ebd0e2c;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.compartir-btn:hover {
+  background: #a4e164;
+}
+
+/* ----------- RESPONSIVO ----------- */
+@media (max-width: 600px) {
+  .rpg-main {
+    max-width: 98vw;
+    padding: 0.9em 0.4em 1.4em 0.4em;
+  }
+  .temporizador-panel {
+    gap: 0.6em;
+  }
+  .emoji-animado {
+    font-size: 2em;
+    width: 1.2em;
+    height: 1.2em;
+  }
+}
