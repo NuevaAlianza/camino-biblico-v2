@@ -20,6 +20,7 @@ let indicePregunta = 0;
 let puntaje = 0;
 let tiempoRestante = 35;
 let timer = null;
+let quizFinalizado = false;
 
 // --- 1. Cargar temporadas y buscar activa ---
 fetch('./datos/temporadas.json')
@@ -41,6 +42,7 @@ fetch('./datos/temporadas.json')
     document.getElementById("titulo-temporada").textContent = datosTemporada.titulo;
     document.getElementById("descripcion-temporada").textContent = datosTemporada.descripcion;
     document.getElementById("fecha-temporada").textContent = `${formatoFecha(datosTemporada.fecha_inicio)} – ${formatoFecha(datosTemporada.fecha_fin)}`;
+    mostrarSolo(inicio); // Solo muestra la sección de inicio
   });
 
 // --- 2. Comenzar quiz ---
@@ -49,43 +51,48 @@ btnComenzar.addEventListener("click", () => {
     alert("No hay preguntas para esta temporada.");
     return;
   }
-  inicio.classList.add("oculto");
-  juego.classList.remove("oculto");
-  final.classList.add("oculto");
   indicePregunta = 0;
   puntaje = 0;
+  quizFinalizado = false;
+  mostrarSolo(juego);
   mostrarPregunta();
 });
 
 // --- 3. Mostrar pregunta actual ---
 function mostrarPregunta() {
+  if (quizFinalizado) return; // Evita avances de más
+
+  // Si terminó el quiz
+  if (indicePregunta >= preguntas.length) {
+    quizFinalizado = true;
+    finalizarJuego();
+    return;
+  }
+
   if (timer) clearInterval(timer);
   tiempoRestante = 35;
   actualizarBarraTiempo();
+
+  // Inicia el temporizador
   timer = setInterval(() => {
     tiempoRestante--;
     actualizarBarraTiempo();
     if (tiempoRestante <= 0) {
       clearInterval(timer);
-      indicePregunta++;
-      mostrarPregunta();
+      if (!quizFinalizado) {
+        indicePregunta++;
+        mostrarPregunta();
+      }
     }
   }, 1000);
 
-  if (indicePregunta >= preguntas.length) {
-    clearInterval(timer);
-    finalizarJuego();
-    return;
-  }
-
+  // Renderiza la pregunta y opciones
   const p = preguntas[indicePregunta];
   preguntaDiv.textContent = p.pregunta;
-
   opcionesDiv.innerHTML = "";
 
   let opciones = [p.respuesta, p.opcion_1, p.opcion_2, p.opcion_3].sort(() => Math.random() - 0.5);
 
-  // Contenedor de opciones con clase para el CSS
   const opcionesCont = document.createElement("div");
   opcionesCont.className = "trivia-opciones";
 
@@ -94,17 +101,22 @@ function mostrarPregunta() {
     btn.className = "trivia-opcion-btn";
     btn.textContent = op;
     btn.onclick = () => {
+      if (quizFinalizado) return;
       clearInterval(timer);
+      // Deshabilita todas las opciones apenas responde
+      opcionesCont.querySelectorAll("button").forEach(b => b.disabled = true);
+
       if (op === p.respuesta) puntaje++;
       indicePregunta++;
-      mostrarPregunta();
+      // Pequeño delay opcional para fluidez visual
+      setTimeout(() => mostrarPregunta(), 280);
     };
     opcionesCont.appendChild(btn);
   });
 
   opcionesDiv.appendChild(opcionesCont);
 
-  // ---- Animación de aparición (después de crear opcionesCont) ----
+  // Animación de aparición
   preguntaDiv.classList.remove("fade-in");
   void preguntaDiv.offsetWidth;
   preguntaDiv.classList.add("fade-in");
@@ -127,9 +139,7 @@ function actualizarBarraTiempo() {
 
 // --- 5. Finalizar juego ---
 function finalizarJuego() {
-  juego.classList.add("oculto");
-  final.classList.remove("oculto");
-
+  mostrarSolo(final);
   const max = datosTemporada.puntaje_maximo;
   const umbral = datosTemporada.umbral_coleccionable;
   const nota = puntaje >= umbral ? "A" : puntaje >= umbral - 2 ? "B" : "C";
@@ -152,7 +162,6 @@ function finalizarJuego() {
     ${mensajeExtra}
     ${botonDescarga}
   `;
-
   puntajeFinal.textContent = `Puntaje: ${puntaje} de ${max}`;
 
   guardarProgresoEnNubeTemporada();
@@ -161,7 +170,6 @@ function finalizarJuego() {
 // --- 6. Guardar progreso en Supabase ---
 async function guardarProgresoEnNubeTemporada() {
   if (typeof supabase === "undefined") return;
-
   const { data: sessionData } = await supabase.auth.getSession();
   const userId = sessionData?.session?.user?.id;
   if (!userId) return;
@@ -175,17 +183,17 @@ async function guardarProgresoEnNubeTemporada() {
   else nota = "C";
 
   const { error } = await supabase
-  .from("progreso")
-  .upsert([{
-    user_id: userId,
-    tipo,
-    clave,
-    nota,
-    porcentaje,
-    fecha: new Date().toISOString()
-  }], {
-    onConflict: ['user_id', 'tipo', 'clave']  // <-- Esto hace que actualice si ya existe
-  });
+    .from("progreso")
+    .upsert([{
+      user_id: userId,
+      tipo,
+      clave,
+      nota,
+      porcentaje,
+      fecha: new Date().toISOString()
+    }], {
+      onConflict: ['user_id', 'tipo', 'clave']
+    });
 
   if (error) {
     console.error("❌ Error al guardar progreso de temporada:", error.message);
@@ -200,4 +208,12 @@ function formatoFecha(fechaISO) {
   return fecha.toLocaleDateString("es-ES", {
     day: '2-digit', month: 'short', year: 'numeric'
   });
+}
+
+// --- 8. Función para mostrar solo una sección ---
+function mostrarSolo(elementoMostrado) {
+  // Oculta todas las secciones
+  [inicio, juego, final].forEach(el => el.classList.add("oculto"));
+  // Muestra solo la sección correspondiente
+  elementoMostrado.classList.remove("oculto");
 }
