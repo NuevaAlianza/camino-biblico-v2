@@ -176,7 +176,7 @@ function iniciarQuizConPreguntas(preguntas) {
       <h2>¡Quiz finalizado!</h2>
       <p>Respondiste correctamente <b>${aciertos}</b> de <b>${preguntas.length}</b> preguntas.</p>
       <button onclick="window.location.reload()">Volver a configurar</button>
-      <a href="index.html" class="btn-volver">Volver al inicio</a>
+      <a href="menu.html" class="btn-volver">Volver al inicio</a>
     `;
   }
 
