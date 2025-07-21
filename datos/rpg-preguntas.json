@@ -319,8 +319,7 @@
         "opciones": ["Felipe", "Bartolomé", "Santiago", "Judas Tadeo"],
         "respuesta": "Felipe"
       },
-{
-  "ciclos": {
+
     "2025-S30": {
       "titulo": "Semana 30 – Frases célebres de Jesús",
       "descripcion": "¿Reconoces a quién o a qué grupo Jesús (u otro personaje) dirigió estas palabras?",
@@ -528,4 +527,4 @@
       }
     }
   }
-}]}}}}
+}]}}
