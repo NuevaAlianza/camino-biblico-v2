@@ -193,7 +193,7 @@ function iniciarTriviaFlash(preguntas, diaSemana) {
     reproducirSonido("start.mp3");
 
     crearTemporizadorPregunta(
-      20,
+      25,
       () => { // onTimeout
         // Tiempo agotado: cuenta como fallo y pasa a la siguiente
         respuestas.push({ pregunta: q.pregunta, correcta: false, opcion: "(Sin respuesta)" });
@@ -201,8 +201,8 @@ function iniciarTriviaFlash(preguntas, diaSemana) {
         mostrarPregunta();
       },
       (tiempoRestante) => {
-        if (tiempoRestante === 10) reproducirSonido("halfway.mp3");
-        if (tiempoRestante === 4) reproducirSonido("warning.mp3");
+        if (tiempoRestante === 15) reproducirSonido("halfway.mp3");
+        if (tiempoRestante === 6) reproducirSonido("warning.mp3");
       },
       (emoji) => {
         // Extra animación si quieres aquí
@@ -262,31 +262,7 @@ function iniciarTriviaFlash(preguntas, diaSemana) {
       return;
     }
 
-    // Suma XP a rpg_progreso
-    const ciclo = obtenerCicloActual();
-    const { data: row } = await supabase
-      .from("rpg_progreso")
-      .select("*")
-      .eq("user_id", usuarioActual.id)
-      .eq("ciclo", ciclo)
-      .maybeSingle();
-
-    if (row) {
-      await supabase
-        .from("rpg_progreso")
-        .update({ xp: (row.xp || 0) + xp })
-        .eq("id", row.id);
-    } else {
-      await supabase
-        .from("rpg_progreso")
-        .insert([{
-          user_id: usuarioActual.id,
-          ciclo,
-          xp,
-          completado: true,
-          fecha_juego: new Date()
-        }]);
-    }
+  
 
     mostrarBotonCompartir(aciertos, diaSemana);
     mostrarHistorial();
