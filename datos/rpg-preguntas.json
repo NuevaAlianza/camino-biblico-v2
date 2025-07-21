@@ -5,44 +5,20 @@
       "descripcion": "Esta semana exploramos la historia de los grandes patriarcas bíblicos: Abraham, Isaac, Jacob y José. ¿Cuánto sabes de ellos?",
       "niveles": {
         "1": [
-          {
-            "pregunta": "¿Quién es conocido como el padre de la fe?",
-            "opciones": ["Abraham", "Isaac", "Jacob", "David"],
-            "respuesta": "Abraham"
-          },
-          {
-            "pregunta": "¿Quién fue vendido por sus hermanos?",
-            "opciones": ["José", "Moisés", "Jacob", "Isaac"],
-            "respuesta": "José"
-          }
+          { "pregunta": "¿Quién es conocido como el padre de la fe?", "opciones": ["Abraham", "Isaac", "Jacob", "David"], "respuesta": "Abraham" },
+          { "pregunta": "¿Quién fue vendido por sus hermanos?", "opciones": ["José", "Moisés", "Jacob", "Isaac"], "respuesta": "José" }
         ],
         "2": [
-          {
-            "pregunta": "¿Quién fue el hijo de la promesa?",
-            "opciones": ["Isaac", "Ismael", "Esaú", "Rubén"],
-            "respuesta": "Isaac"
-          }
+          { "pregunta": "¿Quién fue el hijo de la promesa?", "opciones": ["Isaac", "Ismael", "Esaú", "Rubén"], "respuesta": "Isaac" }
         ],
         "3": [
-          {
-            "pregunta": "¿A quién le cambiaron el nombre a Israel?",
-            "opciones": ["Jacob", "Abraham", "José", "David"],
-            "respuesta": "Jacob"
-          }
+          { "pregunta": "¿A quién le cambiaron el nombre a Israel?", "opciones": ["Jacob", "Abraham", "José", "David"], "respuesta": "Jacob" }
         ],
         "4": [
-          {
-            "pregunta": "¿Qué patriarca soñó con una escalera al cielo?",
-            "opciones": ["Jacob", "Isaac", "Abraham", "Moisés"],
-            "respuesta": "Jacob"
-          }
+          { "pregunta": "¿Qué patriarca soñó con una escalera al cielo?", "opciones": ["Jacob", "Isaac", "Abraham", "Moisés"], "respuesta": "Jacob" }
         ],
         "5": [
-          {
-            "pregunta": "¿A qué país fue llevado José como esclavo?",
-            "opciones": ["Egipto", "Babilonia", "Israel", "Persia"],
-            "respuesta": "Egipto"
-          }
+          { "pregunta": "¿A qué país fue llevado José como esclavo?", "opciones": ["Egipto", "Babilonia", "Israel", "Persia"], "respuesta": "Egipto" }
         ]
       }
     },
@@ -100,431 +76,114 @@
     "2025-S29": {
       "titulo": "Semana 29 – Jesús y sus apóstoles",
       "descripcion": "Descubre detalles sobre la vida de Jesús y la misión de los apóstoles. ¿Cuánto conoces a los Doce y a su Maestro?",
-      "niveles": {"1": [
-      {
-        "pregunta": "¿Cómo se llama la madre de Jesús?",
-        "opciones": ["María", "Marta", "Ana", "Elisabet"],
-        "respuesta": "María"
-      },
-      {
-        "pregunta": "¿En qué pueblo nació Jesús?",
-        "opciones": ["Belén", "Nazaret", "Jerusalén", "Cafarnaúm"],
-        "respuesta": "Belén"
-      },
-      {
-        "pregunta": "¿Cuántos apóstoles eligió Jesús?",
-        "opciones": ["12", "7", "4", "70"],
-        "respuesta": "12"
-      },
-      {
-        "pregunta": "¿Quién traicionó a Jesús por 30 monedas de plata?",
-        "opciones": ["Judas", "Pedro", "Tomás", "Felipe"],
-        "respuesta": "Judas"
-      },
-      {
-        "pregunta": "¿Quién negó a Jesús tres veces?",
-        "opciones": ["Pedro", "Juan", "Andrés", "Mateo"],
-        "respuesta": "Pedro"
-      },
-      {
-        "pregunta": "¿Cuál apóstol era cobrador de impuestos antes de seguir a Jesús?",
-        "opciones": ["Mateo", "Santiago", "Simón", "Tomás"],
-        "respuesta": "Mateo"
-      },
-      {
-        "pregunta": "¿A quién le cambió Jesús el nombre a 'Pedro'?",
-        "opciones": ["Simón", "Santiago", "Juan", "Andrés"],
-        "respuesta": "Simón"
-      },
-      {
-        "pregunta": "¿Qué milagro hizo Jesús en las bodas de Caná?",
-        "opciones": ["Convirtió el agua en vino", "Sanó a un ciego", "Multiplicó panes", "Caminó sobre el agua"],
-        "respuesta": "Convirtió el agua en vino"
-      },
-      {
-        "pregunta": "¿Cuál apóstol es conocido como 'el gemelo'?",
-        "opciones": ["Tomás", "Andrés", "Juan", "Santiago"],
-        "respuesta": "Tomás"
-      },
-      {
-        "pregunta": "¿Quién fue el apóstol más joven?",
-        "opciones": ["Juan", "Pedro", "Santiago", "Judas"],
-        "respuesta": "Juan"
-      }
-    ],
-    "2": [
-      {
-        "pregunta": "¿Quién fue el apóstol que caminó sobre el agua hacia Jesús?",
-        "opciones": ["Pedro", "Juan", "Andrés", "Felipe"],
-        "respuesta": "Pedro"
-      },
-      {
-        "pregunta": "¿Cuál apóstol dudó de la resurrección de Jesús hasta ver sus heridas?",
-        "opciones": ["Tomás", "Mateo", "Bartolomé", "Simón"],
-        "respuesta": "Tomás"
-      },
-      {
-        "pregunta": "¿En qué monte ocurrió la Transfiguración de Jesús?",
-        "opciones": ["Tabor", "Oliveto", "Sinaí", "Moria"],
-        "respuesta": "Tabor"
-      },
-      {
-        "pregunta": "¿Qué apóstol era hermano de Juan?",
-        "opciones": ["Santiago", "Mateo", "Simón", "Bartolomé"],
-        "respuesta": "Santiago"
-      },
-      {
-        "pregunta": "¿A quién le dijo Jesús: 'Sígueme, y te haré pescador de hombres'?",
-        "opciones": ["Pedro y Andrés", "Mateo y Tomás", "Felipe y Bartolomé", "Santiago y Juan"],
-        "respuesta": "Pedro y Andrés"
-      },
-      {
-        "pregunta": "¿Cuál fue el primer milagro de Jesús?",
-        "opciones": ["Agua en vino", "Multiplicación de panes", "Sanó a un ciego", "Resucitó a Lázaro"],
-        "respuesta": "Agua en vino"
-      },
-      {
-        "pregunta": "¿Quién fue apóstol y publicano?",
-        "opciones": ["Mateo", "Pedro", "Andrés", "Juan"],
-        "respuesta": "Mateo"
-      },
-      {
-        "pregunta": "¿A quién le preguntó Jesús tres veces: '¿Me amas?'",
-        "opciones": ["Pedro", "Juan", "Felipe", "Tomás"],
-        "respuesta": "Pedro"
-      },
-      {
-        "pregunta": "¿Qué apóstol era conocido como 'el celote'?",
-        "opciones": ["Simón", "Felipe", "Santiago", "Judas Tadeo"],
-        "respuesta": "Simón"
-      },
-      {
-        "pregunta": "¿Quién fue el apóstol que escribió el Apocalipsis?",
-        "opciones": ["Juan", "Pedro", "Santiago", "Tomás"],
-        "respuesta": "Juan"
-      }
+      "niveles": {
+        "1": [
+          { "pregunta": "¿Cómo se llama la madre de Jesús?", "opciones": ["María", "Marta", "Ana", "Elisabet"], "respuesta": "María" },
+          { "pregunta": "¿En qué pueblo nació Jesús?", "opciones": ["Belén", "Nazaret", "Jerusalén", "Cafarnaúm"], "respuesta": "Belén" },
+          { "pregunta": "¿Cuántos apóstoles eligió Jesús?", "opciones": ["12", "7", "4", "70"], "respuesta": "12" },
+          { "pregunta": "¿Quién traicionó a Jesús por 30 monedas de plata?", "opciones": ["Judas", "Pedro", "Tomás", "Felipe"], "respuesta": "Judas" },
+          { "pregunta": "¿Quién negó a Jesús tres veces?", "opciones": ["Pedro", "Juan", "Andrés", "Mateo"], "respuesta": "Pedro" },
+          { "pregunta": "¿Cuál apóstol era cobrador de impuestos antes de seguir a Jesús?", "opciones": ["Mateo", "Santiago", "Simón", "Tomás"], "respuesta": "Mateo" },
+          { "pregunta": "¿A quién le cambió Jesús el nombre a 'Pedro'?", "opciones": ["Simón", "Santiago", "Juan", "Andrés"], "respuesta": "Simón" },
+          { "pregunta": "¿Qué milagro hizo Jesús en las bodas de Caná?", "opciones": ["Convirtió el agua en vino", "Sanó a un ciego", "Multiplicó panes", "Caminó sobre el agua"], "respuesta": "Convirtió el agua en vino" },
+          { "pregunta": "¿Cuál apóstol es conocido como 'el gemelo'?", "opciones": ["Tomás", "Andrés", "Juan", "Santiago"], "respuesta": "Tomás" },
+          { "pregunta": "¿Quién fue el apóstol más joven?", "opciones": ["Juan", "Pedro", "Santiago", "Judas"], "respuesta": "Juan" }
+        ],
+        "2": [
+          { "pregunta": "¿Quién fue el apóstol que caminó sobre el agua hacia Jesús?", "opciones": ["Pedro", "Juan", "Andrés", "Felipe"], "respuesta": "Pedro" },
+          { "pregunta": "¿Cuál apóstol dudó de la resurrección de Jesús hasta ver sus heridas?", "opciones": ["Tomás", "Mateo", "Bartolomé", "Simón"], "respuesta": "Tomás" },
+          { "pregunta": "¿En qué monte ocurrió la Transfiguración de Jesús?", "opciones": ["Tabor", "Oliveto", "Sinaí", "Moria"], "respuesta": "Tabor" },
+          { "pregunta": "¿Qué apóstol era hermano de Juan?", "opciones": ["Santiago", "Mateo", "Simón", "Bartolomé"], "respuesta": "Santiago" },
+          { "pregunta": "¿A quién le dijo Jesús: 'Sígueme, y te haré pescador de hombres'?", "opciones": ["Pedro y Andrés", "Mateo y Tomás", "Felipe y Bartolomé", "Santiago y Juan"], "respuesta": "Pedro y Andrés" },
+          { "pregunta": "¿Cuál fue el primer milagro de Jesús?", "opciones": ["Agua en vino", "Multiplicación de panes", "Sanó a un ciego", "Resucitó a Lázaro"], "respuesta": "Agua en vino" },
+          { "pregunta": "¿Quién fue apóstol y publicano?", "opciones": ["Mateo", "Pedro", "Andrés", "Juan"], "respuesta": "Mateo" },
+          { "pregunta": "¿A quién le preguntó Jesús tres veces: '¿Me amas?'", "opciones": ["Pedro", "Juan", "Felipe", "Tomás"], "respuesta": "Pedro" },
+          { "pregunta": "¿Qué apóstol era conocido como 'el celote'?", "opciones": ["Simón", "Felipe", "Santiago", "Judas Tadeo"], "respuesta": "Simón" },
+          { "pregunta": "¿Quién fue el apóstol que escribió el Apocalipsis?", "opciones": ["Juan", "Pedro", "Santiago", "Tomás"], "respuesta": "Juan" }
     ],
     "3": [
-      {
-        "pregunta": "¿Quién fue el apóstol que llevó a Natanael (Bartolomé) a Jesús?",
-        "opciones": ["Felipe", "Tomás", "Mateo", "Andrés"],
-        "respuesta": "Felipe"
-      },
-      {
-        "pregunta": "¿Qué apóstol fue llamado también 'Leví'?",
-        "opciones": ["Mateo", "Simón", "Santiago", "Bartolomé"],
-        "respuesta": "Mateo"
-      },
-      {
-        "pregunta": "¿Qué apóstol fue martirizado en la India según la tradición?",
-        "opciones": ["Tomás", "Pedro", "Juan", "Mateo"],
-        "respuesta": "Tomás"
-      },
-      {
-        "pregunta": "¿Quién fue el apóstol que preguntó: '¿Muéstranos al Padre?'",
-        "opciones": ["Felipe", "Bartolomé", "Santiago", "Simón"],
-        "respuesta": "Felipe"
-      },
-      {
-        "pregunta": "¿Cuál apóstol fue martirizado boca abajo en una cruz?",
-        "opciones": ["Pedro", "Santiago", "Juan", "Andrés"],
-        "respuesta": "Pedro"
-      },
-      {
-        "pregunta": "¿Quién fue el apóstol conocido por ser celoso y tener celo patriótico?",
-        "opciones": ["Simón el Zelote", "Felipe", "Andrés", "Tomás"],
-        "respuesta": "Simón el Zelote"
-      },
-      {
-        "pregunta": "¿Qué apóstol es mencionado como 'hermano del Señor'?",
-        "opciones": ["Santiago", "Juan", "Pedro", "Tomás"],
-        "respuesta": "Santiago"
-      },
-      {
-        "pregunta": "¿Cuál apóstol recibió el encargo de cuidar a María al pie de la cruz?",
-        "opciones": ["Juan", "Pedro", "Felipe", "Andrés"],
-        "respuesta": "Juan"
-      },
-      {
-        "pregunta": "¿Quién fue el apóstol que escribió una carta conocida como Epístola Católica?",
-        "opciones": ["Santiago", "Judas Tadeo", "Pedro", "Andrés"],
-        "respuesta": "Santiago"
-      },
-      {
-        "pregunta": "¿Quién fue el apóstol que reemplazó a Judas Iscariote?",
-        "opciones": ["Matías", "Bartolomé", "Felipe", "Tomás"],
-        "respuesta": "Matías"
-      }
+      { "pregunta": "¿Quién fue el apóstol que llevó a Natanael (Bartolomé) a Jesús?", "opciones": ["Felipe", "Tomás", "Mateo", "Andrés"], "respuesta": "Felipe" },
+      { "pregunta": "¿Qué apóstol fue llamado también 'Leví'?", "opciones": ["Mateo", "Simón", "Santiago", "Bartolomé"], "respuesta": "Mateo" },
+      { "pregunta": "¿Qué apóstol fue martirizado en la India según la tradición?", "opciones": ["Tomás", "Pedro", "Juan", "Mateo"], "respuesta": "Tomás" },
+      { "pregunta": "¿Quién fue el apóstol que preguntó: '¿Muéstranos al Padre?'", "opciones": ["Felipe", "Bartolomé", "Santiago", "Simón"], "respuesta": "Felipe" },
+      { "pregunta": "¿Cuál apóstol fue martirizado boca abajo en una cruz?", "opciones": ["Pedro", "Santiago", "Juan", "Andrés"], "respuesta": "Pedro" },
+      { "pregunta": "¿Quién fue el apóstol conocido por ser celoso y tener celo patriótico?", "opciones": ["Simón el Zelote", "Felipe", "Andrés", "Tomás"], "respuesta": "Simón el Zelote" },
+      { "pregunta": "¿Qué apóstol es mencionado como 'hermano del Señor'?", "opciones": ["Santiago", "Juan", "Pedro", "Tomás"], "respuesta": "Santiago" },
+      { "pregunta": "¿Cuál apóstol recibió el encargo de cuidar a María al pie de la cruz?", "opciones": ["Juan", "Pedro", "Felipe", "Andrés"], "respuesta": "Juan" },
+      { "pregunta": "¿Quién fue el apóstol que escribió una carta conocida como Epístola Católica?", "opciones": ["Santiago", "Judas Tadeo", "Pedro", "Andrés"], "respuesta": "Santiago" },
+      { "pregunta": "¿Quién fue el apóstol que reemplazó a Judas Iscariote?", "opciones": ["Matías", "Bartolomé", "Felipe", "Tomás"], "respuesta": "Matías" }
     ],
     "4": [
-      {
-        "pregunta": "¿Qué apóstol fue el primero en sufrir martirio?",
-        "opciones": ["Santiago el Mayor", "Pedro", "Juan", "Andrés"],
-        "respuesta": "Santiago el Mayor"
-      },
-      {
-        "pregunta": "¿A cuál apóstol se le atribuye haber predicado en Etiopía según la tradición?",
-        "opciones": ["Bartolomé", "Felipe", "Judas Tadeo", "Simón"],
-        "respuesta": "Bartolomé"
-      },
-      {
-        "pregunta": "¿Quién fue el apóstol que escribió la segunda carta a los Corintios?",
-        "opciones": ["Pablo", "Pedro", "Juan", "Santiago"],
-        "respuesta": "Pablo"
-      },
-      {
-        "pregunta": "¿Cuál apóstol fue apedreado según la tradición y su muerte narrada en los Hechos de los Apóstoles?",
-        "opciones": ["Santiago el Menor", "Tomás", "Simón", "Judas Tadeo"],
-        "respuesta": "Santiago el Menor"
-      },
-      {
-        "pregunta": "¿Cuál apóstol es llamado 'hijo del trueno' junto a su hermano?",
-        "opciones": ["Juan", "Pedro", "Mateo", "Tomás"],
-        "respuesta": "Juan"
-      },
-      {
-        "pregunta": "¿Qué apóstol fue compañero de Pablo y apóstol de los gentiles?",
-        "opciones": ["Bernabé", "Santiago", "Judas Tadeo", "Simón"],
-        "respuesta": "Bernabé"
-      }
+      { "pregunta": "¿Qué apóstol fue el primero en sufrir martirio?", "opciones": ["Santiago el Mayor", "Pedro", "Juan", "Andrés"], "respuesta": "Santiago el Mayor" },
+      { "pregunta": "¿A cuál apóstol se le atribuye haber predicado en Etiopía según la tradición?", "opciones": ["Bartolomé", "Felipe", "Judas Tadeo", "Simón"], "respuesta": "Bartolomé" },
+      { "pregunta": "¿Quién fue el apóstol que escribió la segunda carta a los Corintios?", "opciones": ["Pablo", "Pedro", "Juan", "Santiago"], "respuesta": "Pablo" },
+      { "pregunta": "¿Cuál apóstol fue apedreado según la tradición y su muerte narrada en los Hechos de los Apóstoles?", "opciones": ["Santiago el Menor", "Tomás", "Simón", "Judas Tadeo"], "respuesta": "Santiago el Menor" },
+      { "pregunta": "¿Cuál apóstol es llamado 'hijo del trueno' junto a su hermano?", "opciones": ["Juan", "Pedro", "Mateo", "Tomás"], "respuesta": "Juan" },
+      { "pregunta": "¿Qué apóstol fue compañero de Pablo y apóstol de los gentiles?", "opciones": ["Bernabé", "Santiago", "Judas Tadeo", "Simón"], "respuesta": "Bernabé" }
     ],
     "5": [
-      {
-        "pregunta": "¿Qué apóstol evangelizó la región del Mar Negro según la tradición?",
-        "opciones": ["Andrés", "Felipe", "Bartolomé", "Matías"],
-        "respuesta": "Andrés"
-      },
-      {
-        "pregunta": "¿Quién fue el apóstol conocido por predicar en Armenia?",
-        "opciones": ["Bartolomé", "Tomás", "Santiago", "Felipe"],
-        "respuesta": "Bartolomé"
-      },
-      {
-        "pregunta": "¿Qué apóstol fue martirizado con una lanza?",
-        "opciones": ["Tomás", "Simón", "Felipe", "Juan"],
-        "respuesta": "Tomás"
-      },
-      {
-        "pregunta": "¿Cuál apóstol murió decapitado en Roma?",
-        "opciones": ["Pablo", "Pedro", "Santiago el Mayor", "Juan"],
-        "respuesta": "Pablo"
-      },
-      {
-        "pregunta": "¿A qué apóstol se le atribuye la fundación de la Iglesia de Alejandría en Egipto?",
-        "opciones": ["Marcos", "Mateo", "Lucas", "Juan"],
-        "respuesta": "Marcos"
-      },
-      {
-        "pregunta": "¿Qué apóstol llevó el Evangelio a Etiopía, según la tradición?",
-        "opciones": ["Felipe", "Bartolomé", "Santiago", "Judas Tadeo"],
-        "respuesta": "Felipe"
-      },
-
+      { "pregunta": "¿Qué apóstol evangelizó la región del Mar Negro según la tradición?", "opciones": ["Andrés", "Felipe", "Bartolomé", "Matías"], "respuesta": "Andrés" },
+      { "pregunta": "¿Quién fue el apóstol conocido por predicar en Armenia?", "opciones": ["Bartolomé", "Tomás", "Santiago", "Felipe"], "respuesta": "Bartolomé" },
+      { "pregunta": "¿Qué apóstol fue martirizado con una lanza?", "opciones": ["Tomás", "Simón", "Felipe", "Juan"], "respuesta": "Tomás" },
+      { "pregunta": "¿Cuál apóstol murió decapitado en Roma?", "opciones": ["Pablo", "Pedro", "Santiago el Mayor", "Juan"], "respuesta": "Pablo" },
+      { "pregunta": "¿A qué apóstol se le atribuye la fundación de la Iglesia de Alejandría en Egipto?", "opciones": ["Marcos", "Mateo", "Lucas", "Juan"], "respuesta": "Marcos" },
+      { "pregunta": "¿Qué apóstol llevó el Evangelio a Etiopía, según la tradición?", "opciones": ["Felipe", "Bartolomé", "Santiago", "Judas Tadeo"], "respuesta": "Felipe" }
+  ]
+      }
+    },
     "2025-S30": {
       "titulo": "Semana 30 – Frases célebres de Jesús",
       "descripcion": "¿Reconoces a quién o a qué grupo Jesús (u otro personaje) dirigió estas palabras?",
       "niveles": {
         "1": [
-          {
-            "pregunta": "¿A quién le dijo Jesús: «Hoy ha llegado la salvación a esta casa»?",
-            "opciones": ["Zaqueo", "Pedro", "Nicodemo", "Lázaro"],
-            "respuesta": "Zaqueo"
-          },
-          {
-            "pregunta": "¿A quién dijo Jesús: «Ven y sígueme»?",
-            "opciones": ["Mateo", "Judas", "Zaqueo", "Pilato"],
-            "respuesta": "Mateo"
-          },
-          {
-            "pregunta": "¿A quién le dijo Jesús: «No llores» antes de resucitar a su hijo?",
-            "opciones": ["La viuda de Naín", "María Magdalena", "Marta", "La samaritana"],
-            "respuesta": "La viuda de Naín"
-          },
-          {
-            "pregunta": "¿A quién dijo Jesús: «Tampoco yo te condeno. Vete y no peques más»?",
-            "opciones": ["La mujer adúltera", "La hemorroísa", "La samaritana", "Marta"],
-            "respuesta": "La mujer adúltera"
-          },
-          {
-            "pregunta": "¿A quién le dijo Jesús: «Tú eres Pedro y sobre esta piedra edificaré mi Iglesia»?",
-            "opciones": ["Simón", "Juan", "Mateo", "Andrés"],
-            "respuesta": "Simón"
-          },
-          {
-            "pregunta": "¿A quién le dijo Jesús: «Ven, camina sobre el agua»?",
-            "opciones": ["Pedro", "Juan", "Tomás", "Felipe"],
-            "respuesta": "Pedro"
-          },
-          {
-            "pregunta": "¿A quién le dijo Jesús: «Tu fe te ha salvado» después de recobrar la vista?",
-            "opciones": ["Bartimeo", "Zaqueo", "Pedro", "Jairo"],
-            "respuesta": "Bartimeo"
-          },
-          {
-            "pregunta": "¿A quién le dijo el ángel: «Llena eres de gracia, el Señor está contigo»?",
-            "opciones": ["María", "Marta", "Elisabet", "Ana"],
-            "respuesta": "María"
-          },
-          {
-            "pregunta": "¿A quién dijo Jesús: «Marta, Marta, te preocupas por muchas cosas...»?",
-            "opciones": ["Marta", "María Magdalena", "María (madre)", "La samaritana"],
-            "respuesta": "Marta"
-          },
-          {
-            "pregunta": "¿A quién dijo Jesús: «Hoy estarás conmigo en el paraíso»?",
-            "opciones": ["El buen ladrón", "Pedro", "Judas", "Pablo"],
-            "respuesta": "El buen ladrón"
-          }
-        ],
-        "2": [
-          {
-            "pregunta": "¿A quién le dijo Jesús: «El agua que yo le daré se convertirá en manantial de vida eterna»?",
-            "opciones": ["La samaritana", "La mujer adúltera", "María Magdalena", "La viuda de Naín"],
-            "respuesta": "La samaritana"
-          },
-          {
-            "pregunta": "¿A quién dijo Jesús: «No temas, sólo ten fe»?",
-            "opciones": ["Jairo", "Pedro", "Santiago", "Tomás"],
-            "respuesta": "Jairo"
-          },
-          {
-            "pregunta": "¿A quién dijo Jesús: «Tú eres el Cristo, el Hijo de Dios vivo» y lo alabó por esa confesión?",
-            "opciones": ["Pedro", "Juan", "Tomás", "Felipe"],
-            "respuesta": "Pedro"
-          },
-          {
-            "pregunta": "¿A quién dijo Jesús: «¿Por qué me llamas bueno?»",
-            "opciones": ["El joven rico", "Pedro", "Nicodemo", "Simón el fariseo"],
-            "respuesta": "El joven rico"
-          },
-          {
-            "pregunta": "¿A quién le dijo Jesús: «¿Dónde están los que te condenaban?»",
-            "opciones": ["La mujer adúltera", "María Magdalena", "La hemorroísa", "La viuda"],
-            "respuesta": "La mujer adúltera"
-          },
-          {
-            "pregunta": "¿A quién le dijo Jesús: «No he venido a llamar a justos, sino a pecadores»?",
-            "opciones": ["A los fariseos", "A los discípulos", "A los escribas", "A la multitud"],
-            "respuesta": "A los fariseos"
-          },
-          {
-            "pregunta": "¿A quién le dijo Jesús: «¿Crees esto?» refiriéndose a la resurrección de Lázaro?",
-            "opciones": ["Marta", "María Magdalena", "Pedro", "Marta y María"],
-            "respuesta": "Marta"
-          },
-          {
-            "pregunta": "¿A quién le dijo Jesús: «Levántate, toma tu camilla y anda»?",
-            "opciones": ["El paralítico de Cafarnaúm", "Bartimeo", "Jairo", "El ciego de Siloé"],
-            "respuesta": "El paralítico de Cafarnaúm"
-          },
-          {
-            "pregunta": "¿A quién le dijo Jesús: «¡Saulo, Saulo! ¿Por qué me persigues?»?",
-            "opciones": ["Pablo", "Pedro", "Felipe", "Santiago"],
-            "respuesta": "Pablo"
-          },
-          {
-            "pregunta": "¿A quién le dijo Jesús: «Hija, tu fe te ha salvado»?",
-            "opciones": ["La hemorroísa", "La mujer adúltera", "Marta", "La viuda de Naín"],
-            "respuesta": "La hemorroísa"
-          }
-        ],
-        "3": [
-          {
-            "pregunta": "¿A quién le dijo Jesús: «¿También ustedes quieren irse?» cuando muchos discípulos se fueron?",
-            "opciones": ["A los Doce", "A la multitud", "A los fariseos", "A los escribas"],
-            "respuesta": "A los Doce"
-          },
-          {
-            "pregunta": "¿A quién le dijo Jesús: «Antes que cante el gallo, me habrás negado tres veces»?",
-            "opciones": ["Pedro", "Juan", "Tomás", "Andrés"],
-            "respuesta": "Pedro"
-          },
-          {
-            "pregunta": "¿A quién le dijo Jesús: «Hoy mismo me negarás tres veces»?",
-            "opciones": ["Pedro", "Tomás", "Judas", "Felipe"],
-            "respuesta": "Pedro"
-          },
-          {
-            "pregunta": "¿A quién le dijo Jesús: «Lázaro, sal fuera»?",
-            "opciones": ["Lázaro", "Jairo", "Bartimeo", "El paralítico"],
-            "respuesta": "Lázaro"
-          },
-          {
-            "pregunta": "¿A quién le dijo Jesús: «Mujer, grande es tu fe»?",
-            "opciones": ["La cananea", "La samaritana", "La hemorroísa", "Marta"],
-            "respuesta": "La cananea"
-          },
-          {
-            "pregunta": "¿A quién le dijo Jesús: «Bienaventurados los que creen sin ver»?",
-            "opciones": ["Tomás", "Pedro", "Felipe", "Juan"],
-            "respuesta": "Tomás"
-          }
-        ],
-        "4": [
-          {
-            "pregunta": "¿A quién le dijo Jesús: «¿Quién es mi madre y quiénes son mis hermanos?»",
-            "opciones": ["A la multitud", "A María y sus hermanos", "A los discípulos", "A los fariseos"],
-            "respuesta": "A la multitud"
-          },
-          {
-            "pregunta": "¿A quién le dijo Jesús: «No sólo de pan vive el hombre»?",
-            "opciones": ["Al diablo en el desierto", "A Pedro", "A Juan", "A la multitud"],
-            "respuesta": "Al diablo en el desierto"
-          },
-          {
-            "pregunta": "¿A quién le dijo Jesús: «Padre, en tus manos encomiendo mi espíritu»?",
-            "opciones": ["Al Padre", "A Pedro", "A María", "A Juan"],
-            "respuesta": "Al Padre"
-          },
-          {
-            "pregunta": "¿A quién le dijo Jesús: «Mujer, he ahí a tu hijo»?",
-            "opciones": ["A María", "A Marta", "A la samaritana", "A la hemorroísa"],
-            "respuesta": "A María"
-          },
-          {
-            "pregunta": "¿A quién le dijo Jesús: «No te he condenado; vete y no peques más»?",
-            "opciones": ["La mujer adúltera", "María Magdalena", "La hemorroísa", "La cananea"],
-            "respuesta": "La mujer adúltera"
-          },
-          {
-            "pregunta": "¿A quién le dijo Jesús: «Paz a ustedes» después de resucitar?",
-            "opciones": ["A los discípulos", "A María Magdalena", "A los fariseos", "A los Doce"],
-            "respuesta": "A los discípulos"
-          }
-        ],
-        "5": [
-          {
-            "pregunta": "¿A quién le dijo Jesús: «Mujer, grande es tu fe. Que te suceda como deseas»?",
-            "opciones": ["La mujer cananea", "María Magdalena", "Marta", "La hemorroísa"],
-            "respuesta": "La mujer cananea"
-          },
-          {
-            "pregunta": "¿A quién le dijo Jesús: «Marta, sólo una cosa es necesaria»?",
-            "opciones": ["Marta", "María Magdalena", "La samaritana", "La viuda de Naín"],
-            "respuesta": "Marta"
-          },
-          {
-            "pregunta": "¿A quién le dijo Jesús: «Recobra la vista; tu fe te ha salvado»?",
-            "opciones": ["Bartimeo", "El ciego de Siloé", "El paralítico", "Lázaro"],
-            "respuesta": "Bartimeo"
-          },
-          {
-            "pregunta": "¿A quién le dijo Jesús: «¡Sal fuera!» y volvió a la vida?",
-            "opciones": ["Lázaro", "La hija de Jairo", "El hijo de la viuda", "Bartimeo"],
-            "respuesta": "Lázaro"
-          },
-          {
-            "pregunta": "¿A quién le dijo Jesús: «Levántate, toma tu lecho y anda»?",
-            "opciones": ["El paralítico de Betesda", "Bartimeo", "La hemorroísa", "La samaritana"],
-            "respuesta": "El paralítico de Betesda"
-          },
-          {
-            "pregunta": "¿A quién le dijo Jesús: «No tengas miedo; basta que tengas fe»?",
-            "opciones": ["Jairo", "Pedro", "Tomás", "Felipe"],
-            "respuesta": "Jairo"
-           }
-        ]
+      { "pregunta": "¿A quién le dijo Jesús: «Hoy ha llegado la salvación a esta casa»?", "opciones": ["Zaqueo", "Pedro", "Nicodemo", "Lázaro"], "respuesta": "Zaqueo" },
+      { "pregunta": "¿A quién dijo Jesús: «Ven y sígueme»?", "opciones": ["Mateo", "Judas", "Zaqueo", "Pilato"], "respuesta": "Mateo" },
+      { "pregunta": "¿A quién le dijo Jesús: «No llores» antes de resucitar a su hijo?", "opciones": ["La viuda de Naín", "María Magdalena", "Marta", "La samaritana"], "respuesta": "La viuda de Naín" },
+      { "pregunta": "¿A quién dijo Jesús: «Tampoco yo te condeno. Vete y no peques más»?", "opciones": ["La mujer adúltera", "La hemorroísa", "La samaritana", "Marta"], "respuesta": "La mujer adúltera" },
+      { "pregunta": "¿A quién le dijo Jesús: «Tú eres Pedro y sobre esta piedra edificaré mi Iglesia»?", "opciones": ["Simón", "Juan", "Mateo", "Andrés"], "respuesta": "Simón" },
+      { "pregunta": "¿A quién le dijo Jesús: «Ven, camina sobre el agua»?", "opciones": ["Pedro", "Juan", "Tomás", "Felipe"], "respuesta": "Pedro" },
+      { "pregunta": "¿A quién le dijo Jesús: «Tu fe te ha salvado» después de recobrar la vista?", "opciones": ["Bartimeo", "Zaqueo", "Pedro", "Jairo"], "respuesta": "Bartimeo" },
+      { "pregunta": "¿A quién le dijo el ángel: «Llena eres de gracia, el Señor está contigo»?", "opciones": ["María", "Marta", "Elisabet", "Ana"], "respuesta": "María" },
+      { "pregunta": "¿A quién dijo Jesús: «Marta, Marta, te preocupas por muchas cosas...»?", "opciones": ["Marta", "María Magdalena", "María (madre)", "La samaritana"], "respuesta": "Marta" },
+      { "pregunta": "¿A quién dijo Jesús: «Hoy estarás conmigo en el paraíso»?", "opciones": ["El buen ladrón", "Pedro", "Judas", "Pablo"], "respuesta": "El buen ladrón" }
+    ],
+    "2": [
+      { "pregunta": "¿A quién le dijo Jesús: «El agua que yo le daré se convertirá en manantial de vida eterna»?", "opciones": ["La samaritana", "La mujer adúltera", "María Magdalena", "La viuda de Naín"], "respuesta": "La samaritana" },
+      { "pregunta": "¿A quién dijo Jesús: «No temas, sólo ten fe»?", "opciones": ["Jairo", "Pedro", "Santiago", "Tomás"], "respuesta": "Jairo" },
+      { "pregunta": "¿A quién dijo Jesús: «Tú eres el Cristo, el Hijo de Dios vivo» y lo alabó por esa confesión?", "opciones": ["Pedro", "Juan", "Tomás", "Felipe"], "respuesta": "Pedro" },
+      { "pregunta": "¿A quién dijo Jesús: «¿Por qué me llamas bueno?»", "opciones": ["El joven rico", "Pedro", "Nicodemo", "Simón el fariseo"], "respuesta": "El joven rico" },
+      { "pregunta": "¿A quién le dijo Jesús: «¿Dónde están los que te condenaban?»", "opciones": ["La mujer adúltera", "María Magdalena", "La hemorroísa", "La viuda"], "respuesta": "La mujer adúltera" },
+      { "pregunta": "¿A quién le dijo Jesús: «No he venido a llamar a justos, sino a pecadores»?", "opciones": ["A los fariseos", "A los discípulos", "A los escribas", "A la multitud"], "respuesta": "A los fariseos" },
+      { "pregunta": "¿A quién le dijo Jesús: «¿Crees esto?» refiriéndose a la resurrección de Lázaro?", "opciones": ["Marta", "María Magdalena", "Pedro", "Marta y María"], "respuesta": "Marta" },
+      { "pregunta": "¿A quién le dijo Jesús: «Levántate, toma tu camilla y anda»?", "opciones": ["El paralítico de Cafarnaúm", "Bartimeo", "Jairo", "El ciego de Siloé"], "respuesta": "El paralítico de Cafarnaúm" },
+      { "pregunta": "¿A quién le dijo Jesús: «¡Saulo, Saulo! ¿Por qué me persigues?»?", "opciones": ["Pablo", "Pedro", "Felipe", "Santiago"], "respuesta": "Pablo" },
+      { "pregunta": "¿A quién le dijo Jesús: «Hija, tu fe te ha salvado»?", "opciones": ["La hemorroísa", "La mujer adúltera", "Marta", "La viuda de Naín"], "respuesta": "La hemorroísa" }
+    ],
+    "3": [
+      { "pregunta": "¿A quién le dijo Jesús: «¿También ustedes quieren irse?» cuando muchos discípulos se fueron?", "opciones": ["A los Doce", "A la multitud", "A los fariseos", "A los escribas"], "respuesta": "A los Doce" },
+      { "pregunta": "¿A quién le dijo Jesús: «Antes que cante el gallo, me habrás negado tres veces»?", "opciones": ["Pedro", "Juan", "Tomás", "Andrés"], "respuesta": "Pedro" },
+      { "pregunta": "¿A quién le dijo Jesús: «Hoy mismo me negarás tres veces»?", "opciones": ["Pedro", "Tomás", "Judas", "Felipe"], "respuesta": "Pedro" },
+      { "pregunta": "¿A quién le dijo Jesús: «Lázaro, sal fuera»?", "opciones": ["Lázaro", "Jairo", "Bartimeo", "El paralítico"], "respuesta": "Lázaro" },
+      { "pregunta": "¿A quién le dijo Jesús: «Mujer, grande es tu fe»?", "opciones": ["La cananea", "La samaritana", "La hemorroísa", "Marta"], "respuesta": "La cananea" },
+      { "pregunta": "¿A quién le dijo Jesús: «Bienaventurados los que creen sin ver»?", "opciones": ["Tomás", "Pedro", "Felipe", "Juan"], "respuesta": "Tomás" }
+    ],
+    "4": [
+      { "pregunta": "¿A quién le dijo Jesús: «¿Quién es mi madre y quiénes son mis hermanos?»", "opciones": ["A la multitud", "A María y sus hermanos", "A los discípulos", "A los fariseos"], "respuesta": "A la multitud" },
+      { "pregunta": "¿A quién le dijo Jesús: «No sólo de pan vive el hombre»?", "opciones": ["Al diablo en el desierto", "A Pedro", "A Juan", "A la multitud"], "respuesta": "Al diablo en el desierto" },
+      { "pregunta": "¿A quién le dijo Jesús: «Padre, en tus manos encomiendo mi espíritu»?", "opciones": ["Al Padre", "A Pedro", "A María", "A Juan"], "respuesta": "Al Padre" },
+      { "pregunta": "¿A quién le dijo Jesús: «Mujer, he ahí a tu hijo»?", "opciones": ["A María", "A Marta", "A la samaritana", "A la hemorroísa"], "respuesta": "A María" },
+      { "pregunta": "¿A quién le dijo Jesús: «No te he condenado; vete y no peques más»?", "opciones": ["La mujer adúltera", "María Magdalena", "La hemorroísa", "La cananea"], "respuesta": "La mujer adúltera" },
+      { "pregunta": "¿A quién le dijo Jesús: «Paz a ustedes» después de resucitar?", "opciones": ["A los discípulos", "A María Magdalena", "A los fariseos", "A los Doce"], "respuesta": "A los discípulos" }
+    ],
+    "5": [
+      { "pregunta": "¿A quién le dijo Jesús: «Mujer, grande es tu fe. Que te suceda como deseas»?", "opciones": ["La mujer cananea", "María Magdalena", "Marta", "La hemorroísa"], "respuesta": "La mujer cananea" },
+      { "pregunta": "¿A quién le dijo Jesús: «Marta, sólo una cosa es necesaria»?", "opciones": ["Marta", "María Magdalena", "La samaritana", "La viuda de Naín"], "respuesta": "Marta" },
+      { "pregunta": "¿A quién le dijo Jesús: «Recobra la vista; tu fe te ha salvado»?", "opciones": ["Bartimeo", "El ciego de Siloé", "El paralítico", "Lázaro"], "respuesta": "Bartimeo" },
+      { "pregunta": "¿A quién le dijo Jesús: «¡Sal fuera!» y volvió a la vida?", "opciones": ["Lázaro", "La hija de Jairo", "El hijo de la viuda", "Bartimeo"], "respuesta": "Lázaro" },
+      { "pregunta": "¿A quién le dijo Jesús: «Levántate, toma tu lecho y anda»?", "opciones": ["El paralítico de Betesda", "Bartimeo", "La hemorroísa", "La samaritana"], "respuesta": "El paralítico de Betesda" },
+      { "pregunta": "¿A quién le dijo Jesús: «No tengas miedo; basta que tengas fe»?", "opciones": ["Jairo", "Pedro", "Tomás", "Felipe"], "respuesta": "Jairo" } 
+    ]
       }
     }
   }
-}]}}
+}
