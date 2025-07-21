@@ -1,4 +1,4 @@
-let usuarioActual = null;
+let usuarioActual = null; 
 let preguntasQuiz = []; // Global
 
 const diasPermitidos = [1, 3, 6]; // lunes, miércoles y sábado
