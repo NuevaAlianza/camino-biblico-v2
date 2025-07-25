@@ -1,0 +1,38 @@
+{
+  "temporadas": [
+    {
+      "id": "T1",
+      "nombre": "Temporada 1 – Génesis",
+      "fecha_inicio": "2025-07-01",
+      "fecha_fin": "2025-09-30",
+      "descripcion": "Inicio del Hall of Fame. Primeros rankings de Camino Bíblico.",
+      "top_xp": [
+        {"user_id": "u001", "nombre": "Lucía Pérez", "xp": 2450, "pais": "RD", "ciudad": "Santiago", "parroquia": "San Pablo"},
+        {"user_id": "u002", "nombre": "Juan Torres", "xp": 2320, "pais": "RD", "ciudad": "La Vega", "parroquia": "Cristo Rey"},
+        {"user_id": "u003", "nombre": "Ana Gómez", "xp": 2250, "pais": "RD", "ciudad": "Santiago", "parroquia": "Sagrada Familia"},
+        {"user_id": "u004", "nombre": "Miguel Soto", "xp": 2205, "pais": "RD", "ciudad": "Puerto Plata", "parroquia": "San Felipe"},
+        {"user_id": "u005", "nombre": "Paola Cabrera", "xp": 2100, "pais": "RD", "ciudad": "Santo Domingo", "parroquia": "Nuestra Señora"},
+        {"user_id": "u006", "nombre": "Elena Cruz", "xp": 2050, "pais": "RD", "ciudad": "Moca", "parroquia": "Santa Rosa"},
+        {"user_id": "u007", "nombre": "Carlos Díaz", "xp": 1990, "pais": "RD", "ciudad": "Santiago", "parroquia": "San José"},
+        {"user_id": "u008", "nombre": "Lía Fernández", "xp": 1940, "pais": "RD", "ciudad": "La Vega", "parroquia": "San Juan"},
+        {"user_id": "u009", "nombre": "Marcos López", "xp": 1920, "pais": "RD", "ciudad": "Puerto Plata", "parroquia": "Sagrado Corazón"},
+        {"user_id": "u010", "nombre": "Diana Morales", "xp": 1910, "pais": "RD", "ciudad": "Santiago", "parroquia": "Cristo Redentor"}
+      ],
+      "top_subgrupos": [
+        {"subgrupo_id": 1, "nombre": "Jóvenes San Pablo", "xp_promedio": 1530, "participantes": 18, "ciudad": "Santiago", "parroquia": "San Pablo"},
+        {"subgrupo_id": 2, "nombre": "Biblia Kids", "xp_promedio": 1470, "participantes": 14, "ciudad": "La Vega", "parroquia": "Cristo Rey"},
+        {"subgrupo_id": 3, "nombre": "Lectores Esperanza", "xp_promedio": 1395, "participantes": 10, "ciudad": "Puerto Plata", "parroquia": "San Felipe"}
+      ],
+      "top_ciudades": [
+        {"ciudad": "Santiago", "xp_promedio": 1435, "participantes": 44},
+        {"ciudad": "La Vega", "xp_promedio": 1390, "participantes": 27},
+        {"ciudad": "Puerto Plata", "xp_promedio": 1378, "participantes": 16}
+      ],
+      "top_parroquias": [
+        {"parroquia": "San Pablo", "xp_promedio": 1478, "participantes": 29, "ciudad": "Santiago"},
+        {"parroquia": "Cristo Rey", "xp_promedio": 1433, "participantes": 13, "ciudad": "La Vega"},
+        {"parroquia": "San Felipe", "xp_promedio": 1410, "participantes": 10, "ciudad": "Puerto Plata"}
+      ]
+    }
+  ]
+}
