@@ -1,222 +1,23 @@
 :root {
   --color-fondo-menu: #f4f6fb;
-  --color-baldosa-quiz: #36b37e;
-  --color-baldosa-coleccionables: #7d4cdb;
+  --color-baldosa-quiz: #3CB371;
+  --color-baldosa-temporada: #FF9100;
+  --color-baldosa-aleatorio-ini: #ffc371;
+  --color-baldosa-aleatorio-fin: #ff5f6d;
+  --color-baldosa-rpg: #3474EE;
+  --color-baldosa-coleccion: #7B32DF;
   --color-baldosa-progreso: #2564cf;
-  --color-baldosa-temporada: #ff8800;
-  --color-baldosa-texto: #fff;
+  --color-baldosa-hof-ini: #ffe09e;
+  --color-baldosa-hof-fin: #ffd700;
+  --color-baldosa-triviaflash-ini: #defcff;
+  --color-baldosa-triviaflash-fin: #41bbf4;
 }
 
 body {
   min-height: 100vh;
-  background: var(--color-fondo-menu);
   margin: 0;
+  background: linear-gradient(135deg, #e9ecf6 0%, #f5f7fa 100%);
   font-family: 'Segoe UI', 'Arial', sans-serif;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.menu-baldosas {
-  max-width: 420px;
-  margin: 2.5rem auto;
-  background: #fff;
-  border-radius: 1.4rem;
-  box-shadow: 0 6px 22px rgba(0,0,0,0.09);
-  padding: 2.3rem 1.2rem 1.8rem 1.2rem;
-  text-align: center;
-}
-
-.menu-baldosas h1 {
-  font-size: 2rem;
-  margin-bottom: 0.3rem;
-  color: #2d1c42;
-}
-
-.bienvenida {
-  font-size: 1.12rem;
-  margin-bottom: 1.6rem;
-  color: #544f69;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-}
-
-.baldosas {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.1rem;
-  margin-bottom: 2.2rem;
-}
-
-.baldosa {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-radius: 1.2rem;
-  font-size: 1.07rem;
-  font-weight: 600;
-  min-height: 85px;
-  box-shadow: 0 3px 10px rgba(60,40,130,0.07);
-  color: var(--color-baldosa-texto);
-  border: none;
-  transition: transform 0.14s, box-shadow 0.2s;
-  cursor: pointer;
-  padding: 1.2rem 0.7rem 1rem 0.7rem;
-  outline: none;
-}
-.baldosa .icon {
-  font-size: 2.1rem;
-  margin-bottom: 0.4rem;
-  display: block;
-}
-
-.baldosa.quiz { background: var(--color-baldosa-quiz);}
-.baldosa.coleccionables { background: var(--color-baldosa-coleccionables);}
-.baldosa.progreso { background: var(--color-baldosa-progreso);}
-.baldosa.temporada { background: var(--color-baldosa-temporada); color: #fff; }
-
-.baldosa:hover,
-.baldosa:focus {
-  transform: scale(1.045);
-  box-shadow: 0 8px 18px rgba(60,40,130,0.14);
-  opacity: 0.93;
-}
-
-.cerrar-sesion {
-  margin-top: 0.8rem;
-  padding: 0.45rem 1.3rem;
-  font-size: 1rem;
-  border-radius: 1.2rem;
-  background: #f6f6f6;
-  color: #bf2626;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 2px 5px rgba(40,0,0,0.04);
-  transition: background 0.2s, color 0.2s;
-  min-width: 130px;
-  font-weight: 500;
-  opacity: 0.86;
-}
-.cerrar-sesion .icon {
-  margin-right: 0.4rem;
-}
-.cerrar-sesion:hover,
-.cerrar-sesion:focus {
-  background: #ffeaea;
-  color: #f04040;
-}
-
-@media (max-width: 550px) {
-  .menu-baldosas {
-    max-width: 99vw;
-    padding: 1.2rem 0.1rem;
-  }
-  .baldosas {
-    gap: 0.7rem;
-  }
-  .baldosa {
-    min-height: 62px;
-    padding: 0.95rem 0.3rem 0.7rem 0.3rem;
-    font-size: 1rem;
-  }
-  .baldosa .icon {
-    font-size: 1.45rem;
-  }
-  .cerrar-sesion {
-    font-size: 0.93rem;
-    min-width: 100px;
-    padding: 0.3rem 0.6rem;
-  }
-}
-body {
-  background: linear-gradient(135deg, #e9ecf6 0%, #f5f7fa 100%);
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.menu {
-  background: #fff;
-  border-radius: 2rem;
-  box-shadow: 0 6px 36px rgba(30, 60, 120, 0.10), 0 1.5px 6px rgba(30,30,50,0.04);
-  padding: 2.5rem 2rem 2rem 2rem;
-  max-width: 360px;
-  margin: 2rem auto;
-  text-align: center;
-}
-
-.menu h1 {
-  color: #211047;
-  font-family: 'Poppins', 'Segoe UI', sans-serif;
-  font-size: 2.3rem;
-  margin-bottom: 0.4em;
-}
-
-.menu nav {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.2rem 1.2rem;
-  margin-top: 1.4rem;
-}
-
-.menu-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-family: inherit;
-  font-weight: 700;
-  font-size: 1.13rem;
-  padding: 1.3rem 0.3rem 0.9rem 0.3rem;
-  border-radius: 1.4rem;
-  box-shadow: 0 2px 8px rgba(60,80,150,0.08);
-  border: none;
-  cursor: pointer;
-  color: white;
-  transition: transform 0.14s, box-shadow 0.3s;
-  outline: none;
-}
-
-.menu-btn:active {
-  transform: scale(0.98);
-  box-shadow: 0 1px 2px rgba(30,40,60,0.10);
-}
-
-/* Baldosa colores (puedes ajustar a tu gusto) */
-.menu-btn.quiz { background: #3CB371; }
-.menu-btn.coleccion { background: #7B32DF; }
-.menu-btn.progreso { background: #3474EE; }
-.menu-btn.temporada { background: #FF9100; }
-
-/* Último botón más pequeño y abajo */
-#btn-logout {
-  display: block;
-  width: 75%;
-  margin: 2.5rem auto 0 auto;
-  background: #fff8f0;
-  color: #e74c3c;
-  border-radius: 1.2rem;
-  border: none;
-  box-shadow: 0 1px 6px rgba(30,30,50,0.05);
-  padding: 0.8rem 1.2rem;
-  font-weight: 600;
-  font-size: 1.03rem;
-  cursor: pointer;
-  transition: background 0.23s;
-}
-#btn-logout:active {
-  background: #ffebe0;
-}
-
-.menu-btn span.emoji {
-  font-size: 2rem;
-  margin-bottom: 0.12em;
-  display: block;
-}
-body {
-  background: linear-gradient(135deg, #e9ecf6 0%, #f5f7fa 100%);
-  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -254,6 +55,7 @@ body {
   margin-top: 1.4rem;
 }
 
+/* ----- BOTONES DEL MENÚ ----- */
 .menu-btn {
   display: flex;
   flex-direction: column;
@@ -267,8 +69,74 @@ body {
   border: none;
   cursor: pointer;
   color: white;
-  transition: transform 0.14s, box-shadow 0.3s;
+  transition: transform 0.14s, box-shadow 0.3s, filter 0.2s;
   outline: none;
+  background: #eee;
+}
+
+.menu-btn span.emoji {
+  font-size: 2rem;
+  margin-bottom: 0.12em;
+  display: block;
+}
+
+.menu-btn.quiz { background: var(--color-baldosa-quiz); }
+.menu-btn.temporada { background: var(--color-baldosa-temporada); }
+.menu-btn.aleatorio {
+  background: linear-gradient(90deg, var(--color-baldosa-aleatorio-ini) 0%, var(--color-baldosa-aleatorio-fin) 100%);
+}
+.menu-btn.rpg { background: #273c75; } /* Tono azul medieval épico */
+.menu-btn.coleccion { background: var(--color-baldosa-coleccion); }
+.menu-btn.progreso { background: var(--color-baldosa-progreso); }
+
+/* Hall of Fame - Destacado dorado */
+.menu-btn.halloffame {
+  background: linear-gradient(92deg, var(--color-baldosa-hof-ini) 60%, var(--color-baldosa-hof-fin) 100%);
+  color: #a88008;
+  font-weight: bold;
+  border: 2.4px solid #ffd70099;
+  box-shadow: 0 0 18px #ffe08280, 0 2px 9px #ffe08240;
+  font-size: 1.17em;
+  border-radius: 1.5em;
+  margin-bottom: 0.6em;
+  position: relative;
+}
+.menu-btn.halloffame:hover, .menu-btn.halloffame:focus {
+  box-shadow: 0 0 32px 6px #ffd70088, 0 4px 14px #ffe08266;
+  transform: scale(1.035);
+  outline: none;
+  filter: brightness(1.10);
+}
+
+/* Trivia Flash - Azul claro especial */
+.menu-btn.triviaflash {
+  background: linear-gradient(90deg, var(--color-baldosa-triviaflash-ini) 60%, var(--color-baldosa-triviaflash-fin) 100%);
+  color: #157bc1;
+  font-weight: bold;
+  border: 2.4px solid #41bbf499;
+  box-shadow: 0 0 12px #bbf0ff88, 0 2px 6px #41bbf422;
+  font-size: 1.08em;
+  border-radius: 1.3em;
+  margin-bottom: 0.4em;
+}
+.menu-btn.triviaflash:hover, .menu-btn.triviaflash:focus {
+  box-shadow: 0 0 24px 5px #41bbf477, 0 2px 10px #41bbf433;
+  transform: scale(1.028);
+  outline: none;
+  filter: brightness(1.10);
+}
+
+/* Aleatorio hover: degrade inverso */
+.menu-btn.aleatorio:hover {
+  background: linear-gradient(90deg, var(--color-baldosa-aleatorio-fin) 0%, var(--color-baldosa-aleatorio-ini) 100%);
+  filter: brightness(1.10);
+}
+
+/* Resto de botones: efecto hover uniforme */
+.menu-btn:hover:not(.aleatorio):not(.halloffame):not(.triviaflash) {
+  filter: brightness(1.12);
+  transform: scale(1.04) translateY(-2px);
+  box-shadow: 0 4px 12px rgba(50,50,50,0.12);
 }
 
 .menu-btn:active {
@@ -276,20 +144,7 @@ body {
   box-shadow: 0 1px 2px rgba(30,40,60,0.10);
 }
 
-/* Baldosa colores */
-.menu-btn.quiz { background: #3CB371; }
-.menu-btn.coleccion { background: #7B32DF; }
-.menu-btn.progreso { background: #3474EE; }
-.menu-btn.temporada { background: #FF9100; }
-
-/* Hover efecto para más feedback */
-.menu-btn:hover {
-  filter: brightness(1.12);
-  transform: scale(1.04) translateY(-2px);
-  box-shadow: 0 4px 12px rgba(50,50,50,0.12);
-}
-
-/* Último botón más pequeño y abajo */
+/* ----- BOTÓN CERRAR SESIÓN ----- */
 #btn-logout {
   display: block;
   width: 78%;
@@ -310,13 +165,7 @@ body {
   background: #ffebe0;
 }
 
-.menu-btn span.emoji {
-  font-size: 2rem;
-  margin-bottom: 0.12em;
-  display: block;
-}
-
-/* Responsive */
+/* ----- RESPONSIVE ----- */
 @media (max-width: 500px) {
   .menu {
     padding: 1.1rem 0.5rem 1.3rem 0.5rem;
@@ -329,65 +178,11 @@ body {
     width: 92%;
     font-size: 0.99rem;
   }
-}
-
-.menu-btn.aleatorio {
-  background: linear-gradient(90deg, #ffc371 0%, #ff5f6d 100%);
-  color: #fff;
-  font-weight: bold;
-}
-.menu-btn.aleatorio:hover {
-  background: linear-gradient(90deg, #ff5f6d 0%, #ffc371 100%);
-}
-.cabecera-quiz {
-  width: 100%;
-  padding-bottom: 1.2rem;
-  border-bottom: 2px solid #eceaf8;
-  margin-bottom: 1.3rem;
-}
-.seleccion-tema {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.8rem;
-  align-items: center;
-  justify-content: center;
-}
-.seleccion-tema label {
-  font-weight: 500;
-  margin-bottom: 0;
-}
-.menu-btn.halloffame {
-  background: linear-gradient(92deg, #ffe09e 60%, #ffd700 100%);
-  color: #a88008;
-  font-weight: bold;
-  border: 2.4px solid #ffd70099;
-  box-shadow: 0 0 18px #ffe08280, 0 2px 9px #ffe08240;
-  font-size: 1.17em;
-  padding: 0.85em 2.2em;
-  border-radius: 1.5em;
-  margin-bottom: 0.6em;
-  position: relative;
-  transition: box-shadow 0.2s, transform 0.1s;
-}
-.menu-btn.halloffame:hover, .menu-btn.halloffame:focus {
-  box-shadow: 0 0 32px 6px #ffd70088, 0 4px 14px #ffe08266;
-  transform: scale(1.035);
-  outline: none;
-}
-
-.menu-btn.triviaflash {
-  background: linear-gradient(90deg, #defcff 60%, #41bbf4 100%);
-  color: #157bc1;
-  font-weight: bold;
-  border: 2.4px solid #41bbf499;
-  box-shadow: 0 0 12px #bbf0ff88, 0 2px 6px #41bbf422;
-  font-size: 1.08em;
-  border-radius: 1.3em;
-  margin-bottom: 0.4em;
-  transition: box-shadow 0.2s, transform 0.1s;
-}
-.menu-btn.triviaflash:hover, .menu-btn.triviaflash:focus {
-  box-shadow: 0 0 24px 5px #41bbf477, 0 2px 10px #41bbf433;
-  transform: scale(1.028);
-  outline: none;
+  .menu-btn {
+    padding: 1.0rem 0.2rem 0.7rem 0.2rem;
+    font-size: 1.04rem;
+  }
+  .menu-btn span.emoji {
+    font-size: 1.45rem;
+  }
 }
