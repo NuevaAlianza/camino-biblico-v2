@@ -30,7 +30,24 @@ function crearTemporizadorPregunta(duracion, onTimeout, onTick, onEmojiChange) {
       circulo.style.strokeDasharray = `${circunferencia}`;
       circulo.style.strokeDashoffset = `${circunferencia * (1 - progreso)}`;
     }
+// --- Sistema de imágenes del mentor RPG ---
+const imgMentor = {
+  avatar: "assets/img/mentor/mentor_avatar.png",        // Miniatura/icono de perfil
+  neutral: "assets/img/mentor/mentor_neutra.png",       // Estado explicando/standby
+  celebra: "assets/img/mentor/mentor_celebra.png",      // Celebrando/motivando
+  preocupado: "assets/img/mentor/mentor_preocupado.png" // Preocupado/advertencia
+};
 
+function mostrarMentor(estado) {
+  const img = document.getElementById('img-mentor');
+  if (img && imgMentor[estado]) {
+    img.src = imgMentor[estado];
+    img.alt = `Mentor ${estado}`;
+  } else if (img) {
+    img.src = imgMentor['neutral'];
+    img.alt = "Mentor neutral";
+  }
+}
     // Emoji animado
     const emojiObj = EMOJIS_RPG.find(e => tiempoRestante > e.hasta) || EMOJIS_RPG[EMOJIS_RPG.length - 1];
     if (emojiObj && emojiActual !== emojiObj.emoji) {
@@ -166,6 +183,7 @@ async function mostrarStatsBienvenida() {
   } else {
     parroquiaHTML = `<div class="rpg-parroquia">No tienes parroquia registrada.</div>`;
   }
+mostrarMentor('neutral');
 
   // --- Renderiza el panel compacto ---
   bienvenida.innerHTML = `
@@ -386,6 +404,12 @@ function mostrarNivel() {
           juegoActual.pregunta++;
           mostrarPregunta();
         }
+        if (juegoActual.vidas === 1) {
+  mostrarMentor('preocupado');
+} else {
+  mostrarMentor('neutral');
+}
+
       },
       (tiempoRestante) => { // onTick
         if (tiempoRestante === 13) reproducirSonido("halfway.mp3");
@@ -415,6 +439,12 @@ function mostrarNivel() {
             setTimeout(() => vidasEl.classList.remove("shake"), 400);
           }
         }
+        if (juegoActual.vidas === 1) {
+  mostrarMentor('preocupado');
+} else {
+  mostrarMentor('neutral');
+}
+
         setTimeout(() => {
           juegoActual.pregunta = preguntaActual + 1;
           if (juegoActual.vidas <= 0) {
@@ -516,7 +546,7 @@ function mostrarMensajeNivelPersonalizado(nivel, vidas, callback) {
   ];
   const msg = mensajes[nivel-1] || "¡Sigue así!";
   const tip = tipsPorNivel[nivel-1] || "";
-
+mostrarMentor('celebra');
   document.getElementById("juego-rpg").innerHTML = `
     <div class="panel-mensaje-nivel">
       <h2>🎉 ¡Felicidades!</h2>
