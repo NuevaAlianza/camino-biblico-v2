@@ -356,3 +356,38 @@ body {
   font-weight: 500;
   margin-bottom: 0;
 }
+.menu-btn.halloffame {
+  background: linear-gradient(92deg, #ffe09e 60%, #ffd700 100%);
+  color: #a88008;
+  font-weight: bold;
+  border: 2.4px solid #ffd70099;
+  box-shadow: 0 0 18px #ffe08280, 0 2px 9px #ffe08240;
+  font-size: 1.17em;
+  padding: 0.85em 2.2em;
+  border-radius: 1.5em;
+  margin-bottom: 0.6em;
+  position: relative;
+  transition: box-shadow 0.2s, transform 0.1s;
+}
+.menu-btn.halloffame:hover, .menu-btn.halloffame:focus {
+  box-shadow: 0 0 32px 6px #ffd70088, 0 4px 14px #ffe08266;
+  transform: scale(1.035);
+  outline: none;
+}
+
+.menu-btn.triviaflash {
+  background: linear-gradient(90deg, #defcff 60%, #41bbf4 100%);
+  color: #157bc1;
+  font-weight: bold;
+  border: 2.4px solid #41bbf499;
+  box-shadow: 0 0 12px #bbf0ff88, 0 2px 6px #41bbf422;
+  font-size: 1.08em;
+  border-radius: 1.3em;
+  margin-bottom: 0.4em;
+  transition: box-shadow 0.2s, transform 0.1s;
+}
+.menu-btn.triviaflash:hover, .menu-btn.triviaflash:focus {
+  box-shadow: 0 0 24px 5px #41bbf477, 0 2px 10px #41bbf433;
+  transform: scale(1.028);
+  outline: none;
+}
