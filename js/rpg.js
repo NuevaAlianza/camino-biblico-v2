@@ -3,6 +3,7 @@ let cicloActual = obtenerSemanaAnio();
 let datosCiclo = null;
 let progresoRPG = null;
 let usuarioActual = null; // Usuario global
+let cicloBloqueado = false; // Protección ciclo jugado
 
 const preguntasPorNivel = [5, 4, 3, 3, 3];
 
@@ -15,6 +16,24 @@ const EMOJIS_RPG = [
   { emoji: "😱", hasta: 0 }   // 5-0
 ];
 let temporizadorActivo = null;
+
+// --- Sistema de imágenes del mentor RPG ---
+const imgMentor = {
+  avatar: "assets/img/mentor/mentor_avatar.png",        // Miniatura/icono de perfil
+  neutral: "assets/img/mentor/mentor_neutra.png",       // Estado explicando/standby
+  celebra: "assets/img/mentor/mentor_celebra.png",      // Celebrando/motivando
+  preocupado: "assets/img/mentor/mentor_preocupado.png" // Preocupado/advertencia
+};
+function mostrarMentor(estado) {
+  const img = document.getElementById('img-mentor');
+  if (img && imgMentor[estado]) {
+    img.src = imgMentor[estado];
+    img.alt = `Mentor ${estado}`;
+  } else if (img) {
+    img.src = imgMentor['neutral'];
+    img.alt = "Mentor neutral";
+  }
+}
 
 function crearTemporizadorPregunta(duracion, onTimeout, onTick, onEmojiChange) {
   let tiempoRestante = duracion;
@@ -30,7 +49,6 @@ function crearTemporizadorPregunta(duracion, onTimeout, onTick, onEmojiChange) {
       circulo.style.strokeDasharray = `${circunferencia}`;
       circulo.style.strokeDashoffset = `${circunferencia * (1 - progreso)}`;
     }
-
     // Emoji animado
     const emojiObj = EMOJIS_RPG.find(e => tiempoRestante > e.hasta) || EMOJIS_RPG[EMOJIS_RPG.length - 1];
     if (emojiObj && emojiActual !== emojiObj.emoji) {
@@ -46,7 +64,6 @@ function crearTemporizadorPregunta(duracion, onTimeout, onTick, onEmojiChange) {
     // Texto de tiempo
     const texto = document.getElementById("timer-text");
     if (texto) texto.textContent = tiempoRestante + "s";
-
     if (onTick) onTick(tiempoRestante);
   }
 
@@ -82,9 +99,6 @@ function reproducirSonido(nombre) {
     // Si no existe, ignora
   }
 }
-
-// Usar nombres como: start.mp3, halfway.mp3, warning.mp3, correct.mp3, wrong1.mp3, ...
-// Recuerda colocar los audios en assets/sonidos/
 function sonidoFalloAleatorio() {
   const opciones = ["wrong1.mp3", "wrong2.mp3", "wrong3.mp3", "wrong4.mp3"];
   const i = Math.floor(Math.random() * opciones.length);
@@ -136,14 +150,12 @@ async function mostrarStatsBienvenida() {
     bienvenida.innerHTML = "";
     return;
   }
-
   // 2. XP total acumulada (suma todas sus filas)
   const { data: xpRows } = await supabase
     .from("rpg_progreso")
     .select("xp")
     .eq("user_id", usuarioActual.id);
   const xpTotal = xpRows ? xpRows.reduce((a, b) => a + (b.xp || 0), 0) : 0;
-
   // 3. Parroquia ranking
   const parroquia = usuarioActual.user_metadata?.parroquia || null;
   let parroquiaHTML = "";
@@ -166,7 +178,7 @@ async function mostrarStatsBienvenida() {
   } else {
     parroquiaHTML = `<div class="rpg-parroquia">No tienes parroquia registrada.</div>`;
   }
-
+  mostrarMentor('neutral'); // Mentor neutral en la bienvenida
   // --- Renderiza el panel compacto ---
   bienvenida.innerHTML = `
     <div class="panel-bienvenida">
@@ -236,6 +248,7 @@ async function guardarProgresoRPG({ nivel, rango, xp, completado }) {
 // --- 4. Estado interno de la partida (RAM) ---
 let juegoActual = null;
 
+// --- 5. Inicializar panel y protección de botones ---
 async function inicializarPanelInicio() {
   document.getElementById("titulo-ciclo").textContent = datosCiclo.titulo || "Trivia Bíblica RPG";
   document.getElementById("descripcion-ciclo").textContent = datosCiclo.descripcion || "";
@@ -245,10 +258,13 @@ async function inicializarPanelInicio() {
 
 async function inicializarRPG() {
   progresoRPG = await cargarProgresoRPG();
-  // Si ya completó el ciclo, muestra solo el resumen
+  // Si ya completó el ciclo, muestra solo el resumen y bloquea botones
   if (progresoRPG && progresoRPG.completado) {
+    cicloBloqueado = true;
     document.getElementById("btn-comenzar").style.display = "none";
+    document.getElementById("btn-comenzar").onclick = null;
     document.getElementById("btn-continuar").style.display = "none";
+    document.getElementById("btn-continuar").onclick = null;
     document.getElementById("juego-rpg").classList.add("oculto");
     document.getElementById("resultados-rpg").classList.add("oculto");
     document.getElementById("logros-rpg").classList.add("oculto");
@@ -259,6 +275,7 @@ async function inicializarRPG() {
       </div>`);
     return;
   }
+  cicloBloqueado = false;
   // Si no ha jugado, permite iniciar
   document.getElementById("btn-comenzar").style.display = juegoActual ? "none" : "inline-block";
   document.getElementById("btn-continuar").style.display = juegoActual ? "inline-block" : "none";
@@ -267,8 +284,9 @@ async function inicializarRPG() {
   document.getElementById("logros-rpg").classList.add("oculto");
 }
 
-// --- 5. Eventos de los botones ---
+// --- 6. Eventos de los botones (protegidos) ---
 document.getElementById("btn-comenzar").onclick = () => {
+  if (cicloBloqueado) return;
   juegoActual = {
     nivel: 1,
     vidas: 3,
@@ -279,13 +297,14 @@ document.getElementById("btn-comenzar").onclick = () => {
   mostrarNivel();
 };
 document.getElementById("btn-continuar").onclick = () => {
+  if (cicloBloqueado) return;
   mostrarNivel();
 };
 document.getElementById("btn-logros").onclick = () => {
   mostrarLogros();
 };
 
-// --- 6. Juego: mostrar nivel y preguntas ---
+// --- 7. Juego: mostrar nivel y preguntas ---
 function mostrarNivel() {
   const juego = document.getElementById("juego-rpg");
   juego.classList.remove("oculto");
@@ -326,6 +345,7 @@ function mostrarNivel() {
   mostrarPregunta();
 
   function mostrarPregunta() {
+    console.log('Mostrando pregunta', juegoActual.pregunta, 'en nivel', juegoActual.nivel);
     const preguntaActual = juegoActual.pregunta || 0;
     const p = juegoActual.preguntasNivel[preguntaActual];
 
@@ -371,28 +391,30 @@ function mostrarNivel() {
     crearTemporizadorPregunta(
       25,
       () => { // onTimeout
-        // Si termina el tiempo: cuenta como fallo
         juegoActual.vidas--;
+        if (juegoActual.vidas === 1) {
+          mostrarMentor('preocupado');
+        } else {
+          mostrarMentor('neutral');
+        }
         if (juegoActual.vidas <= 0) {
           terminarAventura();
         } else {
-          // Animación shake a las vidas
           const vidasEl = document.querySelector('.rpg-vidas');
           if (vidasEl) {
             vidasEl.classList.add("shake");
             setTimeout(() => vidasEl.classList.remove("shake"), 400);
           }
-          // Muestra la siguiente pregunta (sin sumar punto)
           juegoActual.pregunta++;
           mostrarPregunta();
         }
       },
-      (tiempoRestante) => { // onTick
+      (tiempoRestante) => {
         if (tiempoRestante === 13) reproducirSonido("halfway.mp3");
         if (tiempoRestante === 5) reproducirSonido("warning.mp3");
       },
       (emoji) => {
-        // (Opcional) Podrías poner animaciones adicionales según el emoji, si quieres
+        // Opcional: animaciones adicionales según emoji
       }
     );
 
@@ -405,10 +427,16 @@ function mostrarNivel() {
           animarAcierto(btn);
           reproducirSonido("correct.mp3");
           juegoActual.xp += juegoActual.nivel * 1;
+          mostrarMentor('neutral');
         } else {
           btn.classList.add("fallo");
           reproducirSonido(sonidoFalloAleatorio());
           juegoActual.vidas--;
+          if (juegoActual.vidas === 1) {
+            mostrarMentor('preocupado');
+          } else {
+            mostrarMentor('neutral');
+          }
           const vidasEl = document.querySelector('.rpg-vidas');
           if (vidasEl) {
             vidasEl.classList.add("shake");
@@ -417,6 +445,7 @@ function mostrarNivel() {
         }
         setTimeout(() => {
           juegoActual.pregunta = preguntaActual + 1;
+          console.log('Avanzo a pregunta', juegoActual.pregunta, 'en nivel', juegoActual.nivel);
           if (juegoActual.vidas <= 0) {
             terminarAventura();
           } else if (juegoActual.pregunta >= numPreguntas) {
@@ -441,7 +470,7 @@ function mostrarNivel() {
   }
 }
 
-// --- 7. Finalización ---
+// --- 8. Finalización ---
 async function terminarAventura(ganoTodo = false) {
   document.getElementById("juego-rpg").classList.add("oculto");
   document.getElementById("resultados-rpg").classList.remove("oculto");
@@ -452,7 +481,6 @@ async function terminarAventura(ganoTodo = false) {
     xp: juegoActual.xp,
     completado: true,
   });
-
   document.getElementById("resultados-rpg").innerHTML = `
     <h2>${ganoTodo ? "¡Felicidades, completaste la Trivia!" : "Fin de la aventura"}</h2>
     <p>Tu rango: <b>${rango}</b></p>
@@ -469,7 +497,7 @@ async function terminarAventura(ganoTodo = false) {
   }, 50);
 }
 
-// --- 8. Otros ---
+// --- 9. Otros utilitarios ---
 function obtenerRango(nivel, ganoTodo) {
   if (ganoTodo) return "Maestro de la Palabra";
   if (nivel === 5) return "Sabio de las Escrituras";
@@ -478,7 +506,6 @@ function obtenerRango(nivel, ganoTodo) {
   if (nivel === 2) return "Principiante";
   return "Principiante";
 }
-
 function mezclarArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -486,7 +513,6 @@ function mezclarArray(array) {
   }
   return array;
 }
-
 function mostrarLogros() {
   document.getElementById("menu-rpg").classList.add("oculto");
   document.getElementById("juego-rpg").classList.add("oculto");
@@ -516,7 +542,7 @@ function mostrarMensajeNivelPersonalizado(nivel, vidas, callback) {
   ];
   const msg = mensajes[nivel-1] || "¡Sigue así!";
   const tip = tipsPorNivel[nivel-1] || "";
-
+  mostrarMentor('celebra');
   document.getElementById("juego-rpg").innerHTML = `
     <div class="panel-mensaje-nivel">
       <h2>🎉 ¡Felicidades!</h2>
