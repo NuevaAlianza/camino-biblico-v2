@@ -1,59 +1,24 @@
-<div class="hall-container">
-  <div class="hall-header">
-    <span class="hall-icon">🏆</span>
-    <span class="hall-title">Hall of <s class="tachado">Fame</s> <span class="faith">Faith</span></span>
-    <select class="hall-season-select">
-      <option>Temporada 1 – Génesis</option>
-      <option>Temporada 2 – Éxodo</option>
-    </select>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hall of <s class="tachado">Fame</s> <span class="faith">Faith</span> – Camino Bíblico</title>
+  <link rel="stylesheet" href="css/hof.css">
+</head>
+<body>
+  <div class="hall-container">
+    <div class="hall-header">
+      <span class="hall-icon">🏆</span>
+      <span class="hall-title">
+        Hall of <s class="tachado">Fame</s> <span class="faith">Faith</span>
+      </span>
+      <select id="hall-season-select" class="hall-season-select"></select>
+    </div>
+    <div id="hall-season-info"></div>
+    <section id="hall-sections"></section>
   </div>
-
-  <section class="hall-section">
-    <h2 class="hall-section-title">🏆 Top 10 Jugadores</h2>
-    <div class="hall-ranking">
-      <div class="ranking-row top-1">
-        <span class="ranking-pos">1</span>
-        <span class="ranking-medal gold">🥇</span>
-        <span class="ranking-name">Lucía Pérez</span>
-        <span class="ranking-xp">2450 XP</span>
-        <span class="ranking-group">San Pablo</span>
-      </div>
-      <div class="ranking-row">
-        <span class="ranking-pos">2</span>
-        <span class="ranking-medal silver">🥈</span>
-        <span class="ranking-name">Juan Torres</span>
-        <span class="ranking-xp">2320 XP</span>
-        <span class="ranking-group">Cristo Rey</span>
-      </div>
-      <div class="ranking-row">
-        <span class="ranking-pos">3</span>
-        <span class="ranking-medal bronze">🥉</span>
-        <span class="ranking-name">Ana Gómez</span>
-        <span class="ranking-xp">2250 XP</span>
-        <span class="ranking-group">Sagrada Familia</span>
-      </div>
-      <!-- ... más filas ... -->
-    </div>
-  </section>
-
-  <section class="hall-section">
-    <h2 class="hall-section-title">👥 Mejores Subgrupos</h2>
-    <div class="hall-ranking">
-      <div class="ranking-row top-1">
-        <span class="ranking-pos">1</span>
-        <span class="ranking-medal gold">🥇</span>
-        <span class="ranking-name">Jóvenes San Pablo</span>
-        <span class="ranking-xp">1530 XP</span>
-        <span class="ranking-group">18 part.</span>
-      </div>
-      <div class="ranking-row">
-        <span class="ranking-pos">2</span>
-        <span class="ranking-medal silver">🥈</span>
-        <span class="ranking-name">Biblia Kids</span>
-        <span class="ranking-xp">1470 XP</span>
-        <span class="ranking-group">14 part.</span>
-      </div>
-    </div>
-  </section>
-  <!-- Agrega más secciones igual para ciudades, parroquias, etc -->
-</div>
+  <a href="menu.html" id="btn-inicio">🏠</a>
+  <script src="js/halloffame.js"></script>
+</body>
+</html>
