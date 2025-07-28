@@ -8,55 +8,61 @@ const hallOfFameData = {
       "fecha_fin": "2025-09-30",
       "descripcion": "Inicio del Hall of Fame. Primeros rankings de Camino Bíblico.",
       "top_xp": [
-        {"user_id": "u001", "nombre": "Lucía Pérez", "xp": 2450, "pais": "RD", "ciudad": "Santiago", "parroquia": "San Pablo"},
-        {"user_id": "u002", "nombre": "Juan Torres", "xp": 2320, "pais": "RD", "ciudad": "La Vega", "parroquia": "Cristo Rey"},
-        // ... más jugadores
+        {
+          "user_id": "u001",
+          "nombre": "Lucía Pérez",
+          "xp": 790,
+          "porcentaje": 97.5,
+          "rango": "Maestro Legendario",
+          "nivel_rango": 6,
+          "parroquia": "San Pablo",
+          "pais": "RD"
+        }
+        // ...más jugadores
       ],
-      "top_subgrupos": [
-        {"subgrupo_id": 1, "nombre": "Jóvenes San Pablo", "xp_promedio": 1530, "participantes": 18, "ciudad": "Santiago", "parroquia": "San Pablo"},
-        // ...
-      ],
-      "top_ciudades": [
-        {"ciudad": "Santiago", "xp_promedio": 1435, "participantes": 44},
-        // ...
-      ],
-      "top_parroquias": [
-        {"parroquia": "San Pablo", "xp_promedio": 1478, "participantes": 29, "ciudad": "Santiago"},
-        // ...
-      ]
+      "top_subgrupos": [],
+      "top_ciudades": [],
+      "top_parroquias": []
     }
-    // ...más temporadas
   ]
 };
-
-// --- Render dinámico ---
 
 document.addEventListener('DOMContentLoaded', () => {
   const select = document.getElementById('hall-season-select');
   const info = document.getElementById('hall-season-info');
   const sections = document.getElementById('hall-sections');
 
-  // 1. Rellenar el select de temporadas
-  hallOfFameData.temporadas.forEach((t, i) => {
+  // Rellenar select
+  hallOfFameData.temporadas.forEach(t => {
     const opt = document.createElement('option');
     opt.value = t.id;
     opt.textContent = t.nombre;
     select.appendChild(opt);
   });
 
-  // 2. Mostrar la temporada seleccionada al cargar
+  // Mostrar primera temporada
   select.value = hallOfFameData.temporadas[0].id;
   renderSeason(hallOfFameData.temporadas[0]);
 
-  // 3. Al cambiar temporada, renderizar
+  // Cambiar temporada
   select.addEventListener('change', e => {
     const temporada = hallOfFameData.temporadas.find(t => t.id === e.target.value);
     if (temporada) renderSeason(temporada);
   });
 
-  // --- Render principal ---
+  // Función auxiliar: estrellas por nivel
+  function generarEstrellas(nivel) {
+    const max = 6;
+    let estrellas = '';
+    for (let i = 0; i < max; i++) {
+      estrellas += i < nivel ? '⭐' : '☆';
+    }
+    return estrellas;
+  }
+
+  // Render temporada
   function renderSeason(temporada) {
-    // Info de la temporada (fechas, descripción)
+    // Info de cabecera
     info.innerHTML = `
       <div class="season-info">
         <div><b>${temporada.nombre}</b></div>
@@ -65,9 +71,9 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
     `;
 
-    // Secciones de ranking
     let html = '';
-    // Top 10 jugadores
+
+    // Top jugadores
     if (temporada.top_xp) {
       html += `
         <section class="hall-section">
@@ -79,14 +85,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 <span class="ranking-medal">${i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : ''}</span>
                 <span class="ranking-name">${p.nombre}</span>
                 <span class="ranking-xp">${p.xp} XP</span>
-                <span class="ranking-group">${p.parroquia}</span>
+                <span class="ranking-group">${p.parroquia || ''}</span>
+                <span class="ranking-stars">${generarEstrellas(p.nivel_rango || 0)}</span>
+                <span class="ranking-rango">${p.rango || '—'}</span>
+                <span class="ranking-porcentaje">(${p.porcentaje || 0}%)</span>
               </div>
             `).join('')}
           </div>
         </section>
       `;
     }
-    // Mejores subgrupos
+
+    // Subgrupos
     if (temporada.top_subgrupos) {
       html += `
         <section class="hall-section">
@@ -105,7 +115,8 @@ document.addEventListener('DOMContentLoaded', () => {
         </section>
       `;
     }
-    // Mejores ciudades
+
+    // Ciudades
     if (temporada.top_ciudades) {
       html += `
         <section class="hall-section">
@@ -124,7 +135,8 @@ document.addEventListener('DOMContentLoaded', () => {
         </section>
       `;
     }
-    // Mejores parroquias
+
+    // Parroquias
     if (temporada.top_parroquias) {
       html += `
         <section class="hall-section">
@@ -136,13 +148,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 <span class="ranking-medal">${i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : ''}</span>
                 <span class="ranking-name">${p.parroquia}</span>
                 <span class="ranking-xp">${p.xp_promedio} XP</span>
-                <span class="ranking-group">${p.ciudad}</span>
+                <span class="ranking-group">${p.participantes} part.</span>
               </div>
             `).join('')}
           </div>
         </section>
       `;
     }
+
     sections.innerHTML = html;
   }
 });
