@@ -7,149 +7,28 @@
       "fecha_fin": "2025-09-30",
       "descripcion": "Inicio del Hall of Fame. Primeros rankings de Camino Bíblico.",
       "top_xp": [
-        {
-          "user_id": "2fae15c4-6fdd-4f83-8a16-aa2d3ca8d992", "nombre": "Leo love",
-          "xp": 378,
-          "porcentaje": 46.7,
-          "rango": "Aprendiz del Camino",
-          "nivel_rango": 2,
-          "parroquia": "Santo Cura de Ars",
-          "pais": "RD"
-        },
-        {
-          "user_id": "ce8afa08-25ba-43a8-85a6-9135c8f10a8f",
-          "nombre": "Massiel Reyes Nuñez",
-          "xp": 240,
-          "porcentaje": 29.6,
-          "rango": "Semilla en Crecimiento",
-          "nivel_rango": 1,
-          "parroquia": "Santo Cura de Ars",
-          "pais": "RD"
-        },
-        {
-          "user_id": "4032ec69-230c-4dfa-b51c-5d47aca355de",
-          "nombre": "Leonel-Sant",
-          "xp": 221,
-          "porcentaje": 27.3,
-          "rango": "Semilla en Crecimiento",
-          "nivel_rango": 1,
-          "parroquia": "Santo Cura de Ars",
-          "pais": "RD"
-        },
-        {
-          "user_id": "0c834262-a96d-4bfa-a963-1c885cb35fa2",
-          "nombre": "Antonio Valdez",
-          "xp": 213,
-          "porcentaje": 26.3,
-          "rango": "Semilla en Crecimiento",
-          "nivel_rango": 1,
-          "parroquia": "Santo Cura de Ars",
-          "pais": "RD"
-        },
-        {
-          "user_id": "e9c91f84-063d-40cf-86a2-c1c682999d1d",
-          "nombre": "Alexandra Rubio",
-          "xp": 206,
-          "porcentaje": 25.4,
-          "rango": "Semilla en Crecimiento",
-          "nivel_rango": 1,
-          "parroquia": "Santo Cura de Ars",
-          "pais": "RD"
-        },
-        {
-          "user_id": "063a1306-428c-4684-8b45-4924babce737",
-          "nombre": "Lissette Shantall De los santos",
-          "xp": 113,
-          "porcentaje": 14,
-          "rango": "Testigo Ocasional",
-          "nivel_rango": 0,
-          "parroquia": "Santo Cura de Ars",
-          "pais": "RD"
-        },
-        {
-          "user_id": "81b0bd9f-4c21-4771-b97e-89acc7ab556d",
-          "nombre": "Ruben Amable George Aybar",
-          "xp": 82,
-          "porcentaje": 10.1,
-          "rango": "Testigo Ocasional",
-          "nivel_rango": 0,
-          "parroquia": "Santo Cura de Ars",
-          "pais": "RD"
-        },
-        {
-          "user_id": "d9d19d71-63f9-47f8-8d8d-0b3e75e8ba15",
-          "nombre": "Cristopher diaz bello ",
-          "xp": 67,
-          "porcentaje": 8.3,
-          "rango": "Testigo Ocasional",
-          "nivel_rango": 0,
-          "parroquia": "Santo Cura de Ars",
-          "pais": "RD"
-        },
-        {
-          "user_id": "fe4a3a35-ebcc-4c1f-a689-91e0d109ed83",
-          "nombre": "Jonelsy",
-          "xp": 49,
-          "porcentaje": 6,
-          "rango": "Testigo Ocasional",
-          "nivel_rango": 0,
-          "parroquia": null,
-          "pais": "RD"
-        },
-        {
-          "user_id": "f0620d52-cb80-4b35-a2f5-21111dd1a06a",
-          "nombre": "Andrea Olmos",
-          "xp": 46,
-          "porcentaje": 5.7,
-          "rango": "Testigo Ocasional",
-          "nivel_rango": 0,
-          "parroquia": "Santo Cura de Ars",
-          "pais": "RD"
-        },
-        {
-          "user_id": "4555cf32-4b22-499f-b3cf-3f44897c0fe7",
-          "nombre": "Victor Nicolas Romero Cardenás ",
-          "xp": 45,
-          "porcentaje": 5.6,
-          "rango": "Testigo Ocasional",
-          "nivel_rango": 0,
-          "parroquia": "Alianza Nueva",
-          "pais": "RD"
-        },
-        {
-          "user_id": "7250bf63-7e26-496b-8999-0fed9b743376",
-          "nombre": "Rocio Hernandez ",
-          "xp": 0,
-          "porcentaje": 0,
-          "rango": null,
-          "nivel_rango": null,
-          "parroquia": null,
-          "pais": "RD"
-        }
+        {"user_id": "2fae15c4-6fdd-4f83-8a16-aa2d3ca8d992", "nombre": "Leo love", "xp": 378, "porcentaje": 46.7, "rango": "Aprendiz del Camino", "nivel_rango": 2, "parroquia": "Santo Cura de Ars", "pais": "RD"},
+        {"user_id": "ce8afa08-25ba-43a8-85a6-9135c8f10a8f", "nombre": "Massiel Reyes Nuñez", "xp": 240, "porcentaje": 29.6, "rango": "Semilla en Crecimiento", "nivel_rango": 1, "parroquia": "Santo Cura de Ars", "pais": "RD"},
+        {"user_id": "4032ec69-230c-4dfa-b51c-5d47aca355de", "nombre": "Leonel-Sant", "xp": 221, "porcentaje": 27.3, "rango": "Semilla en Crecimiento", "nivel_rango": 1, "parroquia": "Santo Cura de Ars", "pais": "RD"},
+        {"user_id": "0c834262-a96d-4bfa-a963-1c885cb35fa2", "nombre": "Antonio Valdez", "xp": 213, "porcentaje": 26.3, "rango": "Semilla en Crecimiento", "nivel_rango": 1, "parroquia": "Santo Cura de Ars", "pais": "RD"},
+        {"user_id": "e9c91f84-063d-40cf-86a2-c1c682999d1d", "nombre": "Alexandra Rubio", "xp": 206, "porcentaje": 25.4, "rango": "Semilla en Crecimiento", "nivel_rango": 1, "parroquia": "Santo Cura de Ars", "pais": "RD"},
+        {"user_id": "063a1306-428c-4684-8b45-4924babce737", "nombre": "Lissette Shantall De los santos", "xp": 113, "porcentaje": 14, "rango": "Testigo Ocasional", "nivel_rango": 0, "parroquia": "Santo Cura de Ars", "pais": "RD"},
+        {"user_id": "81b0bd9f-4c21-4771-b97e-89acc7ab556d", "nombre": "Ruben Amable George Aybar", "xp": 82, "porcentaje": 10.1, "rango": "Testigo Ocasional", "nivel_rango": 0, "parroquia": "Santo Cura de Ars", "pais": "RD"},
+        {"user_id": "d9d19d71-63f9-47f8-8d8d-0b3e75e8ba15", "nombre": "Cristopher diaz bello ", "xp": 67, "porcentaje": 8.3, "rango": "Testigo Ocasional", "nivel_rango": 0, "parroquia": "Santo Cura de Ars", "pais": "RD"},
+        {"user_id": "fe4a3a35-ebcc-4c1f-a689-91e0d109ed83", "nombre": "Jonelsy", "xp": 49, "porcentaje": 6, "rango": "Testigo Ocasional", "nivel_rango": 0, "parroquia": null, "pais": "RD"},
+        {"user_id": "f0620d52-cb80-4b35-a2f5-21111dd1a06a", "nombre": "Andrea Olmos", "xp": 46, "porcentaje": 5.7, "rango": "Testigo Ocasional", "nivel_rango": 0, "parroquia": "Santo Cura de Ars", "pais": "RD"},
+        {"user_id": "4555cf32-4b22-499f-b3cf-3f44897c0fe7", "nombre": "Victor Nicolas Romero Cardenás ", "xp": 45, "porcentaje": 5.6, "rango": "Testigo Ocasional", "nivel_rango": 0, "parroquia": "Alianza Nueva", "pais": "RD"},
+        {"user_id": "7250bf63-7e26-496b-8999-0fed9b743376", "nombre": "Rocio Hernandez ", "xp": 0, "porcentaje": 0, "rango": null, "nivel_rango": null, "parroquia": null, "pais": "RD"}
       ],
-      "top_subgrupos": [        {
-          "subgrupo_id": 2,
-          "nombre": "Nueva Alianza",
-          "participantes": 9,
-          "xp_promedio": 174.0
-        },
-        {
-          "subgrupo_id": 1,
-          "nombre": "Sin parroquia",
-          "participantes": 1,
-          "xp_promedio": 45.0
-        }],
+      "top_subgrupos": [
+        {"subgrupo_id": 2, "nombre": "Nueva Alianza", "participantes": 9, "xp_promedio": 174.0},
+        {"subgrupo_id": 1, "nombre": "Sin parroquia", "participantes": 1, "xp_promedio": 45.0}
+      ],
       "top_ciudades": [],
-      "top_parroquias": [{
-          "parroquia": "Santo Cura de Ars",
-          "participantes": 9,
-          "xp_promedio": 174.0
-        },
-        {
-          "parroquia": "Alianza Nueva",
-          "participantes": 1,
-          "xp_promedio": 45.0
-        }]
+      "top_parroquias": [
+        {"parroquia": "Santo Cura de Ars", "participantes": 9, "xp_promedio": 174.0},
+        {"parroquia": "Alianza Nueva", "participantes": 1, "xp_promedio": 45.0}
+      ]
     }
   ]
 }
