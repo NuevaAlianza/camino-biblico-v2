@@ -117,3 +117,21 @@
   .hall-section-title { font-size: 1em; }
   .ranking-row, .ranking-row.top-1 { font-size: 0.98em; padding: 0.65em 0.8em;}
 }
+.ranking-stars {
+  display: block;
+  font-size: 1.1rem;
+  color: gold;
+  margin-top: 0.25rem;
+}
+
+.ranking-rango {
+  display: block;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.ranking-porcentaje {
+  display: block;
+  font-size: 0.8rem;
+  color: #777;
+}
