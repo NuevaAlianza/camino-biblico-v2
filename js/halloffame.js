@@ -1,6 +1,6 @@
 // Simulación: Aquí cargarías desde fetch("datos/hall_of_fame.json"), por ahora va el objeto directo
 const hallOfFameData = {
-  "temporadas": [
+  "temporadas": [ 
     {
       "id": "T1",
       "nombre": "Temporada 1 – Génesis",
