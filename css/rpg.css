@@ -6,19 +6,17 @@
   background: #fffbe7;
   border-radius: 1.5em;
   box-shadow: 0 3px 20px #e8c86922;
-  margin: 1.7em auto 1.7em auto;
+  margin: 1.7em auto;
   padding: 1.1em 1.2em 1.1em 1.3em;
   gap: 1.4em;
   max-width: 520px;
 }
-
 .mentor-img-box {
   flex: 0 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
 .mentor-busto {
   width: 90px;
   height: 90px;
@@ -27,7 +25,6 @@
   box-shadow: 0 2px 12px rgba(230, 175, 55, 0.13);
   object-fit: contain;
 }
-
 .bienvenida-panel {
   flex: 1 1 0%;
   display: flex;
@@ -41,16 +38,13 @@
   text-align: left;
   color: #64450c;
 }
-
 .bienvenida-panel b, .bienvenida-panel strong {
   color: #00a877;
 }
-
 .bienvenida-panel .rpg-parroquia {
   margin-top: 0.35em;
   margin-bottom: 0.3em;
 }
-
 .bienvenida-panel .rpg-avanza {
   font-size: 0.98em;
   color: #a18816;
@@ -72,6 +66,35 @@
     height: 76px;
   }
 }
+
+/* --- PANEL DE PREGUNTA Y TEMPORIZADOR --- */
+.panel-pregunta {
+  background: #fffef3;
+  border-radius: 1.2em;
+  box-shadow: 0 4px 18px #eedfbc;
+  padding: 1.4em;
+  margin: 1.2em auto;
+  max-width: 520px;
+  font-family: 'Georgia', serif;
+  color: #573b04;
+}
+.temporizador-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1em;
+}
+.temporizador-panel .emoji-animado {
+  font-size: 1.8em;
+}
+.temporizador-panel .timer-text {
+  font-size: 1.4em;
+  font-weight: bold;
+  color: #937600;
+  font-family: monospace;
+}
+
+/* --- INFORMACIÓN Y OPCIONES --- */
 .rpg-info {
   display: flex;
   flex-wrap: wrap;
@@ -80,24 +103,20 @@
   margin-bottom: 0.8em;
   font-size: 1.05em;
 }
-
 .rpg-xp {
   font-weight: bold;
   color: #388e3c;
 }
-
 .rpg-progreso {
   color: #8d6e63;
   font-style: italic;
 }
-
 .rpg-opciones {
   display: flex;
   flex-direction: column;
   gap: 0.6em;
   margin-top: 1em;
 }
-
 .rpg-btn-op {
   padding: 0.6em 1em;
   background: #f4f4f4;
@@ -106,6 +125,8 @@
   font-size: 1.05em;
   transition: all 0.2s ease;
   cursor: pointer;
+  width: 100%;
+  text-align: left;
 }
 .rpg-btn-op:hover {
   background: #fff8e1;
@@ -122,6 +143,7 @@
   color: #b71c1c;
 }
 
+/* --- XP flotante --- */
 #xp-feedback {
   position: absolute;
   top: 10px;
@@ -136,20 +158,18 @@
   z-index: 10;
 }
 
+/* --- UTILIDADES --- */
 .oculto {
   display: none !important;
 }
-
 .anim-xp {
   animation: subir-fade 1s ease-out forwards;
 }
-
 @keyframes subir-fade {
   0% { opacity: 0; transform: translateY(0px); }
   20% { opacity: 1; }
   100% { opacity: 0; transform: translateY(-25px); }
 }
-
 .shake {
   animation: shake 0.3s;
 }
