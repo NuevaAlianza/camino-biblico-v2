@@ -1,115 +1,119 @@
-// Demo de mentores (puedes ampliar luego)
+// === Mentores disponibles y sus habilidades ===
 const MENTORES = [
   {
-    id: "juan",
-    nombre: "San Juan",
-    img: "assets/img/mentor/juan.png",
+    id: "san_juan",
+    nombre: "San Juan Vianney",
+    img: "assets/img/mentor/san_juan.png",
     habilidades: [
-      "Sabiduría +3",
-      "Intuición Bíblica +2"
+      "Oración poderosa", "Empatía pastoral", "Consejo certero", "Ánimo inagotable", "Discernimiento espiritual"
     ],
-    presentacion: [
-      "¡Hola! Soy San Juan, tu guía en este camino de fe.",
-      "Juntos aprenderemos a profundizar en la Palabra.",
-      "¿Listo para convertirte en un explorador bíblico?"
+    mensajes: [
+      "Confía en el Señor y avanza con alegría.",
+      "Recuerda que la oración es tu fuerza.",
+      "La paciencia y el amor abren todas las puertas."
     ]
   },
   {
-    id: "pablo",
-    nombre: "San Pablo",
-    img: "assets/img/mentor/pablo.png",
+    id: "santa_teresa",
+    nombre: "Santa Teresa de Ávila",
+    img: "assets/img/mentor/santa_teresa.png",
     habilidades: [
-      "Disciplina +4",
-      "Coraje +2"
+      "Mente brillante", "Oración profunda", "Valor ante la adversidad", "Paz interior", "Intuición femenina"
     ],
-    presentacion: [
-      "¡Te acompaña San Pablo! Conmigo aprenderás a no rendirte.",
-      "Recuerda, la constancia es clave en este reto.",
-      "La fe mueve montañas. ¿Listo para el desafío?"
+    mensajes: [
+      "Nada te turbe, nada te espante.",
+      "Dios basta, sigue adelante.",
+      "La humildad es la clave del crecimiento."
+    ]
+  },
+  {
+    id: "san_pablo",
+    nombre: "San Pablo",
+    img: "assets/img/mentor/san_pablo.png",
+    habilidades: [
+      "Valentía", "Sabiduría escritural", "Entusiasmo misionero", "Persuasión", "Fe contagiosa"
+    ],
+    mensajes: [
+      "Todo lo puedo en Aquel que me fortalece.",
+      "Sé firme en la fe y valiente en las pruebas.",
+      "La Palabra es tu espada, úsala con sabiduría."
     ]
   }
-  // ...agrega más mentores
 ];
 
-let mentorElegido = null;
+// ========== Selección de Mentor ==========
+let mentorSeleccionado = null;
+let habilidadesAsignadas = [];
+let mensajeBienvenida = "";
 
-// ==== 1. Renderizar lista de mentores ====
-function renderizarMentores() {
-  const lista = document.getElementById("mentores-lista");
-  lista.innerHTML = "";
-  MENTORES.forEach(mentor => {
-    const div = document.createElement("div");
-    div.className = "mentor-card";
-    div.innerHTML = `
-      <img src="${mentor.img}" alt="${mentor.nombre}" class="mentor-avatar"/>
-      <div class="mentor-nombre">${mentor.nombre}</div>
-    `;
-    div.onclick = () => mostrarDetalleMentor(mentor);
-    lista.appendChild(div);
+function renderMentores() {
+  const container = document.getElementById('mentor-section');
+  container.innerHTML = `
+    <h2>Elige a tu mentor para esta semana</h2>
+    <div class="mentores-grid">
+      ${MENTORES.map((m, idx) => `
+        <div class="mentor-card" data-idx="${idx}">
+          <img src="${m.img}" alt="${m.nombre}" class="mentor-img"/>
+          <div class="mentor-nombre">${m.nombre}</div>
+          <ul class="mentor-habilidades" id="hab-${idx}"></ul>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  // Habilidades aleatorias en la vista previa
+  MENTORES.forEach((mentor, idx) => {
+    const habDiv = document.getElementById(`hab-${idx}`);
+    habDiv.innerHTML = getHabilidadesAleatorias(mentor.habilidades, 3)
+      .map(h => `<li>${h}</li>`).join('');
+  });
+
+  // Eventos de selección
+  document.querySelectorAll('.mentor-card').forEach(card => {
+    card.onclick = () => seleccionarMentor(card.dataset.idx);
   });
 }
 
-function mostrarDetalleMentor(mentor) {
-  mentorElegido = mentor;
-  const detalle = document.getElementById("mentor-detalle");
-  detalle.classList.remove("oculto");
-  detalle.innerHTML = `
-    <h3>${mentor.nombre}</h3>
-    <img src="${mentor.img}" alt="${mentor.nombre}" class="mentor-avatar-grande"/>
-    <div class="mentor-habilidades">
-      <b>Habilidades:</b>
-      <ul>
-        ${mentor.habilidades.map(h => `<li>${h}</li>`).join("")}
-      </ul>
-    </div>
-    <div class="mentor-msg-presentacion">
-      “${mentor.presentacion[Math.floor(Math.random() * mentor.presentacion.length)]}”
-    </div>
-  `;
-  document.getElementById("btn-seleccionar-mentor").classList.remove("oculto");
+// Función para elegir habilidades aleatorias y únicas por mentor
+function getHabilidadesAleatorias(habilidades, n = 3) {
+  const copia = [...habilidades];
+  const elegidas = [];
+  while (elegidas.length < n && copia.length > 0) {
+    const idx = Math.floor(Math.random() * copia.length);
+    elegidas.push(copia.splice(idx, 1)[0]);
+  }
+  return elegidas;
 }
 
-// ==== 2. Al seleccionar mentor ====
-document.getElementById("btn-seleccionar-mentor").onclick = () => {
-  if (!mentorElegido) return;
-  // Oculta selección de mentor y muestra bienvenida
-  document.getElementById("pantalla-mentor").classList.add("oculto");
-  document.getElementById("pantalla-bienvenida").classList.remove("oculto");
-  mostrarBienvenidaMentor();
-};
-
-function mostrarBienvenidaMentor() {
-  // Renderiza el avatar y nombre
-  document.getElementById("bienvenida-mentor").innerHTML = `
-    <img src="${mentorElegido.img}" alt="${mentorElegido.nombre}" class="mentor-avatar-grande"/>
-    <h2>¡Bienvenido con ${mentorElegido.nombre}!</h2>
-  `;
-  // Mensaje aleatorio del mentor
-  const mensajes = [
-    ...mentorElegido.presentacion,
-    "¡Recuerda! Si tienes dudas, tu mentor siempre te anima a avanzar.",
-    "Cada pregunta es una oportunidad de aprender y ganar XP."
+function seleccionarMentor(idx) {
+  mentorSeleccionado = MENTORES[idx];
+  habilidadesAsignadas = getHabilidadesAleatorias(mentorSeleccionado.habilidades, 3);
+  mensajeBienvenida = mentorSeleccionado.mensajes[
+    Math.floor(Math.random() * mentorSeleccionado.mensajes.length)
   ];
-  document.getElementById("mensaje-como-jugar").innerHTML = `
-    <div class="mentor-msg-bienvenida">
-      ${mensajes[Math.floor(Math.random() * mensajes.length)]}
-    </div>
-    <div class="mentor-tips">Tienes 3 vidas y ganas XP por cada acierto.<br>¿Listo para la aventura?</div>
-  `;
+
+  mostrarMensajeMentor();
 }
 
-// ==== 3. Al presionar “¡Comenzar aventura!” ====
-document.getElementById("btn-iniciar-rpg").onclick = () => {
-  alert("Aquí comenzaría la trivia RPG real (¡próximamente!).");
-  // Aquí ocultarías pantalla bienvenida y mostrarías la de preguntas.
-};
+function mostrarMensajeMentor() {
+  document.getElementById('mentor-section').classList.add('oculto');
+  const msgSec = document.getElementById('mensaje-mentor-section');
+  msgSec.classList.remove('oculto');
+  msgSec.innerHTML = `
+    <div class="mentor-bienvenida-card">
+      <img src="${mentorSeleccionado.img}" alt="${mentorSeleccionado.nombre}" class="mentor-img-grande"/>
+      <h2>${mentorSeleccionado.nombre} será tu guía esta semana</h2>
+      <ul>
+        ${habilidadesAsignadas.map(h => `<li>✨ ${h}</li>`).join('')}
+      </ul>
+      <div class="mentor-mensaje">${mensajeBienvenida}</div>
+      <button id="btn-iniciar-rpg2">¡Iniciar Trivia RPG!</button>
+    </div>
+  `;
+  document.getElementById('btn-iniciar-rpg2').onclick = () => {
+    // Aquí luego se conecta el flujo RPG real
+    alert('Aquí empezaría la trivia RPG 2...');
+  };
+}
 
-// ==== INICIALIZACIÓN ====
-document.addEventListener("DOMContentLoaded", () => {
-  renderizarMentores();
-  // Muestra solo la pantalla de selección de mentor
-  document.getElementById("pantalla-mentor").classList.remove("oculto");
-  document.getElementById("pantalla-bienvenida").classList.add("oculto");
-  document.getElementById("pantalla-juego").classList.add("oculto");
-  document.getElementById("pantalla-resultados").classList.add("oculto");
-});
+// Init
+document.addEventListener('DOMContentLoaded', renderMentores);
