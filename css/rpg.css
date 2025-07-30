@@ -180,3 +180,83 @@
   75% { transform: translateX(-2px); }
   100% { transform: translateX(0); }
 }
+/* --- SELECCIÓN DE MENTOR --- */
+.mentores-lista {
+  display: flex;
+  gap: 1.3em;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 1.3em 0 1em 0;
+}
+
+.mentor-card {
+  background: #fffde4;
+  border-radius: 1.3em;
+  box-shadow: 0 4px 16px #ead87d22;
+  padding: 1.2em 0.7em 1em 0.7em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 112px;
+  max-width: 128px;
+  transition: box-shadow .16s;
+  cursor: pointer;
+  border: 2px solid transparent;
+  position: relative;
+}
+
+.mentor-card.selected,
+.mentor-card:hover {
+  border-color: #fbc02d;
+  box-shadow: 0 6px 26px #fbc02d33;
+}
+
+.mentor-card img {
+  width: 78px;
+  height: 78px;
+  border-radius: 16px;
+  margin-bottom: 0.4em;
+  background: #f6eeda;
+  object-fit: contain;
+}
+
+.mentor-nombre {
+  font-size: 1.05em;
+  font-weight: bold;
+  margin-bottom: 0.25em;
+  color: #845106;
+}
+
+.mentor-habilidades {
+  font-size: 0.96em;
+  color: #697725;
+  margin-bottom: 0.2em;
+  text-align: center;
+}
+
+.mentor-descripcion {
+  font-size: 0.92em;
+  color: #a38634;
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .mentores-lista {
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+  }
+  .mentor-card {
+    min-width: 90vw;
+    max-width: 95vw;
+    flex-direction: row;
+    gap: 1.1em;
+    padding: 1em 0.6em;
+  }
+  .mentor-card img {
+    width: 68px;
+    height: 68px;
+    margin-bottom: 0;
+  }
+}
