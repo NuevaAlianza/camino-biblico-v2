@@ -581,3 +581,4 @@ function compartirResultadoRPG(rango, xp, completado) {
     alert("¡Resultado copiado! Puedes pegarlo en WhatsApp, Telegram o donde quieras.");
   }
 }
+}
