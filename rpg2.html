@@ -3,34 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trivia Bíblica RPG – Nuevo</title>
+  <title>Trivia Bíblica RPG 2</title>
   <link rel="stylesheet" href="css/rpg.css">
   <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
-  <!-- PANTALLA: Selección de Mentor -->
-  <section id="pantalla-mentor" class="">
-    <h1>Elige tu Mentor</h1>
-    <div id="mentores-lista"></div>
-    <div id="mentor-detalle" class="oculto"></div>
-    <button id="btn-seleccionar-mentor" class="oculto">Elegir Mentor</button>
-  </section>
-
-  <!-- PANTALLA: Bienvenida / ¿Cómo jugar? -->
-  <section id="pantalla-bienvenida" class="oculto">
-    <div id="bienvenida-mentor"></div>
-    <div id="mensaje-como-jugar"></div>
-    <button id="btn-iniciar-rpg">¡Comenzar aventura!</button>
-  </section>
-
-  <!-- PANTALLA: Juego de preguntas RPG -->
-  <section id="pantalla-juego" class="oculto"></section>
-
-  <!-- PANTALLA: Resultados RPG -->
-  <section id="pantalla-resultados" class="oculto"></section>
-
+  <main class="rpg2-main">
+    <!-- Selección de mentor -->
+    <section id="mentor-section"></section>
+    <!-- Mensaje de mentor -->
+    <section id="mensaje-mentor-section" class="oculto"></section>
+    <!-- Juego (más adelante) -->
+    <section id="juego-rpg2" class="oculto"></section>
+  </main>
   <a href="menu.html" id="btn-inicio">🏠</a>
-
   <script src="js/rpg2.js"></script>
 </body>
 </html>
+
