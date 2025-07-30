@@ -3,7 +3,7 @@ const MENTORES = [
   {
     id: "san_juan",
     nombre: "San Juan Vianney",
-    img: "assets/img/mentor/san_juan.png",
+    img: "assets/img/mentor/mentor_cura.png",
     habilidades: [
       "Oración poderosa", "Empatía pastoral", "Consejo certero", "Ánimo inagotable", "Discernimiento espiritual"
     ],
