@@ -142,53 +142,36 @@ function mostrarSinCiclo() {
 
 // --- 2b. Panel bienvenida: SOLO XP y ranking parroquia ---
 async function mostrarStatsBienvenida() {
-  const bienvenida = document.getElementById("bienvenida-stats");
-  // 1. Obtener usuario actual de Supabase Auth
-  const { data: sessionData } = await supabase.auth.getSession();
-  usuarioActual = sessionData?.session?.user;
-  if (!usuarioActual) {
-    bienvenida.innerHTML = "";
+  const meta = usuarioActual?.user_metadata || {};
+  const nombre = meta.nombre || "Jugador";
+  const parroquia = meta.parroquia || "Parroquia desconocida";
+
+  document.getElementById("bienvenida-stats").innerHTML = `
+    <div><b>${nombre}</b></div>
+    <div class="rpg-parroquia">${parroquia}</div>
+    <div class="rpg-avanza">¡Prepárate para una nueva semana de retos!</div>
+  `;
+
+  // Si la columna "parroquia" no existe, quitamos este filtro
+  const { data: otros, error } = await supabase
+    .from("rpg_progreso")
+    .select("user_id")
+    .eq("ciclo", cicloActual)
+    .eq("completado", true);
+
+  if (error) {
+    console.error("⚠️ Error al consultar otros jugadores:", error);
     return;
   }
-  // 2. XP total acumulada (suma todas sus filas)
-  const { data: xpRows } = await supabase
-    .from("rpg_progreso")
-    .select("xp")
-    .eq("user_id", usuarioActual.id);
-  const xpTotal = xpRows ? xpRows.reduce((a, b) => a + (b.xp || 0), 0) : 0;
-  // 3. Parroquia ranking
-  const parroquia = usuarioActual.user_metadata?.parroquia || null;
-  let parroquiaHTML = "";
-  if (parroquia) {
-    const { data: parroquiaRows } = await supabase
-      .from("rpg_progreso")
-      .select("user_id, xp")
-      .eq("parroquia", parroquia)
-      .eq("completado", true);
-    const parroquiaMap = {};
-    (parroquiaRows || []).forEach(r => {
-      if (!parroquiaMap[r.user_id]) parroquiaMap[r.user_id] = 0;
-      parroquiaMap[r.user_id] += r.xp || 0;
-    });
-    const parroquiaArray = Object.entries(parroquiaMap)
-      .map(([user_id, xp]) => ({ user_id, xp }))
-      .sort((a, b) => b.xp - a.xp);
-    const miParroquiaRank = parroquiaArray.findIndex(r => r.user_id === usuarioActual.id) + 1;
-    parroquiaHTML = `<div class="rpg-parroquia">⛪ Parroquia: <b>#${miParroquiaRank > 0 ? miParroquiaRank : '-'}</b> de ${parroquiaArray.length} (${parroquia})</div>`;
-  } else {
-    parroquiaHTML = `<div class="rpg-parroquia">No tienes parroquia registrada.</div>`;
+
+  const cantidad = otros?.length || 0;
+  if (cantidad > 0) {
+    document.getElementById("bienvenida-stats").innerHTML += `
+      <div class="rpg-avanza">${cantidad} más ya completaron este ciclo</div>
+    `;
   }
-  mostrarMentor('neutral'); // Mentor neutral en la bienvenida
-  // --- Renderiza el panel compacto ---
-  bienvenida.innerHTML = `
-    <div class="panel-bienvenida">
-      <div class="rpg-bienvenido">¡Bienvenido!</div>
-      <div class="rpg-xp">Hasta hoy has acumulado <b>${xpTotal}</b> XP.</div>
-      ${parroquiaHTML}
-      <div class="rpg-avanza">¡Veamos si hoy avanzas al #1! 🚀</div>
-    </div>
-  `;
 }
+
 
 function normalizar(str) {
   return (str || "")
