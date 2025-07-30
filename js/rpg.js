@@ -344,131 +344,131 @@ function mostrarNivel() {
 
   mostrarPregunta();
 
-  function mostrarPregunta() {
-    console.log('Mostrando pregunta', juegoActual.pregunta, 'en nivel', juegoActual.nivel);
-    const preguntaActual = juegoActual.pregunta || 0;
-    const p = juegoActual.preguntasNivel[preguntaActual];
+ // === RPG.js Mejorado: Opciones con estilo, XP en tiempo real y progreso visual ===
 
-    if (!p) {
-      if (juegoActual.nivel >= preguntasPorNivel.length) {
-        terminarAventura(true);
-      } else {
-        juegoActual.nivel++;
-        juegoActual.pregunta = 0;
-        juegoActual.preguntasNivel = null;
-        mostrarMensajeNivelPersonalizado(
-          juegoActual.nivel,
-          juegoActual.vidas,
-          mostrarNivel
-        );
-      }
-      return;
+// (Suponemos que todas las funciones anteriores se mantienen, nos enfocamos en mostrarPregunta)
+
+function mostrarPregunta() {
+  console.log('Mostrando pregunta', juegoActual.pregunta, 'en nivel', juegoActual.nivel);
+  const preguntaActual = juegoActual.pregunta || 0;
+  const p = juegoActual.preguntasNivel[preguntaActual];
+
+  if (!p) {
+    if (juegoActual.nivel >= preguntasPorNivel.length) {
+      terminarAventura(true);
+    } else {
+      juegoActual.nivel++;
+      juegoActual.pregunta = 0;
+      juegoActual.preguntasNivel = null;
+      mostrarMensajeNivelPersonalizado(
+        juegoActual.nivel,
+        juegoActual.vidas,
+        mostrarNivel
+      );
     }
+    return;
+  }
 
-    juego.innerHTML = `
-      <div class="temporizador-panel">
-        <svg width="90" height="90" class="temporizador-svg">
-          <circle cx="45" cy="45" r="40" stroke="#f4a261" stroke-width="7" fill="none" id="timer-circular"/>
-        </svg>
-        <span id="emoji-animado" class="emoji-animado">😌</span>
-        <div id="timer-text" class="timer-text">25s</div>
-      </div>
-      <div class="panel-pregunta">
-        <div class="rpg-info">
-          <span class="rpg-nivel">Nivel: ${juegoActual.nivel}</span>
-          <span class="rpg-vidas">${"❤️".repeat(juegoActual.vidas)}</span>
-        </div>
-        <div class="rpg-pregunta"><b>${p.pregunta}</b></div>
-        <div class="rpg-opciones">
-          ${p.opciones.map((op, i) => `<button class="rpg-btn-op" data-i="${i}">${op}</button>`).join("")}
-        </div>
-        <small>Si fallas, pierdes una vida. ¡Suerte!</small>
-      </div>
-    `;
+  // Calculamos progreso actual
+  const total = preguntasPorNivel[juegoActual.nivel - 1] || 3;
+  const progreso = `${juegoActual.pregunta + 1} / ${total}`;
 
-    limpiarTemporizadorPregunta();
-    reproducirSonido("start.mp3");
-    crearTemporizadorPregunta(
-      25,
-      () => { // onTimeout
+  document.getElementById("juego-rpg").innerHTML = `
+    <div class="temporizador-panel">
+      <svg width="90" height="90" class="temporizador-svg">
+        <circle cx="45" cy="45" r="40" stroke="#f4a261" stroke-width="7" fill="none" id="timer-circular"/>
+      </svg>
+      <span id="emoji-animado" class="emoji-animado">😌</span>
+      <div id="timer-text" class="timer-text">25s</div>
+    </div>
+    <div class="panel-pregunta">
+      <div class="rpg-info">
+        <span class="rpg-nivel">Nivel: ${juegoActual.nivel}</span>
+        <span class="rpg-progreso">Pregunta ${progreso}</span>
+        <span class="rpg-vidas">${"❤️".repeat(juegoActual.vidas)}</span>
+        <span class="rpg-xp">XP: ${juegoActual.xp}</span>
+      </div>
+      <div class="rpg-pregunta"><b>${p.pregunta}</b></div>
+      <div class="rpg-opciones">
+        ${p.opciones.map((op, i) => `<button class="rpg-btn-op" data-i="${i}">${op}</button>`).join("")}
+      </div>
+      <small>Si fallas, pierdes una vida. ¡Suerte!</small>
+      <div id="xp-feedback" class="xp-feedback oculto">+5 XP</div>
+    </div>
+  `;
+
+  limpiarTemporizadorPregunta();
+  reproducirSonido("start.mp3");
+  crearTemporizadorPregunta(
+    25,
+    () => { // Tiempo agotado
+      juegoActual.vidas--;
+      mostrarMentor(juegoActual.vidas === 1 ? 'preocupado' : 'neutral');
+      if (juegoActual.vidas <= 0) return terminarAventura();
+      shakeElemento(document.querySelector('.rpg-vidas'));
+      juegoActual.pregunta++;
+      mostrarPregunta();
+    },
+    (t) => {
+      if (t === 13) reproducirSonido("halfway.mp3");
+      if (t === 5) reproducirSonido("warning.mp3");
+    }
+  );
+
+  document.querySelectorAll('.rpg-btn-op').forEach(btn => {
+    btn.onclick = () => {
+      limpiarTemporizadorPregunta();
+      const correcta = p.opciones[btn.dataset.i] === p.respuesta;
+      if (correcta) {
+        btn.classList.add("acierto");
+        animarAcierto(btn);
+        reproducirSonido("correct.mp3");
+        juegoActual.xp += juegoActual.nivel * 1;
+        document.querySelector('.rpg-xp').textContent = `XP: ${juegoActual.xp}`;
+        mostrarXPFeedback(`+${juegoActual.nivel}`);
+        mostrarMentor('neutral');
+      } else {
+        btn.classList.add("fallo");
+        reproducirSonido(sonidoFalloAleatorio());
         juegoActual.vidas--;
-        if (juegoActual.vidas === 1) {
-          mostrarMentor('preocupado');
+        mostrarMentor(juegoActual.vidas === 1 ? 'preocupado' : 'neutral');
+        shakeElemento(document.querySelector('.rpg-vidas'));
+      }
+      setTimeout(() => {
+        juegoActual.pregunta = preguntaActual + 1;
+        if (juegoActual.vidas <= 0) return terminarAventura();
+        if (juegoActual.pregunta >= total) {
+          juegoActual.nivel++;
+          juegoActual.pregunta = 0;
+          juegoActual.preguntasNivel = null;
+          if (juegoActual.nivel > preguntasPorNivel.length) return terminarAventura(true);
+          mostrarMensajeNivelPersonalizado(juegoActual.nivel, juegoActual.vidas, mostrarNivel);
         } else {
-          mostrarMentor('neutral');
-        }
-        if (juegoActual.vidas <= 0) {
-          terminarAventura();
-        } else {
-          const vidasEl = document.querySelector('.rpg-vidas');
-          if (vidasEl) {
-            vidasEl.classList.add("shake");
-            setTimeout(() => vidasEl.classList.remove("shake"), 400);
-          }
-          juegoActual.pregunta++;
           mostrarPregunta();
         }
-      },
-      (tiempoRestante) => {
-        if (tiempoRestante === 13) reproducirSonido("halfway.mp3");
-        if (tiempoRestante === 5) reproducirSonido("warning.mp3");
-      },
-      (emoji) => {
-        // Opcional: animaciones adicionales según emoji
-      }
-    );
-
-    document.querySelectorAll('.rpg-btn-op').forEach(btn => {
-      btn.onclick = () => {
-        limpiarTemporizadorPregunta(); // ¡Detiene el tiempo al responder!
-        const correcta = p.opciones[btn.dataset.i] === p.respuesta;
-        if (correcta) {
-          btn.classList.add("acierto");
-          animarAcierto(btn);
-          reproducirSonido("correct.mp3");
-          juegoActual.xp += juegoActual.nivel * 1;
-          mostrarMentor('neutral');
-        } else {
-          btn.classList.add("fallo");
-          reproducirSonido(sonidoFalloAleatorio());
-          juegoActual.vidas--;
-          if (juegoActual.vidas === 1) {
-            mostrarMentor('preocupado');
-          } else {
-            mostrarMentor('neutral');
-          }
-          const vidasEl = document.querySelector('.rpg-vidas');
-          if (vidasEl) {
-            vidasEl.classList.add("shake");
-            setTimeout(() => vidasEl.classList.remove("shake"), 400);
-          }
-        }
-        setTimeout(() => {
-          juegoActual.pregunta = preguntaActual + 1;
-          console.log('Avanzo a pregunta', juegoActual.pregunta, 'en nivel', juegoActual.nivel);
-          if (juegoActual.vidas <= 0) {
-            terminarAventura();
-          } else if (juegoActual.pregunta >= numPreguntas) {
-            juegoActual.nivel++;
-            juegoActual.pregunta = 0;
-            juegoActual.preguntasNivel = null;
-            if (juegoActual.nivel > preguntasPorNivel.length) {
-              terminarAventura(true);
-            } else {
-              mostrarMensajeNivelPersonalizado(
-                juegoActual.nivel,
-                juegoActual.vidas,
-                mostrarNivel
-              );
-            }
-          } else {
-            mostrarPregunta();
-          }
-        }, 700);
-      };
-    });
-  }
+      }, 700);
+    };
+  });
 }
+
+function mostrarXPFeedback(texto) {
+  const el = document.getElementById("xp-feedback");
+  if (!el) return;
+  el.textContent = texto;
+  el.classList.remove("oculto");
+  el.classList.add("anim-xp");
+  setTimeout(() => {
+    el.classList.remove("anim-xp");
+    el.classList.add("oculto");
+  }, 1000);
+}
+
+function shakeElemento(el) {
+  if (!el) return;
+  el.classList.add("shake");
+  setTimeout(() => el.classList.remove("shake"), 400);
+}
+
 
 // --- 8. Finalización ---
 async function terminarAventura(ganoTodo = false) {
