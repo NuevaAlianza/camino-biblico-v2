@@ -342,7 +342,7 @@ function mostrarNivel() {
     juegoActual.pregunta = 0;
   }
 
-  mostrarPregunta();
+ 
 
  // === RPG.js Mejorado: Opciones con estilo, XP en tiempo real y progreso visual ===
 
