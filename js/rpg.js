@@ -2,11 +2,10 @@ let rpgCiclos = {};
 let cicloActual = obtenerSemanaAnio();
 let datosCiclo = null;
 let progresoRPG = null;
-let usuarioActual = null; // Usuario global
+let usuarioActual = null;
 
 const preguntasPorNivel = [5, 4, 3, 3, 3];
 
-// === TEMPORIZADOR CIRCULAR + EMOJI ANIMADO ===
 const EMOJIS_RPG = [
   { emoji: "😌", hasta: 21 }, // 25-21
   { emoji: "🙂", hasta: 16 }, // 20-16
@@ -16,13 +15,13 @@ const EMOJIS_RPG = [
 ];
 let temporizadorActivo = null;
 
+// ========== TEMPORIZADOR Y SONIDO ==========
 function crearTemporizadorPregunta(duracion, onTimeout, onTick, onEmojiChange) {
   let tiempoRestante = duracion;
   let intervalo;
   let emojiActual = "";
 
   function actualizarTemporizador() {
-    // Actualiza círculo SVG
     const circulo = document.getElementById("timer-circular");
     const radio = 40, circunferencia = 2 * Math.PI * radio;
     const progreso = tiempoRestante / duracion;
@@ -31,22 +30,18 @@ function crearTemporizadorPregunta(duracion, onTimeout, onTick, onEmojiChange) {
       circulo.style.strokeDashoffset = `${circunferencia * (1 - progreso)}`;
     }
 
-    // Emoji animado
     const emojiObj = EMOJIS_RPG.find(e => tiempoRestante > e.hasta) || EMOJIS_RPG[EMOJIS_RPG.length - 1];
     if (emojiObj && emojiActual !== emojiObj.emoji) {
       emojiActual = emojiObj.emoji;
       const emojiDiv = document.getElementById("emoji-animado");
       if (emojiDiv) {
         emojiDiv.textContent = emojiActual;
-        // Efecto shake sólo en 😱
         emojiDiv.className = "emoji-animado" + (emojiActual === "😱" ? " shake" : "");
         if (onEmojiChange) onEmojiChange(emojiActual);
       }
     }
-    // Texto de tiempo
     const texto = document.getElementById("timer-text");
     if (texto) texto.textContent = tiempoRestante + "s";
-
     if (onTick) onTick(tiempoRestante);
   }
 
@@ -73,25 +68,20 @@ function limpiarTemporizadorPregunta() {
   temporizadorActivo = null;
 }
 
-// === FUNCIONES DE SONIDO ===
 function reproducirSonido(nombre) {
   try {
     const audio = new Audio("assets/sonidos/" + nombre);
     audio.play();
-  } catch (e) {
-    // Si no existe, ignora
-  }
+  } catch (e) {}
 }
 
-// Usar nombres como: start.mp3, halfway.mp3, warning.mp3, correct.mp3, wrong1.mp3, ...
-// Recuerda colocar los audios en assets/sonidos/
 function sonidoFalloAleatorio() {
   const opciones = ["wrong1.mp3", "wrong2.mp3", "wrong3.mp3", "wrong4.mp3"];
   const i = Math.floor(Math.random() * opciones.length);
   return opciones[i];
 }
 
-// --- 1. Carga de datos y ciclo actual ---
+// ========== INICIO: CARGA DE DATOS ==========
 fetch('datos/rpg-preguntas.json')
   .then(res => res.json())
   .then(async data => {
@@ -101,12 +91,11 @@ fetch('datos/rpg-preguntas.json')
       mostrarSinCiclo();
       return;
     }
-    await mostrarStatsBienvenida(); // Panel superior (XP, ranking)
+    await mostrarStatsBienvenida();
     inicializarPanelInicio();
     inicializarRPG();
   });
 
-// --- 2. Funciones utilitarias ---
 function obtenerSemanaAnio() {
   const d = new Date();
   d.setHours(0, 0, 0, 0);
@@ -126,25 +115,20 @@ function mostrarSinCiclo() {
   document.getElementById("btn-continuar").style.display = "none";
 }
 
-// --- 2b. Panel bienvenida: SOLO XP y ranking parroquia ---
+// ========== PANEL BIENVENIDA Y STATS ==========
 async function mostrarStatsBienvenida() {
   const bienvenida = document.getElementById("bienvenida-stats");
-  // 1. Obtener usuario actual de Supabase Auth
   const { data: sessionData } = await supabase.auth.getSession();
   usuarioActual = sessionData?.session?.user;
   if (!usuarioActual) {
     bienvenida.innerHTML = "";
     return;
   }
-
-  // 2. XP total acumulada (suma todas sus filas)
   const { data: xpRows } = await supabase
     .from("rpg_progreso")
     .select("xp")
     .eq("user_id", usuarioActual.id);
   const xpTotal = xpRows ? xpRows.reduce((a, b) => a + (b.xp || 0), 0) : 0;
-
-  // 3. Parroquia ranking
   const parroquia = usuarioActual.user_metadata?.parroquia || null;
   let parroquiaHTML = "";
   if (parroquia) {
@@ -166,8 +150,6 @@ async function mostrarStatsBienvenida() {
   } else {
     parroquiaHTML = `<div class="rpg-parroquia">No tienes parroquia registrada.</div>`;
   }
-
-  // --- Renderiza el panel compacto ---
   bienvenida.innerHTML = `
     <div class="panel-bienvenida">
       <div class="rpg-bienvenido">¡Bienvenido!</div>
@@ -178,19 +160,11 @@ async function mostrarStatsBienvenida() {
   `;
 }
 
-function normalizar(str) {
-  return (str || "")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .trim();
-}
-
-// --- 3. Supabase: cargar y guardar progreso ---
+// ========== PROGRESO: CARGAR Y GUARDAR ==========
 async function cargarProgresoRPG() {
   if (window.supabase) {
     const { data: sessionData } = await supabase.auth.getSession();
-    usuarioActual = sessionData?.session?.user; // Actualiza usuario global
+    usuarioActual = sessionData?.session?.user;
     const userId = usuarioActual?.id;
     if (!userId) return null;
     const { data } = await supabase
@@ -198,7 +172,7 @@ async function cargarProgresoRPG() {
       .select("*")
       .eq("user_id", userId)
       .eq("ciclo", cicloActual)
-      .single();
+      .maybeSingle();  // FIX: evita error 406
     return data;
   }
   // LocalStorage si no logueado
@@ -227,13 +201,12 @@ async function guardarProgresoRPG({ nivel, rango, xp, completado }) {
     }]);
     return;
   }
-  // LocalStorage para offline
   let p = JSON.parse(localStorage.getItem("rpg_progreso")) || {};
   p[cicloActual] = { nivel, rango, xp, completado };
   localStorage.setItem("rpg_progreso", JSON.stringify(p));
 }
 
-// --- 4. Estado interno de la partida (RAM) ---
+// ========== RAM ==========
 let juegoActual = null;
 
 async function inicializarPanelInicio() {
@@ -245,7 +218,6 @@ async function inicializarPanelInicio() {
 
 async function inicializarRPG() {
   progresoRPG = await cargarProgresoRPG();
-  // Si ya completó el ciclo, muestra solo el resumen
   if (progresoRPG && progresoRPG.completado) {
     document.getElementById("btn-comenzar").style.display = "none";
     document.getElementById("btn-continuar").style.display = "none";
@@ -259,7 +231,6 @@ async function inicializarRPG() {
       </div>`);
     return;
   }
-  // Si no ha jugado, permite iniciar
   document.getElementById("btn-comenzar").style.display = juegoActual ? "none" : "inline-block";
   document.getElementById("btn-continuar").style.display = juegoActual ? "inline-block" : "none";
   document.getElementById("juego-rpg").classList.add("oculto");
@@ -267,7 +238,7 @@ async function inicializarRPG() {
   document.getElementById("logros-rpg").classList.add("oculto");
 }
 
-// --- 5. Eventos de los botones ---
+// ========== BOTONES ==========
 document.getElementById("btn-comenzar").onclick = () => {
   juegoActual = {
     nivel: 1,
@@ -285,7 +256,7 @@ document.getElementById("btn-logros").onclick = () => {
   mostrarLogros();
 };
 
-// --- 6. Juego: mostrar nivel y preguntas ---
+// ========== JUEGO: MOSTRAR NIVEL Y PREGUNTA ==========
 function mostrarNivel() {
   const juego = document.getElementById("juego-rpg");
   juego.classList.remove("oculto");
@@ -370,35 +341,29 @@ function mostrarNivel() {
     reproducirSonido("start.mp3");
     crearTemporizadorPregunta(
       25,
-      () => { // onTimeout
-        // Si termina el tiempo: cuenta como fallo
+      () => {
         juegoActual.vidas--;
         if (juegoActual.vidas <= 0) {
           terminarAventura();
         } else {
-          // Animación shake a las vidas
           const vidasEl = document.querySelector('.rpg-vidas');
           if (vidasEl) {
             vidasEl.classList.add("shake");
             setTimeout(() => vidasEl.classList.remove("shake"), 400);
           }
-          // Muestra la siguiente pregunta (sin sumar punto)
           juegoActual.pregunta++;
           mostrarPregunta();
         }
       },
-      (tiempoRestante) => { // onTick
+      (tiempoRestante) => {
         if (tiempoRestante === 13) reproducirSonido("halfway.mp3");
         if (tiempoRestante === 5) reproducirSonido("warning.mp3");
-      },
-      (emoji) => {
-        // (Opcional) Podrías poner animaciones adicionales según el emoji, si quieres
       }
     );
 
     document.querySelectorAll('.rpg-btn-op').forEach(btn => {
       btn.onclick = () => {
-        limpiarTemporizadorPregunta(); // ¡Detiene el tiempo al responder!
+        limpiarTemporizadorPregunta();
         const correcta = p.opciones[btn.dataset.i] === p.respuesta;
         if (correcta) {
           btn.classList.add("acierto");
@@ -441,7 +406,7 @@ function mostrarNivel() {
   }
 }
 
-// --- 7. Finalización ---
+// ========== FINALIZAR ==========
 async function terminarAventura(ganoTodo = false) {
   document.getElementById("juego-rpg").classList.add("oculto");
   document.getElementById("resultados-rpg").classList.remove("oculto");
@@ -452,7 +417,6 @@ async function terminarAventura(ganoTodo = false) {
     xp: juegoActual.xp,
     completado: true,
   });
-
   document.getElementById("resultados-rpg").innerHTML = `
     <h2>${ganoTodo ? "¡Felicidades, completaste la Trivia!" : "Fin de la aventura"}</h2>
     <p>Tu rango: <b>${rango}</b></p>
@@ -469,7 +433,7 @@ async function terminarAventura(ganoTodo = false) {
   }, 50);
 }
 
-// --- 8. Otros ---
+// ========== OTROS ==========
 function obtenerRango(nivel, ganoTodo) {
   if (ganoTodo) return "Maestro de la Palabra";
   if (nivel === 5) return "Sabio de las Escrituras";
@@ -498,7 +462,7 @@ function mostrarLogros() {
   `;
 }
 
-// -- Mensaje personalizado al pasar nivel (felicitación y tip) --
+// Mensaje personalizado
 const tipsPorNivel = [
   "Recuerda leer con atención las opciones antes de responder.",
   "Algunas preguntas tienen pistas en los detalles de la pregunta.",
@@ -532,13 +496,11 @@ function mostrarMensajeNivelPersonalizado(nivel, vidas, callback) {
   document.getElementById("btn-seguir-nivel").onclick = callback;
 }
 
-// Para efecto "bounce" al acertar (en el botón)
 function animarAcierto(btn) {
   btn.classList.add("acierto-anim");
   setTimeout(() => btn.classList.remove("acierto-anim"), 500);
 }
 
-// Compartir resultado
 function compartirResultadoRPG(rango, xp, completado) {
   let mensaje = `¡He jugado la Trivia Bíblica RPG!\nObtuve el rango: ${rango}\nXP ganada: ${xp}\n¿Te atreves a superarme?`;
   if (completado) mensaje = "¡Completé la Trivia Bíblica RPG! 🏆\n" + mensaje;
@@ -550,8 +512,8 @@ function compartirResultadoRPG(rango, xp, completado) {
       url: window.location.href
     });
   } else {
-    // Si no soporta compartir, copia el texto
     navigator.clipboard.writeText(mensaje);
     alert("¡Resultado copiado! Puedes pegarlo en WhatsApp, Telegram o donde quieras.");
   }
 }
+
