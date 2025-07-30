@@ -50,10 +50,10 @@ function renderMentores() {
   const container = document.getElementById('mentor-section');
   container.innerHTML = `
     <h2>Elige a tu mentor para esta semana</h2>
-    <div class="mentores-grid">
+    <div class="mentores-lista">
       ${MENTORES.map((m, idx) => `
         <div class="mentor-card" data-idx="${idx}">
-          <img src="${m.img}" alt="${m.nombre}" class="mentor-img"/>
+          <img src="${m.img}" alt="${m.nombre}" class="mentor-busto"/>
           <div class="mentor-nombre">${m.nombre}</div>
           <ul class="mentor-habilidades" id="hab-${idx}"></ul>
         </div>
@@ -99,8 +99,8 @@ function mostrarMensajeMentor() {
   const msgSec = document.getElementById('mensaje-mentor-section');
   msgSec.classList.remove('oculto');
   msgSec.innerHTML = `
-    <div class="mentor-bienvenida-card">
-      <img src="${mentorSeleccionado.img}" alt="${mentorSeleccionado.nombre}" class="mentor-img-grande"/>
+    <div class="mentor-bienvenida-card bienvenida-card">
+      <img src="${mentorSeleccionado.img}" alt="${mentorSeleccionado.nombre}" class="mentor-busto"/>
       <h2>${mentorSeleccionado.nombre} será tu guía esta semana</h2>
       <ul>
         ${habilidadesAsignadas.map(h => `<li>✨ ${h}</li>`).join('')}
@@ -115,5 +115,5 @@ function mostrarMensajeMentor() {
   };
 }
 
-// Init
-document.addEventListener('DOMContentLoaded', renderMentores);
+// Init: Solo llama renderMentores() al cargar
+
