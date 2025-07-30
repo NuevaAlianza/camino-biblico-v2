@@ -125,13 +125,18 @@
 }
 
 .ranking-rango {
-  display: block;
+  display: inline;
   font-size: 0.85rem;
   color: #555;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px;
 }
 
 .ranking-porcentaje {
-  display: block;
-  font-size: 0.8rem;
-  color: #777;
+  display: inline;
+  font-size: 0.75rem;
+  color: #999;
+  margin-left: 0.3em;
 }
