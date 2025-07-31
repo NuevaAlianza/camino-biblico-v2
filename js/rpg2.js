@@ -50,15 +50,22 @@ function obtenerSemanaAnio() {
 }
 
 function mostrarSinCiclo() {
-  document.getElementById("menu-rpg").innerHTML = `
-    <div class="panel-mensaje">
-      <h2>No hay trivia RPG programada para esta semana.</h2>
-      <p>¡Vuelve la próxima semana!</p>
-    </div>
-  `;
-  document.getElementById("btn-comenzar").style.display = "none";
-  document.getElementById("btn-continuar").style.display = "none";
+  const menuRpg = document.getElementById("menu-rpg");
+  if (menuRpg) {
+    menuRpg.innerHTML = `
+      <div class="panel-mensaje">
+        <h2>No hay trivia RPG programada para esta semana.</h2>
+        <p>¡Vuelve la próxima semana!</p>
+      </div>
+    `;
+  }
+  // --- Chequea existencia antes de ocultar botones ---
+  const btnComenzar = document.getElementById("btn-comenzar");
+  if (btnComenzar) btnComenzar.style.display = "none";
+  const btnContinuar = document.getElementById("btn-continuar");
+  if (btnContinuar) btnContinuar.style.display = "none";
 }
+
 
 // ======================== BIENVENIDA PERSONALIZADA ========================
 async function mostrarStatsBienvenida() {
