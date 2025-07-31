@@ -326,7 +326,7 @@ function mostrarNivel() {
         if (correcta) {
           btn.classList.add("acierto");
           animarAcierto(btn);
-          reproducirSonido("correct.mp3");
+          reproducirSonido("correcto.mp3");
           juegoActual.xp += juegoActual.nivel * 1;
         } else {
           btn.classList.add("fallo");
