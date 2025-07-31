@@ -133,21 +133,67 @@ function mostrarMensajeMentor() {
       <button id="btn-iniciar-rpg2">¡Iniciar Trivia RPG!</button>
     </div>
   `;
-  document.getElementById('btn-iniciar-rpg2').onclick = () => {
+  document.getElementById('btn-iniciar-rpg2').onclick = async () => {
     msgSec.classList.add('oculto');
-    document.getElementById('menu-rpg').classList.remove('oculto');
-    iniciarTriviaRPG2();
+    // === Bloqueo semanal ===
+    const puedeJugar = await chequearJuegoSemana();
+    if (puedeJugar) {
+      document.getElementById('menu-rpg').classList.remove('oculto');
+      iniciarTriviaRPG2();
+    }
   };
 }
 
-// ================== Juego RPG ==================
-let rpgCiclos = {};
+// =========== CONTROL DE PARTIDA SEMANAL ===========
 let cicloActual = obtenerSemanaAnio();
+
+async function chequearJuegoSemana() {
+  // Si no hay Supabase, deja jugar siempre (modo local)
+  if (!window.supabase) {
+    document.getElementById("menu-rpg").classList.remove("oculto");
+    return true;
+  }
+  const { data: sessionData } = await supabase.auth.getSession();
+  const usuarioActual = sessionData?.session?.user;
+  if (!usuarioActual) {
+    alert("Debes iniciar sesión para jugar la Trivia RPG.");
+    window.location.href = "login.html";
+    return false;
+  }
+
+  const { data: progresoCiclo } = await supabase
+    .from("rpg_progreso")
+    .select("*")
+    .eq("user_id", usuarioActual.id)
+    .eq("ciclo", cicloActual)
+    .maybeSingle();
+
+  if (progresoCiclo && progresoCiclo.completado) {
+    document.getElementById("mentor-section").classList.add("oculto");
+    document.getElementById("mensaje-mentor-section").classList.add("oculto");
+    document.getElementById("menu-rpg").classList.add("oculto");
+    document.getElementById("juego-rpg").classList.add("oculto");
+    document.getElementById("resultados-rpg").classList.remove("oculto");
+    document.getElementById("resultados-rpg").innerHTML = `
+      <div class="panel-mensaje">
+        <h2>¡Ya completaste la Trivia de esta semana!</h2>
+        <p>Vuelve la próxima semana para un nuevo reto.<br><br>
+        <button onclick="window.location.reload()">Volver al inicio</button>
+      </div>
+    `;
+    return false;
+  } else {
+    document.getElementById("menu-rpg").classList.remove("oculto");
+    return true;
+  }
+}
+
+// =========== Juego RPG =============
+let rpgCiclos = {};
 let datosCiclo = null;
 let preguntasPorNivel = [5, 4, 3, 3, 3];
 let juegoActual = null;
 
-// Emojis y temporizador
 const EMOJIS_RPG = [
   { emoji: "😌", hasta: 21 }, // 25-21
   { emoji: "🙂", hasta: 16 }, // 20-16
@@ -391,6 +437,35 @@ function terminarAventura(ganoTodo = false) {
   `;
   document.getElementById("btn-comenzar").style.display = "none";
   document.getElementById("btn-continuar").style.display = "none";
+  // Guarda progreso Supabase solo si está presente
+  if (window.supabase) {
+    guardarProgresoRPG2({
+      nivel: juegoActual.nivel,
+      rango,
+      xp: juegoActual.xp,
+      completado: true,
+    });
+  }
+}
+
+// ========== Guardar progreso en Supabase ==========
+async function guardarProgresoRPG2({ nivel, rango, xp, completado }) {
+  const { data: sessionData } = await supabase.auth.getSession();
+  const usuarioActual = sessionData?.session?.user;
+  if (!usuarioActual) return;
+  const meta = usuarioActual.user_metadata || {};
+  await supabase.from("rpg_progreso").upsert([{
+    user_id: usuarioActual.id,
+    ciclo: cicloActual,
+    nivel_max: nivel,
+    rango,
+    xp,
+    completado,
+    fecha_juego: new Date().toISOString(),
+    pais: meta.pais || null,
+    ciudad: meta.ciudad || null,
+    parroquia: meta.parroquia || null
+  }]);
 }
 
 // ========== Logros ==========
