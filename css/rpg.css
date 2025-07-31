@@ -47,8 +47,9 @@
   text-align: center;
 }
 
-/* --- MENSAJE DE BIENVENIDA MENTOR --- */
-.mentor-bienvenida-card {
+/* --- MENSAJE DE BIENVENIDA MENTOR / NIVEL --- */
+.mentor-bienvenida-card,
+.panel-mensaje-nivel {
   background: #fffde4;
   border-radius: 1.2em;
   box-shadow: 0 4px 18px #fbc02d33;
@@ -83,21 +84,7 @@
   margin-bottom: 0.8em;
 }
 
-/* --- MENSAJE DE NIVEL CON MENTOR --- */
-.panel-mensaje-nivel {
-  background: #fffde4;
-  border-radius: 1.2em;
-  box-shadow: 0 4px 18px #ead87d33;
-  padding: 2em 1.2em 1.7em 1.2em;
-  max-width: 420px;
-  margin: 2em auto;
-  text-align: center;
-}
-.panel-mensaje-nivel img {
-  margin-bottom: 0.5em;
-}
-
-/* --- ENEMIGO EMOJI --- */
+/* --- ENEMIGO EMOJI (en preguntas) --- */
 .enemigo-emoji {
   font-size: 1.7em;
   color: #b60000;
@@ -105,126 +92,6 @@
   filter: drop-shadow(1px 1px 4px #a85808cc);
   transition: transform .17s;
   user-select: none;
-}
-
-@media (max-width: 600px) {
-  .panel-mensaje-nivel, .mentor-bienvenida-card {
-    padding: 1.2em 0.3em 1.2em 0.3em;
-    margin: 1em auto;
-    max-width: 97vw;
-  }
-  .mentor-img-nivel,
-  .mentor-bienvenida-card img {
-    width: 75px;
-    height: 75px;
-  }
-  .mentores-grid {
-    flex-direction: column;
-    align-items: center;
-    gap: 1em;
-  }
-  .mentor-card {
-    min-width: 90vw;
-    max-width: 95vw;
-    flex-direction: row;
-    gap: 1.1em;
-    padding: 1em 0.6em;
-  }
-  .mentor-card img {
-    width: 68px;
-    height: 68px;
-    margin-bottom: 0;
-  }
-}
-
-/* --- PANEL DE PREGUNTA Y TEMPORIZADOR --- */
-.temporizador-panel {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1em;
-  gap: 0.5em;
-}
-.temporizador-panel .emoji-animado {
-  font-size: 1.8em;
-}
-.temporizador-panel .timer-text {
-  font-size: 1.4em;
-  font-weight: bold;
-  color: #937600;
-  font-family: monospace;
-}
-
-/* ...mantén el resto de tu CSS (paneles, opciones, utilidades, etc.) */
-
-
-/* --- PANEL BIENVENIDA CON MENTOR --- */
-.bienvenida-card {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #fffbe7;
-  border-radius: 1.5em;
-  box-shadow: 0 3px 20px #e8c86922;
-  margin: 1.7em auto;
-  padding: 1.1em 1.2em 1.1em 1.3em;
-  gap: 1.4em;
-  max-width: 520px;
-}
-.mentor-img-box {
-  flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.mentor-busto {
-  width: 90px;
-  height: 90px;
-  border-radius: 18px;
-  background: #f9f2df;
-  box-shadow: 0 2px 12px rgba(230, 175, 55, 0.13);
-  object-fit: contain;
-}
-.bienvenida-panel {
-  flex: 1 1 0%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background: none;
-  box-shadow: none;
-  padding: 0;
-  margin: 0;
-  font-size: 1.1em;
-  text-align: left;
-  color: #64450c;
-}
-.bienvenida-panel b, .bienvenida-panel strong {
-  color: #00a877;
-}
-.bienvenida-panel .rpg-parroquia {
-  margin-top: 0.35em;
-  margin-bottom: 0.3em;
-}
-.bienvenida-panel .rpg-avanza {
-  font-size: 0.98em;
-  color: #a18816;
-  margin-top: 0.1em;
-}
-
-/* Responsive */
-@media (max-width: 600px) {
-  .bienvenida-card {
-    flex-direction: column;
-    gap: 0.7em;
-    margin-top: 1.1em;
-    margin-bottom: 1.2em;
-    max-width: 98vw;
-    padding: 1.1em 0.4em 1em 0.4em;
-  }
-  .mentor-busto {
-    width: 76px;
-    height: 76px;
-  }
 }
 
 /* --- PANEL DE PREGUNTA Y TEMPORIZADOR --- */
@@ -243,6 +110,7 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 1em;
+  gap: 0.5em;
 }
 .temporizador-panel .emoji-animado {
   font-size: 1.8em;
@@ -318,7 +186,7 @@
   z-index: 10;
 }
 
-/* --- UTILIDADES --- */
+/* --- UTILIDADES Y EFECTOS --- */
 .oculto {
   display: none !important;
 }
@@ -340,69 +208,10 @@
   75% { transform: translateX(-2px); }
   100% { transform: translateX(0); }
 }
-/* --- SELECCIÓN DE MENTOR --- */
-.mentores-lista {
-  display: flex;
-  gap: 1.3em;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin: 1.3em 0 1em 0;
-}
 
-.mentor-card {
-  background: #fffde4;
-  border-radius: 1.3em;
-  box-shadow: 0 4px 16px #ead87d22;
-  padding: 1.2em 0.7em 1em 0.7em;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 112px;
-  max-width: 128px;
-  transition: box-shadow .16s;
-  cursor: pointer;
-  border: 2px solid transparent;
-  position: relative;
-}
-
-.mentor-card.selected,
-.mentor-card:hover {
-  border-color: #fbc02d;
-  box-shadow: 0 6px 26px #fbc02d33;
-}
-
-.mentor-card img {
-  width: 78px;
-  height: 78px;
-  border-radius: 16px;
-  margin-bottom: 0.4em;
-  background: #f6eeda;
-  object-fit: contain;
-}
-
-.mentor-nombre {
-  font-size: 1.05em;
-  font-weight: bold;
-  margin-bottom: 0.25em;
-  color: #845106;
-}
-
-.mentor-habilidades {
-  font-size: 0.96em;
-  color: #697725;
-  margin-bottom: 0.2em;
-  text-align: center;
-}
-
-.mentor-descripcion {
-  font-size: 0.92em;
-  color: #a38634;
-  text-align: center;
-}
-
-/* Responsive */
+/* --- RESPONSIVE --- */
 @media (max-width: 600px) {
-  .mentores-lista {
+  .mentores-grid {
     flex-direction: column;
     align-items: center;
     gap: 1em;
@@ -418,5 +227,16 @@
     width: 68px;
     height: 68px;
     margin-bottom: 0;
+  }
+  .mentor-bienvenida-card,
+  .panel-mensaje-nivel {
+    padding: 1.2em 0.3em 1.2em 0.3em;
+    margin: 1em auto;
+    max-width: 97vw;
+  }
+  .mentor-img-nivel,
+  .mentor-bienvenida-card img {
+    width: 75px;
+    height: 75px;
   }
 }
