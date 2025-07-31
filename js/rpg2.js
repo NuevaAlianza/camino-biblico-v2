@@ -34,6 +34,8 @@ async function cargarYValidarCiclo() {
       mostrarSinCiclo();
       return;
     }
+    document.getElementById("menu-rpg").classList.remove("oculto");
+
     await mostrarStatsBienvenida();
     await chequearYMostrarFlujo();
   } catch (e) {
