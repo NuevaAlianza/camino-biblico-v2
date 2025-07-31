@@ -1,30 +1,32 @@
-// ======================== CONFIGURACIÓN Y VARIABLES ========================
+// ================= CONFIGURACIÓN Y VARIABLES GLOBALES =================
 let rpgCiclos = {};
 let cicloActual = obtenerSemanaAnio();
 let datosCiclo = null;
-let usuarioActual = null;
 let progresoRPG = null;
-let modoPractica = false; // Nuevo: para saber si es modo práctica
-
-const preguntasPorNivel = [5, 4, 3, 3, 3];
-
-const EMOJIS_RPG = [
-  { emoji: "😌", hasta: 21 }, // 25-21
-  { emoji: "🙂", hasta: 16 }, // 20-16
-  { emoji: "😐", hasta: 11 }, // 15-11
-  { emoji: "😯", hasta: 6 },  // 10-6
-  { emoji: "😱", hasta: 0 }   // 5-0
-];
-
+let usuarioActual = null;
 let juegoActual = null;
 let temporizadorActivo = null;
 
-// ======================== CARGA DE DATOS Y CICLO SEGURO ========================
+const preguntasPorNivel = [5, 4, 3, 3, 3];
+const EMOJIS_RPG = [
+  { emoji: "😌", hasta: 21 },
+  { emoji: "🙂", hasta: 16 },
+  { emoji: "😐", hasta: 11 },
+  { emoji: "😯", hasta: 6 },
+  { emoji: "😱", hasta: 0 }
+];
+
+// ================== ARRANQUE: CARGA Y VALIDACIÓN DEL CICLO ==================
 document.addEventListener('DOMContentLoaded', async () => {
-  await cargarYValidarCiclo();
+  const cicloOk = await cargarCicloDesdeJson();
+  if (!cicloOk) return;
+  await mostrarStatsBienvenida();
+  inicializarPanelInicio();
+  inicializarRPG();
 });
 
-async function cargarYValidarCiclo() {
+// Cargar datos y validar ciclo, SOLO continúa si hay ciclo válido
+async function cargarCicloDesdeJson() {
   try {
     const res = await fetch('datos/rpg-preguntas.json');
     const data = await res.json();
@@ -32,17 +34,16 @@ async function cargarYValidarCiclo() {
     datosCiclo = rpgCiclos[cicloActual];
     if (!datosCiclo) {
       mostrarSinCiclo();
-      return;
+      return false;
     }
-    document.getElementById("menu-rpg").classList.remove("oculto");
-
-    await mostrarStatsBienvenida();
-    await chequearYMostrarFlujo();
+    return true;
   } catch (e) {
     mostrarSinCiclo();
+    return false;
   }
 }
 
+// ================== UTILIDADES Y FLUJO PRINCIPAL ==================
 function obtenerSemanaAnio() {
   const d = new Date();
   d.setHours(0, 0, 0, 0);
@@ -52,24 +53,17 @@ function obtenerSemanaAnio() {
 }
 
 function mostrarSinCiclo() {
-  const menuRpg = document.getElementById("menu-rpg");
-  if (menuRpg) {
-    menuRpg.innerHTML = `
-      <div class="panel-mensaje">
-        <h2>No hay trivia RPG programada para esta semana.</h2>
-        <p>¡Vuelve la próxima semana!</p>
-      </div>
-    `;
-  }
-  // --- Chequea existencia antes de ocultar botones ---
-  const btnComenzar = document.getElementById("btn-comenzar");
-  if (btnComenzar) btnComenzar.style.display = "none";
-  const btnContinuar = document.getElementById("btn-continuar");
-  if (btnContinuar) btnContinuar.style.display = "none";
+  document.getElementById("menu-rpg").innerHTML = `
+    <div class="panel-mensaje">
+      <h2>No hay trivia RPG programada para esta semana.</h2>
+      <p>¡Vuelve la próxima semana!</p>
+    </div>
+  `;
+  document.getElementById("btn-comenzar").style.display = "none";
+  document.getElementById("btn-continuar").style.display = "none";
 }
 
-
-// ======================== BIENVENIDA PERSONALIZADA ========================
+// ================== PANEL DE BIENVENIDA Y STATS ==================
 async function mostrarStatsBienvenida() {
   const bienvenida = document.getElementById("bienvenida-stats");
   const { data: sessionData } = await supabase.auth.getSession();
@@ -78,13 +72,11 @@ async function mostrarStatsBienvenida() {
     bienvenida.innerHTML = "";
     return;
   }
-  // Calcula XP total
   const { data: xpRows } = await supabase
     .from("rpg_progreso")
     .select("xp")
     .eq("user_id", usuarioActual.id);
   const xpTotal = xpRows ? xpRows.reduce((a, b) => a + (b.xp || 0), 0) : 0;
-  // Parroquia (ranking local)
   const parroquia = usuarioActual.user_metadata?.parroquia || null;
   let parroquiaHTML = "";
   if (parroquia) {
@@ -116,18 +108,7 @@ async function mostrarStatsBienvenida() {
   `;
 }
 
-// ======================== CHEQUEO DE PROGRESO SEMANAL Y FLUJO PRINCIPAL ========================
-async function chequearYMostrarFlujo() {
-  progresoRPG = await cargarProgresoRPG();
-  if (progresoRPG && progresoRPG.completado) {
-    mostrarPanelBloqueo();
-    return;
-  }
-  // Si no ha jugado, permite iniciar flujo normal
-  inicializarPanelInicio();
-  inicializarRPG();
-}
-
+// ================== PROGRESO: CARGAR Y GUARDAR ==================
 async function cargarProgresoRPG() {
   if (window.supabase) {
     const { data: sessionData } = await supabase.auth.getSession();
@@ -142,38 +123,60 @@ async function cargarProgresoRPG() {
       .maybeSingle();
     return data;
   }
-  // (Opcional: soporte localStorage si quieres modo offline)
-  return null;
+  // LocalStorage (si no logueado)
+  const p = JSON.parse(localStorage.getItem("rpg_progreso")) || {};
+  return p[cicloActual] || null;
 }
 
-// ======================== PANEL DE BLOQUEO Y MODO PRÁCTICA ========================
-function mostrarPanelBloqueo() {
-  document.getElementById("btn-comenzar").style.display = "none";
-  document.getElementById("btn-continuar").style.display = "none";
-  document.getElementById("juego-rpg").classList.add("oculto");
-  document.getElementById("resultados-rpg").classList.add("oculto");
-  document.getElementById("logros-rpg").classList.add("oculto");
-  document.getElementById("menu-rpg").insertAdjacentHTML("beforeend",
-    `<div class="panel-mensaje" style="margin-top:1em;">
-      <strong>¡Ya completaste la Trivia de esta semana!</strong>
-      <br>Vuelve la próxima semana para un nuevo reto.<br><br>
-      <button id="btn-practica-rpg" class="btn-practica">Jugar en modo práctica</button>
-    </div>`
-  );
-  document.getElementById("btn-practica-rpg").onclick = () => {
-    modoPractica = true;
-    document.querySelectorAll(".panel-mensaje").forEach(e => e.remove());
-    inicializarPanelInicio();
-    inicializarRPG();
-  };
+async function guardarProgresoRPG({ nivel, rango, xp, completado }) {
+  if (window.supabase) {
+    const { data: sessionData } = await supabase.auth.getSession();
+    usuarioActual = sessionData?.session?.user;
+    const userId = usuarioActual?.id;
+    const meta = usuarioActual?.user_metadata || {};
+    if (!userId) return;
+    await supabase.from("rpg_progreso").upsert([{
+      user_id: userId,
+      ciclo: cicloActual,
+      nivel_max: nivel,
+      rango,
+      xp,
+      completado,
+      fecha_juego: new Date().toISOString(),
+      pais: meta.pais || null,
+      ciudad: meta.ciudad || null,
+      parroquia: meta.parroquia || null
+    }]);
+    return;
+  }
+  let p = JSON.parse(localStorage.getItem("rpg_progreso")) || {};
+  p[cicloActual] = { nivel, rango, xp, completado };
+  localStorage.setItem("rpg_progreso", JSON.stringify(p));
 }
 
-// ======================== PANEL INICIO Y BOTONES ========================
-function inicializarPanelInicio() {
+// ================== PANELES Y FLUJO DE JUEGO ==================
+async function inicializarPanelInicio() {
   document.getElementById("titulo-ciclo").textContent = datosCiclo.titulo || "Trivia Bíblica RPG";
   document.getElementById("descripcion-ciclo").textContent = datosCiclo.descripcion || "";
   document.getElementById("mensaje-rpg").textContent =
     "Recuerda: solo tienes 3 vidas para demostrar tu valía. ¿Listo para el reto?";
+}
+
+async function inicializarRPG() {
+  progresoRPG = await cargarProgresoRPG();
+  if (progresoRPG && progresoRPG.completado) {
+    document.getElementById("btn-comenzar").style.display = "none";
+    document.getElementById("btn-continuar").style.display = "none";
+    document.getElementById("juego-rpg").classList.add("oculto");
+    document.getElementById("resultados-rpg").classList.add("oculto");
+    document.getElementById("logros-rpg").classList.add("oculto");
+    document.getElementById("menu-rpg").insertAdjacentHTML("beforeend",
+      `<div class="panel-mensaje" style="margin-top:1em;">
+        <strong>¡Ya completaste la Trivia de esta semana!</strong>
+        <br>Vuelve la próxima semana para un nuevo reto.
+      </div>`);
+    return;
+  }
   document.getElementById("btn-comenzar").style.display = juegoActual ? "none" : "inline-block";
   document.getElementById("btn-continuar").style.display = juegoActual ? "inline-block" : "none";
   document.getElementById("juego-rpg").classList.add("oculto");
@@ -181,9 +184,8 @@ function inicializarPanelInicio() {
   document.getElementById("logros-rpg").classList.add("oculto");
 }
 
-// ======================== BOTONES DE INICIO ========================
+// ================== BOTONES DE INICIO ==================
 document.getElementById("btn-comenzar").onclick = () => {
-  modoPractica = false;
   juegoActual = {
     nivel: 1,
     vidas: 3,
@@ -200,15 +202,7 @@ document.getElementById("btn-logros").onclick = () => {
   mostrarLogros();
 };
 
-// ======================== FLUJO DE JUEGO Y PREGUNTAS ========================
-function inicializarRPG() {
-  document.getElementById("btn-comenzar").style.display = juegoActual ? "none" : "inline-block";
-  document.getElementById("btn-continuar").style.display = juegoActual ? "inline-block" : "none";
-  document.getElementById("juego-rpg").classList.add("oculto");
-  document.getElementById("resultados-rpg").classList.add("oculto");
-  document.getElementById("logros-rpg").classList.add("oculto");
-}
-
+// ================== JUEGO: MOSTRAR NIVEL Y PREGUNTA ==================
 function mostrarNivel() {
   const juego = document.getElementById("juego-rpg");
   juego.classList.remove("oculto");
@@ -358,36 +352,43 @@ function mostrarNivel() {
   }
 }
 
-// ======================== FINALIZAR Y RESULTADOS ========================
+// ========== FINALIZAR Y RESULTADOS ==============
 async function terminarAventura(ganoTodo = false) {
   document.getElementById("juego-rpg").classList.add("oculto");
   document.getElementById("resultados-rpg").classList.remove("oculto");
   const rango = obtenerRango(juegoActual.nivel, ganoTodo);
-
-  // Solo guardar si NO es modo práctica
-  if (!modoPractica && window.supabase) {
-    await guardarProgresoRPG({
-      nivel: juegoActual.nivel,
-      rango,
-      xp: juegoActual.xp,
-      completado: true,
-    });
-  }
+  await guardarProgresoRPG({
+    nivel: juegoActual.nivel,
+    rango,
+    xp: juegoActual.xp,
+    completado: true,
+  });
   document.getElementById("resultados-rpg").innerHTML = `
     <h2>${ganoTodo ? "¡Felicidades, completaste la Trivia!" : "Fin de la aventura"}</h2>
     <p>Tu rango: <b>${rango}</b></p>
-    <p>XP ganada: ${modoPractica ? '0 (modo práctica)' : juegoActual.xp}</p>
-    <div class="msg-epico">${modoPractica
-      ? "Modo práctica: este resultado NO se guarda y NO suma XP."
-      : "⚡️ Has completado el reto semanal. Vuelve la próxima semana para una nueva aventura."
-    }</div>
+    <p>XP ganada: ${juegoActual.xp}</p>
+    <div class="msg-epico">⚡️ Has completado el reto semanal. Vuelve la próxima semana para una nueva aventura.</div>
     <button onclick="window.location.reload()">Volver al inicio</button>
+    <button id="btn-compartir-resultado" class="compartir-btn">Compartir resultado</button>
   `;
   document.getElementById("btn-comenzar").style.display = "none";
   document.getElementById("btn-continuar").style.display = "none";
+  setTimeout(() => {
+    const btn = document.getElementById("btn-compartir-resultado");
+    if (btn) btn.onclick = () => compartirResultadoRPG(rango, juegoActual.xp, ganoTodo);
+  }, 50);
 }
 
-// ======================== UTILIDADES Y ANIMACIONES ========================
+// ================== UTILS y EXTRAS ==================
+function obtenerRango(nivel, ganoTodo) {
+  if (ganoTodo) return "Maestro de la Palabra";
+  if (nivel === 5) return "Sabio de las Escrituras";
+  if (nivel === 4) return "Guerrero de la Fe";
+  if (nivel === 3) return "Explorador Bíblico";
+  if (nivel === 2) return "Principiante";
+  return "Principiante";
+}
+
 function mezclarArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -460,21 +461,7 @@ function sonidoFalloAleatorio() {
   return opciones[i];
 }
 
-function animarAcierto(btn) {
-  btn.classList.add("acierto-anim");
-  setTimeout(() => btn.classList.remove("acierto-anim"), 500);
-}
-
-function obtenerRango(nivel, ganoTodo) {
-  if (ganoTodo) return "Maestro de la Palabra";
-  if (nivel === 5) return "Sabio de las Escrituras";
-  if (nivel === 4) return "Guerrero de la Fe";
-  if (nivel === 3) return "Explorador Bíblico";
-  if (nivel === 2) return "Principiante";
-  return "Principiante";
-}
-
-// ======================== MENSAJES Y LOGROS (FUTURO) ========================
+// ========== MENSAJES, LOGROS Y ANIMACIONES ==============
 function mostrarMensajeNivelPersonalizado(nivel, vidas, callback) {
   const mensajes = [
     "¡Buen comienzo!",
@@ -517,4 +504,24 @@ function mostrarLogros() {
     <h2>Logros RPG (próximamente)</h2>
     <button onclick="window.location.reload()">Volver</button>
   `;
+}
+
+function animarAcierto(btn) {
+  btn.classList.add("acierto-anim");
+  setTimeout(() => btn.classList.remove("acierto-anim"), 500);
+}
+
+function compartirResultadoRPG(rango, xp, completado) {
+  let mensaje = `¡He jugado la Trivia Bíblica RPG!\nObtuve el rango: ${rango}\nXP ganada: ${xp}\n¿Te atreves a superarme?`;
+  if (completado) mensaje = "¡Completé la Trivia Bíblica RPG! 🏆\n" + mensaje;
+  if (navigator.share) {
+    navigator.share({
+      title: 'Mi resultado en Trivia Bíblica RPG',
+      text: mensaje,
+      url: window.location.href
+    });
+  } else {
+    navigator.clipboard.writeText(mensaje);
+    alert("¡Resultado copiado! Puedes pegarlo en WhatsApp, Telegram o donde quieras.");
+  }
 }
