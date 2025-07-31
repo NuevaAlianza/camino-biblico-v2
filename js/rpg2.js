@@ -222,6 +222,84 @@ function obtenerSemanaAnio() {
   return d.getFullYear() + "-S" + Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
 }
 
+// ========== BLOQUEO SEMANAL UNIVERSAL EN RPG2 ==========
+
+// 1. Detectar usuario y progreso apenas carga la página
+document.addEventListener('DOMContentLoaded', async () => {
+  await chequearJuegoSemanaUniversal();
+});
+
+// 2. Universal check: se ejecuta siempre al cargar
+async function chequearJuegoSemanaUniversal() {
+  // Si no hay Supabase, modo local (no bloquea)
+  if (!window.supabase) {
+    renderMentores(); // flujo normal
+    return;
+  }
+
+  // Obtén sesión
+  const { data: sessionData } = await supabase.auth.getSession();
+  const usuarioActual = sessionData?.session?.user;
+  if (!usuarioActual) {
+    alert("Debes iniciar sesión para jugar la Trivia RPG.");
+    window.location.href = "login.html";
+    return;
+  }
+
+  // Obtén ciclo
+  let cicloActual = obtenerSemanaAnio();
+
+  // Busca si ya jugó esta semana
+  const { data: progresoCiclo } = await supabase
+    .from("rpg_progreso")
+    .select("*")
+    .eq("user_id", usuarioActual.id)
+    .eq("ciclo", cicloActual)
+    .maybeSingle();
+
+  if (progresoCiclo && progresoCiclo.completado) {
+    mostrarPanelBloqueo();
+    return;
+  }
+
+  // Si no ha jugado, permite seleccionar mentor normalmente
+  renderMentores();
+}
+
+// 3. Mostrar panel de bloqueo si ya jugó
+function mostrarPanelBloqueo() {
+  document.getElementById("mentor-section").classList.add("oculto");
+  document.getElementById("mensaje-mentor-section").classList.add("oculto");
+  document.getElementById("menu-rpg").classList.add("oculto");
+  document.getElementById("juego-rpg").classList.add("oculto");
+  document.getElementById("resultados-rpg").classList.remove("oculto");
+  document.getElementById("resultados-rpg").innerHTML = `
+    <div class="panel-mensaje">
+      <h2>¡Ya completaste la Trivia de esta semana!</h2>
+      <p>Vuelve la próxima semana para un nuevo reto.<br><br>
+      <button onclick="window.location.reload()">Volver al inicio</button>
+    </div>
+  `;
+}
+
+// 4. Cuando termines el juego y guardes progreso, vuelve a chequear y bloquear
+async function terminarAventura(ganoTodo = false) {
+  document.getElementById("juego-rpg").classList.add("oculto");
+  document.getElementById("resultados-rpg").classList.remove("oculto");
+  const rango = obtenerRango(juegoActual.nivel, ganoTodo);
+  // Guarda progreso
+  if (window.supabase) {
+    await guardarProgresoRPG2({
+      nivel: juegoActual.nivel,
+      rango,
+      xp: juegoActual.xp,
+      completado: true,
+    });
+  }
+  // Refresca el bloqueo (podrías también solo mostrarPanelBloqueo())
+  await chequearJuegoSemanaUniversal();
+}
+
 function inicializarPanelInicio() {
   document.getElementById("titulo-ciclo").textContent = datosCiclo?.titulo || "Trivia Bíblica RPG";
   document.getElementById("descripcion-ciclo").textContent = datosCiclo?.descripcion || "";
