@@ -125,6 +125,7 @@ fetch('datos/rpg-preguntas.json')
       return;
     }
     await mostrarStatsBienvenida();
+    document.getElementById("menu-rpg").classList.remove("oculto");
     inicializarPanelInicio();
     inicializarRPG();
   });
