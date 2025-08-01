@@ -1,3 +1,35 @@
+const MENTORES = [
+  {
+    id: "san_juan",
+    nombre: "San Juan Vianney",
+    img: "assets/img/mentor/mentor_cura.png",
+    habilidades: [
+      "Oración poderosa", "Empatía pastoral", "Consejo certero", "Ánimo inagotable", "Discernimiento espiritual",
+      "50% de preguntas más fáciles (¡o eso parece!)", "Sabiduría inesperada", "Fortaleza en la adversidad", "Serenidad bajo presión", "Memoria bíblica"
+    ]
+  },
+  {
+    id: "santa_teresa",
+    nombre: "Santa Teresa de Ávila",
+    img: "assets/img/mentor/mentor_teresa.png",
+    habilidades: [
+      "Paciencia legendaria", "Visión espiritual", "Alegría contagiosa", "Confianza total", "Mente estratégica",
+      "Puedes pedir pista especial", "Oración profunda", "Inspiración a prueba de dudas", "Paz interior", "Valor ante el miedo"
+    ]
+  },
+  {
+    id: "san_pablo",
+    nombre: "San Pablo",
+    img: "assets/img/mentor/mentor_pablo.png",
+    habilidades: [
+      "Conversión radical", "Resistencia a la adversidad", "Predicador incansable", "Dominio de la Palabra", "Coraje misionero",
+      "Sabiduría para responder rápido", "Motivación constante", "Discernimiento de espíritus", "Viajes épicos (¡sin perder el rumbo!)", "Citas bíblicas al instante"
+    ]
+  }
+];
+
+
+
 let rpgCiclos = {};
 let cicloActual = obtenerSemanaAnio();
 let datosCiclo = null;
@@ -506,4 +538,55 @@ function compartirResultadoRPG(rango, xp, completado) {
     navigator.clipboard.writeText(mensaje);
     alert("¡Resultado copiado! Puedes pegarlo en WhatsApp, Telegram o donde quieras.");
   }
+}
+function mostrarSelectorMentor() {
+  // Crea un modal básico, puedes mejorar visuales luego
+  let html = `
+    <div id="modal-mentor" class="modal-mentor">
+      <h2>Elige tu mentor</h2>
+      <div class="mentores-lista">
+  `;
+  MENTORES.forEach(mentor => {
+    // Elige 3 habilidades aleatorias por mentor para mostrar
+    const habilidades = mezclarArray(mentor.habilidades).slice(0, 3);
+    html += `
+      <div class="mentor-card" data-id="${mentor.id}">
+        <img src="${mentor.img}" alt="${mentor.nombre}" class="mentor-img"/>
+        <h3>${mentor.nombre}</h3>
+        <ul>
+          ${habilidades.map(hab => `<li>${hab}</li>`).join("")}
+        </ul>
+        <button class="btn-seleccionar-mentor" data-id="${mentor.id}">Elegir</button>
+      </div>
+    `;
+  });
+  html += `
+      </div>
+      <button id="cerrar-mentor" class="btn-cerrar">Cancelar</button>
+    </div>
+  `;
+
+  // Muestra el modal (o reemplaza el contenido principal si prefieres)
+  const contenedor = document.createElement("div");
+  contenedor.id = "overlay-mentor";
+  contenedor.style = "position:fixed;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.65);z-index:1000;display:flex;align-items:center;justify-content:center;";
+  contenedor.innerHTML = html;
+  document.body.appendChild(contenedor);
+
+  // Botón cerrar
+  document.getElementById("cerrar-mentor").onclick = () => {
+    document.body.removeChild(contenedor);
+  };
+
+  // Elegir mentor (solo simula selección)
+  contenedor.querySelectorAll(".btn-seleccionar-mentor").forEach(btn => {
+    btn.onclick = () => {
+      const mentorId = btn.dataset.id;
+      // Aquí solo mostramos mensaje y cerramos modal
+      alert("Has elegido a " + (MENTORES.find(m => m.id === mentorId)?.nombre || mentorId));
+      document.body.removeChild(contenedor);
+      // Aquí después avanzaremos al juego
+      // avanzarAlJuego(mentorId);
+    };
+  });
 }
