@@ -27,7 +27,8 @@ const MENTORES = [
     ]
   }
 ];
-
+// === 1. Variables globales ===
+let mentorElegido = null;
 
 
 let rpgCiclos = {};
@@ -539,6 +540,7 @@ function compartirResultadoRPG(rango, xp, completado) {
     alert("¡Resultado copiado! Puedes pegarlo en WhatsApp, Telegram o donde quieras.");
   }
 }
+// === 2. Función para mostrar el selector de mentor ===
 function mostrarSelectorMentor() {
   // Crea un modal básico, puedes mejorar visuales luego
   let html = `
@@ -566,7 +568,7 @@ function mostrarSelectorMentor() {
     </div>
   `;
 
-  // Muestra el modal (o reemplaza el contenido principal si prefieres)
+  // Muestra el modal
   const contenedor = document.createElement("div");
   contenedor.id = "overlay-mentor";
   contenedor.style = "position:fixed;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.65);z-index:1000;display:flex;align-items:center;justify-content:center;";
@@ -578,15 +580,58 @@ function mostrarSelectorMentor() {
     document.body.removeChild(contenedor);
   };
 
-  // Elegir mentor (solo simula selección)
+  // Elegir mentor (guarda variable y muestra panel)
   contenedor.querySelectorAll(".btn-seleccionar-mentor").forEach(btn => {
     btn.onclick = () => {
       const mentorId = btn.dataset.id;
-      // Aquí solo mostramos mensaje y cerramos modal
-      alert("Has elegido a " + (MENTORES.find(m => m.id === mentorId)?.nombre || mentorId));
+      mentorElegido = MENTORES.find(m => m.id === mentorId);
       document.body.removeChild(contenedor);
-      // Aquí después avanzaremos al juego
-      // avanzarAlJuego(mentorId);
+      mostrarPanelInicioConMentor();
     };
   });
+}
+
+// === 3. Panel de inicio mostrando al mentor ===
+function mostrarPanelInicioConMentor() {
+  const bienvenida = document.getElementById("bienvenida-stats");
+  bienvenida.innerHTML = `
+    <div class="panel-bienvenida">
+      <div class="rpg-bienvenido">¡Tu mentor en esta aventura será:</div>
+      <div class="mentor-seleccionado">
+        <img src="${mentorElegido.img}" alt="${mentorElegido.nombre}" style="width:90px;height:90px;border-radius:50%;margin:8px 0;">
+        <div><strong>${mentorElegido.nombre}</strong></div>
+      </div>
+      <div class="mentor-frase">${mentorElegidoFraseMotivacional()}</div>
+      <button id="btn-iniciar-aventura" class="btn-principal">Iniciar aventura</button>
+    </div>
+  `;
+  document.getElementById("btn-iniciar-aventura").onclick = () => {
+    document.getElementById("bienvenida-stats").innerHTML = "";
+    document.getElementById("menu-rpg").classList.remove("oculto");
+    document.getElementById("btn-comenzar").click(); // inicia juego
+  };
+}
+
+// === 4. Frases motivacionales según mentor ===
+function mentorElegidoFraseMotivacional() {
+  if (!mentorElegido) return "";
+  const frasesPorMentor = {
+    san_juan: [
+      "¡Recuerda: la oración es tu fuerza secreta!",
+      "No temas equivocarte, sigue adelante.",
+      "Dios siempre camina contigo, ¡ánimo!"
+    ],
+    santa_teresa: [
+      "Nada te turbe, nada te espante...",
+      "Confía, todo pasa, solo Dios basta.",
+      "Aprovecha cada pregunta para aprender."
+    ],
+    san_pablo: [
+      "Todo lo puedo en Aquel que me fortalece.",
+      "No te rindas, la fe mueve montañas.",
+      "Corre la carrera como para ganar el premio."
+    ]
+  };
+  const arr = frasesPorMentor[mentorElegido.id] || ["¡Buena suerte!"];
+  return arr[Math.floor(Math.random() * arr.length)];
 }
