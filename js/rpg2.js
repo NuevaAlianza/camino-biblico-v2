@@ -431,7 +431,7 @@ function mostrarNivel() {
     limpiarTemporizadorPregunta();
     reproducirSonido("start.mp3");
     crearTemporizadorPregunta(
-     25 + bonusTiempoMentor
+    25 + bonusTiempoMentor,
 
       () => {
         juegoActual.vidas--;
