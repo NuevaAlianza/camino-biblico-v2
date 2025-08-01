@@ -240,3 +240,142 @@
     height: 75px;
   }
 }
+/* Overlay oscuro y animación */
+#overlay-mentor {
+  background: rgba(0,0,0,0.68);
+  backdrop-filter: blur(2px);
+  animation: overlay-fadein 0.28s;
+}
+@keyframes overlay-fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+/* Modal principal */
+#modal-mentor {
+  background: #fffde4;
+  border-radius: 1.4em;
+  box-shadow: 0 10px 42px #fbc02d44;
+  padding: 2em 1.5em 1em 1.5em;
+  min-width: 280px;
+  max-width: 400px;
+  width: 95vw;
+  animation: modal-zoomIn 0.24s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+@keyframes modal-zoomIn {
+  from { transform: scale(0.86); opacity: 0.7; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+/* Título y separación */
+#modal-mentor h2 {
+  font-size: 1.28em;
+  color: #9b7403;
+  margin-bottom: 1.2em;
+}
+
+/* Cartas de mentor */
+.mentores-lista {
+  display: flex;
+  gap: 1.4em;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.mentor-card {
+  background: #fffde4;
+  border-radius: 1.2em;
+  box-shadow: 0 4px 18px #ead87d33;
+  padding: 1em 0.6em 0.7em 0.6em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 116px;
+  max-width: 135px;
+  transition: box-shadow .16s, transform .16s, border-color .16s;
+  cursor: pointer;
+  border: 2.4px solid transparent;
+  position: relative;
+}
+.mentor-card:hover, .mentor-card.selected {
+  border-color: #fbc02d;
+  box-shadow: 0 6px 28px #fbc02d66;
+  transform: scale(1.048);
+  z-index: 2;
+}
+.mentor-card:active {
+  transform: scale(0.97);
+}
+/* Haz que el click en toda la carta cuente */
+.mentor-card * {
+  pointer-events: none;
+}
+.mentor-card button {
+  pointer-events: all;
+}
+
+/* Imagen y nombre */
+.mentor-card img {
+  width: 76px;
+  height: 76px;
+  border-radius: 18px;
+  margin-bottom: 0.34em;
+  background: #f6eeda;
+  object-fit: contain;
+  box-shadow: 0 2px 8px #ead87d55;
+}
+.mentor-card h3 {
+  font-size: 1.03em;
+  font-weight: bold;
+  color: #845106;
+  margin-bottom: 0.24em;
+}
+.mentor-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0.24em 0 0.64em 0;
+}
+.mentor-card li {
+  font-size: 0.99em;
+  color: #767632;
+  text-align: center;
+}
+
+/* Botón elegir mentor */
+.btn-seleccionar-mentor {
+  background: linear-gradient(90deg, #ffe26c 10%, #fbc02d 80%);
+  border: none;
+  border-radius: 0.7em;
+  color: #785900;
+  font-weight: bold;
+  font-size: 1em;
+  padding: 0.5em 1.2em;
+  margin-top: 0.48em;
+  box-shadow: 0 2px 7px #e0c13d30;
+  cursor: pointer;
+  transition: background 0.18s, color 0.14s, box-shadow 0.17s;
+}
+.btn-seleccionar-mentor:hover, .btn-seleccionar-mentor:focus {
+  background: linear-gradient(90deg, #ffe77a 0%, #ffd24d 100%);
+  color: #714a00;
+  box-shadow: 0 5px 19px #fbc02d44;
+}
+.btn-cerrar {
+  background: #ffe6c7;
+  color: #af6c04;
+  border: none;
+  border-radius: 0.7em;
+  font-size: 1em;
+  padding: 0.45em 1.5em;
+  margin: 1.2em 0 0.5em 0;
+  cursor: pointer;
+  box-shadow: 0 1px 6px #ffeb3b23;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  #modal-mentor { min-width: 99vw; max-width: 99vw; padding: 1.1em 0.15em 1.3em 0.15em; }
+  .mentores-lista { flex-direction: column; gap: 1em; }
+  .mentor-card { min-width: 93vw; max-width: 99vw; }
+}
