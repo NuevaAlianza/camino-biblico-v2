@@ -1,11 +1,23 @@
+window.modoPractica = false;
+
 const MENTORES = [
   {
     id: "san_juan",
     nombre: "San Juan Vianney",
     img: "assets/img/mentor/mentor_cura.png",
     habilidades: [
-      "Oración poderosa", "Empatía pastoral", "Consejo certero", "Ánimo inagotable", "Discernimiento espiritual",
-      "50% de preguntas más fáciles (¡o eso parece!)", "Sabiduría inesperada", "Fortaleza en la adversidad", "Serenidad bajo presión", "Memoria bíblica"
+      "+5 segundos por pregunta", // Bonus tiempo
+      "Oración poderosa",
+      "Empatía pastoral",
+      "+10 segundos por pregunta", // Otro bonus posible
+      "Consejo certero",
+      "Ánimo inagotable",
+      "Discernimiento espiritual",
+      "50% de preguntas más fáciles (¡o eso parece!)",
+      "Sabiduría inesperada",
+      "Fortaleza en la adversidad",
+      "Serenidad bajo presión",
+      "Memoria bíblica"
     ]
   },
   {
@@ -13,8 +25,18 @@ const MENTORES = [
     nombre: "Santa Teresa de Ávila",
     img: "assets/img/mentor/mentor_teresa.png",
     habilidades: [
-      "Paciencia legendaria", "Visión espiritual", "Alegría contagiosa", "Confianza total", "Mente estratégica",
-      "Puedes pedir pista especial", "Oración profunda", "Inspiración a prueba de dudas", "Paz interior", "Valor ante el miedo"
+      "Paciencia legendaria",
+      "+7 segundos por pregunta", // Bonus tiempo diferente
+      "Visión espiritual",
+      "Alegría contagiosa",
+      "Confianza total",
+      "Mente estratégica",
+      "Puedes pedir pista especial",
+      "+2 segundos por pregunta", // Otro bonus posible
+      "Oración profunda",
+      "Inspiración a prueba de dudas",
+      "Paz interior",
+      "Valor ante el miedo"
     ]
   },
   {
@@ -22,13 +44,32 @@ const MENTORES = [
     nombre: "San Pablo",
     img: "assets/img/mentor/mentor_pablo.png",
     habilidades: [
-      "Conversión radical", "Resistencia a la adversidad", "Predicador incansable", "Dominio de la Palabra", "Coraje misionero",
-      "Sabiduría para responder rápido", "Motivación constante", "Discernimiento de espíritus", "Viajes épicos (¡sin perder el rumbo!)", "Citas bíblicas al instante"
+      "+10 segundos por pregunta", // Bonus tiempo
+      "Conversión radical",
+      "Resistencia a la adversidad",
+      "Predicador incansable",
+      "Dominio de la Palabra",
+      "+5 segundos por pregunta", // Otro bonus
+      "Coraje misionero",
+      "Sabiduría para responder rápido",
+      "Motivación constante",
+      "Discernimiento de espíritus",
+      "Viajes épicos (¡sin perder el rumbo!)",
+      "Citas bíblicas al instante"
     ]
   }
 ];
+function extraerBonusSegundos(habilidad) {
+  // Detecta cualquier "+X segundos por pregunta"
+  const match = habilidad.match(/\+(\d+)\s*segundos?/i);
+  return match ? parseInt(match[1], 10) : 0;
+}
+
 // === 1. Variables globales ===
+
 let mentorElegido = null;
+let habilidadesMentorPartida = [];
+let bonusTiempoMentor = 0; // Suma de los segundos extra para la partida
 
 
 let rpgCiclos = {};
@@ -152,24 +193,32 @@ function mostrarSinCiclo() {
 // ========== PANEL BIENVENIDA Y STATS ==========
 async function mostrarStatsBienvenida() {
   const bienvenida = document.getElementById("bienvenida-stats");
-  // Verificar si ya jugó (usando la lógica de progreso actual, igual que antes)
   progresoRPG = await cargarProgresoRPG();
   let yaJugo = progresoRPG && progresoRPG.completado;
 
-  // Si ya jugó: mensaje y bloqueo, como antes
+  // Si ya jugó: Muestra mensaje y botón modo práctica
   if (yaJugo) {
     bienvenida.innerHTML = `
       <div class="panel-bienvenida">
         <div class="rpg-bienvenido">¡Ya completaste la Trivia RPG de esta semana!</div>
         <div>Vuelve la próxima semana para un nuevo reto.<br>
-        <small>(Si quieres, puedes jugar en modo práctica, pero no sumará XP.)</small></div>
+        <small>(Si quieres, puedes jugar en <b>modo práctica</b>, pero no sumará XP ni logros.)</small></div>
+        <button id="btn-modo-practica" class="btn-secundario">Jugar en modo práctica</button>
       </div>
     `;
-    // (Aquí luego habilitaremos el botón de "Jugar de nuevo" sin XP)
+    document.getElementById("btn-modo-practica").onclick = () => {
+      window.modoPractica = true; // Activa la bandera global
+      // Reinicia estado de juego y mentor para nueva práctica
+      juegoActual = null;
+      mentorElegido = null;
+      bonusTiempoMentor = 0;
+      habilidadesMentorPartida = [];
+      mostrarStatsBienvenidaModoPractica();
+    };
     return;
   }
 
-  // Si NO ha jugado: mensaje motivacional para elegir mentor
+  // Si NO ha jugado: solo muestra elegir mentor
   bienvenida.innerHTML = `
     <div class="panel-bienvenida">
       <div class="rpg-bienvenido">¡Bienvenido a la Aventura RPG!</div>
@@ -180,9 +229,26 @@ async function mostrarStatsBienvenida() {
   `;
   setTimeout(() => {
     const btn = document.getElementById("btn-elegir-mentor");
-    if (btn) btn.onclick = mostrarSelectorMentor; // Prepara función, aunque aún no existe
+    if (btn) btn.onclick = mostrarSelectorMentor;
   }, 100);
 }
+
+// ========== PANEL BIENVENIDA EN MODO PRÁCTICA ==========
+function mostrarStatsBienvenidaModoPractica() {
+  const bienvenida = document.getElementById("bienvenida-stats");
+  bienvenida.innerHTML = `
+    <div class="panel-bienvenida practica">
+      <div class="rpg-bienvenido">¡Modo práctica activado!</div>
+      <div class="rpg-avanza">Juega para practicar y mejorar.<br>Esta partida no sumará XP ni logros.</div>
+      <button id="btn-elegir-mentor" class="btn-principal">Elegir Mentor</button>
+    </div>
+  `;
+  setTimeout(() => {
+    const btn = document.getElementById("btn-elegir-mentor");
+    if (btn) btn.onclick = mostrarSelectorMentor;
+  }, 100);
+}
+
 
 
 // ========== PROGRESO: CARGAR Y GUARDAR ==========
@@ -365,7 +431,8 @@ function mostrarNivel() {
     limpiarTemporizadorPregunta();
     reproducirSonido("start.mp3");
     crearTemporizadorPregunta(
-      25,
+     25 + bonusTiempoMentor
+
       () => {
         juegoActual.vidas--;
         if (juegoActual.vidas <= 0) {
@@ -393,7 +460,7 @@ function mostrarNivel() {
         if (correcta) {
           btn.classList.add("acierto");
           animarAcierto(btn);
-          reproducirSonido("correct.mp3");
+          reproducirSonido("correcto.mp3");
           juegoActual.xp += juegoActual.nivel * 1;
         } else {
           btn.classList.add("fallo");
@@ -435,6 +502,22 @@ function mostrarNivel() {
 async function terminarAventura(ganoTodo = false) {
   document.getElementById("juego-rpg").classList.add("oculto");
   document.getElementById("resultados-rpg").classList.remove("oculto");
+
+  // --- Si es modo práctica, NO guardar progreso ni XP
+  if (window.modoPractica) {
+    document.getElementById("resultados-rpg").innerHTML = `
+      <h2>¡Fin de la práctica!</h2>
+      <p>¡Muy bien! Has completado el reto en <b>modo práctica</b>.</p>
+      <div class="msg-epico">Recuerda: Esta partida no cuenta para tu ranking, XP ni logros.<br>
+      Puedes volver a practicar cuando quieras.</div>
+      <button onclick="window.location.reload()">Volver al inicio</button>
+    `;
+    document.getElementById("btn-comenzar").style.display = "none";
+    document.getElementById("btn-continuar").style.display = "none";
+    return;
+  }
+
+  // --- Si es juego real, sí guarda progreso
   const rango = obtenerRango(juegoActual.nivel, ganoTodo);
   await guardarProgresoRPG({
     nivel: juegoActual.nivel,
@@ -457,6 +540,7 @@ async function terminarAventura(ganoTodo = false) {
     if (btn) btn.onclick = () => compartirResultadoRPG(rango, juegoActual.xp, ganoTodo);
   }, 50);
 }
+
 
 // ========== OTROS ==========
 function obtenerRango(nivel, ganoTodo) {
@@ -555,14 +639,13 @@ function compartirResultadoRPG(rango, xp, completado) {
 }
 // === 2. Función para mostrar el selector de mentor ===
 function mostrarSelectorMentor() {
-  // Crea un modal básico, puedes mejorar visuales luego
   let html = `
     <div id="modal-mentor" class="modal-mentor">
       <h2>Elige tu mentor</h2>
       <div class="mentores-lista">
   `;
   MENTORES.forEach(mentor => {
-    // Elige 3 habilidades aleatorias por mentor para mostrar
+    // Elige 3 habilidades aleatorias
     const habilidades = mezclarArray(mentor.habilidades).slice(0, 3);
     html += `
       <div class="mentor-card" data-id="${mentor.id}">
@@ -593,16 +676,23 @@ function mostrarSelectorMentor() {
     document.body.removeChild(contenedor);
   };
 
-  // Elegir mentor (guarda variable y muestra panel)
+  // Elegir mentor y calcular bonus
   contenedor.querySelectorAll(".btn-seleccionar-mentor").forEach(btn => {
     btn.onclick = () => {
       const mentorId = btn.dataset.id;
       mentorElegido = MENTORES.find(m => m.id === mentorId);
+      habilidadesMentorPartida = mezclarArray(mentorElegido.habilidades).slice(0, 3);
+
+      // Suma los segundos de todas las habilidades seleccionadas
+      bonusTiempoMentor = habilidadesMentorPartida.reduce((total, h) => total + extraerBonusSegundos(h), 0);
+
       document.body.removeChild(contenedor);
       mostrarPanelInicioConMentor();
     };
   });
 }
+
+
 
 // === 3. Panel de inicio mostrando al mentor ===
 function mostrarPanelInicioConMentor() {
