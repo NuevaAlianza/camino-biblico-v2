@@ -506,8 +506,19 @@ function mostrarMensajeNivelPersonalizado(nivel, vidas, callback) {
   const msg = mensajes[nivel-1] || "¡Sigue así!";
   const tip = tipsPorNivel[nivel-1] || "";
 
+  let mentorHtml = "";
+  if (mentorElegido) {
+    mentorHtml = `
+      <div class="mentor-nivel-panel">
+        <img src="${mentorElegido.img}" class="mentor-img-nivel" alt="${mentorElegido.nombre}" />
+        <div class="mentor-mensaje-nivel">${mentorElegidoFraseNivel()}</div>
+      </div>
+    `;
+  }
+
   document.getElementById("juego-rpg").innerHTML = `
     <div class="panel-mensaje-nivel">
+      ${mentorHtml}
       <h2>🎉 ¡Felicidades!</h2>
       <p>${msg}</p>
       <p>Has alcanzado el <b>nivel ${nivel}</b>.<br>
@@ -520,6 +531,7 @@ function mostrarMensajeNivelPersonalizado(nivel, vidas, callback) {
   `;
   document.getElementById("btn-seguir-nivel").onclick = callback;
 }
+
 
 function animarAcierto(btn) {
   btn.classList.add("acierto-anim");
@@ -634,5 +646,27 @@ function mentorElegidoFraseMotivacional() {
     ]
   };
   const arr = frasesPorMentor[mentorElegido.id] || ["¡Buena suerte!"];
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+function mentorElegidoFraseNivel() {
+  if (!mentorElegido) return "";
+  const frasesPorMentor = {
+    san_juan: [
+      "La paciencia te llevará lejos, ¡confía en Dios!",
+      "Cada error es una oportunidad de crecer en santidad.",
+      "Sigue adelante, la gracia nunca te abandona."
+    ],
+    santa_teresa: [
+      "No te detengas, ¡la fe mueve todo!",
+      "En cada paso, Dios te acompaña.",
+      "Si caes, levántate con una sonrisa y sigue."
+    ],
+    san_pablo: [
+      "Lucha la buena batalla, ¡no te rindas!",
+      "Dios obra en ti, aun en el cansancio.",
+      "¡El premio espera al final de la carrera!"
+    ]
+  };
+  const arr = frasesPorMentor[mentorElegido.id] || ["¡Sigue, eres capaz!"];
   return arr[Math.floor(Math.random() * arr.length)];
 }
