@@ -56,11 +56,26 @@
   <!-- Contenedor para configuración grupal -->
   <main id="config-grupal" class="oculto" style="max-width: 500px; margin: 2.5rem auto;">
     <h2>Quiz aleatorio - Modo Grupal</h2>
-    <p>Esta sección la implementaremos pronto para seleccionar cantidad de equipos y otras opciones.</p>
+
+    <label>
+      Número de equipos:
+      <select id="cantidad-equipos">
+        <option value="2">2 equipos</option>
+        <option value="3">3 equipos</option>
+        <option value="4" selected>4 equipos</option>
+      </select>
+    </label>
+
+    <div id="elige-categorias-grupal" style="margin-top: 1em;"></div>
+
+    <button id="iniciar-quiz-grupal" style="margin-top: 1em;">Iniciar Juego Grupal</button>
+
     <button id="volver-menu-grupal" style="margin-top: 2rem;">← Volver a selección de modo</button>
   </main>
 
   <script src="js/app/aleatorio.js"></script>
+  <script src="js/app/aleatorio-grupal.js"></script>
+
   <script>
     // Manejo básico mostrar/ocultar secciones según botón elegido
     const menuPrincipal = document.getElementById('menu-principal-aleatorio');
@@ -77,6 +92,7 @@
       menuPrincipal.classList.add('oculto');
       configSolitario.classList.add('oculto');
       configGrupal.classList.remove('oculto');
+      iniciarConfiguracionGrupal(); // Carga preguntas y categorías para grupal
     });
 
     document.getElementById('volver-menu-solitario').addEventListener('click', (e) => {
