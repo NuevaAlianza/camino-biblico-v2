@@ -8,22 +8,30 @@
 </head>
 <body>
   <main id="contenido-aleatorio">
+
+    <h2>Elige modo de juego</h2>
+    <div id="seleccion-modo" style="margin-bottom: 1.5em;">
+      <button id="modo-solitario" class="modo-btn" style="margin-right:1em;">Solitario</button>
+      <button id="modo-grupal" class="modo-btn">Grupal (2-4 equipos)</button>
+    </div>
+
+    <!-- Configuración modo solitario (por defecto visible) -->
     <div id="config-quiz-random">
-      <h2>Quiz aleatorio</h2>
-   <ul id="descripcion-quiz" style="margin-bottom:1em; list-style: none; padding: 0;">
-  <li style="margin-bottom: 0.6em;">
-    <span style="font-size:1.15em; color:#f4a261;">💡</span>
-    Selecciona cuántas preguntas quieres responder.
-  </li>
-  <li style="margin-bottom: 0.6em;">
-    <span style="font-size:1.15em; color:#2a9d8f;">🎯</span>
-    El sistema elegirá <strong>preguntas aleatorias</strong> de las categorías que marques.
-  </li>
-  <li>
-    <span style="font-size:1.15em; color:#e76f51;">⚙️</span>
-    Puedes <strong>incluir</strong> o <strong>excluir</strong> categorías según tu preferencia.
-  </li>
-</ul>
+      <h2>Quiz aleatorio - Modo Solitario</h2>
+      <ul id="descripcion-quiz" style="margin-bottom:1em; list-style: none; padding: 0;">
+        <li style="margin-bottom: 0.6em;">
+          <span style="font-size:1.15em; color:#f4a261;">💡</span>
+          Selecciona cuántas preguntas quieres responder.
+        </li>
+        <li style="margin-bottom: 0.6em;">
+          <span style="font-size:1.15em; color:#2a9d8f;">🎯</span>
+          El sistema elegirá <strong>preguntas aleatorias</strong> de las categorías que marques.
+        </li>
+        <li>
+          <span style="font-size:1.15em; color:#e76f51;">⚙️</span>
+          Puedes <strong>incluir</strong> o <strong>excluir</strong> categorías según tu preferencia.
+        </li>
+      </ul>
 
       <label>
         ¿Cuántas preguntas?
@@ -35,21 +43,37 @@
         </select>
       </label>
       <div id="elige-categorias"></div>
-      <button id="iniciar-quiz-random">Iniciar</button>
+      <button id="iniciar-quiz-random">Iniciar Solitario</button>
     </div>
+
+    <!-- Configuración modo grupal (inicialmente oculta) -->
+    <div id="config-quiz-grupal" class="oculto">
+      <h2>Quiz Aleatorio - Modo Grupal</h2>
+      <label>
+        Número de equipos:
+        <select id="cantidad-equipos">
+          <option value="2" selected>2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
+      </label>
+      <button id="iniciar-quiz-grupal">Iniciar Grupal</button>
+      <div id="mensaje-grupal" style="margin-top:1em;"></div>
+    </div>
+
     <div id="juego-aleatorio" class="oculto"></div>
+
     <a href="menu.html" id="btn-inicio" title="Volver al inicio">🏠</a>
   </main>
+
   <script src="js/app/aleatorio.js"></script>
-
+  <!-- Aquí luego cargaremos el JS grupal dinámicamente -->
+  
   <!-- Favicon -->
-<link rel="icon" type="image/png" sizes="32x32" href="assets/img/icon_192x192.png">
-<link rel="icon" type="image/png" sizes="192x192" href="assets/img/icon_192x192.png">
-<link rel="apple-touch-icon" sizes="180x180" href="assets/img/icon_192x192.png">
-
-<!-- Manifest -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#ead196">
-
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/icon_192x192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/img/icon_192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/icon_192x192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ead196">
 </body>
 </html>
