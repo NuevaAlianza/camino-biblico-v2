@@ -1,26 +1,47 @@
-// js/app/aleatorio-grupal.js
+// Variables globales para preguntas (se cargan desde JSON, igual que en modo solitario)
+let preguntasDataGrupal = [];
 
-// Variables globales para modo grupal
-let preguntasData = []; // Se cargará desde JSON igual que en modo solitario
+// Función para obtener categorías únicas de preguntas
+function obtenerCategoriasUnicasGrupal(preguntas) {
+  return [...new Set(preguntas.map(p => p.categoria))];
+}
 
-// Equipos: colores y puntajes iniciales, se configuran dinámicamente según cantidad de equipos
+// Generar checkboxes para selección de categorías en modo grupal
+function generarCheckboxCategoriasGrupal(preguntas) {
+  const categorias = obtenerCategoriasUnicasGrupal(preguntas);
+  const contenedor = document.getElementById("elige-categorias-grupal");
+  contenedor.innerHTML = "<h3>Categorías:</h3>";
+  categorias.forEach(cat => {
+    contenedor.innerHTML += `
+      <label style="margin-right:1em; cursor:pointer;">
+        <input type="checkbox" name="categoria-grupal" value="${cat}" checked>
+        <span>${cat}</span>
+      </label>
+    `;
+  });
+}
+
+// Obtener categorías seleccionadas en modo grupal
+function obtenerCategoriasSeleccionadasGrupal() {
+  return Array.from(document.querySelectorAll('input[name="categoria-grupal"]:checked'))
+    .map(cb => cb.value);
+}
+
+// Paleta colores para equipos (hasta 4 equipos)
+const coloresEquipos = ["#2196f3", "#e53935", "#e91e63", "#4caf50"];
+
+// Variables para juego grupal
 let equipos = [];
-
-// Control de rondas y preguntas
 let rondaActual = 1;
 const totalRondas = 3;
 const preguntasPorRonda = 5; // Preguntas por equipo en cada ronda
 
-let preguntasGrupal = []; // Preguntas filtradas y mezcladas para el juego grupal
-let preguntasUsadas = new Set(); // Para evitar repetir preguntas
-let indiceEquipoTurno = 0; // Equipo que responde actualmente
+let preguntasGrupal = []; // Preguntas filtradas y mezcladas
+let preguntasUsadas = new Set();
+let indiceEquipoTurno = 0; // Equipo actual
 let indicePreguntaRonda = 0; // Pregunta actual dentro de la ronda
 
-// Turno para selección de ventaja (antes de ronda)
-let turnoSeleccion = 0;
-
-// Paleta colores para equipos (hasta 4 equipos)
-const coloresEquipos = ["#2196f3", "#e53935", "#e91e63", "#4caf50"];
+let turnoSeleccion = 0; // Turno para elegir ventaja (3x3)
 
 // --- Funciones auxiliares ---
 
@@ -35,7 +56,6 @@ function mezclarArray(array) {
 
 // Asigna segundos extra según casilla 1-9 en 3x3
 function calcularTiempoExtra(casilla) {
-  // Ejemplo: casilla 1 da 15 seg, 2 da 8 seg, 3 da 5 seg, resto 0 seg
   switch (parseInt(casilla, 10)) {
     case 1: return 15;
     case 2: return 8;
@@ -46,7 +66,6 @@ function calcularTiempoExtra(casilla) {
 
 // --- Inicio de juego grupal ---
 function iniciarJuegoGrupal(categoriasSeleccionadas, cantidadEquipos) {
-  // Inicializa equipos con colores y puntaje 0
   equipos = [];
   for (let i = 0; i < cantidadEquipos; i++) {
     equipos.push({
@@ -57,9 +76,8 @@ function iniciarJuegoGrupal(categoriasSeleccionadas, cantidadEquipos) {
     });
   }
 
-  // Filtrar preguntas por categorías y mezclarlas
   preguntasGrupal = mezclarArray(
-    preguntasData.filter(p => categoriasSeleccionadas.includes(p.categoria))
+    preguntasDataGrupal.filter(p => categoriasSeleccionadas.includes(p.categoria))
   );
   preguntasUsadas.clear();
 
@@ -130,7 +148,6 @@ function comenzarRonda() {
 function mostrarPreguntaEquipo() {
   const equipo = equipos[indiceEquipoTurno];
 
-  // Buscar siguiente pregunta no usada
   let p = null;
   while (indicePreguntaRonda < preguntasGrupal.length) {
     if (!preguntasUsadas.has(preguntasGrupal[indicePreguntaRonda])) {
@@ -166,7 +183,7 @@ function mostrarPregunta(pregunta, equipo) {
     <div id="opciones" style="margin-top:1em;">
   `;
 
-  opciones.forEach((op, i) => {
+  opciones.forEach((op) => {
     html += `<button class="btn-opcion" data-correcta="${op.correcta}" style="display:block; margin:0.5em 0;">${op.texto}</button>`;
   });
 
@@ -257,5 +274,28 @@ function terminarJuego() {
   };
 }
 
-// --- Exportar la función principal para que se pueda llamar desde otro script ---
+// --- Exportar función para iniciar el juego grupal desde otro script ---
 window.iniciarJuegoGrupal = iniciarJuegoGrupal;
+
+// --- Inicializar configuración grupal cuando se muestra esa sección ---
+function iniciarConfiguracionGrupal() {
+  fetch('datos/quiz.json')
+    .then(res => res.json())
+    .then(data => {
+      preguntasDataGrupal = data;
+      generarCheckboxCategoriasGrupal(preguntasDataGrupal);
+      configurarBotonIniciarGrupal();
+    });
+}
+
+function configurarBotonIniciarGrupal() {
+  document.getElementById("iniciar-quiz-grupal").addEventListener("click", () => {
+    const cantidadEquipos = parseInt(document.getElementById("cantidad-equipos").value);
+    const categoriasSeleccionadas = obtenerCategoriasSeleccionadasGrupal();
+    if (categoriasSeleccionadas.length === 0) {
+      alert("Por favor selecciona al menos una categoría.");
+      return;
+    }
+    iniciarJuegoGrupal(categoriasSeleccionadas, cantidadEquipos);
+  });
+}
