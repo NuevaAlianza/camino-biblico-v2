@@ -44,7 +44,6 @@ const totalRondas = 3;
 const preguntasPorRonda = 5; // Preguntas por equipo en cada ronda
 
 let preguntasGrupal = []; // Preguntas filtradas y mezcladas
-let preguntasUsadas = new Set();
 let indicePreguntaGlobal = 0; // Índice global para recorrer preguntas filtradas
 
 let indiceEquipoTurno = 0; // Equipo actual
@@ -53,6 +52,14 @@ let turnoSeleccion = 0; // Turno para elegir ventaja (3x3)
 
 // Temporizador
 let temporizadorActivo = null;
+
+// --- Sonidos (opcional) ---
+const sonidoInicio = new Audio('assets/sonidos/inicio.mp3');
+const sonidoCorrecto = new Audio('assets/sonidos/correcto.mp3');
+const sonidoIncorrecto = new Audio('assets/sonidos/incorrecto.mp3');
+const sonidoFondo = new Audio('assets/sonidos/background.mp3');
+sonidoFondo.loop = true;
+sonidoFondo.volume = 0.3;
 
 // --- Funciones auxiliares ---
 
@@ -128,19 +135,21 @@ function iniciarJuegoGrupal(categoriasSeleccionadas, cantidadEquipos) {
       color: coloresEquipos[i].color,
       nombreColor: coloresEquipos[i].nombre,
       puntaje: 0,
-      tiempoExtra: 0
+      tiempoExtra: 0,
+      preguntasContestadas: 0
     });
   }
 
   preguntasGrupal = mezclarArray(
     preguntasDataGrupal.filter(p => categoriasSeleccionadas.includes(p.categoria))
   );
-  preguntasUsadas.clear();
-
+  indicePreguntaGlobal = 0;
   rondaActual = 1;
   indiceEquipoTurno = 0;
-  indicePreguntaGlobal = 0;
   turnoSeleccion = 0;
+
+  // Comienza con música de fondo (opcional)
+  sonidoFondo.play().catch(() => {});
 
   mostrarTableroVentajaParaRonda();
 }
@@ -199,34 +208,27 @@ function iniciarTurnosSeleccionVentaja() {
 // --- Inicia la ronda: turno primer equipo, primera pregunta ---
 function comenzarRonda() {
   indiceEquipoTurno = 0;
-  indicePreguntaGlobal = 0;
   mostrarPreguntaEquipo();
 }
 
 // --- Mostrar pregunta para equipo actual ---
 function mostrarPreguntaEquipo() {
-  const equipo = equipos[indiceEquipoTurno];
-
   if (indicePreguntaGlobal >= preguntasGrupal.length) {
     terminarRonda();
     return;
   }
 
-  // Para distribuir preguntas equitativamente:
-  // Calculamos índice pregunta en ronda (de 0 a preguntasPorRonda-1) para el equipo actual:
-  const preguntasContestadasPorEquipo = equipos[indiceEquipoTurno].preguntasContestadas || 0;
+  const equipo = equipos[indiceEquipoTurno];
 
-  if (preguntasContestadasPorEquipo >= preguntasPorRonda) {
-    // Ya contestó las preguntas suficientes, pasamos al siguiente equipo
+  if (equipo.preguntasContestadas >= preguntasPorRonda) {
     pasarTurno();
     return;
   }
 
-  // Si no, tomamos pregunta actual y asignamos a este equipo
   const p = preguntasGrupal[indicePreguntaGlobal];
   indicePreguntaGlobal++;
 
-  equipos[indiceEquipoTurno].preguntasContestadas = preguntasContestadasPorEquipo + 1;
+  equipo.preguntasContestadas++;
 
   mostrarPregunta(p, equipo);
 }
@@ -267,10 +269,19 @@ function mostrarPregunta(pregunta, equipo) {
 
   contenedor.innerHTML = html;
 
+  // Sonido inicio pregunta
+  sonidoInicio.play().catch(() => {});
+
+  // Iniciar música de fondo si no está sonando
+  if (sonidoFondo.paused) {
+    sonidoFondo.play().catch(() => {});
+  }
+
   // Iniciar temporizador
   detenerTemporizador();
   iniciarTemporizador(tiempoBase, () => {
     // Tiempo agotado → penalizar, pasar turno
+    sonidoIncorrecto.play().catch(() => {});
     pasarTurno();
   });
 
@@ -280,8 +291,10 @@ function mostrarPregunta(pregunta, equipo) {
       const correcta = btn.dataset.correcta === "true";
       if (correcta) {
         equipo.puntaje++;
+        sonidoCorrecto.play().catch(() => {});
         btn.style.background = "#81c784";
       } else {
+        sonidoIncorrecto.play().catch(() => {});
         btn.style.background = "#e57373";
       }
       deshabilitarOpciones();
@@ -364,6 +377,7 @@ function terminarJuego() {
   document.getElementById("btn-jugar-nuevamente").onclick = () => {
     location.reload();
   };
+
 }
 
 // Exportar función para iniciar el juego grupal desde otro script
@@ -395,3 +409,4 @@ function configurarBotonIniciarGrupal() {
     };
   }
 }
+
