@@ -3,25 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Quiz Aleatorio - Selección de modo</title>
+  <title>Quiz Aleatorio – Modo Solitario</title>
   <link rel="stylesheet" href="css/estilos.css" />
 </head>
 <body>
-  <main class="menu" id="menu-principal-aleatorio">
-
-    <h1>Elige modo de juego</h1>
-
-    <nav>
-      <button id="btn-solitario">🎮 Modo Solitario</button>
-      <button id="btn-grupal">🤼‍♂️ Modo Grupal (2-4 equipos)</button>
-    </nav>
-    
-  </main>
-
-  <!-- Contenedor para configuración solitario -->
-  <main id="config-solitario" class="oculto" style="max-width: 500px; margin: 2.5rem auto;">
-    <h2>Quiz aleatorio - Modo Solitario</h2>
-    <ul id="descripcion-quiz" style="margin-bottom:1em; list-style: none; padding: 0;">
+  <main id="config-solitario" style="max-width: 500px; margin: 2.5rem auto;">
+    <h1>Quiz Aleatorio – Modo Solitario</h1>
+    <ul style="margin-bottom:1em; list-style: none; padding: 0;">
       <li style="margin-bottom: 0.6em;">
         <span style="font-size:1.15em; color:#f4a261;">💡</span>
         Selecciona cuántas preguntas quieres responder.
@@ -36,7 +24,7 @@
       </li>
     </ul>
 
-    <label>
+    <label for="cantidad-preguntas">
       ¿Cuántas preguntas?
       <select id="cantidad-preguntas">
         <option value="5">5</option>
@@ -45,68 +33,14 @@
         <option value="20">20</option>
       </select>
     </label>
+
     <div id="elige-categorias"></div>
-    <button id="iniciar-quiz-random">Iniciar Solitario</button>
+    <button id="iniciar-quiz-random" style="margin-top: 1.2em;">Iniciar Quiz</button>
+    <a href="menu.html" style="display: block; margin-top: 1.7em; text-decoration: underline; cursor: pointer;">← Volver al menú</a>
 
-    <a href="#" id="volver-menu-solitario" style="display: block; margin-top: 1.5rem; text-decoration: underline; cursor: pointer;">← Volver a selección de modo</a>
-
-    <div id="juego-aleatorio" class="oculto" style="margin-top: 1em;"></div>
-  </main>
-
-  <!-- Contenedor para configuración grupal -->
-  <main id="config-grupal" class="oculto" style="max-width: 500px; margin: 2.5rem auto;">
-    <h2>Quiz aleatorio - Modo Grupal</h2>
-
-    <label>
-      Número de equipos:
-      <select id="cantidad-equipos">
-        <option value="2">2 equipos</option>
-        <option value="3">3 equipos</option>
-        <option value="4" selected>4 equipos</option>
-      </select>
-    </label>
-
-    <div id="elige-categorias-grupal" style="margin-top: 1em;"></div>
-
-    <button id="iniciar-quiz-grupal" style="margin-top: 1em;">Iniciar Juego Grupal</button>
-
-    <button id="volver-menu-grupal" style="margin-top: 2rem;">← Volver a selección de modo</button>
+    <div id="juego-aleatorio" class="oculto" style="margin-top: 1.6em;"></div>
   </main>
 
   <script src="js/app/aleatorio.js"></script>
-  <script src="js/app/aleatorio-grupal.js"></script>
-
-  <script>
-    // Manejo básico mostrar/ocultar secciones según botón elegido
-    const menuPrincipal = document.getElementById('menu-principal-aleatorio');
-    const configSolitario = document.getElementById('config-solitario');
-    const configGrupal = document.getElementById('config-grupal');
-
-    document.getElementById('btn-solitario').addEventListener('click', () => {
-      menuPrincipal.classList.add('oculto');
-      configSolitario.classList.remove('oculto');
-      configGrupal.classList.add('oculto');
-    });
-
-    document.getElementById('btn-grupal').addEventListener('click', () => {
-      menuPrincipal.classList.add('oculto');
-      configSolitario.classList.add('oculto');
-      configGrupal.classList.remove('oculto');
-      iniciarConfiguracionGrupal(); // Carga preguntas y categorías para grupal
-    });
-
-    document.getElementById('volver-menu-solitario').addEventListener('click', (e) => {
-      e.preventDefault();
-      configSolitario.classList.add('oculto');
-      menuPrincipal.classList.remove('oculto');
-      configGrupal.classList.add('oculto');
-    });
-
-    document.getElementById('volver-menu-grupal').addEventListener('click', () => {
-      configGrupal.classList.add('oculto');
-      menuPrincipal.classList.remove('oculto');
-      configSolitario.classList.add('oculto');
-    });
-  </script>
 </body>
 </html>
