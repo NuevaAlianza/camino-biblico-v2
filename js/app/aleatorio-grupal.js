@@ -159,8 +159,11 @@ function mostrarTableroVentajaParaRonda() {
     <p>Equipos eligen casilla para ventaja de tiempo, en orden.</p>
     <div id="tablero-ventaja" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 300px; margin: 1em auto;">
   `;
-  for (let i = 1; i <= 9; i++) {
-    html += `<button class="casilla" data-casilla="${i}" style="padding: 20px; font-weight: bold; border-radius: 8px;">${i}</button>`;
+
+  // NUEVO: Barajamos los números del 1 al 9 para aleatorizar la disposición
+  const casillas = mezclarArray([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+  for (let i = 0; i < 9; i++) {
+    html += `<button class="casilla" data-casilla="${casillas[i]}" style="padding: 20px; font-weight: bold; border-radius: 8px;">${casillas[i]}</button>`;
   }
   html += `</div>`;
   html += `<div id="info-seleccion" style="margin-top: 1em; font-weight: bold; text-align: center;"></div>`;
@@ -169,6 +172,7 @@ function mostrarTableroVentajaParaRonda() {
 
   iniciarTurnosSeleccionVentaja();
 }
+
 
 // --- Controla turnos para que cada equipo elija ventaja ---
 function iniciarTurnosSeleccionVentaja() {
