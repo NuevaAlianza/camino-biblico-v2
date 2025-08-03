@@ -1,4 +1,6 @@
-// Variables globales para preguntas (se cargan desde JSON, igual que en modo solitario)
+// js/app/aleatorio-grupal.js
+
+// Variables globales para preguntas (se cargan desde JSON)
 let preguntasDataGrupal = [];
 
 // Función para obtener categorías únicas de preguntas
@@ -27,8 +29,13 @@ function obtenerCategoriasSeleccionadasGrupal() {
     .map(cb => cb.value);
 }
 
-// Paleta colores para equipos (hasta 4 equipos)
-const coloresEquipos = ["#2196f3", "#e53935", "#e91e63", "#4caf50"];
+// Paleta colores para equipos (hasta 4 equipos) con nombre legible
+const coloresEquipos = [
+  { color: "#2196f3", nombre: "Azul" },
+  { color: "#e53935", nombre: "Rojo" },
+  { color: "#e91e63", nombre: "Rosado" },
+  { color: "#4caf50", nombre: "Verde" }
+];
 
 // Variables para juego grupal
 let equipos = [];
@@ -38,10 +45,14 @@ const preguntasPorRonda = 5; // Preguntas por equipo en cada ronda
 
 let preguntasGrupal = []; // Preguntas filtradas y mezcladas
 let preguntasUsadas = new Set();
+let indicePreguntaGlobal = 0; // Índice global para recorrer preguntas filtradas
+
 let indiceEquipoTurno = 0; // Equipo actual
-let indicePreguntaRonda = 0; // Pregunta actual dentro de la ronda
 
 let turnoSeleccion = 0; // Turno para elegir ventaja (3x3)
+
+// Temporizador
+let temporizadorActivo = null;
 
 // --- Funciones auxiliares ---
 
@@ -64,13 +75,58 @@ function calcularTiempoExtra(casilla) {
   }
 }
 
+// Detener temporizador si existe
+function detenerTemporizador() {
+  if (temporizadorActivo) {
+    clearInterval(temporizadorActivo);
+    temporizadorActivo = null;
+  }
+}
+
+// Mostrar temporizador y controlar cuenta regresiva
+function iniciarTemporizador(duracionSegundos, onTimeout, onTick) {
+  let tiempoRestante = duracionSegundos;
+  const barra = document.getElementById("progreso");
+  const contador = document.getElementById("contador");
+
+  // Inicializar barra y texto
+  barra.style.width = "100%";
+  barra.style.background = "#4caf50";
+  contador.textContent = `Tiempo: ${tiempoRestante}s`;
+
+  temporizadorActivo = setInterval(() => {
+    tiempoRestante--;
+    const porcentaje = (tiempoRestante / duracionSegundos) * 100;
+    barra.style.width = porcentaje + "%";
+
+    // Cambiar color barra según tiempo restante
+    if (tiempoRestante <= 5) {
+      barra.style.background = "#e53935";
+    } else if (tiempoRestante <= 10) {
+      barra.style.background = "#fbc02d";
+    } else {
+      barra.style.background = "#4caf50";
+    }
+
+    contador.textContent = `Tiempo: ${tiempoRestante}s`;
+
+    if (onTick) onTick(tiempoRestante);
+
+    if (tiempoRestante <= 0) {
+      detenerTemporizador();
+      onTimeout();
+    }
+  }, 1000);
+}
+
 // --- Inicio de juego grupal ---
 function iniciarJuegoGrupal(categoriasSeleccionadas, cantidadEquipos) {
   equipos = [];
   for (let i = 0; i < cantidadEquipos; i++) {
     equipos.push({
       id: i + 1,
-      color: coloresEquipos[i],
+      color: coloresEquipos[i].color,
+      nombreColor: coloresEquipos[i].nombre,
       puntaje: 0,
       tiempoExtra: 0
     });
@@ -83,7 +139,7 @@ function iniciarJuegoGrupal(categoriasSeleccionadas, cantidadEquipos) {
 
   rondaActual = 1;
   indiceEquipoTurno = 0;
-  indicePreguntaRonda = 0;
+  indicePreguntaGlobal = 0;
   turnoSeleccion = 0;
 
   mostrarTableroVentajaParaRonda();
@@ -111,7 +167,10 @@ function mostrarTableroVentajaParaRonda() {
 // --- Controla turnos para que cada equipo elija ventaja ---
 function iniciarTurnosSeleccionVentaja() {
   const info = document.getElementById("info-seleccion");
-  info.textContent = `Turno del equipo ${equipos[turnoSeleccion].id} (color: ${equipos[turnoSeleccion].color})`;
+
+  if (turnoSeleccion >= equipos.length) return; // Evitar error fuera de rango
+
+  info.textContent = `Turno del equipo ${equipos[turnoSeleccion].id} (${equipos[turnoSeleccion].nombreColor})`;
 
   const casillas = document.querySelectorAll("#tablero-ventaja .casilla");
   casillas.forEach(btn => {
@@ -126,7 +185,7 @@ function iniciarTurnosSeleccionVentaja() {
 
       turnoSeleccion++;
       if (turnoSeleccion < equipos.length) {
-        info.textContent = `Turno del equipo ${equipos[turnoSeleccion].id} (color: ${equipos[turnoSeleccion].color})`;
+        info.textContent = `Turno del equipo ${equipos[turnoSeleccion].id} (${equipos[turnoSeleccion].nombreColor})`;
       } else {
         info.textContent = `Selección completada. Comenzando ronda ${rondaActual}...`;
         setTimeout(() => {
@@ -137,10 +196,10 @@ function iniciarTurnosSeleccionVentaja() {
   });
 }
 
-// --- Inicia la ronda: turno primer equipo, primer pregunta ---
+// --- Inicia la ronda: turno primer equipo, primera pregunta ---
 function comenzarRonda() {
   indiceEquipoTurno = 0;
-  indicePreguntaRonda = 0;
+  indicePreguntaGlobal = 0;
   mostrarPreguntaEquipo();
 }
 
@@ -148,20 +207,26 @@ function comenzarRonda() {
 function mostrarPreguntaEquipo() {
   const equipo = equipos[indiceEquipoTurno];
 
-  let p = null;
-  while (indicePreguntaRonda < preguntasGrupal.length) {
-    if (!preguntasUsadas.has(preguntasGrupal[indicePreguntaRonda])) {
-      p = preguntasGrupal[indicePreguntaRonda];
-      preguntasUsadas.add(p);
-      break;
-    }
-    indicePreguntaRonda++;
-  }
-
-  if (!p || indicePreguntaRonda >= preguntasGrupal.length) {
+  if (indicePreguntaGlobal >= preguntasGrupal.length) {
     terminarRonda();
     return;
   }
+
+  // Para distribuir preguntas equitativamente:
+  // Calculamos índice pregunta en ronda (de 0 a preguntasPorRonda-1) para el equipo actual:
+  const preguntasContestadasPorEquipo = equipos[indiceEquipoTurno].preguntasContestadas || 0;
+
+  if (preguntasContestadasPorEquipo >= preguntasPorRonda) {
+    // Ya contestó las preguntas suficientes, pasamos al siguiente equipo
+    pasarTurno();
+    return;
+  }
+
+  // Si no, tomamos pregunta actual y asignamos a este equipo
+  const p = preguntasGrupal[indicePreguntaGlobal];
+  indicePreguntaGlobal++;
+
+  equipos[indiceEquipoTurno].preguntasContestadas = preguntasContestadasPorEquipo + 1;
 
   mostrarPregunta(p, equipo);
 }
@@ -176,9 +241,20 @@ function mostrarPregunta(pregunta, equipo) {
     { texto: pregunta.opcion_3, correcta: false }
   ].sort(() => Math.random() - 0.5);
 
+  // Tiempo base 20 + bonus de equipo
+  const tiempoBase = 20 + equipo.tiempoExtra;
+
   let html = `
-    <h2>Ronda ${rondaActual} - Equipo ${equipo.id} (${equipo.color})</h2>
+    <h2>Ronda ${rondaActual} - Equipo ${equipo.id} (${equipo.nombreColor})</h2>
     <div style="font-weight:bold; margin-bottom:0.5em;">Pregunta para el equipo ${equipo.id}</div>
+
+    <div id="temporizador" style="display:flex; align-items:center; gap:10px; margin-bottom: 1em;">
+      <div id="barra-tiempo" style="flex:1; height: 16px; background: #eee; border-radius: 8px;">
+        <div id="progreso" style="height: 100%; width: 100%; background: #4caf50; border-radius: 8px; transition: width 0.2s;"></div>
+      </div>
+      <div id="contador" style="font-weight: bold; min-width: 48px;">Tiempo: ${tiempoBase}s</div>
+    </div>
+
     <strong>${pregunta.pregunta}</strong>
     <div id="opciones" style="margin-top:1em;">
   `;
@@ -191,6 +267,14 @@ function mostrarPregunta(pregunta, equipo) {
 
   contenedor.innerHTML = html;
 
+  // Iniciar temporizador
+  detenerTemporizador();
+  iniciarTemporizador(tiempoBase, () => {
+    // Tiempo agotado → penalizar, pasar turno
+    pasarTurno();
+  });
+
+  // Eventos para opciones
   document.querySelectorAll('.btn-opcion').forEach(btn => {
     btn.onclick = () => {
       const correcta = btn.dataset.correcta === "true";
@@ -201,6 +285,7 @@ function mostrarPregunta(pregunta, equipo) {
         btn.style.background = "#e57373";
       }
       deshabilitarOpciones();
+      detenerTemporizador();
 
       setTimeout(() => {
         pasarTurno();
@@ -220,10 +305,12 @@ function pasarTurno() {
   indiceEquipoTurno++;
   if (indiceEquipoTurno >= equipos.length) {
     indiceEquipoTurno = 0;
-    indicePreguntaRonda++;
   }
 
-  if (indicePreguntaRonda >= preguntasPorRonda) {
+  // Revisar si todos los equipos completaron las preguntas de la ronda
+  const todosCompletaron = equipos.every(e => (e.preguntasContestadas || 0) >= preguntasPorRonda);
+
+  if (todosCompletaron) {
     terminarRonda();
   } else {
     mostrarPreguntaEquipo();
@@ -233,10 +320,15 @@ function pasarTurno() {
 // --- Final de ronda: resumen y botón continuar ---
 function terminarRonda() {
   const contenedor = document.getElementById("config-grupal");
+
+  // Reset contador preguntas para la siguiente ronda
+  equipos.forEach(e => e.preguntasContestadas = 0);
+
+  // Mostrar resumen acumulado (puntajes acumulados de todas las rondas)
   let resumen = `<h2>Fin de la ronda ${rondaActual}</h2>`;
-  resumen += `<p>Resultados parciales:</p><ul>`;
+  resumen += `<p>Resultados parciales acumulados:</p><ul>`;
   equipos.forEach(e => {
-    resumen += `<li>Equipo ${e.id} (${e.color}): ${e.puntaje} puntos</li>`;
+    resumen += `<li>Equipo ${e.id} (${e.nombreColor}): ${e.puntaje} puntos</li>`;
   });
   resumen += `</ul>`;
   resumen += `<button id="btn-continuar-ronda">Continuar</button>`;
@@ -259,10 +351,10 @@ function terminarJuego() {
   let ganador = equipos.reduce((max, eq) => (eq.puntaje > max.puntaje ? eq : max), equipos[0]);
 
   let html = `<h2>Juego finalizado</h2>`;
-  html += `<p>Ganador: Equipo ${ganador.id} (${ganador.color}) con ${ganador.puntaje} puntos</p>`;
+  html += `<p>Ganador: Equipo ${ganador.id} (${ganador.nombreColor}) con ${ganador.puntaje} puntos</p>`;
   html += `<ul>`;
   equipos.forEach(e => {
-    html += `<li>Equipo ${e.id} (${e.color}): ${e.puntaje} puntos</li>`;
+    html += `<li>Equipo ${e.id} (${e.nombreColor}): ${e.puntaje} puntos</li>`;
   });
   html += `</ul>`;
   html += `<button id="btn-jugar-nuevamente">Jugar de nuevo</button>`;
@@ -274,10 +366,10 @@ function terminarJuego() {
   };
 }
 
-// --- Exportar función para iniciar el juego grupal desde otro script ---
+// Exportar función para iniciar el juego grupal desde otro script
 window.iniciarJuegoGrupal = iniciarJuegoGrupal;
 
-// --- Inicializar configuración grupal cuando se muestra esa sección ---
+// Inicializar configuración grupal al mostrar esa sección
 function iniciarConfiguracionGrupal() {
   fetch('datos/quiz.json')
     .then(res => res.json())
@@ -288,14 +380,18 @@ function iniciarConfiguracionGrupal() {
     });
 }
 
+// Configurar botón para iniciar juego grupal
 function configurarBotonIniciarGrupal() {
-  document.getElementById("iniciar-quiz-grupal").addEventListener("click", () => {
-    const cantidadEquipos = parseInt(document.getElementById("cantidad-equipos").value);
-    const categoriasSeleccionadas = obtenerCategoriasSeleccionadasGrupal();
-    if (categoriasSeleccionadas.length === 0) {
-      alert("Por favor selecciona al menos una categoría.");
-      return;
-    }
-    iniciarJuegoGrupal(categoriasSeleccionadas, cantidadEquipos);
-  });
+  const btn = document.getElementById("iniciar-quiz-grupal");
+  if (btn) {
+    btn.onclick = () => {
+      const cantidadEquipos = parseInt(document.getElementById("cantidad-equipos").value);
+      const categoriasSeleccionadas = obtenerCategoriasSeleccionadasGrupal();
+      if (categoriasSeleccionadas.length === 0) {
+        alert("Por favor selecciona al menos una categoría.");
+        return;
+      }
+      iniciarJuegoGrupal(categoriasSeleccionadas, cantidadEquipos);
+    };
+  }
 }
