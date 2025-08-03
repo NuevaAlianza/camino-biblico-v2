@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quiz Aleatorio – Modo Grupal</title>
+  <link rel="stylesheet" href="css/estilos.css" />
+</head>
+<body>
+  <main id="config-grupal" style="max-width: 520px; margin: 2.5rem auto;">
+    <h1>Quiz Aleatorio – Modo Grupal</h1>
+    <div style="margin-bottom: 1.2em;">
+      <p>Elige el número de equipos y selecciona categorías.</p>
+    </div>
+
+    <label for="cantidad-equipos" style="font-weight: bold;">
+      Número de equipos:
+      <select id="cantidad-equipos" style="margin-left: 0.5em;">
+        <option value="2">2 equipos</option>
+        <option value="3">3 equipos</option>
+        <option value="4" selected>4 equipos</option>
+      </select>
+    </label>
+
+    <div id="elige-categorias-grupal" style="margin-top: 1em;"></div>
+    <button id="iniciar-quiz-grupal" style="margin-top: 1.2em;">Iniciar Juego Grupal</button>
+    <a href="menu.html" style="display:block; margin-top: 1.7em; text-decoration: underline;">← Volver al menú</a>
+  </main>
+
+  <script src="js/app/aleatorio-grupal.js"></script>
+  <script>
+    // Inicia automáticamente la carga de categorías al abrir la página
+    document.addEventListener("DOMContentLoaded", () => {
+      if (window.iniciarConfiguracionGrupal) {
+        window.iniciarConfiguracionGrupal();
+      }
+    });
+  </script>
+</body>
+</html>
