@@ -53,7 +53,8 @@ function iniciarQuizConPreguntas(preguntas) {
   let indice = 0;
   let aciertos = 0;
   const juegoDiv = document.getElementById("juego-aleatorio");
-  const configDiv = document.getElementById("config-quiz-random");
+  const configDiv = document.getElementById("config-solitario");
+
 
   configDiv.classList.add("oculto");
   juegoDiv.classList.remove("oculto");
