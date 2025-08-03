@@ -1,136 +1,3 @@
-main.menu {
-  background: #fff;
-  border-radius: 1rem;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.07);
-  max-width: 400px;
-  margin: 2rem auto;
-  padding: 2rem;
-  text-align: center;
-}
-main.menu h1 {
-  margin-bottom: 1.2rem;
-}
-main.menu nav button {
-  display: block;
-  width: 100%;
-  margin: 0.5rem 0;
-  padding: 0.7rem 0;
-  border-radius: 0.5rem;
-  background: #2a9d8f;
-  color: white;
-  font-size: 1.1rem;
-  border: none;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-main.menu nav button:hover {
-  background: #21867a;
-}
-/* OCULTAR secciones cuando se aplica la clase oculto */
-.oculto {
-  display: none !important;
-}
-
-/* Tarjetas generales de categorías y personajes */
-.card-categoria, .card-personaje {
-  background: #fffdf9;
-  border-radius: 16px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  padding: 1.3rem;
-  margin: 1rem 0.7rem;
-  text-align: center;
-  transition: box-shadow 0.2s, transform 0.2s;
-  cursor: pointer;
-}
-
-.card-categoria:hover, .card-personaje:hover {
-  box-shadow: 0 6px 24px rgba(90,40,100,0.13);
-  transform: translateY(-2px) scale(1.02);
-}
-
-/* Galería de tarjetas (para personajes/coleccionables) */
-#personajes-categoria {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 1.2rem;
-  justify-content: center;
-  margin: 1.4rem 0;
-}
-
-/* Imagen de personaje/coleccionable */
-.card-personaje img {
-  width: 100%;
-  max-width: 180px;
-  height: auto;
-  border-radius: 10px;
-  margin-bottom: 0.8rem;
-  background: #f6e9ff;
-  box-shadow: 0 1px 6px rgba(90,40,100,0.10);
-}
-
-/* Títulos y nota */
-.card-personaje h3 {
-  font-size: 1.1rem;
-  margin: 0.5rem 0 0.2rem 0;
-}
-
-.card-personaje .nota {
-  font-size: 1rem;
-  color: #995fa3;
-}
-
-/* Responsive en móviles */
-@media (max-width: 600px) {
-  #personajes-categoria {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-  .card-categoria, .card-personaje {
-    margin: 1rem 0.1rem;
-    padding: 1rem;
-  }
-  .card-personaje img {
-    max-width: 95vw;
-  }
-}
-
-/* Modal estilos básicos */
-#modal-detalle {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  background: rgba(30,20,50,0.28);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 99;
-}
-#modal-detalle .modal-contenido {
-  background: #fff;
-  border-radius: 12px;
-  max-width: 350px;
-  width: 90vw;
-  padding: 2rem 1.5rem 1rem 1.5rem;
-  box-shadow: 0 6px 30px rgba(90, 50, 130, 0.22);
-  text-align: center;
-  animation: fadeInUp 0.3s;
-}
-#modal-detalle .modal-contenido img {
-  width: 100%;
-  max-width: 180px;
-  border-radius: 10px;
-  margin-bottom: 1rem;
-}
-#cerrar-modal {
-  position: absolute;
-  top: 10px;
-  right: 16px;
-  background: none;
-  border: none;
-  font-size: 1.3rem;
-  cursor: pointer;
-  color: #e76f51;
-}
 body {
   background: linear-gradient(120deg, #f0f4f8 0%, #e3e6e8 100%);
   min-height: 100vh;
@@ -139,24 +6,24 @@ body {
   margin: 0;
 }
 
-main, #contenido-aleatorio {
-  max-width: 500px;
-  margin: 2.5rem auto;
+main#config-solitario {
   background: #fff;
   border-radius: 1.5em;
   box-shadow: 0 4px 24px rgba(80,110,130,0.10), 0 1.5px 10px rgba(0,0,0,0.03);
+  max-width: 500px;
+  margin: 2.5rem auto;
   padding: 2.2rem 1.5rem 2.8rem 1.5rem;
+  text-align: left;
 }
 
-h2 {
+main#config-solitario h1 {
   color: #2a9d8f;
-  font-size: 2.1rem;
-  font-weight: 700;
-  letter-spacing: -1px;
-  margin-bottom: 0.5em;
+  font-size: 2rem;
+  margin-bottom: 0.8em;
+  text-align: center;
 }
 
-#descripcion-quiz {
+main#config-solitario ul {
   background: #f6f4f2;
   color: #456;
   border-left: 4px solid #f4a261;
@@ -166,11 +33,10 @@ h2 {
   font-size: 1.04em;
 }
 
-#config-quiz-random label,
-#config-quiz-random h3 {
+main#config-solitario label {
   display: block;
   font-weight: 500;
-  margin-bottom: 0.7em;
+  margin: 1.1em 0 0.4em 0;
   color: #444;
 }
 
@@ -232,6 +98,10 @@ h2 {
   margin-bottom: 1em;
 }
 #progreso {
+  height: 100%;
+  width: 100%;
+  border-radius: 8px;
+  background: #4caf50;
   transition: width 0.3s, background 0.2s;
 }
 
@@ -269,50 +139,17 @@ h2 {
   font-size: 1.13em;
 }
 
-#btn-inicio {
-  position: fixed;
-  bottom: 1.5rem;
-  left: 1.5rem;
-  background-color: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  color: #2a9d8f;
-  font-size: 1.6rem;
-  padding: 0.8rem 1rem;
-  border-radius: 50%;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.10);
-  text-decoration: none;
-  z-index: 10;
-  border: none;
-  transition: background 0.18s;
-}
-#btn-inicio:hover {
-  background-color: #f4a261;
-  color: #fff;
-}
-#btn-trivia-flash {
-  position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  z-index: 50;
-  background: linear-gradient(120deg, #e9f5ff 60%, #fff4e3 100%);
-  border-radius: 50%;
-  color: #236e5e;
-  font-size: 2.2rem;
-  width: 64px;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 14px #3fa6db29;
-  border: 2.5px solid #c3ecfd;
-  transition: box-shadow 0.15s, background 0.15s, transform 0.15s;
-  cursor: pointer;
-  text-decoration: none;
-}
-#btn-trivia-flash:hover {
-  box-shadow: 0 7px 26px #aaf8dc51;
-  background: #bff9e2;
-  transform: scale(1.09);
+/* Ocultar */
+.oculto {
+  display: none !important;
 }
 
+/* Responsive */
+@media (max-width: 600px) {
+  main#config-solitario {
+    padding: 1.1rem 0.5rem 1.7rem 0.5rem;
+  }
+  #juego-aleatorio {
+    font-size: 1.03em;
+  }
+}
