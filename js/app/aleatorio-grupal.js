@@ -96,7 +96,6 @@ function iniciarTemporizador(duracionSegundos, onTimeout, onTick) {
   const barra = document.getElementById("progreso");
   const contador = document.getElementById("contador");
 
-  // Inicializar barra y texto
   barra.style.width = "100%";
   barra.style.background = "#4caf50";
   contador.textContent = `Tiempo: ${tiempoRestante}s`;
@@ -106,7 +105,6 @@ function iniciarTemporizador(duracionSegundos, onTimeout, onTick) {
     const porcentaje = (tiempoRestante / duracionSegundos) * 100;
     barra.style.width = porcentaje + "%";
 
-    // Cambiar color barra según tiempo restante
     if (tiempoRestante <= 5) {
       barra.style.background = "#e53935";
     } else if (tiempoRestante <= 10) {
@@ -148,7 +146,6 @@ function iniciarJuegoGrupal(categoriasSeleccionadas, cantidadEquipos) {
   indiceEquipoTurno = 0;
   turnoSeleccion = 0;
 
-  // Comienza con música de fondo (opcional)
   sonidoFondo.play().catch(() => {});
 
   mostrarTableroVentajaParaRonda();
@@ -177,7 +174,7 @@ function mostrarTableroVentajaParaRonda() {
 function iniciarTurnosSeleccionVentaja() {
   const info = document.getElementById("info-seleccion");
 
-  if (turnoSeleccion >= equipos.length) return; // Evitar error fuera de rango
+  if (turnoSeleccion >= equipos.length) return;
 
   info.textContent = `Turno del equipo ${equipos[turnoSeleccion].id} (${equipos[turnoSeleccion].nombreColor})`;
 
@@ -199,7 +196,7 @@ function iniciarTurnosSeleccionVentaja() {
         info.textContent = `Selección completada. Comenzando ronda ${rondaActual}...`;
         setTimeout(() => {
           comenzarRonda();
-        }, 1500);
+        }, 3000); // Cambiado a 3 segundos para mayor visibilidad
       }
     };
   });
@@ -383,6 +380,9 @@ function terminarJuego() {
 // Exportar función para iniciar el juego grupal desde otro script
 window.iniciarJuegoGrupal = iniciarJuegoGrupal;
 
+// Exportar función para iniciar configuración grupal desde HTML
+window.iniciarConfiguracionGrupal = iniciarConfiguracionGrupal;
+
 // Inicializar configuración grupal al mostrar esa sección
 function iniciarConfiguracionGrupal() {
   fetch('datos/quiz.json')
@@ -409,4 +409,3 @@ function configurarBotonIniciarGrupal() {
     };
   }
 }
-
