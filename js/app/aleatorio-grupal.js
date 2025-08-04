@@ -84,7 +84,7 @@ function mezclarArray(array) {
 let valores3x3 = {};
 
 function generarValoresRandom3x3() {
-  let valores = [15, 8, 5, 0, 0, 0, 0, 0, 0];
+  let valores = [15, 8, 5, 5, 3, 0, 0, 0, 0];
   valores = mezclarArray(valores);
   const mapa = {};
   for (let i = 1; i <= 9; i++) {
@@ -383,15 +383,16 @@ function terminarRonda() {
 
   contenedor.innerHTML = resumen;
 
-  document.getElementById("btn-continuar-ronda").onclick = () => {
-    if (rondaActual < totalRondas) {
-      rondaActual++;
-      mostrarTableroVentajaParaRonda();
-    } else {
-      terminarJuego();
-    }
-  };
-}
+document.getElementById("btn-continuar-ronda").onclick = () => {
+  if (rondaActual < totalRondas) {
+    rondaActual++;
+    turnoSeleccion = 0;           // <-- Agregado: reinicia el turno de selección para el 3x3
+    mostrarTableroVentajaParaRonda();
+  } else {
+    terminarJuego();
+  }
+};
+
 
 // --- Final del juego: muestra ganador ---
 function terminarJuego() {
