@@ -392,7 +392,7 @@ document.getElementById("btn-continuar-ronda").onclick = () => {
     terminarJuego();
   }
 };
-
+}
 
 // --- Final del juego: muestra ganador ---
 function terminarJuego() {
@@ -447,4 +447,4 @@ function configurarBotonIniciarGrupal() {
   }
 }
 
-}
+
