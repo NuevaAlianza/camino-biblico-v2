@@ -1,0 +1,196 @@
+/* ========== BASE RPG2 ========== */
+.rpg2-main {
+  max-width: 470px;
+  margin: 2.5rem auto;
+  padding: 1.6rem 0.6rem;
+  background: #fff;
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 30px rgba(40,40,40,0.09);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  position: relative;
+}
+
+/* Paneles y mensajes */
+.panel-bienvenida, .panel-mensaje-nivel, .panel-mensaje {
+  background: #f5f6fa;
+  border-radius: 1.1rem;
+  padding: 1.4em 1em;
+  box-shadow: 0 2px 10px rgba(60,60,100,0.04);
+  margin-bottom: 1.4em;
+  text-align: center;
+}
+.panel-mensaje-nivel { background: #eaf7ec; }
+.panel-bienvenida.practica { background: #e0e6f9; }
+
+.rpg-bienvenido { font-size: 1.35em; font-weight: bold; color: #275589; margin-bottom: 0.5em; }
+.rpg-avanza, .mentor-frase { color: #555b77; font-size: 1.05em; margin-bottom: 0.7em; }
+.rpg-xp, .rpg-parroquia { font-size: 1.04em; color: #7b3cdb; }
+
+#titulo-ciclo { font-size: 1.26em; margin-bottom: 0.1em; }
+#descripcion-ciclo { font-size: 1.05em; margin-bottom: 0.5em; color: #666; }
+#mensaje-rpg { margin-bottom: 1.2em; color: #444; }
+
+.rpg-info {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 0.4em; font-size: 1.08em;
+}
+.rpg-nivel { font-weight: 500; }
+.rpg-vidas { font-size: 1.15em; transition: 0.18s; }
+
+/* Animaciones visuales */
+.shake { animation: shake 0.22s linear; }
+@keyframes shake {
+  20% { transform: translateX(-4px); }
+  50% { transform: translateX(5px); }
+  80% { transform: translateX(-3px); }
+  100% { transform: translateX(0); }
+}
+.acierto-anim { animation: acierto .35s linear; }
+@keyframes acierto {
+  20% { background: #a6f3b1; }
+  60% { background: #f5fffa; }
+}
+
+/* Panel pregunta y opciones */
+.panel-pregunta {
+  margin-bottom: 1.3em;
+  background: #f9f9fb;
+  border-radius: 1rem;
+  padding: 1em 0.7em;
+  box-shadow: 0 1px 5px rgba(70,100,180,0.05);
+}
+.rpg-pregunta { margin: 0.6em 0 1em 0; font-size: 1.1em; color: #243055; }
+.rpg-opciones { display: flex; flex-direction: column; gap: 0.6em; }
+.rpg-btn-op {
+  background: #eef2fb;
+  border: none;
+  border-radius: 0.9em;
+  padding: 0.68em 1em;
+  font-size: 1.06em;
+  cursor: pointer;
+  transition: background 0.18s, box-shadow 0.18s;
+  box-shadow: 0 0px 1px rgba(20,40,80,0.04);
+}
+.rpg-btn-op.acierto { background: #baf9d4; color: #166b3e; }
+.rpg-btn-op.fallo { background: #ffd5db; color: #992033; }
+.rpg-btn-op:active { background: #d4dbef; }
+
+.tip-box {
+  background: #f6f9ff;
+  border-left: 4px solid #5a9beb;
+  margin: 0.8em 0 1.1em 0;
+  padding: 0.7em 1em;
+  border-radius: 0.8em;
+  color: #4479b8;
+  font-size: 0.97em;
+}
+
+.msg-epico {
+  font-size: 1.12em;
+  color: #9a5cc7;
+  background: #f9efff;
+  border-radius: 0.8em;
+  padding: 0.65em 0.5em;
+  margin: 1.2em 0 0.5em 0;
+}
+
+/* ===== Modal Mentor ===== */
+#overlay-mentor {
+  position: fixed; left:0; top:0; width:100vw; height:100vh;
+  background: rgba(15,22,42,0.70);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 2000;
+}
+.modal-mentor {
+  background: #fff; border-radius: 1.2rem;
+  padding: 1.4em 1em 1.1em 1em; width: 99vw; max-width: 380px;
+  box-shadow: 0 8px 24px rgba(60, 30, 120, 0.13);
+  text-align: center; position: relative;
+}
+.mentores-lista { display: flex; flex-direction: column; gap: 1.1em; margin-top: 0.8em; }
+.mentor-card {
+  background: #f5f1fc; border-radius: 1em; box-shadow: 0 1px 5px rgba(90,60,200,0.06);
+  padding: 0.7em 0.6em; display: flex; flex-direction: column; align-items: center;
+  transition: box-shadow 0.16s;
+}
+.mentor-img { width: 66px; height: 66px; border-radius: 50%; object-fit: cover; box-shadow: 0 1px 6px rgba(90,60,200,0.11); }
+.mentor-card h3 { margin: 0.25em 0 0.3em 0; font-size: 1.12em; color: #6c37a2; }
+.mentor-card ul { padding: 0; margin: 0 0 0.5em 0; list-style: none; color: #3a376a; font-size: 0.98em; }
+.mentor-card li { margin: 0.12em 0; }
+
+.btn-seleccionar-mentor {
+  background: #5a9beb; color: #fff; border: none; border-radius: 1.1em;
+  padding: 0.47em 1.4em; margin-top: 0.4em;
+  font-size: 1em; cursor: pointer; font-weight: 500; transition: background 0.13s;
+}
+.btn-seleccionar-mentor:hover { background: #2c5fa9; }
+
+.btn-cerrar {
+  position: absolute; right: 1em; bottom: 1em;
+  background: #fae2ee; color: #aa2577; border: none; border-radius: 1em;
+  padding: 0.45em 1.1em; font-size: 1em; cursor: pointer; font-weight: 500;
+  transition: background 0.13s;
+}
+.btn-cerrar:hover { background: #fcc5e5; color: #6a1c4d; }
+
+/* Mentor destacado en panel */
+.mentor-seleccionado {
+  margin: 1em auto 0.7em auto; display: flex; flex-direction: column; align-items: center;
+}
+.mentor-seleccionado img { width: 90px; height: 90px; border-radius: 50%; margin-bottom: 0.2em; border: 3px solid #e6e2fa; }
+
+/* Panel nivel */
+.mentor-nivel-panel {
+  display: flex; align-items: center; gap: 1.2em; justify-content: center; margin-bottom: 1em;
+}
+.mentor-img-nivel { width: 54px; height: 54px; border-radius: 50%; }
+.mentor-mensaje-nivel { color: #703b99; font-size: 1em; font-weight: 500; }
+
+/* Temporizador */
+.temporizador-panel { display: flex; flex-direction: column; align-items: center; margin-bottom: 0.6em; }
+.temporizador-svg { display: block; }
+#timer-circular { transition: stroke-dashoffset 0.25s; }
+#timer-text { font-size: 1.12em; margin-top: -1.8em; margin-bottom: 0.6em; color: #436fa6; font-weight: 600; }
+.emoji-animado { font-size: 2.0em; margin-bottom: 0.1em; display: inline-block; transition: 0.2s; }
+
+.compact { padding: 0.7em 0.4em; font-size: 0.92em; }
+.oculto { display: none !important; }
+
+button, .btn-principal, .btn-secundario, .compartir-btn {
+  border: none;
+  border-radius: 1.15em;
+  padding: 0.49em 1.2em;
+  font-size: 1.06em;
+  margin: 0.13em 0.18em;
+  background: #5a9beb;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.14s;
+}
+.btn-principal:hover, .btn-secundario:hover, .compartir-btn:hover { background: #4079bd; }
+
+#btn-inicio {
+  position: fixed;
+  left: 18px;
+  bottom: 18px;
+  font-size: 1.44em;
+  background: #fff;
+  color: #7b3cdb;
+  border-radius: 50%;
+  box-shadow: 0 3px 14px rgba(80,40,160,0.13);
+  padding: 0.39em 0.42em;
+  text-decoration: none;
+  z-index: 999;
+  transition: background 0.13s;
+}
+#btn-inicio:hover { background: #f5efff; color: #483787; }
+
+/* ===== Responsive ===== */
+@media (max-width: 600px) {
+  .rpg2-main { padding: 0.7em 0.1em; border-radius: 0.5em; }
+  .modal-mentor { max-width: 96vw; }
+  .mentor-card { padding: 0.8em 0.2em; }
+  .panel-bienvenida, .panel-mensaje-nivel, .panel-mensaje { padding: 1em 0.3em; }
+}
+
