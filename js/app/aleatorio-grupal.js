@@ -153,23 +153,20 @@ function iniciarJuegoGrupal(categoriasSeleccionadas, cantidadEquipos) {
 
 // --- Muestra tablero 3x3 para seleccionar ventaja ---
 function mostrarTableroVentajaParaRonda() {
+  turnoSeleccion = 0; // ← Reinicia el turno para cada ronda
   const contenedor = document.getElementById("config-grupal");
   let html = `
     <h2>Ronda ${rondaActual} - Ventajas de tiempo</h2>
     <p>Equipos eligen casilla para ventaja de tiempo, en orden.</p>
     <div id="tablero-ventaja" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 300px; margin: 1em auto;">
   `;
-
-  // NUEVO: Barajamos los números del 1 al 9 para aleatorizar la disposición
-  const casillas = mezclarArray([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+  const casillas = mezclarArray([1,2,3,4,5,6,7,8,9]);
   for (let i = 0; i < 9; i++) {
     html += `<button class="casilla" data-casilla="${casillas[i]}" style="padding: 20px; font-weight: bold; border-radius: 8px;">${casillas[i]}</button>`;
   }
   html += `</div>`;
   html += `<div id="info-seleccion" style="margin-top: 1em; font-weight: bold; text-align: center;"></div>`;
-
   contenedor.innerHTML = html;
-
   iniciarTurnosSeleccionVentaja();
 }
 
@@ -177,7 +174,6 @@ function mostrarTableroVentajaParaRonda() {
 // --- Controla turnos para que cada equipo elija ventaja ---
 function iniciarTurnosSeleccionVentaja() {
   const info = document.getElementById("info-seleccion");
-
   if (turnoSeleccion >= equipos.length) return;
 
   info.textContent = `Turno del equipo ${equipos[turnoSeleccion].id} (${equipos[turnoSeleccion].nombreColor})`;
@@ -189,19 +185,26 @@ function iniciarTurnosSeleccionVentaja() {
     btn.onclick = () => {
       if (turnoSeleccion >= equipos.length) return;
 
-      equipos[turnoSeleccion].tiempoExtra = calcularTiempoExtra(btn.dataset.casilla);
+      // Asignar bonus
+      let bonus = calcularTiempoExtra(btn.dataset.casilla);
+      equipos[turnoSeleccion].tiempoExtra = bonus;
       btn.style.background = equipos[turnoSeleccion].color;
       btn.disabled = true;
 
-      turnoSeleccion++;
-      if (turnoSeleccion < equipos.length) {
-        info.textContent = `Turno del equipo ${equipos[turnoSeleccion].id} (${equipos[turnoSeleccion].nombreColor})`;
-      } else {
-        info.textContent = `Selección completada. Comenzando ronda ${rondaActual}...`;
-        setTimeout(() => {
-          comenzarRonda();
-        }, 3000); // Cambiado a 3 segundos para mayor visibilidad
-      }
+      // Mostrar segundos extra ganados
+      info.innerHTML = `Equipo ${equipos[turnoSeleccion].id} (${equipos[turnoSeleccion].nombreColor}) ganó <b>${bonus}</b> segundos extra.`;
+
+      setTimeout(() => {
+        turnoSeleccion++;
+        if (turnoSeleccion < equipos.length) {
+          info.textContent = `Turno del equipo ${equipos[turnoSeleccion].id} (${equipos[turnoSeleccion].nombreColor})`;
+        } else {
+          info.textContent = `Selección completada. Comenzando ronda ${rondaActual}...`;
+          setTimeout(() => {
+            comenzarRonda();
+          }, 2000);
+        }
+      }, 1200);
     };
   });
 }
