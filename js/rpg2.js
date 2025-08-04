@@ -516,6 +516,13 @@ async function terminarAventura(ganoTodo = false) {
     document.getElementById("btn-continuar").style.display = "none";
     return;
   }
+console.log("Voy a guardar progreso RPG:");
+console.log("Nivel:", juegoActual.nivel);
+console.log("XP:", juegoActual.xp);
+console.log("Rango:", obtenerRango(juegoActual.nivel, ganoTodo));
+console.log("Ciclo actual:", cicloActual);
+console.log("Usuario:", usuarioActual);
+console.log("Modo práctica:", window.modoPractica);
 
   // --- Si es juego real, sí guarda progreso
   const rango = obtenerRango(juegoActual.nivel, ganoTodo);
