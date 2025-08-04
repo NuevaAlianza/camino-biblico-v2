@@ -1,19 +1,19 @@
 // --- sw.js (service worker) ---
 
-const CACHE_VERSION = 'v6.8'; // Cambia este número cuando actualices archivos
+const CACHE_VERSION = 'v6.9'; // Cambia este número cuando actualices archivos
 const CACHE_NAME = `camino-biblico-${CACHE_VERSION}`;
 const FILES_TO_CACHE = [
   './index.html',
   './menu.html',
   './quiz.html',
   './coleccionables-v2.html',
-  './rpg.html',
+  './rpg2.html',
   './temporada.html',
   './mi-progreso.html',
   './login.html',
   './manifest.json',
   './perfil.html',
-  './aleatorio.html',
+  './aleatorio-grupal.html',
 
 './trivia-flash.html',
   // CSS
@@ -23,16 +23,18 @@ const FILES_TO_CACHE = [
   './css/progreso.css',
   './css/quiz.css',
   './css/rpg.css',
+  './css/rpg2.css',
+  './css/aleatorio-grupal.css',
   './css/temporada.css',
   // JS
-  './js/app/aleatorio.js',
+  './js/app/aleatorio-grupal.js',
   './js/app/coleccionables-v2.js',
   './js/app/progreso.js',
   './js/app/temporada.js',
   './js/auth.js',
   './js/progreso.js',
   './js/quiz.js',
-  './js/rpg.js',
+  './js/rpg2.js',
   './js/app/instalar-pwa.js',
   './supabase.js',
   './js/app/trivia-flash.js',
