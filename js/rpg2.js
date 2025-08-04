@@ -63,6 +63,8 @@ const EMOJIS_RPG = [
 ];
 let temporizadorActivo = null;
 
+
+
 // ====== VALIDACIÓN DE SESIÓN EN EL DOMContentLoaded ======
 document.addEventListener("DOMContentLoaded", async () => {
   const { data: sessionData } = await supabase.auth.getSession();
