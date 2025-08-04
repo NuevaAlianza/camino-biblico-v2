@@ -62,8 +62,10 @@
 .rpg-pregunta { margin: 0.6em 0 1em 0; font-size: 1.1em; color: #243055; }
 .rpg-opciones { display: flex; flex-direction: column; gap: 0.6em; }
 .rpg-btn-op {
-  background: #eef2fb;
-  border: none;
+  background: #e4eaff; /* Más fuerte que #eef2fb */
+  color: #1b2053; /* Color oscuro para legibilidad */
+  border: 1.5px solid #cfd7ec;
+  font-weight: 500;
   border-radius: 0.9em;
   padding: 0.68em 1em;
   font-size: 1.06em;
@@ -73,8 +75,7 @@
 }
 .rpg-btn-op.acierto { background: #baf9d4; color: #166b3e; }
 .rpg-btn-op.fallo { background: #ffd5db; color: #992033; }
-.rpg-btn-op:active { background: #d4dbef; }
-
+.rpg-btn-op:active { background: #d0d9ee; }
 .tip-box {
   background: #f6f9ff;
   border-left: 4px solid #5a9beb;
