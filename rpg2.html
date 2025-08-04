@@ -4,16 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Trivia Bíblica RPG 2</title>
-  <link rel="stylesheet" href="css/rpg.css">
+  <link rel="stylesheet" href="css/rpg2.css">
   <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
   <main class="rpg2-main">
-    <!-- Selección de mentor -->
-    <section id="mentor-section"></section>
-    <!-- Mensaje de mentor -->
-    <section id="mensaje-mentor-section" class="oculto"></section>
-    <!-- Panel clásico del juego -->
     <section id="menu-rpg" class="oculto">
       <div id="bienvenida-stats"></div>
       <h2 id="titulo-ciclo"></h2>
@@ -28,6 +23,8 @@
     <section id="logros-rpg" class="oculto"></section>
   </main>
   <a href="menu.html" id="btn-inicio">🏠</a>
+  <!-- Incluye Supabase antes del script principal -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script src="js/rpg2.js"></script>
 </body>
 </html>
