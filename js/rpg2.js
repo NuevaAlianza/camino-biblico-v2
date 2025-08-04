@@ -1,23 +1,17 @@
 window.modoPractica = false;
 
+// ====== Definición de mentores ======
 const MENTORES = [
   {
     id: "san_juan",
     nombre: "San Juan Vianney",
     img: "assets/img/mentor/mentor_cura.png",
     habilidades: [
-      "+5 segundos por pregunta", // Bonus tiempo
-      "Oración poderosa",
-      "Empatía pastoral",
-      "+10 segundos por pregunta", // Otro bonus posible
-      "Consejo certero",
-      "Ánimo inagotable",
-      "Discernimiento espiritual",
-      "50% de preguntas más fáciles (¡o eso parece!)",
-      "Sabiduría inesperada",
-      "Fortaleza en la adversidad",
-      "Serenidad bajo presión",
-      "Memoria bíblica"
+      "+5 segundos por pregunta", "Oración poderosa", "Empatía pastoral",
+      "+10 segundos por pregunta", "Consejo certero", "Ánimo inagotable",
+      "Discernimiento espiritual", "50% de preguntas más fáciles (¡o eso parece!)",
+      "Sabiduría inesperada", "Fortaleza en la adversidad",
+      "Serenidad bajo presión", "Memoria bíblica"
     ]
   },
   {
@@ -25,18 +19,10 @@ const MENTORES = [
     nombre: "Santa Teresa de Ávila",
     img: "assets/img/mentor/mentor_teresa.png",
     habilidades: [
-      "Paciencia legendaria",
-      "+7 segundos por pregunta", // Bonus tiempo diferente
-      "Visión espiritual",
-      "Alegría contagiosa",
-      "Confianza total",
-      "Mente estratégica",
-      "Puedes pedir pista especial",
-      "+2 segundos por pregunta", // Otro bonus posible
-      "Oración profunda",
-      "Inspiración a prueba de dudas",
-      "Paz interior",
-      "Valor ante el miedo"
+      "Paciencia legendaria", "+7 segundos por pregunta", "Visión espiritual",
+      "Alegría contagiosa", "Confianza total", "Mente estratégica",
+      "Puedes pedir pista especial", "+2 segundos por pregunta", "Oración profunda",
+      "Inspiración a prueba de dudas", "Paz interior", "Valor ante el miedo"
     ]
   },
   {
@@ -44,33 +30,23 @@ const MENTORES = [
     nombre: "San Pablo",
     img: "assets/img/mentor/mentor_pablo.png",
     habilidades: [
-      "+10 segundos por pregunta", // Bonus tiempo
-      "Conversión radical",
-      "Resistencia a la adversidad",
-      "Predicador incansable",
-      "Dominio de la Palabra",
-      "+5 segundos por pregunta", // Otro bonus
-      "Coraje misionero",
-      "Sabiduría para responder rápido",
-      "Motivación constante",
-      "Discernimiento de espíritus",
-      "Viajes épicos (¡sin perder el rumbo!)",
-      "Citas bíblicas al instante"
+      "+10 segundos por pregunta", "Conversión radical", "Resistencia a la adversidad",
+      "Predicador incansable", "Dominio de la Palabra", "+5 segundos por pregunta",
+      "Coraje misionero", "Sabiduría para responder rápido", "Motivación constante",
+      "Discernimiento de espíritus", "Viajes épicos (¡sin perder el rumbo!)", "Citas bíblicas al instante"
     ]
   }
 ];
+
 function extraerBonusSegundos(habilidad) {
-  // Detecta cualquier "+X segundos por pregunta"
   const match = habilidad.match(/\+(\d+)\s*segundos?/i);
   return match ? parseInt(match[1], 10) : 0;
 }
 
-// === 1. Variables globales ===
-
+// ====== Variables globales ======
 let mentorElegido = null;
 let habilidadesMentorPartida = [];
-let bonusTiempoMentor = 0; // Suma de los segundos extra para la partida
-
+let bonusTiempoMentor = 0;
 
 let rpgCiclos = {};
 let cicloActual = obtenerSemanaAnio();
@@ -81,15 +57,43 @@ let usuarioActual = null;
 const preguntasPorNivel = [5, 4, 3, 3, 3];
 
 const EMOJIS_RPG = [
-  { emoji: "😌", hasta: 21 }, // 25-21
-  { emoji: "🙂", hasta: 16 }, // 20-16
-  { emoji: "😐", hasta: 11 }, // 15-11
-  { emoji: "😯", hasta: 6 },  // 10-6
-  { emoji: "😱", hasta: 0 }   // 5-0
+  { emoji: "😌", hasta: 21 }, { emoji: "🙂", hasta: 16 },
+  { emoji: "😐", hasta: 11 }, { emoji: "😯", hasta: 6 },
+  { emoji: "😱", hasta: 0 }
 ];
 let temporizadorActivo = null;
 
-// ========== TEMPORIZADOR Y SONIDO ==========
+// ====== VALIDACIÓN DE SESIÓN EN EL DOMContentLoaded ======
+document.addEventListener("DOMContentLoaded", async () => {
+  const { data: sessionData } = await supabase.auth.getSession();
+  usuarioActual = sessionData?.session?.user;
+  if (!usuarioActual) {
+    document.getElementById("bienvenida-stats").innerHTML = `
+      <div class="panel-mensaje">
+        <h2>Por favor, inicia sesión para acceder a la Trivia RPG.</h2>
+        <button onclick="window.location.reload()">Recargar sesión</button>
+      </div>
+    `;
+    document.getElementById("btn-comenzar").style.display = "none";
+    document.getElementById("btn-continuar").style.display = "none";
+    return;
+  }
+  fetch('datos/rpg-preguntas.json')
+    .then(res => res.json())
+    .then(async data => {
+      rpgCiclos = data.ciclos || {};
+      datosCiclo = rpgCiclos[cicloActual];
+      if (!datosCiclo) {
+        mostrarSinCiclo();
+        return;
+      }
+      await mostrarStatsBienvenida();
+      document.getElementById("menu-rpg").classList.remove("oculto");
+      inicializarPanelInicio();
+      inicializarRPG();
+    });
+});
+
 function crearTemporizadorPregunta(duracion, onTimeout, onTick, onEmojiChange) {
   let tiempoRestante = duracion;
   let intervalo;
@@ -103,7 +107,6 @@ function crearTemporizadorPregunta(duracion, onTimeout, onTick, onEmojiChange) {
       circulo.style.strokeDasharray = `${circunferencia}`;
       circulo.style.strokeDashoffset = `${circunferencia * (1 - progreso)}`;
     }
-
     const emojiObj = EMOJIS_RPG.find(e => tiempoRestante > e.hasta) || EMOJIS_RPG[EMOJIS_RPG.length - 1];
     if (emojiObj && emojiActual !== emojiObj.emoji) {
       emojiActual = emojiObj.emoji;
@@ -155,22 +158,6 @@ function sonidoFalloAleatorio() {
   return opciones[i];
 }
 
-// ========== INICIO: CARGA DE DATOS ==========
-fetch('datos/rpg-preguntas.json')
-  .then(res => res.json())
-  .then(async data => {
-    rpgCiclos = data.ciclos || {};
-    datosCiclo = rpgCiclos[cicloActual];
-    if (!datosCiclo) {
-      mostrarSinCiclo();
-      return;
-    }
-    await mostrarStatsBienvenida();
-    document.getElementById("menu-rpg").classList.remove("oculto");
-    inicializarPanelInicio();
-    inicializarRPG();
-  });
-
 function obtenerSemanaAnio() {
   const d = new Date();
   d.setHours(0, 0, 0, 0);
@@ -190,15 +177,26 @@ function mostrarSinCiclo() {
   document.getElementById("btn-continuar").style.display = "none";
 }
 
-// ========== PANEL BIENVENIDA Y STATS ==========
+// ====== BIENVENIDA (validando sesión antes de cualquier panel) ======
 async function mostrarStatsBienvenida() {
-  const bienvenida = document.getElementById("bienvenida-stats");
+  const { data: sessionData } = await supabase.auth.getSession();
+  usuarioActual = sessionData?.session?.user;
+  if (!usuarioActual) {
+    document.getElementById("bienvenida-stats").innerHTML = `
+      <div class="panel-mensaje">
+        <h2>Debes iniciar sesión para jugar la Trivia RPG.</h2>
+        <button onclick="window.location.reload()">Recargar sesión</button>
+      </div>
+    `;
+    document.getElementById("btn-comenzar").style.display = "none";
+    document.getElementById("btn-continuar").style.display = "none";
+    return;
+  }
   progresoRPG = await cargarProgresoRPG();
   let yaJugo = progresoRPG && progresoRPG.completado;
 
-  // Si ya jugó: Muestra mensaje y botón modo práctica
   if (yaJugo) {
-    bienvenida.innerHTML = `
+    document.getElementById("bienvenida-stats").innerHTML = `
       <div class="panel-bienvenida">
         <div class="rpg-bienvenido">¡Ya completaste la Trivia RPG de esta semana!</div>
         <div>Vuelve la próxima semana para un nuevo reto.<br>
@@ -207,8 +205,7 @@ async function mostrarStatsBienvenida() {
       </div>
     `;
     document.getElementById("btn-modo-practica").onclick = () => {
-      window.modoPractica = true; // Activa la bandera global
-      // Reinicia estado de juego y mentor para nueva práctica
+      window.modoPractica = true;
       juegoActual = null;
       mentorElegido = null;
       bonusTiempoMentor = 0;
@@ -218,8 +215,7 @@ async function mostrarStatsBienvenida() {
     return;
   }
 
-  // Si NO ha jugado: solo muestra elegir mentor
-  bienvenida.innerHTML = `
+  document.getElementById("bienvenida-stats").innerHTML = `
     <div class="panel-bienvenida">
       <div class="rpg-bienvenido">¡Bienvenido a la Aventura RPG!</div>
       <div class="rpg-avanza">Prepárate para elegir un mentor que te acompañará en esta travesía.<br>
@@ -233,10 +229,8 @@ async function mostrarStatsBienvenida() {
   }, 100);
 }
 
-// ========== PANEL BIENVENIDA EN MODO PRÁCTICA ==========
 function mostrarStatsBienvenidaModoPractica() {
-  const bienvenida = document.getElementById("bienvenida-stats");
-  bienvenida.innerHTML = `
+  document.getElementById("bienvenida-stats").innerHTML = `
     <div class="panel-bienvenida practica">
       <div class="rpg-bienvenido">¡Modo práctica activado!</div>
       <div class="rpg-avanza">Juega para practicar y mejorar.<br>Esta partida no sumará XP ni logros.</div>
@@ -248,8 +242,6 @@ function mostrarStatsBienvenidaModoPractica() {
     if (btn) btn.onclick = mostrarSelectorMentor;
   }, 100);
 }
-
-
 
 // ========== PROGRESO: CARGAR Y GUARDAR ==========
 async function cargarProgresoRPG() {
@@ -263,38 +255,34 @@ async function cargarProgresoRPG() {
       .select("*")
       .eq("user_id", userId)
       .eq("ciclo", cicloActual)
-      .maybeSingle();  // FIX: evita error 406
+      .maybeSingle();
     return data;
   }
-  // LocalStorage si no logueado
   const p = JSON.parse(localStorage.getItem("rpg_progreso")) || {};
   return p[cicloActual] || null;
 }
 
 async function guardarProgresoRPG({ nivel, rango, xp, completado }) {
-  if (window.supabase) {
-    const { data: sessionData } = await supabase.auth.getSession();
-    usuarioActual = sessionData?.session?.user;
-    const userId = usuarioActual?.id;
-    const meta = usuarioActual?.user_metadata || {};
-    if (!userId) return;
-    await supabase.from("rpg_progreso").upsert([{
-      user_id: userId,
-      ciclo: cicloActual,
-      nivel_max: nivel,
-      rango,
-      xp,
-      completado,
-      fecha_juego: new Date().toISOString(),
-      pais: meta.pais || null,
-      ciudad: meta.ciudad || null,
-      parroquia: meta.parroquia || null
-    }]);
+  const { data: sessionData } = await supabase.auth.getSession();
+  usuarioActual = sessionData?.session?.user;
+  const userId = usuarioActual?.id;
+  const meta = usuarioActual?.user_metadata || {};
+  if (!userId) {
+    alert("Error: No se detectó usuario autenticado. Por favor, inicia sesión nuevamente.");
     return;
   }
-  let p = JSON.parse(localStorage.getItem("rpg_progreso")) || {};
-  p[cicloActual] = { nivel, rango, xp, completado };
-  localStorage.setItem("rpg_progreso", JSON.stringify(p));
+  await supabase.from("rpg_progreso").upsert([{
+    user_id: userId,
+    ciclo: cicloActual,
+    nivel_max: nivel,
+    rango,
+    xp,
+    completado,
+    fecha_juego: new Date().toISOString(),
+    pais: meta.pais || null,
+    ciudad: meta.ciudad || null,
+    parroquia: meta.parroquia || null
+  }]);
 }
 
 // ========== RAM ==========
@@ -331,6 +319,11 @@ async function inicializarRPG() {
 
 // ========== BOTONES ==========
 document.getElementById("btn-comenzar").onclick = () => {
+  if (!usuarioActual) {
+    alert("Por favor, inicia sesión para jugar.");
+    window.location.reload();
+    return;
+  }
   juegoActual = {
     nivel: 1,
     vidas: 3,
@@ -341,6 +334,11 @@ document.getElementById("btn-comenzar").onclick = () => {
   mostrarNivel();
 };
 document.getElementById("btn-continuar").onclick = () => {
+  if (!usuarioActual) {
+    alert("Por favor, inicia sesión para jugar.");
+    window.location.reload();
+    return;
+  }
   mostrarNivel();
 };
 document.getElementById("btn-logros").onclick = () => {
@@ -431,8 +429,7 @@ function mostrarNivel() {
     limpiarTemporizadorPregunta();
     reproducirSonido("start.mp3");
     crearTemporizadorPregunta(
-    25 + bonusTiempoMentor,
-
+      25 + bonusTiempoMentor,
       () => {
         juegoActual.vidas--;
         if (juegoActual.vidas <= 0) {
@@ -503,7 +500,6 @@ async function terminarAventura(ganoTodo = false) {
   document.getElementById("juego-rpg").classList.add("oculto");
   document.getElementById("resultados-rpg").classList.remove("oculto");
 
-  // --- Si es modo práctica, NO guardar progreso ni XP
   if (window.modoPractica) {
     document.getElementById("resultados-rpg").innerHTML = `
       <h2>¡Fin de la práctica!</h2>
@@ -516,15 +512,13 @@ async function terminarAventura(ganoTodo = false) {
     document.getElementById("btn-continuar").style.display = "none";
     return;
   }
-console.log("Voy a guardar progreso RPG:");
-console.log("Nivel:", juegoActual.nivel);
-console.log("XP:", juegoActual.xp);
-console.log("Rango:", obtenerRango(juegoActual.nivel, ganoTodo));
-console.log("Ciclo actual:", cicloActual);
-console.log("Usuario:", usuarioActual);
-console.log("Modo práctica:", window.modoPractica);
 
-  // --- Si es juego real, sí guarda progreso
+  if (!usuarioActual) {
+    alert("Error: No se detectó usuario autenticado. Por favor, inicia sesión nuevamente.");
+    window.location.reload();
+    return;
+  }
+
   const rango = obtenerRango(juegoActual.nivel, ganoTodo);
   await guardarProgresoRPG({
     nivel: juegoActual.nivel,
@@ -547,7 +541,6 @@ console.log("Modo práctica:", window.modoPractica);
     if (btn) btn.onclick = () => compartirResultadoRPG(rango, juegoActual.xp, ganoTodo);
   }, 50);
 }
-
 
 // ========== OTROS ==========
 function obtenerRango(nivel, ganoTodo) {
@@ -578,7 +571,6 @@ function mostrarLogros() {
   `;
 }
 
-// Mensaje personalizado
 const tipsPorNivel = [
   "Recuerda leer con atención las opciones antes de responder.",
   "Algunas preguntas tienen pistas en los detalles de la pregunta.",
@@ -588,10 +580,8 @@ const tipsPorNivel = [
 ];
 function mostrarMensajeNivelPersonalizado(nivel, vidas, callback) {
   const mensajes = [
-    "¡Buen comienzo!",
-    "¡Vas avanzando muy bien!",
-    "¡Increíble progreso!",
-    "¡Estás entre los mejores!",
+    "¡Buen comienzo!", "¡Vas avanzando muy bien!",
+    "¡Increíble progreso!", "¡Estás entre los mejores!",
     "¡Nivel máximo alcanzado, eres un crack!"
   ];
   const msg = mensajes[nivel-1] || "¡Sigue así!";
@@ -623,7 +613,6 @@ function mostrarMensajeNivelPersonalizado(nivel, vidas, callback) {
   document.getElementById("btn-seguir-nivel").onclick = callback;
 }
 
-
 function animarAcierto(btn) {
   btn.classList.add("acierto-anim");
   setTimeout(() => btn.classList.remove("acierto-anim"), 500);
@@ -644,15 +633,20 @@ function compartirResultadoRPG(rango, xp, completado) {
     alert("¡Resultado copiado! Puedes pegarlo en WhatsApp, Telegram o donde quieras.");
   }
 }
-// === 2. Función para mostrar el selector de mentor ===
+
+// === Selector de Mentor ===
 function mostrarSelectorMentor() {
+  if (!usuarioActual) {
+    alert("Tu sesión ha caducado. Por favor, inicia sesión nuevamente para jugar.");
+    window.location.reload();
+    return;
+  }
   let html = `
     <div id="modal-mentor" class="modal-mentor">
       <h2>Elige tu mentor</h2>
       <div class="mentores-lista">
   `;
   MENTORES.forEach(mentor => {
-    // Elige 3 habilidades aleatorias
     const habilidades = mezclarArray(mentor.habilidades).slice(0, 3);
     html += `
       <div class="mentor-card" data-id="${mentor.id}">
@@ -671,40 +665,30 @@ function mostrarSelectorMentor() {
     </div>
   `;
 
-  // Muestra el modal
   const contenedor = document.createElement("div");
   contenedor.id = "overlay-mentor";
   contenedor.style = "position:fixed;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.65);z-index:1000;display:flex;align-items:center;justify-content:center;";
   contenedor.innerHTML = html;
   document.body.appendChild(contenedor);
 
-  // Botón cerrar
   document.getElementById("cerrar-mentor").onclick = () => {
     document.body.removeChild(contenedor);
   };
 
-  // Elegir mentor y calcular bonus
   contenedor.querySelectorAll(".btn-seleccionar-mentor").forEach(btn => {
     btn.onclick = () => {
       const mentorId = btn.dataset.id;
       mentorElegido = MENTORES.find(m => m.id === mentorId);
       habilidadesMentorPartida = mezclarArray(mentorElegido.habilidades).slice(0, 3);
-
-      // Suma los segundos de todas las habilidades seleccionadas
       bonusTiempoMentor = habilidadesMentorPartida.reduce((total, h) => total + extraerBonusSegundos(h), 0);
-
       document.body.removeChild(contenedor);
       mostrarPanelInicioConMentor();
     };
   });
 }
 
-
-
-// === 3. Panel de inicio mostrando al mentor ===
 function mostrarPanelInicioConMentor() {
-  const bienvenida = document.getElementById("bienvenida-stats");
-  bienvenida.innerHTML = `
+  document.getElementById("bienvenida-stats").innerHTML = `
     <div class="panel-bienvenida">
       <div class="rpg-bienvenido">¡Tu mentor en esta aventura será:</div>
       <div class="mentor-seleccionado">
@@ -718,11 +702,10 @@ function mostrarPanelInicioConMentor() {
   document.getElementById("btn-iniciar-aventura").onclick = () => {
     document.getElementById("bienvenida-stats").innerHTML = "";
     document.getElementById("menu-rpg").classList.remove("oculto");
-    document.getElementById("btn-comenzar").click(); // inicia juego
+    document.getElementById("btn-comenzar").click();
   };
 }
 
-// === 4. Frases motivacionales según mentor ===
 function mentorElegidoFraseMotivacional() {
   if (!mentorElegido) return "";
   const frasesPorMentor = {
@@ -767,3 +750,4 @@ function mentorElegidoFraseNivel() {
   const arr = frasesPorMentor[mentorElegido.id] || ["¡Sigue, eres capaz!"];
   return arr[Math.floor(Math.random() * arr.length)];
 }
+
