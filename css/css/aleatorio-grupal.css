@@ -1,0 +1,198 @@
+body {
+  background: linear-gradient(120deg, #f0f4f8 0%, #e3e6e8 100%);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  color: #232a36;
+  margin: 0;
+  min-height: 100vh;
+}
+
+#config-grupal {
+  background: #fff;
+  border-radius: 1.4rem;
+  box-shadow: 0 8px 30px rgba(0,60,60,0.09);
+  max-width: 540px;
+  margin: 2.8rem auto;
+  padding: 2.5rem 1.7rem 2.5rem 1.7rem;
+  text-align: center;
+  position: relative;
+}
+
+h1, h2 {
+  color: #2a9d8f;
+  font-weight: 700;
+  margin-bottom: 0.7em;
+  letter-spacing: -1.2px;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+label, select {
+  font-size: 1.08em;
+  margin-bottom: 0.8em;
+}
+
+select {
+  border-radius: 0.55em;
+  padding: 0.32em 0.7em;
+  border: 1.5px solid #ddd;
+  background: #e5f7fa;
+  color: #2a9d8f;
+}
+
+#elige-categorias-grupal {
+  margin-bottom: 1.2em;
+  margin-top: 1.2em;
+}
+
+#elige-categorias-grupal h3 {
+  margin-bottom: 0.6em;
+  color: #366;
+  font-weight: 600;
+  font-size: 1.08em;
+}
+
+#elige-categorias-grupal label {
+  background: #e0e4ed;
+  color: #223;
+  border-radius: 2em;
+  padding: 0.47em 1.13em 0.47em 0.99em;
+  margin: 0.23em 0.3em 0.23em 0;
+  font-size: 1em;
+  cursor: pointer;
+  border: 1.2px solid #d5e2e8;
+  transition: background 0.19s, color 0.19s, border 0.19s;
+}
+
+#elige-categorias-grupal input[type="checkbox"]:checked + span,
+#elige-categorias-grupal label:hover {
+  background: #2a9d8f;
+  color: #fff;
+  border-color: #219177;
+}
+
+#iniciar-quiz-grupal {
+  display: block;
+  margin: 2.2em auto 0.5em auto;
+  background: #f4a261;
+  color: #fff;
+  border: none;
+  border-radius: 2em;
+  padding: 0.85em 2.2em;
+  font-size: 1.13em;
+  font-weight: bold;
+  box-shadow: 0 2px 8px rgba(245, 172, 97, 0.13);
+  transition: background 0.21s, transform 0.13s;
+  cursor: pointer;
+}
+#iniciar-quiz-grupal:hover {
+  background: #e76f51;
+  transform: scale(1.04);
+}
+
+/* --- Tablero de ventaja (3x3) --- */
+#tablero-ventaja {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9px;
+  max-width: 300px;
+  margin: 1.1em auto 0.9em auto;
+}
+
+#tablero-ventaja .casilla {
+  font-size: 1.24em;
+  font-weight: bold;
+  border-radius: 0.9em;
+  padding: 22px 0;
+  background: #f1f8e9;
+  border: 2.5px solid #e0e0e0;
+  box-shadow: 0 2px 8px #c9efe5aa;
+  color: #366;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border 0.2s, transform 0.13s;
+}
+
+#tablero-ventaja .casilla:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: scale(0.98);
+}
+
+/* Resalta casilla con color de equipo */
+#tablero-ventaja .casilla.azul { background: #2196f3; color: #fff; border-color: #1976d2; }
+#tablero-ventaja .casilla.rojo { background: #e53935; color: #fff; border-color: #b71c1c; }
+#tablero-ventaja .casilla.rosado { background: #e91e63; color: #fff; border-color: #ad1457; }
+#tablero-ventaja .casilla.verde { background: #4caf50; color: #fff; border-color: #1b5e20; }
+
+/* --- Temporizador y barra de turno de equipo --- */
+#temporizador {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1em;
+}
+
+#barra-tiempo {
+  flex: 1;
+  height: 17px;
+  background: #eee;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+#progreso {
+  height: 100%;
+  width: 100%;
+  background: #4caf50;
+  border-radius: 8px;
+  transition: width 0.25s, background 0.18s;
+}
+
+/* Barra de color de equipo activo */
+#franja-equipo {
+  height: 8px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  transition: background 0.27s;
+}
+
+/* --- Botón continuar ronda --- */
+#btn-continuar-ronda, #btn-jugar-nuevamente {
+  margin-top: 1.7em;
+  padding: 0.83em 2.1em;
+  background: #2196f3;
+  color: #fff;
+  border: none;
+  border-radius: 2em;
+  font-size: 1.14em;
+  font-weight: bold;
+  transition: background 0.2s, transform 0.13s;
+  cursor: pointer;
+}
+#btn-continuar-ronda:hover, #btn-jugar-nuevamente:hover {
+  background: #e76f51;
+  transform: scale(1.03);
+}
+
+/* Resumen de ronda y ganador */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 1.1em 0 0.7em 0;
+}
+li {
+  margin: 0.4em 0;
+  font-size: 1.06em;
+  font-weight: 500;
+}
+
+@media (max-width: 620px) {
+  #config-grupal {
+    padding: 1.1rem 0.3rem 2rem 0.3rem;
+    max-width: 99vw;
+  }
+  #tablero-ventaja {
+    max-width: 95vw;
+  }
+}
