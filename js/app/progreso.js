@@ -303,3 +303,43 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (box) box.innerHTML = "<p>Error cargando tu progreso.</p>";
   }
 });
+function initTouchSlider() {
+  const container = document.querySelector('.progreso-slider');
+  if (!container) return;
+
+  let startX = 0, startY = 0, dx = 0, dy = 0, swiping = false;
+  const THRESHOLD = 45;   // mínimo px horizontal para considerar swipe
+  const VERTICAL_BIAS = 1.2; // ignora si hay más vertical que horizontal
+
+  container.addEventListener('touchstart', (e) => {
+    const t = e.touches[0];
+    startX = t.clientX; startY = t.clientY;
+    dx = 0; dy = 0; swiping = true;
+  }, { passive: true });
+
+  container.addEventListener('touchmove', (e) => {
+    if (!swiping) return;
+    const t = e.touches[0];
+    dx = t.clientX - startX;
+    dy = t.clientY - startY;
+    // si el gesto es claramente vertical, no hacemos nada
+    if (Math.abs(dy) > Math.abs(dx) * VERTICAL_BIAS) return;
+    // si quieres, puedes hacer un pequeño translateX visual aquí
+  }, { passive: true });
+
+  container.addEventListener('touchend', () => {
+    if (!swiping) return;
+    swiping = false;
+    if (Math.abs(dx) < THRESHOLD || Math.abs(dy) > Math.abs(dx) * VERTICAL_BIAS) return;
+
+    const dir = dx < 0 ? +1 : -1; // izquierda→derecha = anterior; derecha→izquierda = siguiente
+    const next = Math.min(Math.max(0, progresoSlideActual + dir), SLIDES.length - 1);
+    if (next !== progresoSlideActual) mostrarSlideProgreso(next);
+  });
+}
+
+// llama esto después de montar los slides
+document.addEventListener("DOMContentLoaded", () => {
+  // si ya tienes otro DOMContentLoaded, mete esta línea al final de ese callback:
+  initTouchSlider();
+});
