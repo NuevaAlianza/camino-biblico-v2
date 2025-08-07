@@ -1,3 +1,4 @@
+/* ============ LAYOUT BÁSICO ============ */
 .trivia-flash-main {
   max-width: 480px;
   margin: 0 auto;
@@ -20,9 +21,14 @@
 .trivia-flash-main ul {
   margin: 0.5em 0 0.5em 1.1em;
 }
-#trivia-flash-estado, #trivia-flash-juego, #trivia-flash-resultado, #trivia-flash-historial {
+#trivia-flash-estado,
+#trivia-flash-juego,
+#trivia-flash-resultado,
+#trivia-flash-historial {
   margin-bottom: 1.2em;
 }
+
+/* ============ PREGUNTA Y OPCIONES ============ */
 .trivia-pregunta {
   background: #fffdfa;
   border-radius: 1.2em;
@@ -60,6 +66,8 @@
   background: #f5b6a0;
   border-color: #e76f51;
 }
+
+/* ============ RESULTADO ============ */
 .trivia-flash-resultado-msg {
   font-size: 1.18em;
   color: #185e5e;
@@ -75,57 +83,145 @@
   font-weight: bold;
   margin-bottom: 0.6em;
 }
-/* --- TEMPORIZADOR CIRCULAR + EMOJI ANIMADO --- */
-.temporizador-panel {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.1em;
-  margin-bottom: 1.2em;
-  min-height: 98px;
-}
-.temporizador-svg {
-  width: 88px; height: 88px;
+.emoji-final {
+  font-size: 2.2em;
   display: block;
-  background: transparent;
+  margin-bottom: 0.25em;
 }
+.msg-final {
+  font-size: 1.08em;
+  display: block;
+  margin-top: 0.3em;
+  color: #1e6e6e;
+}
+
+/* ============ TEMPORIZADOR CIRCULAR + EMOJI ============ */
+.temporizador-panel {
+  position: relative;
+  width: 110px;
+  margin: 0 auto 1rem;
+}
+.temporizador-svg { transform: rotate(-90deg); }
 #timer-circular {
   transition: stroke-dashoffset 0.7s cubic-bezier(0.44,0,0.56,1);
   stroke-linecap: round;
   filter: drop-shadow(0 1px 6px #29e8e233);
 }
 .emoji-animado {
-  font-size: 2.5em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  font-size: 20px;
+}
+.emoji-animado.shake { animation: shake .36s; }
+@keyframes shake {
+  0% { transform: translate(-50%,-50%) translateX(0); }
+  20% { transform: translate(-50%,-50%) translateX(-4px); }
+  40% { transform: translate(-50%,-50%) translateX(4px); }
+  60% { transform: translate(-50%,-50%) translateX(-3px); }
+  80% { transform: translate(-50%,-50%) translateX(3px); }
+  100% { transform: translate(-50%,-50%) translateX(0); }
+}
+.timer-text {
+  position: absolute;
+  top: calc(50% + 22px);
+  left: 50%;
+  transform: translate(-50%,-50%);
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #17797a;
+  letter-spacing: 1px;
+}
+.temporizador-panel.warn { animation: pulse .9s infinite; }
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+/* ============ PROGRESO DE 5 PREGUNTAS ============ */
+.flash-progreso {
+  display: flex;
+  gap: .3rem;
+  margin: .6rem 0 1rem;
+}
+.flash-progreso .seg {
+  width: 18px;
+  height: 6px;
+  border-radius: 4px;
+  background: #e6e6e6;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,.05);
+}
+.flash-progreso .seg.lleno { background: #36b37e; }
+
+/* ============ BANNER SUPERIOR (DÍA / CICLO) ============ */
+.flash-banner {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .6rem .9rem;
+  border-radius: 12px;
+  margin: .6rem 0 1rem;
+  background: #f4f6fb;
+  color: #333;
+  box-shadow: 0 2px 10px rgba(0,0,0,.05);
+}
+.flash-banner.activo { background: #eefcf8; }
+.flash-banner.inactivo { background: #fff4f4; }
+.flash-banner .pill-dia,
+.flash-banner .pill-ciclo {
+  display: inline-block;
+  padding: .2rem .6rem;
+  border-radius: 999px;
+  font-weight: 600;
+  background: #36b37e;
+  color: #fff;
+  font-size: .82rem;
+}
+.flash-banner.inactivo .pill-dia { background: #e23d3d; }
+.flash-banner .pill-ciclo { background: #2564cf; }
+
+/* ============ RACHA SEMANAL (L–S) ============ */
+.resumen-semanal { margin: .8rem 0 1.2rem; }
+.resumen-titulo { font-weight: 700; margin-bottom: .4rem; }
+.semana-wrap { width: 100%; }
+.semana-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: .4rem;
+}
+.semana-dia {
+  position: relative;
+  height: 28px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 1.6em;
-  height: 1.6em;
-  transition: transform 0.22s cubic-bezier(0.45, 0, 0.55, 1);
+  background: #e9eef7;
+  color: #334;
+  font-weight: 700;
+  font-size: .9rem;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,.06);
 }
-.emoji-animado.shake {
-  animation: shake 0.36s;
-}
-@keyframes shake {
-  0% { transform: translateX(0); }
-  20% { transform: translateX(-4px);}
-  40% { transform: translateX(4px);}
-  60% { transform: translateX(-3px);}
-  80% { transform: translateX(3px);}
-  100% { transform: translateX(0);}
-}
-.timer-text {
-  font-size: 1.3em;
-  font-family: 'Georgia', serif;
-  font-weight: bold;
-  color: #17797a;
-  min-width: 2.6em;
-  text-align: center;
-  letter-spacing: 1px;
+.semana-dia.jugado { background: #36b37e; color: #fff; }
+.semana-dia.no-jugado { background: #ffe0e0; color: #a33; }
+.semana-dia.pendiente { background: #f5f5f5; color: #777; }
+.dia-label { pointer-events: none; }
+.resumen-datos { margin-top: .4rem; color: #334; }
+
+/* ============ MENSAJE DOMINGO ============ */
+.domingo-msg {
+  margin-top: .6rem;
+  padding: .6rem .8rem;
+  background: #fffdf3;
+  border: 1px solid #f3e6a1;
+  border-radius: 10px;
 }
 
-/* --- BOTÓN COMPARTIR FLOTANTE --- */
-#btn-flash-compartir, .flash-compartir-btn {
+/* ============ BOTÓN COMPARTIR (flotante) ============ */
+#btn-flash-compartir,
+.flash-compartir-btn {
   position: fixed;
   bottom: 1.4rem;
   right: 1.3rem;
@@ -143,80 +239,25 @@
   transition: background 0.19s, transform 0.19s;
   outline: none;
 }
-.flash-activo {
-  background: #25cb6d !important;
-  color: #fff !important;
-  box-shadow: 0 2px 18px #16fa9c47;
-}
-.flash-bounce {
-  animation: flash-bounce 1.1s;
-}
-@keyframes flash-bounce {
-  0% { transform: scale(0.9);}
-  35% { transform: scale(1.13);}
-  60% { transform: scale(0.98);}
-  100% { transform: scale(1);}
+.flash-compartir-btn.flash-activo { background: #36b37e; }
+.flash-compartir-btn.flash-bounce { animation: popin .6s ease; }
+@keyframes popin {
+  0% { transform: scale(.6); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
 }
 
-/* --- FEEDBACK FINAL --- */
-.emoji-final {
-  font-size: 2.2em;
-  display: block;
-  margin-bottom: 0.25em;
-}
-.msg-final {
-  font-size: 1.08em;
-  display: block;
-  margin-top: 0.3em;
-  color: #1e6e6e;
-}
-
-/* --- DÍA ACTIVO/INACTIVO --- */
-.flash-dia-activo {
-  display: inline-block;
-  color: #19bf7a;
-  background: #ecffe6;
-  font-weight: bold;
-  padding: 0.16em 0.55em;
-  border-radius: 1em;
-  margin-bottom: 0.55em;
-  font-size: 1.08em;
-}
-.flash-dia-lunes {
-  display: inline-block;
-  color: #267ab7;
-  background: #e6f2ff;
-  font-weight: bold;
-  padding: 0.16em 0.55em;
-  border-radius: 1em;
-  margin-bottom: 0.55em;
-  font-size: 1.08em;
-}
-.flash-dia-inactivo {
-  color: #d28a3a;
-  font-weight: bold;
-  margin-bottom: 0.7em;
-  font-size: 1.04em;
-}
-
-/* --- RESPONSIVO --- */
+/* ============ RESPONSIVO ============ */
 @media (max-width: 600px) {
   .trivia-flash-main {
     max-width: 99vw;
     padding: 1.1em 0.2em 2.7em 0.2em;
   }
-  .temporizador-panel {
-    gap: 0.5em;
-  }
-  .emoji-animado {
-    font-size: 1.5em;
-    width: 1.1em;
-    height: 1.1em;
-  }
-  #btn-flash-compartir, .flash-compartir-btn {
+  #btn-flash-compartir,
+  .flash-compartir-btn {
     padding: 0.76em 1.3em;
     font-size: 1em;
     right: 0.6em;
     bottom: 0.7em;
   }
 }
+
