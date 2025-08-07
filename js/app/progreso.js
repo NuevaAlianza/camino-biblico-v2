@@ -1,236 +1,241 @@
-let usuarioActual = null; // Declaración global
+// ====== Helpers & State ======
+let usuarioActual = null;
+let cacheResumen = null;
 
-document.addEventListener("DOMContentLoaded", async () => {
-  // 1. Obtener la sesión del usuario
-  const { data: sessionData } = await supabase.auth.getSession();
-  usuarioActual = sessionData?.session?.user;
-  const userId = usuarioActual?.id || usuarioActual?.user?.id;
-  if (!userId) {
-    ocultarTodosLosSlidesRanking();
-    document.getElementById("progreso-resumen").innerHTML = "<p>Inicia sesión para ver tu progreso.</p>";
-    return;
-  }
+const SLIDES = [
+  "slide-ranking-global",
+  "slide-ranking-parroquia",
+  "slide-ranking-subgrupos-parroquia",
+  "slide-ranking-subgrupo"
+];
 
-  // Render
-  await mostrarDashboardResumen(userId);
-  await mostrarNivelYLogros(userId);
-  await mostrarRankingGlobal(userId);
-  await mostrarRankingParroquia(userId);
-  await mostrarRankingSubgruposParroquia(userId); // <-- aquí
-  await mostrarRankingSubgrupo(userId);
-  await mostrarHistorialPartidas(userId);
-});
+const $ = (id) => document.getElementById(id);
+const safe = (t) => (t ?? "").toString().replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
+const fmtFecha = (d) => new Date(d).toLocaleDateString('es-DO');
 
-function ocultarTodosLosSlidesRanking() {
-  document.getElementById("slide-ranking-global").style.display = "none";
-  document.getElementById("slide-ranking-parroquia").style.display = "none";
-  document.getElementById("slide-ranking-subgrupo").style.display = "none";
-  document.getElementById("slide-historial").style.display = "none";
-  document.getElementById("slide-logros").style.display = "none";
+function setLoading(id, msg="Cargando...") {
+  const el = $(id);
+  if (el) el.innerHTML = `<div class="loading">${safe(msg)}</div>`;
 }
 
-function mostrarTodosLosSlidesRanking() {
-  document.getElementById("slide-ranking-global").style.display = "";
-  document.getElementById("slide-ranking-parroquia").style.display = "";
-  document.getElementById("slide-ranking-subgrupo").style.display = "";
-  document.getElementById("slide-historial").style.display = "";
-  document.getElementById("slide-logros").style.display = "";
-}
-
-// --- Dashboard Resumen ---
-async function mostrarDashboardResumen(userId) {
-  const { data: [resumen], error } = await supabase
+// ====== Data access ======
+async function getResumen(userId) {
+  if (cacheResumen) return cacheResumen;
+  const { data, error } = await supabase
     .from("resumen_ranking")
     .select("*")
     .eq("user_id", userId);
+  if (error || !data?.length) throw new Error("No se pudo cargar resumen_ranking");
+  cacheResumen = data[0];
+  return cacheResumen;
+}
 
-  if (error || !resumen) {
-    document.getElementById("progreso-resumen").innerHTML = "<p>Error cargando tu progreso.</p>";
-    return;
-  }
-  const nombre = resumen.nombre || usuarioActual.email || "Sin nombre";
-  const avatar = nombre.trim().charAt(0).toUpperCase() || "👤";
-  const temasTotales = resumen.temas_totales || 60; // Ajusta a tu máximo real
-  const temasJugados = resumen.total_partidas_progreso || 0;
+// ====== Nivel por “A” (mapeo existente) ======
+function nivelPorA(totalA) {
+  if (totalA >= 60) return { nivel: 11, titulo: "Campeón Legendario" };
+  if (totalA >= 51) return { nivel: 10, titulo: "Maestro" };
+  if (totalA >= 41) return { nivel: 9,  titulo: "Discípulo Fiel" };
+  if (totalA >= 36) return { nivel: 8,  titulo: "Maestro Joven" };
+  if (totalA >= 31) return { nivel: 7,  titulo: "Sabio en Camino" };
+  if (totalA >= 26) return { nivel: 6,  titulo: "Perseverante" };
+  if (totalA >= 21) return { nivel: 5,  titulo: "Investigador" };
+  if (totalA >= 16) return { nivel: 4,  titulo: "Estudioso" };
+  if (totalA >= 11) return { nivel: 3,  titulo: "Explorador" };
+  if (totalA >= 6)  return { nivel: 2,  titulo: "Aprendiz" };
+  if (totalA >= 0)  return { nivel: 1,  titulo: "Principiante" };
+  return { nivel: 0, titulo: "Sin nivel" };
+}
+
+// ====== UI: Dashboard y Nivel ======
+async function mostrarDashboardResumen(userId, resumen) {
+  const el = $("progreso-resumen");
+  if (!el) return;
+
+  const nombre = resumen?.nombre || usuarioActual?.email || "Sin nombre";
+  const avatar = safe(nombre.trim().charAt(0).toUpperCase()) || "👤";
+  const temasTotales = resumen?.temas_totales || 60;
+  const temasJugados = resumen?.total_partidas_progreso || 0;
   const porcentajeTemas = temasTotales ? Math.round((temasJugados / temasTotales) * 100) : 0;
 
-  document.getElementById("progreso-resumen").innerHTML = `
+  el.innerHTML = `
     <div class="dashboard-resumen" style="gap:1.2em;">
       <div class="dashboard-icon">${avatar}</div>
       <div class="dashboard-metrics">
-        <h2>${nombre}</h2>
-        <p><b>XP total:</b> ${resumen.xp_global || 0}</p>
-        <p><b>Nivel:</b> ${resumen.nivel || "-"} (${nivelPorA(resumen.total_a_progreso || 0).titulo})</p>
-        <p><b>Nota promedio:</b> ${resumen.nota_promedio_progreso ? calcularLetraProm(resumen.nota_promedio_progreso) : "-"}</p>
+        <h2>${safe(nombre)}</h2>
+        <p><b>XP total:</b> ${resumen?.xp_global ?? 0}</p>
+        <p><b>Nivel:</b> ${resumen?.nivel || "-"} (${nivelPorA(resumen?.total_a_progreso || 0).titulo})</p>
+        <p><b>Nota promedio:</b> ${resumen?.nota_promedio_progreso ?? "-"}</p>
         <p><b>Temas jugados:</b> ${temasJugados} / ${temasTotales}</p>
         <div class="dashboard-bar"><div class="dashboard-bar-inner" style="width:${porcentajeTemas}%;"></div></div>
-        <p><b>Última participación:</b> ${resumen.fecha_ultimo_juego ? new Date(resumen.fecha_ultimo_juego).toLocaleDateString() : "-"}</p>
+        <p><b>Última participación:</b> ${resumen?.fecha_ultimo_juego ? fmtFecha(resumen.fecha_ultimo_juego) : "-"}</p>
       </div>
     </div>
   `;
 }
 
-function calcularLetraProm(n) {
-  if (n >= 95) return "A";
-  if (n >= 85) return "B";
-  if (n >= 70) return "C";
-  if (n > 0) return "D";
-  return "-";
-}
-function nivelPorA(totalA) {
-  if (totalA >= 60) return { nivel: 11, titulo: "Campeón Legendario" };
-  if (totalA >= 51) return { nivel: 10, titulo: "Maestro" };
-  if (totalA >= 41) return { nivel: 9, titulo: "Discípulo Fiel" };
-  if (totalA >= 36) return { nivel: 8, titulo: "Maestro Joven" };
-  if (totalA >= 31) return { nivel: 7, titulo: "Sabio en Camino" };
-  if (totalA >= 26) return { nivel: 6, titulo: "Perseverante" };
-  if (totalA >= 21) return { nivel: 5, titulo: "Investigador" };
-  if (totalA >= 16) return { nivel: 4, titulo: "Estudioso" };
-  if (totalA >= 11) return { nivel: 3, titulo: "Explorador" };
-  if (totalA >= 6)  return { nivel: 2, titulo: "Aprendiz" };
-  if (totalA >= 0)  return { nivel: 1, titulo: "Principiante" };
-  return { nivel: 0, titulo: "Sin nivel" };
-}
-
-// --- Logros rápidos y nivel ---
-async function mostrarNivelYLogros(userId) {
-  const { data: [resumen] } = await supabase
-    .from("resumen_ranking")
-    .select("total_a_progreso")
-    .eq("user_id", userId);
+async function mostrarNivel(userId, resumen) {
+  const el = $("progreso-nivel");
+  if (!el) return;
 
   const totalA = resumen?.total_a_progreso || 0;
   const { nivel, titulo } = nivelPorA(totalA);
 
-  document.getElementById("progreso-nivel").innerHTML = `
+  el.innerHTML = `
     <div class="nivel-titulo">
       <span class="nivel-label">Nivel:</span>
       <span class="nivel-num">${nivel}</span>
-      <span class="nivel-titulo-nombre">${titulo}</span>
+      <span class="nivel-titulo-nombre">${safe(titulo)}</span>
       <div class="nivel-progreso">Coleccionables A: <b>${totalA}</b> / 60</div>
       ${nivel === 11 ? `<div class="nivel-premio">🏆 ¡Coleccionable especial desbloqueado!</div>` : ""}
     </div>
   `;
-
-  const logrosSlide = document.getElementById("slide-logros");
-  if (logrosSlide) {
-    logrosSlide.innerHTML = `
-      <h3>Logros rápidos</h3>
-      <div class="logros-grid">
-        <div class="logro-card">🏅 <div>${totalA} temas <b>A</b></div></div>
-        <div class="logro-card">🥇 <div>Nivel <b>${nivel}</b>: ${titulo}</div></div>
-      </div>
-    `;
-  } else {
-    console.warn('No se encontró el elemento #slide-logros');
-  }
 }
 
-// --- Ranking Global (Top 10 XP) ---
-async function mostrarRankingGlobal(userId) {
-  const { data: rankingGlobal } = await supabase
+// ====== Rankings ======
+
+// Top Global (preparado para paginación si la activas)
+async function mostrarRankingGlobal(userId, { page = 0, size = 10 } = {}) {
+  const el = $("slide-ranking-global");
+  if (!el) return;
+
+  const from = page * size;
+  const to   = from + size - 1;
+
+  const { data, count, error } = await supabase
     .from("resumen_ranking")
-    .select("user_id, nombre, xp_global")
+    .select("user_id, nombre, xp_global", { count: 'exact' })
     .order("xp_global", { ascending: false })
-    .limit(10);
+    .range(from, to);
 
-  let html = `<h3>Top 10 Global</h3><ol style="text-align:center;">`;
-  (rankingGlobal || []).forEach((u, i) => {
-    html += `<li${u.user_id === userId ? ' class="yo"' : ''}>#${i + 1} ${u.nombre || u.user_id.slice(0, 8)} – ${u.xp_global} XP</li>`;
-  });
-  html += `</ol>`;
-  document.getElementById("slide-ranking-global").innerHTML = html;
-}
-
-// --- Ranking parroquial (XP promedio por parroquia) ---
-async function mostrarRankingParroquia(userId) {
-  // Obtén todas las parroquias con usuarios
-  const { data: parroquiasAll } = await supabase
-    .from("resumen_ranking")
-    .select("parroquia_id, parroquia_nombre, xp_global, user_id")
-    .not("parroquia_id", "is", null);
-
-  if (!parroquiasAll || parroquiasAll.length === 0) {
-    document.getElementById("slide-ranking-parroquia").innerHTML = "<p>No hay datos parroquiales aún.</p>";
+  if (error) {
+    el.innerHTML = "<p>Error cargando ranking global.</p>";
     return;
   }
 
-  // Agrupa por parroquia_id
-  const parroquiaMap = {};
-  parroquiasAll.forEach(row => {
-    if (!parroquiaMap[row.parroquia_id]) {
-      parroquiaMap[row.parroquia_id] = {
-        nombre: row.parroquia_nombre || `Parroquia ${row.parroquia_id}`,
-        xp: 0,
-        count: 0
-      };
+  el.innerHTML = `
+    <h3>Top Global</h3>
+    <div class="ranking-subgrupo-list">
+      ${(data || []).map((u, i) => `
+        <div class="ranking-row${u.user_id === userId ? " actual" : ""}">
+          <span class="pos">#${from + i + 1}</span>
+          <span class="nombre">${safe(u.nombre || u.user_id?.slice(0,8))}</span>
+          <span class="xp">${u.xp_global ?? 0} XP</span>
+          ${u.user_id === userId ? "<span class='tuyo'>(Tú)</span>" : ""}
+        </div>
+      `).join("")}
+    </div>
+    ${
+      typeof count === 'number' && count > size
+        ? `<div class="pager">
+             <button ${page<=0?'disabled':''} onclick="cambiarPaginaGlobal(${Math.max(0,page-1)})">Anterior</button>
+             <span>Página ${page+1} de ${Math.ceil(count/size)}</span>
+             <button ${from+data.length>=count?'disabled':''} onclick="cambiarPaginaGlobal(${page+1})">Siguiente</button>
+           </div>`
+        : ""
     }
-    parroquiaMap[row.parroquia_id].xp += row.xp_global || 0;
-    parroquiaMap[row.parroquia_id].count++;
-  });
+  `;
 
-  const ranking = Object.entries(parroquiaMap)
-    .map(([id, p]) => ({
-      id,
-      nombre: p.nombre,
-      xpPromedio: p.count ? p.xp / p.count : 0,
-      count: p.count
-    }))
-    .sort((a, b) => b.xpPromedio - a.xpPromedio);
-
-  let html = `<h3>Ranking parroquial (XP promedio)</h3><ol style="text-align:center;">`;
-  ranking.forEach((p, i) => {
-    html += `<li>#${i + 1} ${p.nombre} – ${p.xpPromedio.toFixed(1)} XP/promedio (${p.count} jugador${p.count === 1 ? '' : 'es'})</li>`;
-  });
-  html += "</ol>";
-  document.getElementById("slide-ranking-parroquia").innerHTML = html;
+  // expone paginator si lo usas
+  window.cambiarPaginaGlobal = async (p) => {
+    setLoading("slide-ranking-global");
+    await mostrarRankingGlobal(userId, { page: p, size });
+  };
 }
 
-// --- Ranking de subgrupo (XP total por subgrupo) ---
-async function mostrarRankingSubgrupo(userId) {
-  // 1. Saca tu subgrupo
-  const { data: [resumenPropio] } = await supabase
-    .from("resumen_ranking")
-    .select("subgrupo")
-    .eq("user_id", userId);
+// Ranking por parroquia (desde vista agregada)
+async function mostrarRankingParroquia() {
+  const el = $("slide-ranking-parroquia");
+  if (!el) return;
 
-  const subgrupoId = resumenPropio?.subgrupo;
-  const cont = document.getElementById("slide-ranking-subgrupo");
-  cont.innerHTML = "<div>Cargando ranking de subgrupo...</div>";
+  const { data, error } = await supabase
+    .from("v_ranking_parroquias")
+    .select("*");
 
-  if (!subgrupoId) {
-    cont.innerHTML = "<div>No tienes subgrupo asignado.</div>";
+  if (error) {
+    el.innerHTML = "<p>Error cargando ranking parroquial.</p>";
     return;
   }
 
-  // 2. Obtén todos los usuarios de ese subgrupo
-  const { data: miembros } = await supabase
+  el.innerHTML = `
+    <h3>Ranking parroquial (XP promedio)</h3>
+    <div class="ranking-subgrupo-list">
+      ${ (data || []).map((p, i) => `
+        <div class="ranking-row">
+          <span class="pos">#${i + 1}</span>
+          <span class="nombre">${safe(p.parroquia_nombre)}</span>
+          <span class="xp">${Number(p.xp_promedio).toFixed(1)} XP/prom.</span>
+          <span class="miembros">(${p.jugadores} jugador${p.jugadores===1?'':'es'})</span>
+        </div>
+      `).join("") }
+    </div>
+  `;
+}
+
+// Ranking de subgrupos de TU parroquia (RPC)
+async function mostrarRankingSubgruposParroquia(userId, resumen) {
+  const el = $("slide-ranking-subgrupos-parroquia");
+  if (!el) return;
+
+  const parroquiaId = resumen?.parroquia_id;
+  if (!parroquiaId) { el.innerHTML = "<p>No tienes parroquia asignada.</p>"; return; }
+
+  const { data, error } = await supabase
+    .rpc("ranking_subgrupos_por_parroquia", { p_parroquia_id: parroquiaId });
+
+  if (error) {
+    el.innerHTML = "<p>Error cargando subgrupos de tu parroquia.</p>";
+    return;
+  }
+
+  const ranking = data || [];
+  const miSubgrupo = resumen?.subgrupo;
+  const miPos = ranking.findIndex(r => r.subgrupo == miSubgrupo) + 1;
+
+  el.innerHTML = `
+    <h3>Subgrupos – ${safe(resumen?.parroquia_nombre || 'Parroquia')}</h3>
+    <div class="ranking-subgrupo-list">
+      ${ranking.map((sg, i) => `
+        <div class="ranking-row${sg.subgrupo == miSubgrupo ? " actual" : ""}">
+          <span class="pos">#${i + 1}</span>
+          <span class="nombre">Subgrupo ${safe(sg.subgrupo)}</span>
+          <span class="xp">${Number(sg.xp_promedio).toFixed(1)} XP/prom.</span>
+          <span class="miembros">(${sg.miembros} miembro${sg.miembros===1?'':'s'})</span>
+          ${sg.subgrupo == miSubgrupo ? "<span class='tuyo'>(Tuyo)</span>" : ""}
+        </div>
+      `).join("")}
+    </div>
+    ${miPos ? `<div class="posicion-propia">Tu subgrupo: #${miPos} de ${ranking.length}</div>` : ""}
+  `;
+}
+
+// Ranking de tu subgrupo (lista de personas por XP)
+async function mostrarRankingSubgrupo(userId, resumen) {
+  const el = $("slide-ranking-subgrupo");
+  if (!el) return;
+
+  const subgrupoId = resumen?.subgrupo;
+  if (!subgrupoId) { el.innerHTML = "<div>No tienes subgrupo asignado.</div>"; return; }
+
+  const { data, error } = await supabase
     .from("resumen_ranking")
     .select("user_id, nombre, xp_global")
     .eq("subgrupo", subgrupoId);
 
-  if (!miembros || miembros.length === 0) {
-    cont.innerHTML = "<div>No hay datos de tu subgrupo.</div>";
-    return;
-  }
+  if (error || !data?.length) { el.innerHTML = "<div>No hay datos de tu subgrupo.</div>"; return; }
 
-  // 3. Ranking
-  const ranking = miembros
-    .map(u => ({
-      id: u.user_id,
-      nombre: u.nombre || u.user_id.slice(0,8),
-      xp: u.xp_global || 0
-    }))
-    .sort((a, b) => b.xp - a.xp);
+  const ranking = data
+    .map(u => ({ id: u.user_id, nombre: u.nombre || u.user_id?.slice(0,8), xp: u.xp_global || 0 }))
+    .sort((a,b)=> b.xp - a.xp);
 
   const miPos = ranking.findIndex(r => r.id === userId) + 1;
-  cont.innerHTML = `
-    <h3>Ranking de tu subgrupo <span style="color:#2a9d8f;">#${subgrupoId}</span></h3>
+
+  el.innerHTML = `
+    <h3>Tu subgrupo <span style="color:#2a9d8f;">#${safe(subgrupoId)}</span></h3>
     <div class="ranking-subgrupo-list">
-      ${ranking.map((r, i) => `
+      ${ranking.map((r,i)=>`
         <div class="ranking-row${r.id === userId ? " actual" : ""}">
           <span class="pos">#${i+1}</span>
-          <span class="nombre">${r.nombre}</span>
+          <span class="nombre">${safe(r.nombre)}</span>
           <span class="xp">${r.xp} XP</span>
           ${r.id === userId ? "<span class='tuyo'>(Tú)</span>" : ""}
         </div>
@@ -240,259 +245,61 @@ async function mostrarRankingSubgrupo(userId) {
   `;
 }
 
-// --- Historial de partidas (solo últimos 10) ---
-async function mostrarHistorialPartidas(userId) {
-  const { data: partidas } = await supabase
-    .from("progreso")
-    .select("tipo, clave, nota, porcentaje, fecha")
-    .eq("user_id", userId)
-    .order("fecha", { ascending: false })
-    .limit(10);
-
-  let html = `<h3>Historial reciente</h3><ul class="historial-lista">`;
-  (partidas || []).forEach(part => {
-    html += `<li>${part.tipo} – ${part.clave || ""} <span>${part.nota || "-"} (${part.porcentaje || "-"}%)</span> <small>${new Date(part.fecha).toLocaleDateString()}</small></li>`;
-  });
-  html += "</ul>";
-  document.getElementById("slide-historial").innerHTML = html;
-}
-
-// --- SLIDER DE SECCIONES ---
-const slideIds = [
-  "slide-ranking-global",
-  "slide-ranking-parroquia",
-  "slide-ranking-subgrupos-parroquia", // <-- Aquí lo agregas
-  "slide-ranking-subgrupo",
-  "slide-historial",
-  "slide-logros"
-];
+// ====== Slider ======
 let progresoSlideActual = 0;
-
 function mostrarSlideProgreso(idx) {
-  slideIds.forEach((id, i) => {
-    const slide = document.getElementById(id);
+  SLIDES.forEach((id, i) => {
+    const slide = $(id);
     if (!slide) return;
     slide.classList.toggle("visible", i === idx);
   });
-
-  // Actualiza los bullets
-  const bullets = document.getElementById("progreso-bullets");
+  const bullets = $("progreso-bullets");
   if (bullets) {
-    bullets.innerHTML = slideIds.map((_, i) =>
+    bullets.innerHTML = SLIDES.map((_, i) =>
       `<button type="button" class="${i === idx ? 'active' : ''}" onclick="mostrarSlideProgreso(${i})"></button>`
     ).join("");
   }
   progresoSlideActual = idx;
 }
-
-// Hace visible el primero al cargar
-document.addEventListener("DOMContentLoaded", () => mostrarSlideProgreso(0));
-// Expón función global para los bullets
 window.mostrarSlideProgreso = mostrarSlideProgreso;
 
-// --- Ranking de subgrupos por parroquia ---
-async function mostrarRankingSubgruposParroquia(userId) {
-  // 1. Saca tu parroquia
-  const { data: [miResumen] } = await supabase
-    .from("resumen_ranking")
-    .select("parroquia_id, parroquia_nombre, subgrupo")
-    .eq("user_id", userId);
+// ====== Boot ======
+document.addEventListener("DOMContentLoaded", async () => {
+  // Estado inicial (skeletons)
+  ["progreso-resumen","progreso-nivel",
+   "slide-ranking-global","slide-ranking-parroquia",
+   "slide-ranking-subgrupos-parroquia","slide-ranking-subgrupo"].forEach(id => setLoading(id));
 
-  const parroquiaId = miResumen?.parroquia_id;
-  if (!parroquiaId) {
-    document.getElementById("slide-ranking-subgrupos-parroquia").innerHTML = "<p>No tienes parroquia asignada.</p>";
+  // Sesión
+  const { data: sessionData } = await supabase.auth.getSession();
+  usuarioActual = sessionData?.session?.user;
+  const userId = usuarioActual?.id;
+  if (!userId) {
+    const box = $("progreso-resumen");
+    if (box) box.innerHTML = "<p>Inicia sesión para ver tu progreso.</p>";
+    // Ocultamos slides si no hay sesión
+    SLIDES.forEach(id => { const el = $(id); if (el) el.style.display = "none"; });
     return;
   }
 
-  // 2. Saca todos los usuarios de la parroquia
-  const { data: miembros } = await supabase
-    .from("resumen_ranking")
-    .select("subgrupo, xp_global, nombre, user_id")
-    .eq("parroquia_id", parroquiaId);
+  try {
+    const resumen = await getResumen(userId);
 
-  if (!miembros || miembros.length === 0) {
-    document.getElementById("slide-ranking-subgrupos-parroquia").innerHTML = "<p>No hay datos para tu parroquia.</p>";
-    return;
+    // Cargar en paralelo
+    await Promise.all([
+      mostrarDashboardResumen(userId, resumen),
+      mostrarNivel(userId, resumen),
+      mostrarRankingGlobal(userId),              // Top 10 (paginable)
+      mostrarRankingParroquia(),                 // Vista agregada
+      mostrarRankingSubgruposParroquia(userId, resumen), // RPC
+      mostrarRankingSubgrupo(userId, resumen)    // Lista por tu subgrupo
+    ]);
+
+    // Mostrar primer slide
+    mostrarSlideProgreso(0);
+  } catch (e) {
+    console.error(e);
+    const box = $("progreso-resumen");
+    if (box) box.innerHTML = "<p>Error cargando tu progreso.</p>";
   }
-
-  // 3. Agrupa usuarios por subgrupo
-  const subgrupoMap = {};
-  miembros.forEach(m => {
-    if (!m.subgrupo) return;
-    if (!subgrupoMap[m.subgrupo]) {
-      subgrupoMap[m.subgrupo] = { xp: 0, count: 0, miembros: [], subgrupo: m.subgrupo };
-    }
-    subgrupoMap[m.subgrupo].xp += m.xp_global || 0;
-    subgrupoMap[m.subgrupo].count += 1;
-    subgrupoMap[m.subgrupo].miembros.push(m);
-  });
-
-  // 4. Convierte en array y ordena
-  const ranking = Object.values(subgrupoMap)
-    .map(sg => ({
-      subgrupo: sg.subgrupo,
-      xpPromedio: sg.count ? sg.xp / sg.count : 0,
-      count: sg.count
-    }))
-    .sort((a, b) => b.xpPromedio - a.xpPromedio);
-
-  // 5. Renderiza
-  let html = `<h3>Ranking de subgrupos – ${miResumen.parroquia_nombre || 'Parroquia'}</h3><ol style="text-align:center;">`;
-  ranking.forEach((sg, i) => {
-    html += `<li>#${i + 1} Subgrupo ${sg.subgrupo} – ${sg.xpPromedio.toFixed(1)} XP/promedio (${sg.count} miembro${sg.count === 1 ? '' : 's'})</li>`;
-  });
-  html += "</ol>";
-
-  // Mostrar tu puesto
-  const miSubgrupo = miResumen.subgrupo;
-  const miPos = ranking.findIndex(r => r.subgrupo == miSubgrupo) + 1;
-  if (miPos) {
-    html += `<div class="posicion-propia">Tu subgrupo: #${miPos} de ${ranking.length}</div>`;
-  }
-
-  document.getElementById("slide-ranking-subgrupos-parroquia").innerHTML = html;
-}
-
-// --- Ranking Global (Top 10 XP, colorido) ---
-async function mostrarRankingGlobal(userId) {
-  const { data: rankingGlobal } = await supabase
-    .from("resumen_ranking")
-    .select("user_id, nombre, xp_global")
-    .order("xp_global", { ascending: false })
-    .limit(10);
-
-  let html = `<h3>Top 10 Global</h3>
-    <div class="ranking-subgrupo-list">
-      ${ (rankingGlobal || []).map((u, i) => `
-        <div class="ranking-row${u.user_id === userId ? " actual" : ""}">
-          <span class="pos">#${i + 1}</span>
-          <span class="nombre">${u.nombre || u.user_id.slice(0, 8)}</span>
-          <span class="xp">${u.xp_global} XP</span>
-          ${u.user_id === userId ? "<span class='tuyo'>(Tú)</span>" : ""}
-        </div>
-      `).join("") }
-    </div>
-  `;
-  document.getElementById("slide-ranking-global").innerHTML = html;
-}
-
-// --- Ranking parroquial (XP promedio por parroquia, colorido) ---
-async function mostrarRankingParroquia(userId) {
-  const { data: parroquiasAll } = await supabase
-    .from("resumen_ranking")
-    .select("parroquia_id, parroquia_nombre, xp_global, user_id")
-    .not("parroquia_id", "is", null);
-
-  if (!parroquiasAll || parroquiasAll.length === 0) {
-    document.getElementById("slide-ranking-parroquia").innerHTML = "<p>No hay datos parroquiales aún.</p>";
-    return;
-  }
-
-  // Agrupa por parroquia_id
-  const parroquiaMap = {};
-  parroquiasAll.forEach(row => {
-    if (!parroquiaMap[row.parroquia_id]) {
-      parroquiaMap[row.parroquia_id] = {
-        nombre: row.parroquia_nombre || `Parroquia ${row.parroquia_id}`,
-        xp: 0,
-        count: 0,
-        users: []
-      };
-    }
-    parroquiaMap[row.parroquia_id].xp += row.xp_global || 0;
-    parroquiaMap[row.parroquia_id].count++;
-    parroquiaMap[row.parroquia_id].users.push(row.user_id);
-  });
-
-  const ranking = Object.entries(parroquiaMap)
-    .map(([id, p]) => ({
-      id,
-      nombre: p.nombre,
-      xpPromedio: p.count ? p.xp / p.count : 0,
-      count: p.count,
-      users: p.users
-    }))
-    .sort((a, b) => b.xpPromedio - a.xpPromedio);
-
-  // Para marcar la parroquia del usuario actual
-  const miParroquia = parroquiasAll.find(p => p.user_id === userId)?.parroquia_id;
-
-  let html = `<h3>Ranking parroquial (XP promedio)</h3>
-    <div class="ranking-subgrupo-list">
-      ${ ranking.map((p, i) => `
-        <div class="ranking-row${p.id == miParroquia ? " actual" : ""}">
-          <span class="pos">#${i + 1}</span>
-          <span class="nombre">${p.nombre}</span>
-          <span class="xp">${p.xpPromedio.toFixed(1)} XP/prom.</span>
-          <span class="miembros">(${p.count} jugador${p.count === 1 ? '' : 'es'})</span>
-          ${p.id == miParroquia ? "<span class='tuyo'>(Tu parroquia)</span>" : ""}
-        </div>
-      `).join("") }
-    </div>
-  `;
-  document.getElementById("slide-ranking-parroquia").innerHTML = html;
-}
-
-// --- Ranking de subgrupos de TU parroquia (XP promedio, colorido) ---
-async function mostrarRankingSubgruposParroquia(userId) {
-  // 1. Saca tu parroquia
-  const { data: [miResumen] } = await supabase
-    .from("resumen_ranking")
-    .select("parroquia_id, parroquia_nombre, subgrupo")
-    .eq("user_id", userId);
-
-  const parroquiaId = miResumen?.parroquia_id;
-  if (!parroquiaId) {
-    document.getElementById("slide-ranking-subgrupos-parroquia").innerHTML = "<p>No tienes parroquia asignada.</p>";
-    return;
-  }
-
-  // 2. Saca todos los usuarios de la parroquia
-  const { data: miembros } = await supabase
-    .from("resumen_ranking")
-    .select("subgrupo, xp_global, nombre, user_id")
-    .eq("parroquia_id", parroquiaId);
-
-  if (!miembros || miembros.length === 0) {
-    document.getElementById("slide-ranking-subgrupos-parroquia").innerHTML = "<p>No hay datos para tu parroquia.</p>";
-    return;
-  }
-
-  // 3. Agrupa usuarios por subgrupo
-  const subgrupoMap = {};
-  miembros.forEach(m => {
-    if (!m.subgrupo) return;
-    if (!subgrupoMap[m.subgrupo]) {
-      subgrupoMap[m.subgrupo] = { xp: 0, count: 0, miembros: [], subgrupo: m.subgrupo };
-    }
-    subgrupoMap[m.subgrupo].xp += m.xp_global || 0;
-    subgrupoMap[m.subgrupo].count += 1;
-    subgrupoMap[m.subgrupo].miembros.push(m);
-  });
-
-  // 4. Convierte en array y ordena
-  const ranking = Object.values(subgrupoMap)
-    .map(sg => ({
-      subgrupo: sg.subgrupo,
-      xpPromedio: sg.count ? sg.xp / sg.count : 0,
-      count: sg.count
-    }))
-    .sort((a, b) => b.xpPromedio - a.xpPromedio);
-
-  // 5. Renderiza colorido
-  let html = `<h3>Ranking de subgrupos – ${miResumen.parroquia_nombre || 'Parroquia'}</h3>
-    <div class="ranking-subgrupo-list">
-      ${ranking.map((sg, i) => `
-        <div class="ranking-row${sg.subgrupo == miResumen.subgrupo ? " actual" : ""}">
-          <span class="pos">#${i + 1}</span>
-          <span class="nombre">Subgrupo ${sg.subgrupo}</span>
-          <span class="xp">${sg.xpPromedio.toFixed(1)} XP/prom.</span>
-          <span class="miembros">(${sg.count} miembro${sg.count === 1 ? '' : 's'})</span>
-          ${sg.subgrupo == miResumen.subgrupo ? "<span class='tuyo'>(Tuyo)</span>" : ""}
-        </div>
-      `).join("")}
-    </div>
-  `;
-
-  document.getElementById("slide-ranking-subgrupos-parroquia").innerHTML = html;
-}
+});
