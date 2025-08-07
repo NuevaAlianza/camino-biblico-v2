@@ -1,48 +1,47 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mi Progreso</title>
+
+  <!-- Estilos -->
   <link rel="stylesheet" href="css/estilos.css" />
   <link rel="stylesheet" href="css/progreso.css" />
+
+  <!-- PWA / Iconos -->
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/img/icon_192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/icon_192x192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ead196">
 </head>
 <body>
-  <main class="progreso-main">
+  <main class="progreso-main" role="main">
     <h1>📈 Mi Progreso</h1>
 
     <!-- Nivel/título y progreso por coleccionables -->
-    <section id="progreso-nivel"></section>
+    <section id="progreso-nivel" aria-live="polite"></section>
 
     <!-- Resumen general de temas y notas -->
-    <section id="progreso-resumen"></section>
+    <section id="progreso-resumen" aria-live="polite"></section>
 
-    <!-- SLIDER/CARRUSEL DE SECCIONES DE PROGRESO -->
-<section class="progreso-slider">
-  <div class="progreso-slide" id="slide-ranking-global"></div>
-  <div class="progreso-slide" id="slide-ranking-parroquia"></div>
-  <div class="progreso-slide" id="slide-ranking-subgrupos-parroquia"></div> <!-- NUEVO -->
-  <div class="progreso-slide" id="slide-ranking-subgrupo"></div>
-  <div class="progreso-slide" id="slide-historial"></div>
-  <div class="progreso-slide" id="slide-logros"></div>
-  <div class="progreso-bullets" id="progreso-bullets"></div>
-</section>
+    <!-- Carrusel de rankings -->
+    <section class="progreso-slider" aria-label="Rankings y posiciones">
+      <div class="progreso-slide" id="slide-ranking-global" aria-live="polite"></div>
+      <div class="progreso-slide" id="slide-ranking-parroquia" aria-live="polite"></div>
+      <div class="progreso-slide" id="slide-ranking-subgrupos-parroquia" aria-live="polite"></div>
+      <div class="progreso-slide" id="slide-ranking-subgrupo" aria-live="polite"></div>
 
+      <div class="progreso-bullets" id="progreso-bullets" role="tablist" aria-label="Navegación de secciones"></div>
+    </section>
   </main>
+
   <a href="menu.html" id="btn-inicio" title="Volver al inicio">🏠</a>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-  <script src="supabase.js"></script>
-  <script src="js/app/progreso.js"></script>
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/icon_192x192.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="assets/img/icon_192x192.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/icon_192x192.png">
-
-  <!-- Manifest -->
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#ead196">
-
+  <!-- Scripts (defer para no bloquear el render) -->
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script defer src="supabase.js"></script>
+  <script defer src="js/app/progreso.js"></script>
 </body>
 </html>
+
