@@ -10,28 +10,31 @@
 <body>
   <main class="trivia-flash-main">
     <h1>🔦 Trivia Flash</h1>
+
     <section class="intro">
       <p>
-        La <b>Trivia Flash</b> es un reto especial disponible solo <b>miércoles</b> y <b>sábado</b> de cada semana.<br>
-        <br>
+        La <b>Trivia Flash</b> está disponible de <b>lunes a sábado</b> cada semana.<br><br>
         • Solo tienes <b>un intento</b> por día.<br>
         • Responde <b>5 preguntas aleatorias</b> de distintos temas.<br>
         • Obtén <b>XP extra</b> según tu resultado:
-        <ul>
-          <li>5 aciertos: <b>10 XP</b></li>
-          <li>4 aciertos: <b>5 XP</b></li>
-          <li>3 aciertos: <b>2 XP</b></li>
-          <li>2 o menos: <b>0 XP</b></li>
-        </ul>
-        ¡Suma puntos para el ranking y desafía a tus amigos!
       </p>
+      <ul>
+        <li>5 aciertos: <b>10 XP</b></li>
+        <li>4 aciertos: <b>5 XP</b></li>
+        <li>3 aciertos: <b>2 XP</b></li>
+        <li>2 o menos: <b>0 XP</b></li>
+      </ul>
+      <p>¡Suma puntos para el ranking y desafía a tus amigos!</p>
     </section>
+
     <section id="trivia-flash-estado"></section>
     <section id="trivia-flash-juego"></section>
     <section id="trivia-flash-resultado"></section>
     <section id="trivia-flash-historial"></section>
   </main>
+
   <a href="menu.html" id="btn-inicio" title="Volver al inicio">🏠</a>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script src="supabase.js"></script>
   <script src="js/app/trivia-flash.js"></script>
