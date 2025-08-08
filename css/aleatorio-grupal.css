@@ -170,4 +170,43 @@ a {
     margin-bottom: 0.8em;
   }
 }
+/* === Tablero 3x3 de ventajas === */
+#tablero-ventaja {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  max-width: 300px;
+  margin: 1.2em auto;
+}
+
+#tablero-ventaja .casilla {
+  padding: 20px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  border: 1.5px solid #dde8f3;
+  background: #fefefe;
+  cursor: pointer;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+  transition: transform 0.15s, background 0.3s;
+}
+
+#tablero-ventaja .casilla:hover {
+  transform: scale(1.05);
+}
+
+/* === Barra de tiempo === */
+#barra-tiempo {
+  flex: 1;
+  height: 16px;
+  background: #eee;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+#contador {
+  font-weight: bold;
+  min-width: 58px;
+  text-align: right;
+}
 
