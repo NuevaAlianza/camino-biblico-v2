@@ -8,10 +8,8 @@ async function init() {
   const info = document.getElementById('hall-season-info');
   const sections = document.getElementById('hall-sections');
 
-  // Estado inicial
   info.innerHTML = '<p class="muted">Cargando datos…</p>';
 
-  // Carga de datos
   try {
     const res = await fetch('datos/hall_of_fame.json', { cache: 'no-cache' });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -28,7 +26,7 @@ async function init() {
     return;
   }
 
-  // Construir <select>
+  // Rellenar select
   select.replaceChildren();
   const frag = document.createDocumentFragment();
   for (const t of temporadas) {
@@ -39,7 +37,7 @@ async function init() {
   }
   select.appendChild(frag);
 
-  // Selección inicial: query/hash/localStorage o primera
+  // Selección inicial: URL ?season / #hash / localStorage / primera
   const urlId = getSeasonFromURL();
   const savedId = localStorage.getItem('hof:season');
   const inicial =
@@ -50,7 +48,7 @@ async function init() {
   select.value = String(inicial.id);
   renderSeason(inicial, info, sections);
 
-  // Cambios por el usuario
+  // Cambios del usuario
   select.addEventListener('change', e => {
     const val = String(e.target.value);
     localStorage.setItem('hof:season', val);
@@ -59,7 +57,7 @@ async function init() {
     if (temporada) renderSeason(temporada, info, sections);
   });
 
-  // Deep-link: responder a cambios de hash
+  // Deep-link (hash o query) reactivo
   window.addEventListener('hashchange', () => {
     const h = getSeasonFromURL();
     if (!h) return;
@@ -88,7 +86,7 @@ function renderSeason(temporada, info, sections) {
   // Secciones
   sections.replaceChildren();
 
-  // Orden opcional (por si el backend no lo garantiza)
+  // Por si el backend no ordena por XP
   const byXpDesc = (a, b) => (Number(b?.xp ?? b?.xp_promedio ?? 0) - Number(a?.xp ?? a?.xp_promedio ?? 0));
 
   renderRankingSection({
@@ -104,7 +102,6 @@ function renderSeason(temporada, info, sections) {
       const st = addSpan(li, 'ranking-stars', str);
       st.setAttribute('aria-label', aria);
       addSpan(li, 'ranking-rango', p?.rango ?? '—');
-
       const pr = Number(p?.porcentaje);
       addSpan(li, 'ranking-porcentaje', Number.isFinite(pr) ? `(${pf().format(pr / 100)})` : '');
       return li;
@@ -158,20 +155,26 @@ function renderRankingSection({ container, titulo, items, mapRow }) {
 
   const section = el('section', 'hall-section');
   const h2 = el('h2', 'hall-section-title', titulo);
-  const list = el('ol', 'hall-ranking');
+  const list = el('ol', 'hall-ranking'); // ol para semántica/lector de pantalla
 
   const frag = document.createDocumentFragment();
   items.forEach((item, i) => frag.appendChild(mapRow(item, i)));
 
-  section.append(h2, list);
   list.appendChild(frag);
+  section.append(h2, list);
   container.appendChild(section);
 }
 
 function baseRow(i) {
   const li = el('li', `ranking-row${i < 3 ? ' top-' + (i + 1) : ''}`);
   addSpan(li, 'ranking-pos', String(i + 1));
-  addSpan(li, 'ranking-medal', medal(i));
+
+  // Medalla con clase para coincidir con tu CSS
+  const medalSpan = addSpan(li, 'ranking-medal', medalEmoji(i));
+  if (i === 0) medalSpan.classList.add('gold');
+  else if (i === 1) medalSpan.classList.add('silver');
+  else if (i === 2) medalSpan.classList.add('bronze');
+
   return li;
 }
 
@@ -193,7 +196,7 @@ function el(tag, cls, text, raw = false) {
   return n;
 }
 
-function medal(i) {
+function medalEmoji(i) {
   if (i === 0) return '🥇';
   if (i === 1) return '🥈';
   if (i === 2) return '🥉';
@@ -210,13 +213,10 @@ function escapeHtml(s) {
   return String(s).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
 }
 
-// Formatters (creados “a demanda” para no fijar región del navegador)
 function nf() { return new Intl.NumberFormat('es-DO'); }
 function pf() { return new Intl.NumberFormat('es-DO', { style: 'percent', maximumFractionDigits: 0 }); }
 
-// deep-link helpers
 function getSeasonFromURL() {
-  // admite ?season=ID y/o #ID
   const params = new URLSearchParams(location.search);
   const q = params.get('season');
   const hash = location.hash?.replace(/^#/, '') || null;
