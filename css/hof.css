@@ -137,4 +137,24 @@
 .ranking-porcentaje {
   display: none !important;
 }
+/* Quita viñetas/espaciado del <ol> usado para el ranking */
+.hall-ranking {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Para labels ocultos accesibles (si usas <label class="visually-hidden">) */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0);
+  white-space: nowrap; border: 0;
+}
+
+/* Opcional: alinear mejor la medalla con tu esquema de color */
+.ranking-medal.gold   { color: #FFD700; filter: drop-shadow(0 0 4px #ffd70088); }
+.ranking-medal.silver { color: #B0B0B0; filter: drop-shadow(0 0 4px #b0b0b088); }
+.ranking-medal.bronze { color: #C98436; filter: drop-shadow(0 0 4px #c9843688); }
 
