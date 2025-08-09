@@ -331,7 +331,7 @@ function iniciarTriviaFlash(preguntas, diaSemana, ciclo, idx6) {
     `;
 
     limpiarTemporizadorPregunta();
-    reproducirSonido("start.mp3");
+    reproducirSonido("background2.mp3");
 
     const panel = document.getElementById("panel-tempo");
     const circulo = document.getElementById("timer-circular");
