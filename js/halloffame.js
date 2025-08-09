@@ -1,132 +1,231 @@
+// js/halloffame.js
 let hallOfFameData = null;
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', init);
+
+async function init() {
   const select = document.getElementById('hall-season-select');
   const info = document.getElementById('hall-season-info');
   const sections = document.getElementById('hall-sections');
 
+  // Estado inicial
+  info.innerHTML = '<p class="muted">Cargando datos…</p>';
+
+  // Carga de datos
   try {
-    const response = await fetch("datos/hall_of_fame.json");
-    hallOfFameData = await response.json();
-  } catch (error) {
-    info.innerHTML = "<p>Error al cargar los datos del ranking.</p>";
+    const res = await fetch('datos/hall_of_fame.json', { cache: 'no-cache' });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    hallOfFameData = await res.json();
+  } catch (err) {
+    console.error(err);
+    info.innerHTML = '<p class="error">Error al cargar los datos del ranking.</p>';
     return;
   }
 
-  // Rellenar select
-  hallOfFameData.temporadas.forEach(t => {
+  const temporadas = Array.isArray(hallOfFameData?.temporadas) ? hallOfFameData.temporadas : [];
+  if (!temporadas.length) {
+    info.innerHTML = '<p class="muted">Aún no hay temporadas para mostrar.</p>';
+    return;
+  }
+
+  // Construir <select>
+  select.replaceChildren();
+  const frag = document.createDocumentFragment();
+  for (const t of temporadas) {
     const opt = document.createElement('option');
-    opt.value = t.id;
-    opt.textContent = t.nombre;
-    select.appendChild(opt);
-  });
+    opt.value = String(t.id ?? '');
+    opt.textContent = t?.nombre ?? '(sin nombre)';
+    frag.appendChild(opt);
+  }
+  select.appendChild(frag);
 
-  // Mostrar primera temporada
-  select.value = hallOfFameData.temporadas[0].id;
-  renderSeason(hallOfFameData.temporadas[0]);
+  // Selección inicial: query/hash/localStorage o primera
+  const urlId = getSeasonFromURL();
+  const savedId = localStorage.getItem('hof:season');
+  const inicial =
+    temporadas.find(t => String(t.id) === urlId) ??
+    temporadas.find(t => String(t.id) === savedId) ??
+    temporadas[0];
 
-  // Cambiar temporada
+  select.value = String(inicial.id);
+  renderSeason(inicial, info, sections);
+
+  // Cambios por el usuario
   select.addEventListener('change', e => {
-    const temporada = hallOfFameData.temporadas.find(t => t.id === e.target.value);
-    if (temporada) renderSeason(temporada);
+    const val = String(e.target.value);
+    localStorage.setItem('hof:season', val);
+    updateURLSeason(val);
+    const temporada = temporadas.find(t => String(t.id) === val);
+    if (temporada) renderSeason(temporada, info, sections);
   });
 
-  function generarEstrellas(nivel) {
-    const max = 6;
-    return Array.from({ length: max }, (_, i) => (i < nivel ? '⭐' : '☆')).join('');
+  // Deep-link: responder a cambios de hash
+  window.addEventListener('hashchange', () => {
+    const h = getSeasonFromURL();
+    if (!h) return;
+    const temporada = temporadas.find(t => String(t.id) === h);
+    if (temporada) {
+      select.value = String(temporada.id);
+      localStorage.setItem('hof:season', String(temporada.id));
+      renderSeason(temporada, info, sections);
+    }
+  });
+}
+
+/* ---------- Render ---------- */
+
+function renderSeason(temporada, info, sections) {
+  // Cabecera
+  info.replaceChildren();
+  const box = el('div', 'season-info');
+  const title = el('div', null, null, true);
+  title.innerHTML = `<b>${escapeHtml(temporada?.nombre ?? '(Sin nombre)')}</b>`;
+  const dates = el('div', 'season-dates', `${temporada?.fecha_inicio ?? '—'} – ${temporada?.fecha_fin ?? '—'}`);
+  const desc = el('div', 'season-desc', temporada?.descripcion ?? '');
+  box.append(title, dates, desc);
+  info.appendChild(box);
+
+  // Secciones
+  sections.replaceChildren();
+
+  // Orden opcional (por si el backend no lo garantiza)
+  const byXpDesc = (a, b) => (Number(b?.xp ?? b?.xp_promedio ?? 0) - Number(a?.xp ?? a?.xp_promedio ?? 0));
+
+  renderRankingSection({
+    container: sections,
+    titulo: '🏆 Top 10 Jugadores',
+    items: (temporada?.top_xp ?? []).slice().sort(byXpDesc).slice(0, 10),
+    mapRow: (p, i) => {
+      const li = baseRow(i);
+      addSpan(li, 'ranking-name', p?.nombre ?? '—');
+      addSpan(li, 'ranking-xp', `${nf().format(Number(p?.xp ?? 0))} XP`);
+      addSpan(li, 'ranking-group', p?.parroquia ? String(p.parroquia) : '');
+      const { str, aria } = estrellas(Number(p?.nivel_rango ?? 0));
+      const st = addSpan(li, 'ranking-stars', str);
+      st.setAttribute('aria-label', aria);
+      addSpan(li, 'ranking-rango', p?.rango ?? '—');
+
+      const pr = Number(p?.porcentaje);
+      addSpan(li, 'ranking-porcentaje', Number.isFinite(pr) ? `(${pf().format(pr / 100)})` : '');
+      return li;
+    }
+  });
+
+  renderRankingSection({
+    container: sections,
+    titulo: '👥 Mejores Subgrupos',
+    items: (temporada?.top_subgrupos ?? []).slice().sort(byXpDesc),
+    mapRow: (g, i) => {
+      const li = baseRow(i);
+      addSpan(li, 'ranking-name', g?.nombre ?? '—');
+      addSpan(li, 'ranking-xp', `${nf().format(Number(g?.xp_promedio ?? 0))} XP`);
+      addSpan(li, 'ranking-group', `${nf().format(Number(g?.participantes ?? 0))} part.`);
+      return li;
+    }
+  });
+
+  renderRankingSection({
+    container: sections,
+    titulo: '🏙️ Mejores Ciudades',
+    items: (temporada?.top_ciudades ?? []).slice().sort(byXpDesc),
+    mapRow: (c, i) => {
+      const li = baseRow(i);
+      addSpan(li, 'ranking-name', c?.ciudad ?? '—');
+      addSpan(li, 'ranking-xp', `${nf().format(Number(c?.xp_promedio ?? 0))} XP`);
+      addSpan(li, 'ranking-group', `${nf().format(Number(c?.participantes ?? 0))} part.`);
+      return li;
+    }
+  });
+
+  renderRankingSection({
+    container: sections,
+    titulo: '⛪ Mejores Parroquias',
+    items: (temporada?.top_parroquias ?? []).slice().sort(byXpDesc),
+    mapRow: (p, i) => {
+      const li = baseRow(i);
+      addSpan(li, 'ranking-name', p?.parroquia ?? '—');
+      addSpan(li, 'ranking-xp', `${nf().format(Number(p?.xp_promedio ?? 0))} XP`);
+      addSpan(li, 'ranking-group', `${nf().format(Number(p?.participantes ?? 0))} part.`);
+      return li;
+    }
+  });
+}
+
+/* ---------- Sección / filas ---------- */
+
+function renderRankingSection({ container, titulo, items, mapRow }) {
+  if (!Array.isArray(items) || items.length === 0) return;
+
+  const section = el('section', 'hall-section');
+  const h2 = el('h2', 'hall-section-title', titulo);
+  const list = el('ol', 'hall-ranking');
+
+  const frag = document.createDocumentFragment();
+  items.forEach((item, i) => frag.appendChild(mapRow(item, i)));
+
+  section.append(h2, list);
+  list.appendChild(frag);
+  container.appendChild(section);
+}
+
+function baseRow(i) {
+  const li = el('li', `ranking-row${i < 3 ? ' top-' + (i + 1) : ''}`);
+  addSpan(li, 'ranking-pos', String(i + 1));
+  addSpan(li, 'ranking-medal', medal(i));
+  return li;
+}
+
+function addSpan(parent, cls, text) {
+  const s = el('span', cls, text ?? '');
+  parent.appendChild(s);
+  return s;
+}
+
+/* ---------- Utilidades ---------- */
+
+function el(tag, cls, text, raw = false) {
+  const n = document.createElement(tag);
+  if (cls) n.className = cls;
+  if (text != null) {
+    if (raw) n.innerHTML = text;
+    else n.textContent = text;
   }
+  return n;
+}
 
-  function renderSeason(temporada) {
-    info.innerHTML = `
-      <div class="season-info">
-        <div><b>${temporada.nombre}</b></div>
-        <div class="season-dates">${temporada.fecha_inicio} &ndash; ${temporada.fecha_fin}</div>
-        <div class="season-desc">${temporada.descripcion || ''}</div>
-      </div>
-    `;
+function medal(i) {
+  if (i === 0) return '🥇';
+  if (i === 1) return '🥈';
+  if (i === 2) return '🥉';
+  return '';
+}
 
-    let html = '';
+function estrellas(nivel = 0, max = 6) {
+  const filled = Math.max(0, Math.min(max, Number(nivel) || 0));
+  const str = '⭐'.repeat(filled) + '☆'.repeat(max - filled);
+  return { str, aria: `${filled} de ${max} estrellas` };
+}
 
-    if (temporada.top_xp?.length) {
-      html += `
-        <section class="hall-section">
-          <h2 class="hall-section-title">🏆 Top 10 Jugadores</h2>
-          <div class="hall-ranking">
-            ${temporada.top_xp.map((p, i) => `
-              <div class="ranking-row${i < 3 ? ' top-' + (i + 1) : ''}">
-                <span class="ranking-pos">${i + 1}</span>
-                <span class="ranking-medal">${['🥇', '🥈', '🥉'][i] || ''}</span>
-                <span class="ranking-name">${p.nombre}</span>
-                <span class="ranking-xp">${p.xp} XP</span>
-                <span class="ranking-group">${p.parroquia || ''}</span>
-                <span class="ranking-stars">${generarEstrellas(p.nivel_rango || 0)}</span>
-                <span class="ranking-rango">${p.rango || '—'}</span>
-                <span class="ranking-porcentaje">(${p.porcentaje || 0}%)</span>
-              </div>
-            `).join('')}
-          </div>
-        </section>
-      `;
-    }
+function escapeHtml(s) {
+  return String(s).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+}
 
-    if (temporada.top_subgrupos?.length) {
-      html += `
-        <section class="hall-section">
-          <h2 class="hall-section-title">👥 Mejores Subgrupos</h2>
-          <div class="hall-ranking">
-            ${temporada.top_subgrupos.map((g, i) => `
-              <div class="ranking-row${i < 3 ? ' top-' + (i + 1) : ''}">
-                <span class="ranking-pos">${i + 1}</span>
-                <span class="ranking-medal">${['🥇', '🥈', '🥉'][i] || ''}</span>
-                <span class="ranking-name">${g.nombre}</span>
-                <span class="ranking-xp">${g.xp_promedio} XP</span>
-                <span class="ranking-group">${g.participantes} part.</span>
-              </div>
-            `).join('')}
-          </div>
-        </section>
-      `;
-    }
+// Formatters (creados “a demanda” para no fijar región del navegador)
+function nf() { return new Intl.NumberFormat('es-DO'); }
+function pf() { return new Intl.NumberFormat('es-DO', { style: 'percent', maximumFractionDigits: 0 }); }
 
-    if (temporada.top_ciudades?.length) {
-      html += `
-        <section class="hall-section">
-          <h2 class="hall-section-title">🏙️ Mejores Ciudades</h2>
-          <div class="hall-ranking">
-            ${temporada.top_ciudades.map((c, i) => `
-              <div class="ranking-row${i < 3 ? ' top-' + (i + 1) : ''}">
-                <span class="ranking-pos">${i + 1}</span>
-                <span class="ranking-medal">${['🥇', '🥈', '🥉'][i] || ''}</span>
-                <span class="ranking-name">${c.ciudad}</span>
-                <span class="ranking-xp">${c.xp_promedio} XP</span>
-                <span class="ranking-group">${c.participantes} part.</span>
-              </div>
-            `).join('')}
-          </div>
-        </section>
-      `;
-    }
+// deep-link helpers
+function getSeasonFromURL() {
+  // admite ?season=ID y/o #ID
+  const params = new URLSearchParams(location.search);
+  const q = params.get('season');
+  const hash = location.hash?.replace(/^#/, '') || null;
+  return q || hash || null;
+}
 
-    if (temporada.top_parroquias?.length) {
-      html += `
-        <section class="hall-section">
-          <h2 class="hall-section-title">⛪ Mejores Parroquias</h2>
-          <div class="hall-ranking">
-            ${temporada.top_parroquias.map((p, i) => `
-              <div class="ranking-row${i < 3 ? ' top-' + (i + 1) : ''}">
-                <span class="ranking-pos">${i + 1}</span>
-                <span class="ranking-medal">${['🥇', '🥈', '🥉'][i] || ''}</span>
-                <span class="ranking-name">${p.parroquia}</span>
-                <span class="ranking-xp">${p.xp_promedio} XP</span>
-                <span class="ranking-group">${p.participantes} part.</span>
-              </div>
-            `).join('')}
-          </div>
-        </section>
-      `;
-    }
-
-    sections.innerHTML = html;
-  }
-});
-
+function updateURLSeason(id) {
+  const url = new URL(location.href);
+  url.searchParams.set('season', id);
+  url.hash = id;
+  history.replaceState(null, '', url);
+}
