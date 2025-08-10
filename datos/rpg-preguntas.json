@@ -1,274 +1,291 @@
 {
   "ciclos": {
-    "2025-S27": {
-      "titulo": "Semana 27 – Patriarcas de la Fe",
-      "descripcion": "Esta semana exploramos la historia de los grandes patriarcas bíblicos: Abraham, Isaac, Jacob y José. ¿Cuánto sabes de ellos?",
+    "2025-S33": {
+      "titulo": "Semana 33 – Abraham, padre en la fe",
+      "descripcion": "Descubre la historia y la fe de Abraham, ejemplo de confianza en Dios",
       "niveles": {
         "1": [
-          { "pregunta": "¿Quién es conocido como el padre de la fe?", "opciones": ["Abraham", "Isaac", "Jacob", "David"], "respuesta": "Abraham" },
-          { "pregunta": "¿Quién fue vendido por sus hermanos?", "opciones": ["José", "Moisés", "Jacob", "Isaac"], "respuesta": "José" }
+          { "pregunta": "¿Cuál era el nombre original de Abraham?", "opciones": ["Abram", "Abinadab", "Adán", "Amram"], "respuesta": "Abram" },
+        { "pregunta": "¿De qué ciudad salió Abraham por mandato de Dios?", "opciones": ["Ur de los caldeos", "Jericó", "Babilonia", "Damasco"], "respuesta": "Ur de los caldeos" },
+        { "pregunta": "¿Quién fue la esposa de Abraham?", "opciones": ["Sara", "Rebeca", "Raquel", "Lía"], "respuesta": "Sara" },
+        { "pregunta": "¿Cómo se llamaba su hijo con Sara?", "opciones": ["Isaac", "Ismael", "Jacob", "Esaú"], "respuesta": "Isaac" },
+        { "pregunta": "¿Cómo se llamaba su hijo con Agar?", "opciones": ["Ismael", "Isaac", "Lot", "Esaú"], "respuesta": "Ismael" },
+        { "pregunta": "¿Qué le prometió Dios a Abraham?", "opciones": ["Una descendencia numerosa y una tierra", "Ser rey de Egipto", "Riquezas sin límites", "Poder sobre las naciones"], "respuesta": "Una descendencia numerosa y una  tierra" },
+        { "pregunta": "¿Qué significó el cambio de nombre a Abraham?", "opciones": ["Padre de multitudes", "Príncipe de paz", "Guerrero de Dios", "Siervo fiel"], "respuesta": "Padre de multitudes" },
+        { "pregunta": "¿Quién acompañó a Abraham en su salida de Ur?", "opciones": ["Lot", "Jacob", "Isaac", "Esaú"], "respuesta": "Lot" },
+        { "pregunta": "¿Qué ciudades intercedió Abraham para salvar?", "opciones": ["Sodoma y Gomorra", "Jericó y Ai", "Babilonia y Nínive", "Tiro y Sidón"], "respuesta": "Sodoma y Gomorra" },
+        { "pregunta": "¿Qué señal pidió Dios como signo de la alianza con Abraham?", "opciones": ["La circuncisión", "El sacrificio de un cordero", "La construcción de un altar", "Un voto de silencio"], "respuesta": "La circuncisión" }
+
         ],
         "2": [
-          { "pregunta": "¿Quién fue el hijo de la promesa?", "opciones": ["Isaac", "Ismael", "Esaú", "Rubén"], "respuesta": "Isaac" }
+         { "pregunta": "¿Cómo reaccionó Sara al oír que tendría un hijo?", "opciones": ["Se rió", "Lloró", "Se enojó", "Se arrodilló"], "respuesta": "Se rió" },
+        { "pregunta": "¿Qué ofrecieron los tres visitantes a Abraham?", "opciones": ["El anuncio del nacimiento de Isaac", "La bendición sobre Sodoma", "La victoria en la guerra", "Un pacto con Egipto"], "respuesta": "El anuncio del nacimiento de Isaac" },
+        { "pregunta": "¿Qué hizo Abraham con Melquisedec?", "opciones": ["Le dio el diezmo de todo", "Le ofreció un sacrificio", "Le pidió ayuda en la guerra", "Le compró una tierra"], "respuesta": "Le dio el diezmo de todo" },
+        { "pregunta": "¿Qué hizo Abraham cuando recibió la promesa de Dios?", "opciones": ["Creyó y le fue contado como justicia", "Ofreció un holocausto", "Construyó un altar", "Hizo un voto"], "respuesta": "Creyó y le fue contado como justicia" },
+        { "pregunta": "¿En qué libro de la Biblia se narra la historia de Abraham?", "opciones": ["Génesis", "Éxodo", "Levítico", "Números"], "respuesta": "Génesis" },
+        { "pregunta": "¿Qué edad tenía Abraham cuando nació Isaac?", "opciones": ["100 años", "90 años", "80 años", "110 años"], "respuesta": "100 años" },
+        { "pregunta": "¿Qué parentesco tenía Lot con Abraham?", "opciones": ["Sobrino", "Hijo", "Hermano", "Cuñado"], "respuesta": "Sobrino" },
+        { "pregunta": "¿En qué monte iba a sacrificar Abraham a Isaac?", "opciones": ["Moria", "Sinaí", "Carmelo", "Tabor"], "respuesta": "Moria" },
+        { "pregunta": "¿Quién detuvo la mano de Abraham antes de sacrificar a Isaac?", "opciones": ["Un ángel", "Dios Padre", "Isaac", "Sara"], "respuesta": "Un ángel" },
+        { "pregunta": "¿Qué animal ofreció Abraham en lugar de Isaac?", "opciones": ["Un carnero", "Un cordero", "Una oveja", "Un toro"], "respuesta": "Un carnero" }
+
         ],
         "3": [
-          { "pregunta": "¿A quién le cambiaron el nombre a Israel?", "opciones": ["Jacob", "Abraham", "José", "David"], "respuesta": "Jacob" }
+          { "pregunta": "¿Qué rey tomó a Sara como esposa sin saber que era mujer de Abraham?", "opciones": ["Abimélec", "Faraón", "Nabucodonosor", "Saúl"], "respuesta": "Abimélec" },
+        { "pregunta": "¿Qué hizo Abraham al llegar a Siquem?", "opciones": ["Construyó un altar al Señor", "Cavó un pozo", "Hizo un sacrificio de animales", "Erigió una tienda"], "respuesta": "Construyó un altar al Señor" },
+        { "pregunta": "¿Qué pacto hizo Abraham con Abimélec?", "opciones": ["Pacto de Beer-Seba", "Pacto del Sinaí", "Pacto de Hebrón", "Pacto de Jerusalén"], "respuesta": "Pacto de Beer-Seba" },
+        { "pregunta": "¿Qué nación surgió de Ismael?", "opciones": ["Ismaelitas", "Edomitas", "Moabitas", "Filisteos"], "respuesta": "Ismaelitas" },
+        { "pregunta": "¿A qué edad murió Abraham?", "opciones": ["175 años", "120 años", "150 años", "180 años"], "respuesta": "175 años" },
+        { "pregunta": "¿En qué lugar fue sepultado Abraham?", "opciones": ["Cueva de Macpela", "Monte Nebo", "Monte Carmelo", "Valle de Josafat"], "respuesta": "Cueva de Macpela" }
         ],
         "4": [
-          { "pregunta": "¿Qué patriarca soñó con una escalera al cielo?", "opciones": ["Jacob", "Isaac", "Abraham", "Moisés"], "respuesta": "Jacob" }
+          { "pregunta": "¿Quién compró la tumba donde fue sepultado Abraham?", "opciones": ["Abraham", "Isaac", "Jacob", "José"], "respuesta": "Abraham" },
+        { "pregunta": "¿Qué rey recibió a Abraham después de rescatar a Lot?", "opciones": ["Melquisedec", "Saúl", "David", "Salomón"], "respuesta": "Melquisedec" },
+        { "pregunta": "¿Qué hizo Abraham cuando Lot eligió las tierras del Jordán?", "opciones": ["Aceptó y tomó otra región", "Se enojó", "Reclamó esas tierras", "Hizo un pacto de guerra"], "respuesta": "Aceptó y tomó otra región" },
+        { "pregunta": "¿En qué capítulo de Génesis se narra el sacrificio de Isaac?", "opciones": ["Capítulo 22", "Capítulo 15", "Capítulo 12", "Capítulo 17"], "respuesta": "Capítulo 22" },
+        { "pregunta": "¿Qué hizo Abraham al llegar a Mambré?", "opciones": ["Recibió a tres visitantes", "Construyó un altar", "Hizo un sacrificio", "Levantó una tienda"], "respuesta": "Recibió a tres visitantes" },
+        { "pregunta": "¿Cómo respondió Abraham a la promesa de un hijo en su vejez?", "opciones": ["Cayó rostro en tierra y se rió", "Se enojó", "Negó la promesa", "Pidió una señal escrita"], "respuesta": "Cayó rostro en tierra y se rió" }
+
         ],
         "5": [
-          { "pregunta": "¿A qué país fue llevado José como esclavo?", "opciones": ["Egipto", "Babilonia", "Israel", "Persia"], "respuesta": "Egipto" }
+          { "pregunta": "¿En qué capítulo de Génesis se relata el pacto de las estrellas?", "opciones": ["Capítulo 15", "Capítulo 17", "Capítulo 12", "Capítulo 18"], "respuesta": "Capítulo 15" },
+        { "pregunta": "¿Qué ofreció Abraham como sacrificio en el pacto de las mitades?", "opciones": ["Una ternera, una cabra y un carnero", "Un cordero y dos palomas", "Un buey y un toro", "Un macho cabrío y una oveja"], "respuesta": "Una ternera, una cabra y un carnero" },
+        { "pregunta": "¿Quién fue el siervo enviado por Abraham para buscar esposa para Isaac?", "opciones": ["Eliezer", "Caleb", "Gad", "Otoniel"], "respuesta": "Eliezer" },
+        { "pregunta": "¿Qué río cruzó Abraham al salir de su tierra?", "opciones": ["Éufrates", "Jordán", "Nilo", "Tigris"], "respuesta": "Éufrates" },
+        { "pregunta": "¿Qué palabra significa 'Isaac'?", "opciones": ["Él ríe", "Dios salva", "Fuerza de Dios", "Paz de Dios"], "respuesta": "Él ríe" },
+        { "pregunta": "¿Cómo llamó Abraham al lugar donde casi sacrificó a Isaac?", "opciones": ["El Señor provee", "Monte de la fe", "Dios escucha", "Monte del pacto"], "respuesta": "El Señor provee" }
+
         ]
       }
     },
-    "2025-S28": {
-      "titulo": "Semana 28 – Profetas y Reyes",
-      "descripcion": "Una aventura especial para conocer a los profetas y reyes más importantes del pueblo de Israel. ¡Pon a prueba tu sabiduría!",
+    "2025-S34": {
+      "titulo": "Semana 34 – Moisés, liberador del pueblo de Dios",
+      "descripcion": "Vive la historia de Moisés, desde su nacimiento hasta su misión de guiar al pueblo elegido.",
       "niveles": {
         "1": [
-          { "pregunta": "¿Quién fue el primer rey de Israel?", "opciones": ["Saúl", "David", "Salomón", "Josías"], "respuesta": "Saúl" },
-          { "pregunta": "¿Quién venció a Goliat?", "opciones": ["David", "Salomón", "Saúl", "Samuel"], "respuesta": "David" },
-          { "pregunta": "¿Quién fue el profeta que desafió a los profetas de Baal en el monte Carmelo?", "opciones": ["Elías", "Isaías", "Jeremías", "Oseas"], "respuesta": "Elías" },
-          { "pregunta": "¿Cuál de estos fue rey sabio de Israel?", "opciones": ["Salomón", "Josué", "Samuel", "Eliseo"], "respuesta": "Salomón" },
-          { "pregunta": "¿Quién sucedió a Moisés como líder de Israel?", "opciones": ["Josué", "Samuel", "David", "Saúl"], "respuesta": "Josué" },
-          { "pregunta": "¿A qué rey le construyó el profeta Natán el templo de Jerusalén?", "opciones": ["Salomón", "David", "Saúl", "Josías"], "respuesta": "Salomón" },
-          { "pregunta": "¿Quién interpretó los sueños del faraón en Egipto?", "opciones": ["José", "Daniel", "Elías", "David"], "respuesta": "José" },
-          { "pregunta": "¿Quién fue el profeta llamado cuando era niño?", "opciones": ["Samuel", "Isaías", "Jeremías", "Ezequiel"], "respuesta": "Samuel" },
-          { "pregunta": "¿Quién fue lanzado al foso de los leones?", "opciones": ["Daniel", "Jeremías", "Elías", "David"], "respuesta": "Daniel" },
-          { "pregunta": "¿Quién ungió a David como rey?", "opciones": ["Samuel", "Natán", "Elías", "Eliseo"], "respuesta": "Samuel" }
+         { "pregunta": "¿Dónde fue colocado Moisés cuando era bebé para salvarlo?", "opciones": ["En una cesta sobre el río Nilo", "En una cueva del desierto", "En el palacio del faraón", "En una tienda en el campamento"], "respuesta": "En una cesta sobre el río Nilo" },
+        { "pregunta": "¿Quién encontró a Moisés en el río?", "opciones": ["La hija del faraón", "Su hermana Miriam", "Una sierva hebrea", "Una mujer madianita"], "respuesta": "La hija del faraón" },
+        { "pregunta": "¿En qué monte habló Dios a Moisés desde una zarza ardiente?", "opciones": ["Monte Horeb", "Monte Sinaí", "Monte Carmelo", "Monte Nebo"], "respuesta": "Monte Horeb" },
+        { "pregunta": "¿Qué señal realizó Dios para convencer a Moisés de su misión?", "opciones": ["La vara convertida en serpiente", "El agua transformada en vino", "La multiplicación de pan", "El mar convertido en sangre"], "respuesta": "La vara convertida en serpiente" },
+        { "pregunta": "¿Cómo se llamaba el hermano de Moisés que fue su portavoz?", "opciones": ["Aarón", "Josué", "Caleb", "Hur"], "respuesta": "Aarón" },
+        { "pregunta": "¿Qué mar abrió Moisés para que el pueblo pasara?", "opciones": ["Mar Rojo", "Mar de Galilea", "Mar Negro", "Mar Muerto"], "respuesta": "Mar Rojo" },
+        { "pregunta": "¿Dónde recibió Moisés las tablas de la Ley?", "opciones": ["Monte Sinaí", "Monte Horeb", "Monte Carmelo", "Monte Hermón"], "respuesta": "Monte Sinaí" },
+        { "pregunta": "¿Cómo alimentó Dios a su pueblo en el desierto?", "opciones": ["Con maná y codornices", "Con trigo y aceite", "Con pan horneado", "Con frutas y leche"], "respuesta": "Con maná y codornices" },
+        { "pregunta": "¿Qué golpeó Moisés para sacar agua en el desierto?", "opciones": ["Una roca", "Un árbol", "Una vasija", "Un pozo"], "respuesta": "Una roca" },
+        { "pregunta": "¿Cómo se llamaba el sucesor de Moisés?", "opciones": ["Josué", "Caleb", "Samuel", "David"], "respuesta": "Josué" }
         ],
         "2": [
-          { "pregunta": "¿Quién fue el profeta que habló del 'Emanuel'?", "opciones": ["Isaías", "Jeremías", "Elías", "Oseas"], "respuesta": "Isaías" },
-          { "pregunta": "¿Qué rey fue conocido por encontrar el libro de la Ley y renovar la alianza?", "opciones": ["Josías", "Salomón", "Saúl", "David"], "respuesta": "Josías" },
-          { "pregunta": "¿Quién fue el profeta que animó al pueblo durante el exilio en Babilonia?", "opciones": ["Ezequiel", "Elías", "Moisés", "Samuel"], "respuesta": "Ezequiel" },
-          { "pregunta": "¿Quién fue el profeta que predijo la venida de Juan el Bautista?", "opciones": ["Isaías", "Daniel", "Jeremías", "Eliseo"], "respuesta": "Isaías" },
-          { "pregunta": "¿A qué rey le escribió el profeta Isaías durante el asedio de Jerusalén?", "opciones": ["Ezequías", "Josías", "David", "Saúl"], "respuesta": "Ezequías" },
-          { "pregunta": "¿Quién fue el profeta llevado al cielo en un carro de fuego?", "opciones": ["Elías", "Daniel", "Isaías", "Ezequiel"], "respuesta": "Elías" },
-          { "pregunta": "¿Qué rey tuvo un sueño de una estatua de diferentes metales?", "opciones": ["Nabucodonosor", "Faraón", "David", "Saúl"], "respuesta": "Nabucodonosor" },
-          { "pregunta": "¿Quién fue el profeta que escribió lamentaciones sobre Jerusalén?", "opciones": ["Jeremías", "Isaías", "Elías", "Ezequiel"], "respuesta": "Jeremías" },
-          { "pregunta": "¿Quién reconstruyó el templo después del exilio?", "opciones": ["Zorobabel", "David", "Salomón", "Josías"], "respuesta": "Zorobabel" },
-          { "pregunta": "¿Qué rey fue confrontado por el profeta Natán por su pecado?", "opciones": ["David", "Saúl", "Salomón", "Josías"], "respuesta": "David" }
+          { "pregunta": "¿En qué monte murió Moisés?", "opciones": ["Monte Nebo", "Monte Sinaí", "Monte Horeb", "Monte Carmelo"], "respuesta": "Monte Nebo" },
+        { "pregunta": "¿Qué señal marcó la salida de Egipto?", "opciones": ["La Pascua con sangre en las puertas", "La quema de incienso", "El sacrificio de Isaac", "El toque de trompetas"], "respuesta": "La Pascua con sangre en las puertas" },
+        { "pregunta": "¿Qué instrumento usó Moisés en muchos milagros?", "opciones": ["Su vara", "Un manto", "Un cetro de oro", "Una espada"], "respuesta": "Su vara" },
+        { "pregunta": "¿Cómo protegió Dios a los israelitas del ejército egipcio?", "opciones": ["Con una columna de nube y fuego", "Con una muralla de piedra", "Con un ejército de ángeles", "Con un río desbordado"], "respuesta": "Con una columna de nube y fuego" },
+        { "pregunta": "¿Qué hizo Moisés cuando el pueblo adoró el becerro de oro?", "opciones": ["Rompió las tablas de la Ley", "Castigó al pueblo con hambre", "Huyó al desierto", "Quemó el campamento"], "respuesta": "Rompió las tablas de la Ley" },
+        { "pregunta": "¿Quién sostuvo los brazos de Moisés en la batalla contra Amalec?", "opciones": ["Aarón y Jur", "Josué y Caleb", "Miriam y Aarón", "Elías y Eliseo"], "respuesta": "Aarón y Jur" },
+        { "pregunta": "¿Quién aconsejó a Moisés establecer jueces para ayudarlo?", "opciones": ["Jetró", "Aarón", "Josué", "Caleb"], "respuesta": "Jetró" },
+        { "pregunta": "¿Qué plaga fue la última antes de la salida de Egipto?", "opciones": ["Muerte de los primogénitos", "Oscuridad", "Langostas", "Granizo"], "respuesta": "Muerte de los primogénitos" },
+        { "pregunta": "¿En qué mar se ahogó el ejército del faraón?", "opciones": ["Mar Rojo", "Mar Negro", "Mar de Galilea", "Mar Muerto"], "respuesta": "Mar Rojo" },
+        { "pregunta": "¿Qué ordenó Dios a Moisés para sanar a los mordidos por serpientes?", "opciones": ["Hacer una serpiente de bronce", "Cavar un pozo", "Ofrecer un sacrificio", "Levantar un altar"], "respuesta": "Hacer una serpiente de bronce" }
+
         ],
         "3": [
-          { "pregunta": "¿Cuál de estos NO fue profeta mayor?", "opciones": ["Oseas", "Isaías", "Ezequiel", "Daniel"], "respuesta": "Oseas" },
-          { "pregunta": "¿Quién fue el profeta que restauró la fe en el Dios único en Israel durante un tiempo de idolatría?", "opciones": ["Elías", "Isaías", "Jeremías", "Ezequiel"], "respuesta": "Elías" },
-          { "pregunta": "¿Qué profeta tuvo la visión de un valle de huesos secos?", "opciones": ["Ezequiel", "Daniel", "Isaías", "Samuel"], "respuesta": "Ezequiel" }
+          { "pregunta": "¿Qué edad tenía Moisés cuando habló con el faraón?", "opciones": ["80 años", "40 años", "60 años", "100 años"], "respuesta": "80 años" },
+        { "pregunta": "¿Quién cantó junto a Moisés después de cruzar el Mar Rojo?", "opciones": ["Miriam", "Sara", "Débora", "Raquel"], "respuesta": "Miriam" },
+        { "pregunta": "¿En qué libro de la Biblia se narra la historia de Moisés?", "opciones": ["Éxodo", "Levítico", "Números", "Deuteronomio"], "respuesta": "Éxodo" },
+        { "pregunta": "¿Dónde guardó Moisés las tablas de la Ley?", "opciones": ["En el Arca de la Alianza", "En una tienda", "En el monte", "En una roca"], "respuesta": "En el Arca de la Alianza" },
+        { "pregunta": "¿Qué pueblo atacó a Israel en Refidim?", "opciones": ["Amalecitas", "Filisteos", "Moabitas", "Edomitas"], "respuesta": "Amalecitas" },
+        { "pregunta": "¿Quién habló cara a cara con Dios como con un amigo?", "opciones": ["Moisés", "Abraham", "Elías", "Samuel"], "respuesta": "Moisés" }
+
         ],
         "4": [
-          { "pregunta": "¿Cuál de los profetas fue contemporáneo del rey Josías y predicó el arrepentimiento antes del exilio?", "opciones": ["Jeremías", "Isaías", "Elías", "Daniel"], "respuesta": "Jeremías" },
-          { "pregunta": "¿A qué profeta le ordenó Dios casarse con una mujer adúltera como signo profético?", "opciones": ["Oseas", "Ezequiel", "Isaías", "Miqueas"], "respuesta": "Oseas" },
-          { "pregunta": "¿Qué profeta tuvo que comer un rollo que sabía dulce como la miel?", "opciones": ["Ezequiel", "Jeremías", "Isaías", "Daniel"], "respuesta": "Ezequiel" },
-          { "pregunta": "¿Quién fue el rey que destruyó los altares de dioses paganos y restauró el templo, conocido por su reforma religiosa?", "opciones": ["Josías", "Salomón", "Ezequías", "Manasés"], "respuesta": "Josías" },
-          { "pregunta": "¿Qué profeta experimentó el milagro de la multiplicación del aceite y la harina en casa de una viuda?", "opciones": ["Elías", "Eliseo", "Isaías", "Jeremías"], "respuesta": "Elías" },
-          { "pregunta": "¿Qué profeta reprendió a David por su pecado con Betsabé?", "opciones": ["Natán", "Samuel", "Gad", "Eliseo"], "respuesta": "Natán" }
+          { "pregunta": "¿Qué hizo Moisés para endulzar el agua amarga de Mara?", "opciones": ["Arrojó un trozo de madera", "Oró hasta que llovió", "Usó sal", "Golpeó la roca"], "respuesta": "Arrojó un trozo de madera" },
+        { "pregunta": "¿Qué tribu no recibió herencia en la tierra prometida?", "opciones": ["Leví", "Judá", "Efraín", "Gad"], "respuesta": "Leví" },
+        { "pregunta": "¿Qué monte vio Moisés desde lejos antes de morir?", "opciones": ["Monte Nebo", "Monte Sinaí", "Monte Horeb", "Monte Hermón"], "respuesta": "Monte Nebo" },
+        { "pregunta": "¿Quién fue el faraón durante el Éxodo?", "opciones": ["No se menciona por nombre", "Ramsés II", "Tutankamón", "Amenofis"], "respuesta": "No se menciona por nombre" },
+        { "pregunta": "¿Cuántos mandamientos recibió Moisés?", "opciones": ["Diez", "Doce", "Siete", "Quince"], "respuesta": "Diez" },
+        { "pregunta": "¿Qué le prohibió Dios a Moisés antes de entrar en la tierra prometida?", "opciones": ["Entrar a Canaán", "Nombrar a un nuevo líder", "Subir al monte", "Hablar al pueblo"], "respuesta": "Entrar a Canaán" }
+
         ],
         "5": [
-          { "pregunta": "¿Cuál fue el rey de Judá que fue cegado y llevado cautivo a Babilonia?", "opciones": ["Sedequías", "Ezequías", "Josías", "Manasés"], "respuesta": "Sedequías" },
-          { "pregunta": "¿Qué profeta vio una visión de ruedas llenas de ojos?", "opciones": ["Ezequiel", "Daniel", "Isaías", "Jeremías"], "respuesta": "Ezequiel" },
-          { "pregunta": "¿Qué rey ofreció sacrificios en el altar, usurpando funciones sacerdotales, y fue castigado con lepra?", "opciones": ["Uzías", "Saúl", "Salomón", "Josías"], "respuesta": "Uzías" },
-          { "pregunta": "¿Qué profeta fue arrojado a una cisterna llena de lodo por anunciar la caída de Jerusalén?", "opciones": ["Jeremías", "Ezequiel", "Isaías", "Oseas"], "respuesta": "Jeremías" },
-          { "pregunta": "¿Quién fue el profeta sucesor de Elías?", "opciones": ["Eliseo", "Natán", "Jeremías", "Ezequiel"], "respuesta": "Eliseo" },
-          { "pregunta": "¿Qué profeta denunció el lujo y la injusticia social en el reino de Israel, usando visiones de cestas de frutas y plomadas?", "opciones": ["Amós", "Oseas", "Miqueas", "Habacuc"], "respuesta": "Amós" }
+          { "pregunta": "¿Qué significa el nombre Moisés?", "opciones": ["Sacado de las aguas", "Hijo del Nilo", "Elegido de Dios", "Libertador"], "respuesta": "Sacado de las aguas" },
+        { "pregunta": "¿Qué plaga convirtió el agua en sangre?", "opciones": ["Primera", "Segunda", "Tercera", "Cuarta"], "respuesta": "Primera" },
+        { "pregunta": "¿Quién fue el sacerdote que hizo el becerro de oro?", "opciones": ["Aarón", "Josué", "Caleb", "Hur"], "respuesta": "Aarón" },
+        { "pregunta": "¿En qué capítulo de Éxodo se entrega el Decálogo?", "opciones": ["Capítulo 20", "Capítulo 15", "Capítulo 12", "Capítulo 25"], "respuesta": "Capítulo 20" },
+        { "pregunta": "¿Qué animal se sacrificaba en la Pascua?", "opciones": ["Un cordero", "Un toro", "Una cabra", "Un carnero"], "respuesta": "Un cordero" },
+        { "pregunta": "¿Qué milagro ocurrió en el monte Horeb antes de liberar a Israel?", "opciones": ["La zarza ardiente", "El maná", "El agua de la roca", "Las tablas de la Ley"], "respuesta": "La zarza ardiente" }
+
         ]
       }
     },
-    "2025-S29": {
-      "titulo": "Semana 29 – Jesús y sus apóstoles",
-      "descripcion": "Descubre detalles sobre la vida de Jesús y la misión de los apóstoles. ¿Cuánto conoces a los Doce y a su Maestro?",
+    "2025-S35": {
+      "titulo": "Semana 35 – Isaías, profeta del Emanuel",
+      "descripcion": "Profundiza en las profecías de Isaías, anunciando la venida del Mesías y la salvación.",
       "niveles": {
         "1": [
-          { "pregunta": "¿Cómo se llama la madre de Jesús?", "opciones": ["María", "Marta", "Ana", "Elisabet"], "respuesta": "María" },
-          { "pregunta": "¿En qué pueblo nació Jesús?", "opciones": ["Belén", "Nazaret", "Jerusalén", "Cafarnaúm"], "respuesta": "Belén" },
-          { "pregunta": "¿Cuántos apóstoles eligió Jesús?", "opciones": ["12", "7", "4", "70"], "respuesta": "12" },
-          { "pregunta": "¿Quién traicionó a Jesús por 30 monedas de plata?", "opciones": ["Judas", "Pedro", "Tomás", "Felipe"], "respuesta": "Judas" },
-          { "pregunta": "¿Quién negó a Jesús tres veces?", "opciones": ["Pedro", "Juan", "Andrés", "Mateo"], "respuesta": "Pedro" },
-          { "pregunta": "¿Cuál apóstol era cobrador de impuestos antes de seguir a Jesús?", "opciones": ["Mateo", "Santiago", "Simón", "Tomás"], "respuesta": "Mateo" },
-          { "pregunta": "¿A quién le cambió Jesús el nombre a 'Pedro'?", "opciones": ["Simón", "Santiago", "Juan", "Andrés"], "respuesta": "Simón" },
-          { "pregunta": "¿Qué milagro hizo Jesús en las bodas de Caná?", "opciones": ["Convirtió el agua en vino", "Sanó a un ciego", "Multiplicó panes", "Caminó sobre el agua"], "respuesta": "Convirtió el agua en vino" },
-          { "pregunta": "¿Cuál apóstol es conocido como 'el gemelo'?", "opciones": ["Tomás", "Andrés", "Juan", "Santiago"], "respuesta": "Tomás" },
-          { "pregunta": "¿Quién fue el apóstol más joven?", "opciones": ["Juan", "Pedro", "Santiago", "Judas"], "respuesta": "Juan" }
+          { "pregunta": "¿En qué reino profetizó Isaías principalmente?", "opciones": ["En el reino de Judá", "En el reino de Israel", "En Babilonia", "En Asiria"], "respuesta": "En el reino de Judá" },
+        { "pregunta": "¿Qué significa Emanuel?", "opciones": ["Dios con nosotros", "El Señor salva", "Paz eterna", "Luz de las naciones"], "respuesta": "Dios con nosotros" },
+        { "pregunta": "¿Qué visión tuvo Isaías en el templo?", "opciones": ["Un serafín purificando sus labios con una brasa", "Un ángel tocando su hombro", "Un arco iris sobre el altar", "Un cordero junto al altar"], "respuesta": "Un serafín purificando sus labios con una brasa" },
+        { "pregunta": "¿Qué anunció Isaías sobre el Mesías?", "opciones": ["Que nacería de una virgen", "Que vendría de Egipto", "Que sería nazareno", "Que sería hijo de un carpintero"], "respuesta": "Que nacería de una virgen" },
+        { "pregunta": "¿A quién anunció Isaías como voz en el desierto?", "opciones": ["A Juan el Bautista", "A Pedro", "A Jeremías", "A Elías"], "respuesta": "A Juan el Bautista" },
+        { "pregunta": "¿Qué símbolo usó Isaías para anunciar la paz del Mesías?", "opciones": ["El lobo vivirá con el cordero", "El sol brillará de noche", "El mar se secará", "La vid dará fruto en invierno"], "respuesta": "El lobo vivirá con el cordero" },
+        { "pregunta": "¿Qué rey recibió consejo de Isaías durante un asedio?", "opciones": ["Ezequías", "Saúl", "David", "Josías"], "respuesta": "Ezequías" },
+        { "pregunta": "¿Qué metáfora usa Isaías para describir a Dios como cuidador?", "opciones": ["Viñador", "Pastor", "Alfarero", "Carpintero"], "respuesta": "Viñador" },
+        { "pregunta": "¿Qué frase de Isaías leyó Jesús en Nazaret?", "opciones": ["El Espíritu del Señor está sobre mí", "Felices los pobres", "Yo soy el buen pastor", "La mies es mucha"], "respuesta": "El Espíritu del Señor está sobre mí" },
+        { "pregunta": "¿Cómo llamó Isaías al Mesías que traería la paz?", "opciones": ["Príncipe de la paz", "Rey de reyes", "Hijo del Altísimo", "Señor de la gloria"], "respuesta": "Príncipe de la paz" }
+
         ],
         "2": [
-          { "pregunta": "¿Quién fue el apóstol que caminó sobre el agua hacia Jesús?", "opciones": ["Pedro", "Juan", "Andrés", "Felipe"], "respuesta": "Pedro" },
-          { "pregunta": "¿Cuál apóstol dudó de la resurrección de Jesús hasta ver sus heridas?", "opciones": ["Tomás", "Mateo", "Bartolomé", "Simón"], "respuesta": "Tomás" },
-          { "pregunta": "¿En qué monte ocurrió la Transfiguración de Jesús?", "opciones": ["Tabor", "Oliveto", "Sinaí", "Moria"], "respuesta": "Tabor" },
-          { "pregunta": "¿Qué apóstol era hermano de Juan?", "opciones": ["Santiago", "Mateo", "Simón", "Bartolomé"], "respuesta": "Santiago" },
-          { "pregunta": "¿A quién le dijo Jesús: 'Sígueme, y te haré pescador de hombres'?", "opciones": ["Pedro y Andrés", "Mateo y Tomás", "Felipe y Bartolomé", "Santiago y Juan"], "respuesta": "Pedro y Andrés" },
-          { "pregunta": "¿Cuál fue el primer milagro de Jesús?", "opciones": ["Agua en vino", "Multiplicación de panes", "Sanó a un ciego", "Resucitó a Lázaro"], "respuesta": "Agua en vino" },
-          { "pregunta": "¿Quién fue apóstol y publicano?", "opciones": ["Mateo", "Pedro", "Andrés", "Juan"], "respuesta": "Mateo" },
-          { "pregunta": "¿A quién le preguntó Jesús tres veces: '¿Me amas?'", "opciones": ["Pedro", "Juan", "Felipe", "Tomás"], "respuesta": "Pedro" },
-          { "pregunta": "¿Qué apóstol era conocido como 'el celote'?", "opciones": ["Simón", "Felipe", "Santiago", "Judas Tadeo"], "respuesta": "Simón" },
-          { "pregunta": "¿Quién fue el apóstol que escribió el Apocalipsis?", "opciones": ["Juan", "Pedro", "Santiago", "Tomás"], "respuesta": "Juan" }
+           { "pregunta": "¿Qué ciudad anunció Isaías que sería consolada?", "opciones": ["Jerusalén", "Belén", "Nínive", "Jericó"], "respuesta": "Jerusalén" },
+        { "pregunta": "¿Qué imagen usó Isaías para anunciar la redención?", "opciones": ["Caminos en el desierto", "Puertas de bronce", "Montañas de oro", "Ríos de miel"], "respuesta": "Caminos en el desierto" },
+        { "pregunta": "¿Qué título de Isaías aplica la liturgia a María?", "opciones": ["Hija de Sión", "Estrella de la mañana", "Torre de David", "Puerta del cielo"], "respuesta": "Hija de Sión" },
+        { "pregunta": "¿Qué instrumento dijo Isaías que afilaría el Señor?", "opciones": ["Su boca como espada", "Su vara como lanza", "Su mano como flecha", "Su palabra como martillo"], "respuesta": "Su boca como espada" },
+        { "pregunta": "¿Qué animal habitará con el cordero según Isaías 11?", "opciones": ["Lobo", "León", "Oso", "Zorro"], "respuesta": "Lobo" },
+        { "pregunta": "¿Qué nación invadió a Judá en tiempos de Isaías?", "opciones": ["Asiria", "Babilonia", "Egipto", "Persia"], "respuesta": "Asiria" },
+        { "pregunta": "¿Quién fue contemporáneo de Isaías?", "opciones": ["Miqueas", "Samuel", "Elías", "Ezequiel"], "respuesta": "Miqueas" },
+        { "pregunta": "¿Qué capítulo contiene la profecía del Emanuel?", "opciones": ["Capítulo 7", "Capítulo 9", "Capítulo 40", "Capítulo 53"], "respuesta": "Capítulo 7" },
+        { "pregunta": "¿Qué capítulo describe al Siervo Sufriente?", "opciones": ["Capítulo 53", "Capítulo 42", "Capítulo 11", "Capítulo 61"], "respuesta": "Capítulo 53" },
+        { "pregunta": "¿Qué oficio tuvo Isaías antes de ser profeta?", "opciones": ["No se menciona en la Biblia", "Sacerdote", "Pastor", "Escriba"], "respuesta": "No se menciona en la Biblia" }
+
     ],
     "3": [
-      { "pregunta": "¿Quién fue el apóstol que llevó a Natanael (Bartolomé) a Jesús?", "opciones": ["Felipe", "Tomás", "Mateo", "Andrés"], "respuesta": "Felipe" },
-      { "pregunta": "¿Qué apóstol fue llamado también 'Leví'?", "opciones": ["Mateo", "Simón", "Santiago", "Bartolomé"], "respuesta": "Mateo" },
-      { "pregunta": "¿Qué apóstol fue martirizado en la India según la tradición?", "opciones": ["Tomás", "Pedro", "Juan", "Mateo"], "respuesta": "Tomás" },
-      { "pregunta": "¿Quién fue el apóstol que preguntó: '¿Muéstranos al Padre?'", "opciones": ["Felipe", "Bartolomé", "Santiago", "Simón"], "respuesta": "Felipe" },
-      { "pregunta": "¿Cuál apóstol fue martirizado boca abajo en una cruz?", "opciones": ["Pedro", "Santiago", "Juan", "Andrés"], "respuesta": "Pedro" },
-      { "pregunta": "¿Quién fue el apóstol conocido por ser celoso y tener celo patriótico?", "opciones": ["Simón el Zelote", "Felipe", "Andrés", "Tomás"], "respuesta": "Simón el Zelote" },
-      { "pregunta": "¿Qué apóstol es mencionado como 'hermano del Señor'?", "opciones": ["Santiago", "Juan", "Pedro", "Tomás"], "respuesta": "Santiago" },
-      { "pregunta": "¿Cuál apóstol recibió el encargo de cuidar a María al pie de la cruz?", "opciones": ["Juan", "Pedro", "Felipe", "Andrés"], "respuesta": "Juan" },
-      { "pregunta": "¿Quién fue el apóstol que escribió una carta conocida como Epístola Católica?", "opciones": ["Santiago", "Judas Tadeo", "Pedro", "Andrés"], "respuesta": "Santiago" },
-      { "pregunta": "¿Quién fue el apóstol que reemplazó a Judas Iscariote?", "opciones": ["Matías", "Bartolomé", "Felipe", "Tomás"], "respuesta": "Matías" }
+      { "pregunta": "¿Qué rey quiso aliarse con Asiria contra Israel según Isaías?", "opciones": ["Acaz", "Ezequías", "Josías", "Manasés"], "respuesta": "Acaz" },
+        { "pregunta": "¿Qué capítulo habla de preparar el camino del Señor?", "opciones": ["Capítulo 40", "Capítulo 53", "Capítulo 7", "Capítulo 9"], "respuesta": "Capítulo 40" },
+        { "pregunta": "¿Qué imagen usa Isaías para el pueblo rebelde?", "opciones": ["Viña sin fruto", "Ovejas sin pastor", "Casa derrumbada", "Ciudad en ruinas"], "respuesta": "Viña sin fruto" },
+        { "pregunta": "¿Qué metal se menciona en la purificación de Jerusalén?", "opciones": ["Plata", "Oro", "Bronce", "Hierro"], "respuesta": "Plata" },
+        { "pregunta": "¿Qué país sería derrotado según Isaías 19?", "opciones": ["Egipto", "Babilonia", "Asiria", "Filistea"], "respuesta": "Egipto" },
+        { "pregunta": "¿Qué rey vio Isaías morir antes de su llamado?", "opciones": ["Ozías", "Ezequías", "Josías", "Manasés"], "respuesta": "Ozías" }
+
     ],
     "4": [
-      { "pregunta": "¿Qué apóstol fue el primero en sufrir martirio?", "opciones": ["Santiago el Mayor", "Pedro", "Juan", "Andrés"], "respuesta": "Santiago el Mayor" },
-      { "pregunta": "¿A cuál apóstol se le atribuye haber predicado en Etiopía según la tradición?", "opciones": ["Bartolomé", "Felipe", "Judas Tadeo", "Simón"], "respuesta": "Bartolomé" },
-      { "pregunta": "¿Quién fue el apóstol que escribió la segunda carta a los Corintios?", "opciones": ["Pablo", "Pedro", "Juan", "Santiago"], "respuesta": "Pablo" },
-      { "pregunta": "¿Cuál apóstol fue apedreado según la tradición y su muerte narrada en los Hechos de los Apóstoles?", "opciones": ["Santiago el Menor", "Tomás", "Simón", "Judas Tadeo"], "respuesta": "Santiago el Menor" },
-      { "pregunta": "¿Cuál apóstol es llamado 'hijo del trueno' junto a su hermano?", "opciones": ["Juan", "Pedro", "Mateo", "Tomás"], "respuesta": "Juan" },
-      { "pregunta": "¿Qué apóstol fue compañero de Pablo y apóstol de los gentiles?", "opciones": ["Bernabé", "Santiago", "Judas Tadeo", "Simón"], "respuesta": "Bernabé" }
+     { "pregunta": "¿Qué nación sería llamada 'pueblo de Dios' junto con Israel?", "opciones": ["Asiria", "Egipto", "Moab", "Filistea"], "respuesta": "Egipto" },
+        { "pregunta": "¿Qué fruto describe Isaías como símbolo de abundancia?", "opciones": ["Higos", "Uvas", "Granadas", "Olivas"], "respuesta": "Higos" },
+        { "pregunta": "¿Qué rey recibió 15 años más de vida por intercesión de Isaías?", "opciones": ["Ezequías", "Josías", "Manasés", "Salomón"], "respuesta": "Ezequías" },
+        { "pregunta": "¿Qué imagen describe la justicia en Isaías 32?", "opciones": ["Refugio contra el viento", "Árbol plantado junto al río", "Escudo de oro", "Montaña alta"], "respuesta": "Refugio contra el viento" },
+        { "pregunta": "¿Qué capítulo anuncia el año de gracia del Señor?", "opciones": ["Capítulo 61", "Capítulo 53", "Capítulo 11", "Capítulo 7"], "respuesta": "Capítulo 61" },
+        { "pregunta": "¿Qué figura usó Isaías para mostrar que Dios modela al pueblo?", "opciones": ["Alfarero", "Pastor", "Padre", "Viñador"], "respuesta": "Alfarero" }
+
     ],
     "5": [
-      { "pregunta": "¿Qué apóstol evangelizó la región del Mar Negro según la tradición?", "opciones": ["Andrés", "Felipe", "Bartolomé", "Matías"], "respuesta": "Andrés" },
-      { "pregunta": "¿Quién fue el apóstol conocido por predicar en Armenia?", "opciones": ["Bartolomé", "Tomás", "Santiago", "Felipe"], "respuesta": "Bartolomé" },
-      { "pregunta": "¿Qué apóstol fue martirizado con una lanza?", "opciones": ["Tomás", "Simón", "Felipe", "Juan"], "respuesta": "Tomás" },
-      { "pregunta": "¿Cuál apóstol murió decapitado en Roma?", "opciones": ["Pablo", "Pedro", "Santiago el Mayor", "Juan"], "respuesta": "Pablo" },
-      { "pregunta": "¿A qué apóstol se le atribuye la fundación de la Iglesia de Alejandría en Egipto?", "opciones": ["Marcos", "Mateo", "Lucas", "Juan"], "respuesta": "Marcos" },
-      { "pregunta": "¿Qué apóstol llevó el Evangelio a Etiopía, según la tradición?", "opciones": ["Felipe", "Bartolomé", "Santiago", "Judas Tadeo"], "respuesta": "Felipe" }
+      { "pregunta": "¿Qué instrumento musical se menciona en Isaías 5 como símbolo de alegría?", "opciones": ["Arpa", "Cítara", "Tamboril", "Flauta"], "respuesta": "Arpa" },
+        { "pregunta": "¿Qué rey aparece en Isaías 45 como ungido por Dios?", "opciones": ["Ciro", "Darío", "Nabucodonosor", "Artajerjes"], "respuesta": "Ciro" },
+        { "pregunta": "¿Qué prenda se menciona en Isaías 61 como símbolo de salvación?", "opciones": ["Vestiduras", "Corona", "Manto", "Cinturón"], "respuesta": "Vestiduras" },
+        { "pregunta": "¿Qué tipo de árbol se menciona como símbolo de justicia?", "opciones": ["Encina", "Olivo", "Cedro", "Palmera"], "respuesta": "Encina" },
+        { "pregunta": "¿Qué capítulo anuncia que las espadas se convertirán en arados?", "opciones": ["Capítulo 2", "Capítulo 7", "Capítulo 9", "Capítulo 11"], "respuesta": "Capítulo 2" },
+        { "pregunta": "¿Qué alimento recibirá el pueblo en el banquete de Isaías 25?", "opciones": ["Vinos generosos", "Pan de cebada", "Frutas frescas", "Leche y miel"], "respuesta": "Vinos generosos" }
   ]
       }
     },
-    "2025-S30": {
-      "titulo": "Semana 30 – Frases célebres de Jesús",
-      "descripcion": "¿Reconoces a quién o a qué grupo Jesús (u otro personaje) dirigió estas palabras?",
+    "2025-S36": {
+      "titulo": "Semana 36 – María, la joven del pueblo que espera al Salvador",
+      "descripcion": "Conoce a María, su fe y su misión como Madre del Salvador, desde la Anunciación hasta su papel en la historia de la salvación.",
       "niveles": {
-        "1": [
-      { "pregunta": "¿A quién le dijo Jesús: «Hoy ha llegado la salvación a esta casa»?", "opciones": ["Zaqueo", "Pedro", "Nicodemo", "Lázaro"], "respuesta": "Zaqueo" },
-      { "pregunta": "¿A quién dijo Jesús: «Ven y sígueme»?", "opciones": ["Mateo", "Judas", "Zaqueo", "Pilato"], "respuesta": "Mateo" },
-      { "pregunta": "¿A quién le dijo Jesús: «No llores» antes de resucitar a su hijo?", "opciones": ["La viuda de Naín", "María Magdalena", "Marta", "La samaritana"], "respuesta": "La viuda de Naín" },
-      { "pregunta": "¿A quién dijo Jesús: «Tampoco yo te condeno. Vete y no peques más»?", "opciones": ["La mujer adúltera", "La hemorroísa", "La samaritana", "Marta"], "respuesta": "La mujer adúltera" },
-      { "pregunta": "¿A quién le dijo Jesús: «Tú eres Pedro y sobre esta piedra edificaré mi Iglesia»?", "opciones": ["Simón", "Juan", "Mateo", "Andrés"], "respuesta": "Simón" },
-      { "pregunta": "¿A quién le dijo Jesús: «Ven, camina sobre el agua»?", "opciones": ["Pedro", "Juan", "Tomás", "Felipe"], "respuesta": "Pedro" },
-      { "pregunta": "¿A quién le dijo Jesús: «Tu fe te ha salvado» después de recobrar la vista?", "opciones": ["Bartimeo", "Zaqueo", "Pedro", "Jairo"], "respuesta": "Bartimeo" },
-      { "pregunta": "¿A quién le dijo el ángel: «Llena eres de gracia, el Señor está contigo»?", "opciones": ["María", "Marta", "Elisabet", "Ana"], "respuesta": "María" },
-      { "pregunta": "¿A quién dijo Jesús: «Marta, Marta, te preocupas por muchas cosas...»?", "opciones": ["Marta", "María Magdalena", "María (madre)", "La samaritana"], "respuesta": "Marta" },
-      { "pregunta": "¿A quién dijo Jesús: «Hoy estarás conmigo en el paraíso»?", "opciones": ["El buen ladrón", "Pedro", "Judas", "Pablo"], "respuesta": "El buen ladrón" }
-    ],
-    "2": [
-      { "pregunta": "¿A quién le dijo Jesús: «El agua que yo le daré se convertirá en manantial de vida eterna»?", "opciones": ["La samaritana", "La mujer adúltera", "María Magdalena", "La viuda de Naín"], "respuesta": "La samaritana" },
-      { "pregunta": "¿A quién dijo Jesús: «No temas, sólo ten fe»?", "opciones": ["Jairo", "Pedro", "Santiago", "Tomás"], "respuesta": "Jairo" },
-      { "pregunta": "¿A quién dijo Jesús: «Tú eres el Cristo, el Hijo de Dios vivo» y lo alabó por esa confesión?", "opciones": ["Pedro", "Juan", "Tomás", "Felipe"], "respuesta": "Pedro" },
-      { "pregunta": "¿A quién dijo Jesús: «¿Por qué me llamas bueno?»", "opciones": ["El joven rico", "Pedro", "Nicodemo", "Simón el fariseo"], "respuesta": "El joven rico" },
-      { "pregunta": "¿A quién le dijo Jesús: «¿Dónde están los que te condenaban?»", "opciones": ["La mujer adúltera", "María Magdalena", "La hemorroísa", "La viuda"], "respuesta": "La mujer adúltera" },
-      { "pregunta": "¿A quién le dijo Jesús: «No he venido a llamar a justos, sino a pecadores»?", "opciones": ["A los fariseos", "A los discípulos", "A los escribas", "A la multitud"], "respuesta": "A los fariseos" },
-      { "pregunta": "¿A quién le dijo Jesús: «¿Crees esto?» refiriéndose a la resurrección de Lázaro?", "opciones": ["Marta", "María Magdalena", "Pedro", "Marta y María"], "respuesta": "Marta" },
-      { "pregunta": "¿A quién le dijo Jesús: «Levántate, toma tu camilla y anda»?", "opciones": ["El paralítico de Cafarnaúm", "Bartimeo", "Jairo", "El ciego de Siloé"], "respuesta": "El paralítico de Cafarnaúm" },
-      { "pregunta": "¿A quién le dijo Jesús: «¡Saulo, Saulo! ¿Por qué me persigues?»?", "opciones": ["Pablo", "Pedro", "Felipe", "Santiago"], "respuesta": "Pablo" },
-      { "pregunta": "¿A quién le dijo Jesús: «Hija, tu fe te ha salvado»?", "opciones": ["La hemorroísa", "La mujer adúltera", "Marta", "La viuda de Naín"], "respuesta": "La hemorroísa" }
-    ],
-    "3": [
-      { "pregunta": "¿A quién le dijo Jesús: «¿También ustedes quieren irse?» cuando muchos discípulos se fueron?", "opciones": ["A los Doce", "A la multitud", "A los fariseos", "A los escribas"], "respuesta": "A los Doce" },
-      { "pregunta": "¿A quién le dijo Jesús: «Antes que cante el gallo, me habrás negado tres veces»?", "opciones": ["Pedro", "Juan", "Tomás", "Andrés"], "respuesta": "Pedro" },
-      { "pregunta": "¿A quién le dijo Jesús: «Hoy mismo me negarás tres veces»?", "opciones": ["Pedro", "Tomás", "Judas", "Felipe"], "respuesta": "Pedro" },
-      { "pregunta": "¿A quién le dijo Jesús: «Lázaro, sal fuera»?", "opciones": ["Lázaro", "Jairo", "Bartimeo", "El paralítico"], "respuesta": "Lázaro" },
-      { "pregunta": "¿A quién le dijo Jesús: «Mujer, grande es tu fe»?", "opciones": ["La cananea", "La samaritana", "La hemorroísa", "Marta"], "respuesta": "La cananea" },
-      { "pregunta": "¿A quién le dijo Jesús: «Bienaventurados los que creen sin ver»?", "opciones": ["Tomás", "Pedro", "Felipe", "Juan"], "respuesta": "Tomás" }
-    ],
-    "4": [
-      { "pregunta": "¿A quién le dijo Jesús: «¿Quién es mi madre y quiénes son mis hermanos?»", "opciones": ["A la multitud", "A María y sus hermanos", "A los discípulos", "A los fariseos"], "respuesta": "A la multitud" },
-      { "pregunta": "¿A quién le dijo Jesús: «No sólo de pan vive el hombre»?", "opciones": ["Al diablo en el desierto", "A Pedro", "A Juan", "A la multitud"], "respuesta": "Al diablo en el desierto" },
-      { "pregunta": "¿A quién le dijo Jesús: «Padre, en tus manos encomiendo mi espíritu»?", "opciones": ["Al Padre", "A Pedro", "A María", "A Juan"], "respuesta": "Al Padre" },
-      { "pregunta": "¿A quién le dijo Jesús: «Mujer, he ahí a tu hijo»?", "opciones": ["A María", "A Marta", "A la samaritana", "A la hemorroísa"], "respuesta": "A María" },
-      { "pregunta": "¿A quién le dijo Jesús: «No te he condenado; vete y no peques más»?", "opciones": ["La mujer adúltera", "María Magdalena", "La hemorroísa", "La cananea"], "respuesta": "La mujer adúltera" },
-      { "pregunta": "¿A quién le dijo Jesús: «Paz a ustedes» después de resucitar?", "opciones": ["A los discípulos", "A María Magdalena", "A los fariseos", "A los Doce"], "respuesta": "A los discípulos" }
-    ],
-    "5": [
-      { "pregunta": "¿A quién le dijo Jesús: «Mujer, grande es tu fe. Que te suceda como deseas»?", "opciones": ["La mujer cananea", "María Magdalena", "Marta", "La hemorroísa"], "respuesta": "La mujer cananea" },
-      { "pregunta": "¿A quién le dijo Jesús: «Marta, sólo una cosa es necesaria»?", "opciones": ["Marta", "María Magdalena", "La samaritana", "La viuda de Naín"], "respuesta": "Marta" },
-      { "pregunta": "¿A quién le dijo Jesús: «Recobra la vista; tu fe te ha salvado»?", "opciones": ["Bartimeo", "El ciego de Siloé", "El paralítico", "Lázaro"], "respuesta": "Bartimeo" },
-      { "pregunta": "¿A quién le dijo Jesús: «¡Sal fuera!» y volvió a la vida?", "opciones": ["Lázaro", "La hija de Jairo", "El hijo de la viuda", "Bartimeo"], "respuesta": "Lázaro" },
-      { "pregunta": "¿A quién le dijo Jesús: «Levántate, toma tu lecho y anda»?", "opciones": ["El paralítico de Betesda", "Bartimeo", "La hemorroísa", "La samaritana"], "respuesta": "El paralítico de Betesda" },
-      { "pregunta": "¿A quién le dijo Jesús: «No tengas miedo; basta que tengas fe»?", "opciones": ["Jairo", "Pedro", "Tomás", "Felipe"], "respuesta": "Jairo" } 
-    ]
+         "1": [
+        { "pregunta": "¿Quién fue enviado por Dios para anunciar a María que sería madre del Salvador?", "opciones": ["El ángel Gabriel", "El ángel Miguel", "El ángel Rafael", "Un profeta"], "respuesta": "El ángel Gabriel" },
+        { "pregunta": "¿En qué ciudad vivía María cuando recibió el anuncio del ángel?", "opciones": ["Nazaret", "Belén", "Jerusalén", "Cafarnaúm"], "respuesta": "Nazaret" },
+        { "pregunta": "¿Qué respondió María al anuncio del ángel?", "opciones": ["Hágase en mí según tu palabra", "No soy digna", "El Señor es grande", "Mi alma alaba al Señor"], "respuesta": "Hágase en mí según tu palabra" },
+        { "pregunta": "¿Qué pariente visitó María después de la Anunciación?", "opciones": ["Isabel", "Marta", "Salomé", "Débora"], "respuesta": "Isabel" },
+        { "pregunta": "¿Qué exclamó Isabel al ver llegar a María?", "opciones": ["Bendita tú entre las mujeres", "El Señor está contigo", "Mi alma se alegra", "Ave, llena de gracia"], "respuesta": "Bendita tú entre las mujeres" },
+        { "pregunta": "¿Qué cántico pronunció María en casa de Isabel?", "opciones": ["El Magníficat", "El Benedictus", "El Gloria", "El Aleluya"], "respuesta": "El Magníficat" },
+        { "pregunta": "¿Qué título le dio el ángel Gabriel a María?", "opciones": ["Llena de gracia", "Hija de Sión", "Bendita del Señor", "Servidora del Altísimo"], "respuesta": "Llena de gracia" },
+        { "pregunta": "¿Quién fue el esposo de María?", "opciones": ["José", "Zacarías", "Simeón", "Andrés"], "respuesta": "José" },
+        { "pregunta": "¿Qué profecía de Isaías se cumplió en María?", "opciones": ["La virgen concebirá y dará a luz un hijo", "De Egipto llamé a mi hijo", "Será llamado Nazareno", "Nacerá en Belén"], "respuesta": "La virgen concebirá y dará a luz un hijo" },
+        { "pregunta": "¿Qué fiesta recuerda el anuncio del ángel a María?", "opciones": ["La Anunciación", "La Visitación", "La Asunción", "La Purificación"], "respuesta": "La Anunciación" }
+      ],
+      "2": [
+        { "pregunta": "¿Qué actitud mostró María al aceptar la voluntad de Dios?", "opciones": ["Obediencia y fe", "Miedo y duda", "Tristeza y resignación", "Indiferencia y silencio"], "respuesta": "Obediencia y fe" },
+        { "pregunta": "¿En qué momento María es proclamada Madre de la Iglesia?", "opciones": ["Al pie de la cruz", "En las bodas de Caná", "En la Anunciación", "En la Ascensión"], "respuesta": "Al pie de la cruz" },
+        { "pregunta": "¿Qué hizo María después de la visita del ángel?", "opciones": ["Fue de prisa a servir a Isabel", "Guardó silencio durante meses", "Se escondió por miedo", "Se lo contó a todo el pueblo"], "respuesta": "Fue de prisa a servir a Isabel" },
+        { "pregunta": "¿Qué significa el nombre María?", "opciones": ["La amada de Dios", "Dios salva", "Luz del Señor", "Esperanza eterna"], "respuesta": "La amada de Dios" },
+        { "pregunta": "¿Qué oración católica recoge palabras de Isabel a María?", "opciones": ["Ave María", "Padre Nuestro", "Gloria", "Credo"], "respuesta": "Ave María" },
+        { "pregunta": "¿Quién reconoció a Jesús como Salvador cuando María lo presentó en el templo?", "opciones": ["Simeón", "Zacarías", "Juan", "José"], "respuesta": "Simeón" },
+        { "pregunta": "¿Qué fiesta mariana celebra que María fue llevada al cielo en cuerpo y alma?", "opciones": ["Asunción", "Inmaculada Concepción", "Visitación", "Anunciación"], "respuesta": "Asunción" },
+        { "pregunta": "¿Qué hizo María en las bodas de Caná?", "opciones": ["Pidió a Jesús que ayudara", "Sirvió el vino", "Predicó al pueblo", "Cantó un salmo"], "respuesta": "Pidió a Jesús que ayudara" },
+        { "pregunta": "¿Qué respuesta dio María en Caná a los sirvientes?", "opciones": ["Hagan lo que Él les diga", "Escúchenlo con atención", "Esperen su señal", "Sirvan con alegría"], "respuesta": "Hagan lo que Él les diga" },
+        { "pregunta": "¿Dónde estaba María cuando descendió el Espíritu Santo?", "opciones": ["En el cenáculo con los discípulos", "En Nazaret", "En el templo", "En Belén"], "respuesta": "En el cenáculo con los discípulos" }
+      ],
+      "3": [
+        { "pregunta": "¿Qué pariente de María fue madre de Juan el Bautista?", "opciones": ["Isabel", "Ana", "Marta", "Raquel"], "respuesta": "Isabel" },
+        { "pregunta": "¿Qué evangelista narra la Anunciación?", "opciones": ["Lucas", "Mateo", "Marcos", "Juan"], "respuesta": "Lucas" },
+        { "pregunta": "¿Qué fiesta mariana se celebra el 8 de diciembre?", "opciones": ["Inmaculada Concepción", "Asunción", "Visitación", "Anunciación"], "respuesta": "Inmaculada Concepción" },
+        { "pregunta": "¿Qué nombre recibe la visita de María a Isabel?", "opciones": ["La Visitación", "La Anunciación", "La Purificación", "La Presentación"], "respuesta": "La Visitación" },
+        { "pregunta": "¿Qué hizo María después del nacimiento de Jesús según Lucas 2,19?", "opciones": ["Guardaba todo en su corazón", "Contó la noticia a todos", "Cantó el Magníficat", "Regresó a Nazaret"], "respuesta": "Guardaba todo en su corazón" },
+        { "pregunta": "¿Quién es el esposo de María según el evangelio de Mateo?", "opciones": ["José", "Simeón", "Zacarías", "Natán"], "respuesta": "José" }
+      ],
+      "4": [
+        { "pregunta": "¿Qué edad aproximada se cree que tenía María en la Anunciación?", "opciones": ["14-16 años", "18-20 años", "20-25 años", "12 años"], "respuesta": "14-16 años" },
+        { "pregunta": "¿Qué fiesta se celebra el 31 de mayo en honor a María?", "opciones": ["La Visitación", "La Anunciación", "La Asunción", "La Natividad de María"], "respuesta": "La Visitación" },
+        { "pregunta": "¿En qué país se refugió María con José y Jesús?", "opciones": ["Egipto", "Siria", "Grecia", "Babilonia"], "respuesta": "Egipto" },
+        { "pregunta": "¿Qué título mariano hace referencia a María como protectora de los cristianos?", "opciones": ["Auxiliadora", "Mediadora", "Madre del Creador", "Reina de los profetas"], "respuesta": "Auxiliadora" },
+        { "pregunta": "¿Qué palabra del Magníficat significa 'engrandece'?", "opciones": ["Magníficat", "Gloria", "Benedictus", "Hosanna"], "respuesta": "Magníficat" },
+        { "pregunta": "¿Qué parentesco une a María y a Isabel?", "opciones": ["Parentesco familiar (parientes)", "Tía y sobrina", "Hermanas", "Primas"], "respuesta": "Parentesco familiar (parientes)" }
+      ],
+      "5": [
+        { "pregunta": "¿Qué dogma mariano enseña que María fue preservada del pecado original?", "opciones": ["Inmaculada Concepción", "Asunción", "Maternidad divina", "Perpetua virginidad"], "respuesta": "Inmaculada Concepción" },
+        { "pregunta": "¿Qué fiesta mariana recuerda la maternidad divina de María?", "opciones": ["Santa María Madre de Dios", "Asunción", "Visitación", "Anunciación"], "respuesta": "Santa María Madre de Dios" },
+        { "pregunta": "¿Qué significa 'Theotokos', título de María?", "opciones": ["Madre de Dios", "Llena de gracia", "Reina del cielo", "Señora de la paz"], "respuesta": "Madre de Dios" },
+        { "pregunta": "¿Qué oración mariana comienza con 'Bajo tu amparo'?", "opciones": ["Sub tuum praesidium", "Ave María", "Salve Regina", "Magníficat"], "respuesta": "Sub tuum praesidium" },
+        { "pregunta": "¿Qué título mariano se menciona en Apocalipsis 12?", "opciones": ["Mujer vestida de sol", "Reina de los cielos", "Madre de la Iglesia", "Hija de Sión"], "respuesta": "Mujer vestida de sol" },
+        { "pregunta": "¿Qué oración mariana fue compuesta en Fátima?", "opciones": ["Oh Jesús mío", "Salve Regina", "Ave María", "Bajo tu amparo"], "respuesta": "Oh Jesús mío" }
       }
 },
-    "2025-S31": {
-      "titulo": "Semana 31 – Resumen 1",
-      "descripcion": "¿Esta semana  Resumimos  las ultimas 3 semanas, atento, preguntas diversas pero sera muy fácil?",
+    "2025-S37": {
+      "titulo": "Semana 37 – Jesús, el esperado del pueblo de Israel",
+      "descripcion": "¿Descubre las profecías y signos que anunciaron la venida de Jesús y su nacimiento como Mesías?",
       "niveles": {
         "1": [
-          { "pregunta": "¿Quién fue el primer rey de Israel?", "opciones": ["Saúl", "David", "Salomón", "Josías"], "respuesta": "Saúl" },
-          { "pregunta": "¿Quién venció a Goliat?", "opciones": ["David", "Salomón", "Saúl", "Samuel"], "respuesta": "David" },
-          { "pregunta": "¿Quién fue el profeta que desafió a los profetas de Baal en el monte Carmelo?", "opciones": ["Elías", "Isaías", "Jeremías", "Oseas"], "respuesta": "Elías" },
-          { "pregunta": "¿Cuál de estos fue rey sabio de Israel?", "opciones": ["Salomón", "Josué", "Samuel", "Eliseo"], "respuesta": "Salomón" },
-          { "pregunta": "¿Quién sucedió a Moisés como líder de Israel?", "opciones": ["Josué", "Samuel", "David", "Saúl"], "respuesta": "Josué" },
-          { "pregunta": "¿A quién le dijo Jesús: «Hoy ha llegado la salvación a esta casa»?", "opciones": ["Zaqueo", "Pedro", "Nicodemo", "Lázaro"], "respuesta": "Zaqueo" },
-          { "pregunta": "¿A quién dijo Jesús: «Ven y sígueme»?", "opciones": ["Mateo", "Judas", "Zaqueo", "Pilato"], "respuesta": "Mateo" },
-          { "pregunta": "¿A quién le dijo Jesús: «No llores» antes de resucitar a su hijo?", "opciones": ["La viuda de Naín", "María Magdalena", "Marta", "La samaritana"], "respuesta": "La viuda de Naín" },
-          { "pregunta": "¿A quién dijo Jesús: «Tampoco yo te condeno. Vete y no peques más»?", "opciones": ["La mujer adúltera", "La hemorroísa", "La samaritana", "Marta"], "respuesta": "La mujer adúltera" },
-          { "pregunta": "¿A quién le dijo Jesús: «Tú eres Pedro y sobre esta piedra edificaré mi Iglesia»?", "opciones": ["Simón", "Juan", "Mateo", "Andrés"], "respuesta": "Simón" },
-          { "pregunta": "¿Cómo se llama la madre de Jesús?", "opciones": ["María", "Marta", "Ana", "Elisabet"], "respuesta": "María" },
-          { "pregunta": "¿En qué pueblo nació Jesús?", "opciones": ["Belén", "Nazaret", "Jerusalén", "Cafarnaúm"], "respuesta": "Belén" },
-          { "pregunta": "¿Cuántos apóstoles eligió Jesús?", "opciones": ["12", "7", "4", "70"], "respuesta": "12" },
-          { "pregunta": "¿Quién traicionó a Jesús por 30 monedas de plata?", "opciones": ["Judas", "Pedro", "Tomás", "Felipe"], "respuesta": "Judas" },
-          { "pregunta": "¿Quién negó a Jesús tres veces?", "opciones": ["Pedro", "Juan", "Andrés", "Mateo"], "respuesta": "Pedro" }
+        { "pregunta": "¿Qué significa la palabra 'Mesías'?", "opciones": ["Ungido", "Salvador", "Rey eterno", "Hijo del hombre"], "respuesta": "Ungido" },
+        { "pregunta": "¿En qué ciudad debía nacer el Mesías según la profecía?", "opciones": ["Belén", "Nazaret", "Jerusalén", "Cafarnaúm"], "respuesta": "Belén" },
+        { "pregunta": "¿Qué profeta anunció que el Mesías sería llamado Emanuel?", "opciones": ["Isaías", "Jeremías", "Ezequiel", "Oseas"], "respuesta": "Isaías" },
+        { "pregunta": "¿Qué significa Emanuel?", "opciones": ["Dios con nosotros", "El Señor salva", "Príncipe de paz", "Rey de justicia"], "respuesta": "Dios con nosotros" },
+        { "pregunta": "¿De qué linaje debía venir el Mesías?", "opciones": ["De la casa de David", "De la tribu de Leví", "De la casa de Aarón", "De la tribu de Benjamín"], "respuesta": "De la casa de David" },
+        { "pregunta": "¿Quién anunció a María que su hijo heredaría el trono de David?", "opciones": ["El ángel Gabriel", "El ángel Miguel", "El profeta Simeón", "Juan el Bautista"], "respuesta": "El ángel Gabriel" },
+        { "pregunta": "¿Quién preparó el camino para la llegada de Jesús?", "opciones": ["Juan el Bautista", "Pedro", "Santiago", "Andrés"], "respuesta": "Juan el Bautista" },
+        { "pregunta": "¿Qué reyes magos llegaron a adorar a Jesús recién nacido?", "opciones": ["Melchor, Gaspar y Baltasar", "Herodes, César y Augusto", "Pedro, Juan y Santiago", "Natán, Zacarías y Elías"], "respuesta": "Melchor, Gaspar y Baltasar" },
+        { "pregunta": "¿Qué regalo ofreció Melchor?", "opciones": ["Oro", "Incienso", "Mirra", "Plata"], "respuesta": "Oro" },
+        { "pregunta": "¿Qué señal anunció el ángel a los pastores?", "opciones": ["Un niño envuelto en pañales y acostado en un pesebre", "Una estrella brillante", "Un cordero junto a una cruz", "Un ángel con trompeta"], "respuesta": "Un niño envuelto en pañales y acostado en un pesebre" }
+      ],
+      "2": [
+        { "pregunta": "¿Qué ángel anunció la buena noticia a los pastores?", "opciones": ["Un ángel del Señor", "Gabriel", "Miguel", "Rafael"], "respuesta": "Un ángel del Señor" },
+        { "pregunta": "¿Qué personaje reconoció a Jesús como Mesías en el templo?", "opciones": ["Simeón", "José de Arimatea", "Nicodemo", "Zacarías"], "respuesta": "Simeón" },
+        { "pregunta": "¿Qué profetisa habló de Jesús en el templo?", "opciones": ["Ana", "Elisabet", "Débora", "Marta"], "respuesta": "Ana" },
+        { "pregunta": "¿Qué fiesta recuerda la manifestación de Jesús a los pueblos?", "opciones": ["La Epifanía", "La Ascensión", "La Transfiguración", "La Asunción"], "respuesta": "La Epifanía" },
+        { "pregunta": "¿Qué estrella guió a los magos hasta Jesús?", "opciones": ["La estrella de Belén", "La estrella de David", "La estrella de Jacob", "La estrella de Judá"], "respuesta": "La estrella de Belén" },
+        { "pregunta": "¿Qué oficio tenía José, padre adoptivo de Jesús?", "opciones": ["Carpintero", "Pastor", "Pescador", "Escriba"], "respuesta": "Carpintero" },
+        { "pregunta": "¿Qué rey intentó matar a Jesús siendo niño?", "opciones": ["Herodes", "César Augusto", "Pilato", "Felipe"], "respuesta": "Herodes" },
+        { "pregunta": "¿A dónde huyó la Sagrada Familia para escapar de Herodes?", "opciones": ["Egipto", "Siria", "Galilea", "Babilonia"], "respuesta": "Egipto" },
+        { "pregunta": "¿En qué evangelio se narra la visita de los magos?", "opciones": ["Mateo", "Marcos", "Lucas", "Juan"], "respuesta": "Mateo" },
+        { "pregunta": "¿Qué animal tradicionalmente se representa junto al pesebre?", "opciones": ["Buey", "León", "Oveja", "Caballo"], "respuesta": "Buey" }
+      ],
+      "3": [
+        { "pregunta": "¿Qué emperador ordenó el censo que llevó a María y José a Belén?", "opciones": ["César Augusto", "Tiberio", "Claudio", "Nerón"], "respuesta": "César Augusto" },
+        { "pregunta": "¿En qué evangelio se relata la Anunciación a María?", "opciones": ["Lucas", "Mateo", "Juan", "Marcos"], "respuesta": "Lucas" },
+        { "pregunta": "¿Qué significado tiene el regalo de incienso a Jesús?", "opciones": ["Su divinidad", "Su realeza", "Su pasión", "Su pobreza"], "respuesta": "Su divinidad" },
+        { "pregunta": "¿Qué significado tiene el regalo de mirra a Jesús?", "opciones": ["Su futura muerte", "Su realeza", "Su divinidad", "Su resurrección"], "respuesta": "Su futura muerte" },
+        { "pregunta": "¿Qué significado tiene el regalo de oro a Jesús?", "opciones": ["Su realeza", "Su divinidad", "Su pobreza", "Su resurrección"], "respuesta": "Su realeza" },
+        { "pregunta": "¿Qué pastor fue llamado por los ángeles a adorar a Jesús?", "opciones": ["No se menciona el nombre", "David", "Jacob", "Isaac"], "respuesta": "No se menciona el nombre" }
+      ],
+      "4": [
+        { "pregunta": "¿En qué fiesta judía nació Jesús según la tradición?", "opciones": ["No se especifica", "Pascua", "Tabernáculos", "Pentecostés"], "respuesta": "No se especifica" },
+        { "pregunta": "¿Qué salmo menciona que el Mesías reinará sobre toda la tierra?", "opciones": ["Salmo 72", "Salmo 23", "Salmo 51", "Salmo 100"], "respuesta": "Salmo 72" },
+        { "pregunta": "¿Quién mandó empadronar todo el imperio romano?", "opciones": ["César Augusto", "Tiberio", "Claudio", "Nerón"], "respuesta": "César Augusto" },
+        { "pregunta": "¿En qué siglo nació Jesús aproximadamente?", "opciones": ["Siglo I a.C.", "Siglo I d.C.", "Siglo II d.C.", "Siglo III d.C."], "respuesta": "Siglo I a.C." },
+        { "pregunta": "¿Qué otro nombre significa Cristo?", "opciones": ["Ungido", "Salvador", "Redentor", "Señor"], "respuesta": "Ungido" },
+        { "pregunta": "¿Qué significa Jesús?", "opciones": ["Dios salva", "Príncipe de paz", "Rey de justicia", "Dios con nosotros"], "respuesta": "Dios salva" }
+      ],
+      "5": [
+        { "pregunta": "¿Qué profecía de Miqueas habla de Belén como lugar del nacimiento del Mesías?", "opciones": ["Miqueas 5,1", "Miqueas 6,8", "Miqueas 4,2", "Miqueas 7,7"], "respuesta": "Miqueas 5,1" },
+        { "pregunta": "¿Qué título recibió Jesús en el anuncio del ángel a María?", "opciones": ["Hijo del Altísimo", "Maestro", "Rabí", "Mesías"], "respuesta": "Hijo del Altísimo" },
+        { "pregunta": "¿Qué animal acompañó a los pastores al pesebre según la tradición?", "opciones": ["Ovejas", "Camellos", "Burros", "Caballos"], "respuesta": "Ovejas" },
+        { "pregunta": "¿Quiénes fueron los primeros en recibir la noticia del nacimiento de Jesús?", "opciones": ["Los pastores", "Los magos", "Los sacerdotes", "Los escribas"], "respuesta": "Los pastores" },
+        { "pregunta": "¿Qué ángel se aparece en sueños a José para proteger a Jesús?", "opciones": ["El ángel del Señor", "Gabriel", "Miguel", "Rafael"], "respuesta": "El ángel del Señor" },
+        { "pregunta": "¿Qué nombre ordenó el ángel dar al hijo de María?", "opciones": ["Jesús", "Emanuel", "Mesías", "Cristo"], "respuesta": "Jesús" }
 
-           ],
-    "2": [
-
-          { "pregunta": "¿Quién fue el profeta que habló del 'Emanuel'?", "opciones": ["Isaías", "Jeremías", "Elías", "Oseas"], "respuesta": "Isaías" },
-          { "pregunta": "¿Qué rey fue conocido por encontrar el libro de la Ley y renovar la alianza?", "opciones": ["Josías", "Salomón", "Saúl", "David"], "respuesta": "Josías" },
-          { "pregunta": "¿Quién fue el profeta que animó al pueblo durante el exilio en Babilonia?", "opciones": ["Ezequiel", "Elías", "Moisés", "Samuel"], "respuesta": "Ezequiel" },
-          { "pregunta": "¿Quién fue el profeta que predijo la venida de Juan el Bautista?", "opciones": ["Isaías", "Daniel", "Jeremías", "Eliseo"], "respuesta": "Isaías" },
-          { "pregunta": "¿A qué rey le escribió el profeta Isaías durante el asedio de Jerusalén?", "opciones": ["Ezequías", "Josías", "David", "Saúl"], "respuesta": "Ezequías" },
-          { "pregunta": "¿Quién fue el apóstol que caminó sobre el agua hacia Jesús?", "opciones": ["Pedro", "Juan", "Andrés", "Felipe"], "respuesta": "Pedro" },
-          { "pregunta": "¿Cuál apóstol dudó de la resurrección de Jesús hasta ver sus heridas?", "opciones": ["Tomás", "Mateo", "Bartolomé", "Simón"], "respuesta": "Tomás" },
-          { "pregunta": "¿En qué monte ocurrió la Transfiguración de Jesús?", "opciones": ["Tabor", "Oliveto", "Sinaí", "Moria"], "respuesta": "Tabor" },
-          { "pregunta": "¿Qué apóstol era hermano de Juan?", "opciones": ["Santiago", "Mateo", "Simón", "Bartolomé"], "respuesta": "Santiago" },
-          { "pregunta": "¿A quién le dijo Jesús: 'Sígueme, y te haré pescador de hombres'?", "opciones": ["Pedro y Andrés", "Mateo y Tomás", "Felipe y Bartolomé", "Santiago y Juan"], "respuesta": "Pedro y Andrés" },
-          { "pregunta": "¿A quién dijo Jesús: «No temas, sólo ten fe»?", "opciones": ["Jairo", "Pedro", "Santiago", "Tomás"], "respuesta": "Jairo" },
-          { "pregunta": "¿A quién dijo Jesús: «Tú eres el Cristo, el Hijo de Dios vivo» y lo alabó por esa confesión?", "opciones": ["Pedro", "Juan", "Tomás", "Felipe"], "respuesta": "Pedro" },
-          { "pregunta": "¿A quién dijo Jesús: «¿Por qué me llamas bueno?»", "opciones": ["El joven rico", "Pedro", "Nicodemo", "Simón el fariseo"], "respuesta": "El joven rico" },
-          { "pregunta": "¿A quién le dijo Jesús: «¿Dónde están los que te condenaban?»", "opciones": ["La mujer adúltera", "María Magdalena", "La hemorroísa", "La viuda"], "respuesta": "La mujer adúltera" },
-          { "pregunta": "¿A quién le dijo Jesús: «No he venido a llamar a justos, sino a pecadores»?", "opciones": ["A los fariseos", "A los discípulos", "A los escribas", "A la multitud"], "respuesta": "A los fariseos" }
-
-       ],
-    "3": [
-          { "pregunta": "¿Cuál de estos NO fue profeta mayor?", "opciones": ["Oseas", "Isaías", "Ezequiel", "Daniel"], "respuesta": "Oseas" },
-          { "pregunta": "¿Quién fue el profeta que restauró la fe en el Dios único en Israel durante un tiempo de idolatría?", "opciones": ["Elías", "Isaías", "Jeremías", "Ezequiel"], "respuesta": "Elías" },
-          { "pregunta": "¿Qué profeta tuvo la visión de un valle de huesos secos?", "opciones": ["Ezequiel", "Daniel", "Isaías", "Samuel"], "respuesta": "Ezequiel" },
-          { "pregunta": "¿Quién fue el apóstol que llevó a Natanael (Bartolomé) a Jesús?", "opciones": ["Felipe", "Tomás", "Mateo", "Andrés"], "respuesta": "Felipe" },
-          { "pregunta": "¿Qué apóstol fue llamado también 'Leví'?", "opciones": ["Mateo", "Simón", "Santiago", "Bartolomé"], "respuesta": "Mateo" },
-          { "pregunta": "¿Qué apóstol fue martirizado en la India según la tradición?", "opciones": ["Tomás", "Pedro", "Juan", "Mateo"], "respuesta": "Tomás" },
-          { "pregunta": "¿Quién fue el apóstol que preguntó: '¿Muéstranos al Padre?'", "opciones": ["Felipe", "Bartolomé", "Santiago", "Simón"], "respuesta": "Felipe" },
-          { "pregunta": "¿Cuál apóstol fue martirizado boca abajo en una cruz?", "opciones": ["Pedro", "Santiago", "Juan", "Andrés"], "respuesta": "Pedro" },
-          { "pregunta": "¿A quién le dijo Jesús: «¿También ustedes quieren irse?» cuando muchos discípulos se fueron?", "opciones": ["A los Doce", "A la multitud", "A los fariseos", "A los escribas"], "respuesta": "A los Doce" },
-          { "pregunta": "¿A quién le dijo Jesús: «Antes que cante el gallo, me habrás negado tres veces»?", "opciones": ["Pedro", "Juan", "Tomás", "Andrés"], "respuesta": "Pedro" },
-          { "pregunta": "¿A quién le dijo Jesús: «Hoy mismo me negarás tres veces»?", "opciones": ["Pedro", "Tomás", "Judas", "Felipe"], "respuesta": "Pedro" }
- 
-          ],
-    "4": [
-          { "pregunta": "¿Cuál de los profetas fue contemporáneo del rey Josías y predicó el arrepentimiento antes del exilio?", "opciones": ["Jeremías", "Isaías", "Elías", "Daniel"], "respuesta": "Jeremías" },
-          { "pregunta": "¿A qué profeta le ordenó Dios casarse con una mujer adúltera como signo profético?", "opciones": ["Oseas", "Ezequiel", "Isaías", "Miqueas"], "respuesta": "Oseas" },
-          { "pregunta": "¿Qué profeta tuvo que comer un rollo que sabía dulce como la miel?", "opciones": ["Ezequiel", "Jeremías", "Isaías", "Daniel"], "respuesta": "Ezequiel" },
-          { "pregunta": "¿Qué apóstol fue el primero en sufrir martirio?", "opciones": ["Santiago el Mayor", "Pedro", "Juan", "Andrés"], "respuesta": "Santiago el Mayor" },
-          { "pregunta": "¿A cuál apóstol se le atribuye haber predicado en Etiopía según la tradición?", "opciones": ["Bartolomé", "Felipe", "Judas Tadeo", "Simón"], "respuesta": "Bartolomé" },
-          { "pregunta": "¿Quién fue el apóstol que escribió la segunda carta a los Corintios?", "opciones": ["Pablo", "Pedro", "Juan", "Santiago"], "respuesta": "Pablo" },
-          { "pregunta": "¿A quién le dijo Jesús: «¿Quién es mi madre y quiénes son mis hermanos?»", "opciones": ["A la multitud", "A María y sus hermanos", "A los discípulos", "A los fariseos"], "respuesta": "A la multitud" },
-          { "pregunta": "¿A quién le dijo Jesús: «No sólo de pan vive el hombre»?", "opciones": ["Al diablo en el desierto", "A Pedro", "A Juan", "A la multitud"], "respuesta": "Al diablo en el desierto" },
-          { "pregunta": "¿A quién le dijo Jesús: «Padre, en tus manos encomiendo mi espíritu»?", "opciones": ["Al Padre", "A Pedro", "A María", "A Juan"], "respuesta": "Al Padre" }
-   
-     ],
-    "5": [
-          { "pregunta": "¿Cuál fue el rey de Judá que fue cegado y llevado cautivo a Babilonia?", "opciones": ["Sedequías", "Ezequías", "Josías", "Manasés"], "respuesta": "Sedequías" },
-          { "pregunta": "¿Qué profeta vio una visión de ruedas llenas de ojos?", "opciones": ["Ezequiel", "Daniel", "Isaías", "Jeremías"], "respuesta": "Ezequiel" },
-          { "pregunta": "¿Qué rey ofreció sacrificios en el altar, usurpando funciones sacerdotales, y fue castigado con lepra?", "opciones": ["Uzías", "Saúl", "Salomón", "Josías"], "respuesta": "Uzías" },
-          { "pregunta": "¿Qué apóstol evangelizó la región del Mar Negro según la tradición?", "opciones": ["Andrés", "Felipe", "Bartolomé", "Matías"], "respuesta": "Andrés" },
-          { "pregunta": "¿Quién fue el apóstol conocido por predicar en Armenia?", "opciones": ["Bartolomé", "Tomás", "Santiago", "Felipe"], "respuesta": "Bartolomé" },
-          { "pregunta": "¿Qué apóstol fue martirizado con una lanza?", "opciones": ["Tomás", "Simón", "Felipe", "Juan"], "respuesta": "Tomás" },
-          { "pregunta": "¿A quién le dijo Jesús: «Mujer, grande es tu fe. Que te suceda como deseas»?", "opciones": ["La mujer cananea", "María Magdalena", "Marta", "La hemorroísa"], "respuesta": "La mujer cananea" },
-          { "pregunta": "¿A quién le dijo Jesús: «Marta, sólo una cosa es necesaria»?", "opciones": ["Marta", "María Magdalena", "La samaritana", "La viuda de Naín"], "respuesta": "Marta" },
-          { "pregunta": "¿A quién le dijo Jesús: «Recobra la vista; tu fe te ha salvado»?", "opciones": ["Bartimeo", "El ciego de Siloé", "El paralítico", "Lázaro"], "respuesta": "Bartimeo" }
 
     ]
       }
 },
-    "2025-S32": {
-      "titulo": "Semana 32 – Resumen 2",
-      "descripcion": "¿Esta semana  Resumimos  las ultimas 3 semanas, atento, preguntas diversas pero sera muy fácil?",
+    "2025-S38": {
+      "titulo": "Semana 3 – Resumen gran Resumen",
+      "descripcion": "¿ preguntas diversas, pero sera muy fácil? si pretaste atención sera muy facil",
       "niveles": {
         "1": [
           { "pregunta": "¿A qué rey le construyó el profeta Natán el templo de Jerusalén?", "opciones": ["Salomón", "David", "Saúl", "Josías"], "respuesta": "Salomón" },
