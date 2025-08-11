@@ -225,8 +225,9 @@
         { "pregunta": "¿Qué oración mariana comienza con 'Bajo tu amparo'?", "opciones": ["Sub tuum praesidium", "Ave María", "Salve Regina", "Magníficat"], "respuesta": "Sub tuum praesidium" },
         { "pregunta": "¿Qué título mariano se menciona en Apocalipsis 12?", "opciones": ["Mujer vestida de sol", "Reina de los cielos", "Madre de la Iglesia", "Hija de Sión"], "respuesta": "Mujer vestida de sol" },
         { "pregunta": "¿Qué oración mariana fue compuesta en Fátima?", "opciones": ["Oh Jesús mío", "Salve Regina", "Ave María", "Bajo tu amparo"], "respuesta": "Oh Jesús mío" }
+ ]
       }
-},
+    },
     "2025-S37": {
       "titulo": "Semana 37 – Jesús, el esperado del pueblo de Israel",
       "descripcion": "¿Descubre las profecías y signos que anunciaron la venida de Jesús y su nacimiento como Mesías?",
