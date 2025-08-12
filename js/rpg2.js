@@ -429,7 +429,7 @@ function mostrarNivel() {
     `;
 
     limpiarTemporizadorPregunta();
-    reproducirSonido("start.mp3");
+    reproducirSonido("go.mp3");
     crearTemporizadorPregunta(
       25 + bonusTiempoMentor,
       () => {
