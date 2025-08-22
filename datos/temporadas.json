@@ -574,6 +574,96 @@
               "opcion_1": "Galileos",
               "opcion_2": "Herodianos",
               "opcion_3": "Saduceos"
+
+               }
+    ]
+  },
+  { 
+    "id": "T7",
+  "titulo": "María de la Merced: Madre y Liberadora",
+  "descripcion": "Pon a prueba tu conocimiento sobre la devoción a la Virgen María como Nuestra Señora de las Mercedes y su raíz bíblica.",
+  "fecha_inicio": "2025-09-20",
+  "fecha_fin": "2025-09-27",
+  "puntaje_maximo": 10,
+  "umbral_coleccionable": 9,
+  "coleccionable": {
+    "nombre": "Temporada 7 – Virgen de las Mercedes",
+    "imagen_a": "assets/img/coleccionables/temporada7_a.png",
+    "imagen_b": "assets/img/coleccionables/generica_b.png",
+    "imagen_c": "assets/img/coleccionables/generica_c.png"
+  },
+  "preguntas": [
+    {
+      "pregunta": "¿Qué significa el título 'de las Mercedes' atribuido a la Virgen María?",
+      "respuesta": "De las misericordias y liberaciones",
+      "opcion_1": "De las riquezas y coronas",
+      "opcion_2": "De las montañas y valles",
+      "opcion_3": "De las estrellas y cielos"
+    },
+    {
+      "pregunta": "¿Qué orden religiosa difundió la devoción a la Virgen de las Mercedes?",
+      "respuesta": "La Orden de la Merced",
+      "opcion_1": "La Orden Franciscana",
+      "opcion_2": "La Orden Carmelita",
+      "opcion_3": "La Orden Benedictina"
+    },
+    {
+      "pregunta": "¿Con qué misión nació la Orden de la Merced en el siglo XIII?",
+      "respuesta": "Redimir a los cautivos",
+      "opcion_1": "Construir templos",
+      "opcion_2": "Predicar en Roma",
+      "opcion_3": "Defender Jerusalén"
+    },
+    {
+      "pregunta": "¿Qué país celebra a la Virgen de las Mercedes como patrona nacional?",
+      "respuesta": "República Dominicana",
+      "opcion_1": "México",
+      "opcion_2": "España",
+      "opcion_3": "Perú"
+    },
+    {
+      "pregunta": "¿Qué símbolo suele acompañar la imagen de la Virgen de las Mercedes?",
+      "respuesta": "Las cadenas rotas",
+      "opcion_1": "La paloma blanca",
+      "opcion_2": "La zarza ardiente",
+      "opcion_3": "El arca de la alianza"
+    },
+    {
+      "pregunta": "¿Qué acontecimiento bíblico inspira la advocación como protectora de cautivos?",
+      "respuesta": "La liberación de Israel de Egipto",
+      "opcion_1": "El paso de Elías en el Carmelo",
+      "opcion_2": "La victoria de David sobre Goliat",
+      "opcion_3": "El bautismo de Jesús en el Jordán"
+    },
+    {
+      "pregunta": "¿Qué virtud mariana resalta más la devoción de las Mercedes?",
+      "respuesta": "La misericordia",
+      "opcion_1": "La sabiduría",
+      "opcion_2": "La justicia",
+      "opcion_3": "La prudencia"
+    },
+    {
+      "pregunta": "¿En qué mes se celebra la fiesta de Nuestra Señora de las Mercedes?",
+      "respuesta": "Septiembre",
+      "opcion_1": "Agosto",
+      "opcion_2": "Octubre",
+      "opcion_3": "Diciembre"
+    },
+    {
+      "pregunta": "¿Qué título mariano comparte sentido con 'Mercedes'?",
+      "respuesta": "Virgen de la Misericordia",
+      "opcion_1": "Virgen del Rosario",
+      "opcion_2": "Virgen del Carmen",
+      "opcion_3": "Virgen de la Esperanza"
+    },
+    {
+      "pregunta": "¿Qué pasaje bíblico refleja mejor la intercesión de María por los necesitados?",
+      "respuesta": "Las bodas de Caná",
+      "opcion_1": "La multiplicación de los panes",
+      "opcion_2": "El sermón de la montaña",
+      "opcion_3": "La resurrección de Lázaro"
+
+              
             }
     ]
   }
