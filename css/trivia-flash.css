@@ -52,20 +52,12 @@
   font-weight: bold;
   cursor: pointer;
   font-size: 1.06em;
-  transition: background 0.12s, border-color 0.12s;
+  transition: background 0.12s, border-color 0.12s, transform 0.06s;
 }
-.trivia-opcion-btn:hover {
-  background: #aaf8dc;
-  border-color: #51c4b7;
-}
-.trivia-opcion-btn.correcta {
-  background: #9aedb8;
-  border-color: #45c490;
-}
-.trivia-opcion-btn.incorrecta {
-  background: #f5b6a0;
-  border-color: #e76f51;
-}
+.trivia-opcion-btn:hover { background: #aaf8dc; border-color: #51c4b7; }
+.trivia-opcion-btn:disabled { opacity: 0.7; cursor: default; }
+.trivia-opcion-btn.correcta { background: #9aedb8; border-color: #45c490; }
+.trivia-opcion-btn.incorrecta { background: #f5b6a0; border-color: #e76f51; }
 
 /* ============ RESULTADO ============ */
 .trivia-flash-resultado-msg {
@@ -140,9 +132,10 @@
   100% { transform: scale(1); }
 }
 
-/* ============ PROGRESO DE 5 PREGUNTAS ============ */
+/* ============ PROGRESO (5–12 PREGUNTAS) ============ */
 .flash-progreso {
   display: flex;
+  flex-wrap: wrap;         /* soporta 12 en pantallas pequeñas */
   gap: .3rem;
   margin: .6rem 0 1rem;
 }
@@ -154,6 +147,20 @@
   box-shadow: inset 0 1px 2px rgba(0,0,0,.05);
 }
 .flash-progreso .seg.lleno { background: #36b37e; }
+
+/* ============ CHIP DE RACHA EN JUEGO ============ */
+.flash-racha {
+  display: inline-block;
+  background: #eaf8f4;
+  border: 1px solid #b9e8db;
+  color: #0d6b5f;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: .25rem .6rem;
+  font-size: .9rem;
+  margin: .2rem auto .5rem;
+  width: max-content;
+}
 
 /* ============ BANNER SUPERIOR (DÍA / CICLO) ============ */
 .flash-banner {
@@ -181,6 +188,7 @@
 }
 .flash-banner.inactivo .pill-dia { background: #e23d3d; }
 .flash-banner .pill-ciclo { background: #2564cf; }
+.flash-banner .txt { font-weight: 600; }
 
 /* ============ RACHA SEMANAL (L–S) ============ */
 .resumen-semanal { margin: .8rem 0 1.2rem; }
@@ -243,7 +251,7 @@
 .flash-compartir-btn.flash-bounce { animation: popin .6s ease; }
 @keyframes popin {
   0% { transform: scale(.6); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1); opacity: 1); }
 }
 
 /* ============ RESPONSIVO ============ */
@@ -260,4 +268,3 @@
     bottom: 0.7em;
   }
 }
-
