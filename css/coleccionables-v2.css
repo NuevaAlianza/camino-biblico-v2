@@ -207,3 +207,88 @@ body {
 .categorias-contenedor::-webkit-scrollbar {
   display: none;             /* Oculta scrollbar en Chrome/Safari */
 }
+
+/* === utilidades de vista === */
+.oculto { display: none !important; }
+
+.fade-in { animation: fadeIn .35s ease; }
+.fade-out { animation: fadeOut .25s ease; }
+@keyframes fadeIn { from {opacity:0; transform: scale(.98);} to {opacity:1; transform: scale(1);} }
+@keyframes fadeOut { from {opacity:1; transform: scale(1);} to {opacity:0; transform: scale(.98);} }
+
+/* === encabezados === */
+.coleccionables-v2 h1 {
+  font-family: 'Cinzel', serif;
+  color: #a47c1c;
+  text-align: center;
+  margin: .2rem 0 1rem;
+}
+#vista-personajes h2 {
+  font-family: 'Cinzel', serif;
+  color: #a47c1c;
+  text-align: center;
+  margin: .6rem 0 0;
+}
+
+/* === botón volver === */
+#volver-resumen {
+  display: inline-block;
+  margin: .5rem 0 0 .2rem;
+  padding: .45rem .9rem;
+  border-radius: 12px;
+  border: 2px solid #ffe5a2;
+  background: #fffdf9;
+  color: #815c14;
+  font-weight: 600;
+  box-shadow: var(--sombra);
+  cursor: pointer;
+}
+#volver-resumen:hover { transform: translateY(-1px); }
+
+/* === tarjetas del resumen de categorías === */
+#resumen-categorias {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1rem;
+  padding: 0.6rem 0.2rem 1.2rem;
+}
+.card-categoria {
+  border-radius: 16px;
+  background: var(--color-fondo-tarjeta);
+  box-shadow: var(--sombra);
+  padding: 1rem 1rem 1.2rem;
+  position: relative;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .18s ease;
+}
+.card-categoria:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(191,164,83,.16); }
+
+.card-categoria h2 {
+  margin: 0 0 .4rem 0;
+  font-size: 1.05rem;
+  color: #734f0f;
+  font-weight: 800;
+}
+.card-categoria p {
+  margin: 0 0 .7rem 0;
+  color: #6b6b6b;
+  font-size: .95rem;
+}
+
+.progreso {
+  width: 100%;
+  height: 12px;
+  background: #eee5d1;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: inset 0 1px 2px #0000000e;
+}
+.progreso-barra {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--color-primario) 55%, var(--color-secundario) 100%);
+  border-radius: 10px;
+  transition: width .35s cubic-bezier(.4,1.4,.48,1);
+}
+
