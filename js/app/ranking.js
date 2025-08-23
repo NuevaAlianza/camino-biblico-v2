@@ -49,8 +49,8 @@ const toastEl = document.getElementById("toast");
 // ====== ESTADO ======
 let sb = null;
 let user = null;
-let mode = "wordle"; // "wordle" | "global"
-let scope = "global"; // "global" | "parroquia" | "ciudad"
+let mode = "wordle";        // "wordle" | "global"
+let scope = "global";       // "global" | "parroquia" | "subgrupo"
 let valor = null;
 let limit = 200;
 let dataRows = [];
@@ -73,14 +73,14 @@ async function ensureAuth() {
 
   // Tabs
   tabWordle.addEventListener("click", ()=> switchTab("wordle"));
-  tabGlobal.addEventListener("click", ()=> switchTab("global"));
+  tabGlobal .addEventListener("click", ()=> switchTab("global"));
 
   // Scope
   segBtns.forEach(b=>{
     b.addEventListener("click", ()=>{
       segBtns.forEach(x=>x.classList.remove("active"));
       b.classList.add("active");
-      scope = b.dataset.scope;
+      scope = b.dataset.scope;                 // ahora puede ser 'subgrupo'
       inputValor.disabled = (scope === "global");
       fetchAndRender(true);
     });
@@ -111,7 +111,8 @@ async function fetchAndRender(reset=false){
   showLoading();
   try{
     if (mode === "wordle"){
-      const { data, error } = await sb.rpc("get_wordle_leaderboard", {
+      // 👉 usa la nueva función v2 con 'subgrupo' y nombres
+      const { data, error } = await sb.rpc("get_wordle_leaderboard_v2", {
         p_semana: domingoISO,
         p_scope: scope,
         p_valor: scope==="global" ? null : (valor || null),
@@ -128,23 +129,20 @@ async function fetchAndRender(reset=false){
         <div class="cell center">Aciertos</div>
         <div class="cell center">Intentos prom.</div>`;
 
-      // Podio
+      // Podio + "Tú"
       renderPodio(dataRows.slice(0,3));
-
-      // Tarjeta "Tú"
       await renderYouCardWordle(dataRows);
     } else {
-      // Global (XP) — solo si existe la vista
-      const { data, error } = await sb
-        .from("resumen_global_v2")
-        .select("*")
-        .eq("semana_id", domingoISO)
-        .order("xp_total_semana", { ascending: false })
-        .limit(limit);
+      // 👉 usa el nuevo RPC global con nombres
+      const { data, error } = await sb.rpc("get_global_leaderboard", {
+        p_semana: domingoISO,
+        p_scope: scope,
+        p_valor: scope==="global" ? null : (valor || null),
+        p_limit: limit
+      });
       if (error) {
-        // Si no existe, ocultamos la pestaña y volvemos a Wordle
         tabGlobal.classList.add("hidden");
-        toast("Vista 'resumen_global_v2' no encontrada. Pestaña Global oculta.");
+        toast("Global no disponible (vista/resumen no encontrado).");
         switchTab("wordle");
         return;
       }
@@ -178,7 +176,7 @@ function renderPodio(top3){
     <div class="p">
       <div class="rank">#${r.pos}</div>
       <div class="name">${escapeHTML(r.nombre || "Jugador")}</div>
-      <div class="meta">${escapeHTML(r.parroquia||"—")} • ${escapeHTML(r.ciudad||"—")}</div>
+      <div class="meta">${escapeHTML(r.parroquia||"—")} • ${escapeHTML(r.subgrupo||"—")}</div>
       <div class="num">${r.wrp_total}</div>
       <div class="meta">WRP</div>
     </div>
@@ -200,7 +198,7 @@ function renderTable(){
           <div class="cell center">#${r.pos ?? (idx+1)}</div>
           <div>
             <div><strong>${escapeHTML(r.nombre||"Jugador")}</strong>${isYou?' <span class="tag">Tú</span>':''}</div>
-            <div class="muted tiny">${escapeHTML(r.parroquia||"—")} • ${escapeHTML(r.ciudad||"—")}</div>
+            <div class="muted tiny">${escapeHTML(r.parroquia||"—")} • ${escapeHTML(r.subgrupo||"—")}</div>
           </div>
           <div class="cell center"><strong>${r.wrp_total}</strong></div>
           <div class="cell center">${r.aciertos}</div>
@@ -209,8 +207,11 @@ function renderTable(){
     } else {
       return `
         <div class="row ${isYou?"you":""}">
-          <div class="cell center">#${idx+1}</div>
-          <div><div><strong>${escapeHTML(r.user_id)}</strong>${isYou?' <span class="tag">Tú</span>':''}</div></div>
+          <div class="cell center">#${r.pos ?? (idx+1)}</div>
+          <div>
+            <div><strong>${escapeHTML(r.nombre||"Jugador")}</strong>${isYou?' <span class="tag">Tú</span>':''}</div>
+            <div class="muted tiny">${escapeHTML(r.parroquia||"—")} • ${escapeHTML(r.subgrupo||"—")}</div>
+          </div>
           <div class="cell center"><strong>${r.xp_total_semana}</strong></div>
           <div class="cell center">${r.wrp_wordle_semana ?? "—"}</div>
           <div class="cell center">${Number(r.wordle_prom_intentos||0).toFixed(2)}</div>
@@ -248,7 +249,7 @@ function renderYouCardGlobal(list){
   const idx = list.findIndex(r => r.user_id === user.id);
   if (idx >= 0){
     const row = list[idx];
-    youRankEl.textContent = `#${idx+1} / ${list.length}`;
+    youRankEl.textContent = `#${row.pos} / ${list.length}`;
     youWrpEl.textContent  = row.wrp_wordle_semana ?? "0";
     youXpEl.textContent   = row.xp_total_semana ?? "0";
   } else {
