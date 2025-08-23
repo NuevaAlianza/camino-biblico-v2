@@ -1,0 +1,39 @@
+:root{ --ok:#16a34a; --mid:#eab308; --no:#9ca3af; --bg:#f8fafc; --card:#fff; --ink:#0f172a; }
+*{ box-sizing:border-box; }
+body{ margin:0; font-family:system-ui,Segoe UI,Arial; background:var(--bg); color:var(--ink); }
+.app{ max-width:420px; margin:24px auto; padding:0 12px; }
+.card{ background:var(--card); border-radius:16px; box-shadow:0 6px 20px rgba(0,0,0,.08); padding:14px 16px; }
+.header{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px; }
+.header h1{ margin:0 0 4px; font-size:20px; }
+.header p{ margin:0; color:#475569; font-size:13px; }
+.stats{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; text-align:center; }
+.stats small{ display:block; color:#475569; font-size:11px; }
+.stats strong{ font-size:18px; }
+
+.grid{ display:grid; gap:8px; margin-top:10px; }
+.row{ display:grid; grid-template-columns:repeat(var(--n,5),1fr); gap:8px; }
+.tile{ width:56px; height:56px; border-radius:12px; border:2px solid #e5e7eb; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:20px; background:#fff; position:relative; }
+.tile.ok{ background:var(--ok); border-color:var(--ok); color:#fff; }
+.tile.mid{ background:var(--mid); border-color:var(--mid); color:#fff; }
+.tile.no{ background:var(--no); border-color:var(--no); color:#fff; }
+.tile .icon{ position:absolute; bottom:4px; right:6px; font-size:10px; opacity:.9; }
+
+.pista{ display:flex; align-items:center; justify-content:space-between; margin-top:10px; }
+.muted{ color:#64748b; }
+.primary{ background:#0f172a; color:#fff; border:none; padding:8px 12px; border-radius:10px; cursor:pointer; }
+
+.teclado{ margin-top:10px; display:grid; gap:6px; }
+.krow{ display:flex; gap:6px; justify-content:center; }
+.key{ min-width:34px; padding:10px 8px; border-radius:10px; background:#e5e7eb; text-align:center; font-weight:700; cursor:pointer; user-select:none; }
+.key.ok{ background:var(--ok); color:#fff; }
+.key.mid{ background:var(--mid); color:#fff; }
+.key.no{ background:var(--no); color:#fff; }
+.key.action{ min-width:60px; }
+
+.footer{ display:flex; justify-content:space-between; margin:12px 2px; }
+
+.modal{ position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,.35); }
+.modal.hidden{ display:none; }
+.modal-card{ background:#fff; border-radius:16px; padding:18px; width:min(90vw, 380px); box-shadow:0 10px 30px rgba(0,0,0,.25); }
+.modal-card h2{ margin:0 0 8px; }
+.modal-actions{ margin-top:12px; display:flex; justify-content:flex-end; gap:8px; }
