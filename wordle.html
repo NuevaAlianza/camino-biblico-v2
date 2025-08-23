@@ -35,7 +35,7 @@
       <button id="btn-catequesis" class="primary">Catequesis del domingo</button>
     </footer>
 
-    <!-- Modal resultado -->
+    <!-- Modal -->
     <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
       <div class="modal-card">
         <h2 id="modal-title">Resultado</h2>
@@ -48,9 +48,9 @@
   </main>
 
   <!-- 1) SDK UMD -->
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-  <!-- 2) Tu cliente global con URL/KEY reales -->
-  <script src="js/supabase.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <!-- 2) Tu cliente (raíz, como en Trivia) -->
+  <script src="supabase.js"></script>
   <!-- 3) Juego -->
   <script src="js/wordle.js"></script>
 </body>
