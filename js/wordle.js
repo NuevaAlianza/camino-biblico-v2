@@ -3,30 +3,36 @@ const TZ = "America/Santo_Domingo";
 const MAX_INTENTOS = 6;
 const DATA_URL = "datos/wordle-semanas.json";
 
-const SUPABASE_URL = window.__SUPABASE_URL__;
-const SUPABASE_ANON = window.__SUPABASE_ANON__;
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+// Usa el cliente global creado en js/supabase.js
+const sb = window.supabase;
 
-// === UTILIDADES FECHA/TZ ===
+// ====== FECHAS (TZ RD) ======
 const hoyDO = () => new Date(new Date().toLocaleString("en-US", { timeZone: TZ }));
-const isoDate = d => new Date(d.getTime() - d.getTimezoneOffset()*60000).toISOString().slice(0,10); // cuidado: usamos d ya en TZ
+
+function isoDateDO(d) {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: TZ, year: "numeric", month: "2-digit", day: "2-digit"
+  }).formatToParts(d).reduce((acc,p)=> (acc[p.type]=p.value, acc), {});
+  return `${parts.year}-${parts.month}-${parts.day}`;
+}
 
 function domingoDe(d) {
-  const x = new Date(d);
+  const x = hoyDO();
+  x.setFullYear(d.getFullYear(), d.getMonth(), d.getDate());
   x.setHours(0,0,0,0);
-  const dow = x.getDay(); // 0 = domingo
+  const dow = x.getDay(); // 0=Dom
   x.setDate(x.getDate() - dow);
   return x;
 }
 
-// === NORMALIZACIÓN ES ===
+// ====== NORMALIZACIÓN (ES) ======
 const normalize = s => (s||"")
   .toUpperCase()
   .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
   .replace(/Á/g,"A").replace(/É/g,"E").replace(/Í/g,"I").replace(/Ó/g,"O").replace(/Ú/g,"U")
   .replace(/Ü/g,"U");
 
-// === ESTADO UI ===
+// ====== UI refs ======
 const gridEl = document.getElementById("grid");
 const tecladoEl = document.getElementById("teclado");
 const temaEl = document.getElementById("tema");
@@ -39,15 +45,15 @@ const modal = document.getElementById("modal");
 const resumenEl = document.getElementById("resumen");
 document.getElementById("cerrar").onclick = () => modal.classList.add("hidden");
 
+// ====== Estado ======
 let solucion = "";
 let longitud = 5;
 let intentoIdx = 0;
 let terminado = false;
 let pistasUsadas = 0;
 let hardMode = false; // opcional
-let keyState = {}; // mejor estado por letra
+let keyState = {};
 let startTime = Date.now();
-
 const filasRef = [];
 const filasTeclado = [
   "Q W E R T Y U I O P".split(" "),
@@ -55,22 +61,34 @@ const filasTeclado = [
   ["ENTER", ..."Z X C V B N M".split(" "), "BORRAR"]
 ];
 
-// === CARGA JSON Y SETUP ===
+// ====== Auth (anónimo) ======
+async function ensureAuth() {
+  const { data: g } = await sb.auth.getUser();
+  if (!g?.user) {
+    const { error } = await sb.auth.signInAnonymously();
+    if (error) {
+      console.error("Auth anónima falló:", error);
+      alert("No se pudo iniciar sesión (anónimo). Revisa Auth → Anonymous en Supabase.");
+    }
+  }
+}
+
+// ====== Init ======
 (async function init(){
-  // Datos del día
+  await ensureAuth();
+
   const cfg = await fetch(DATA_URL, { cache: "no-store" }).then(r => r.json());
   const hoy = hoyDO();
   const semana = pickSemana(cfg.semanas, hoy);
   const item = semana.dias.find(d => d.dow === hoy.getDay()) || semana.dias[0];
 
-  // Meta UI
   temaEl.textContent = `${semana.tema}`;
   citaEl.textContent = `${item.cita}`;
   solucion = normalize(item.palabra);
   longitud = solucion.length;
   gridEl.style.setProperty("--n", longitud);
 
-  // Construir grilla
+  // Grilla
   for (let r=0; r<MAX_INTENTOS; r++){
     const row = document.createElement("div");
     row.className = "row";
@@ -94,13 +112,13 @@ const filasTeclado = [
     btnPista.disabled = true;
   });
 
-  // Racha (local, display)
+  // Racha (display local)
   const last = localStorage.getItem("wb:last");
   const prev = localStorage.getItem("wb:streak") || "0";
-  const todayISO = isoDate(hoy);
+  const todayISO = isoDateDO(hoy);
   if (last && last !== todayISO) {
-    const y = new Date(last); const diff = (hoy - y) / 86400000;
-    // si ayer jugó, mantiene racha; si se saltó un día, resetea
+    const y = new Date(last);
+    const diff = (hoy - y) / 86400000;
     const newStreak = diff <= 2 ? (parseInt(prev,10) || 0) : 0;
     localStorage.setItem("wb:streak", String(newStreak));
   }
@@ -110,16 +128,16 @@ const filasTeclado = [
   window.addEventListener("keydown", onKey);
 })();
 
+// ====== Semana activa desde JSON ======
 function pickSemana(semanas, d){
-  // Prioriza semana cuyo domingo == domingo de hoy; si no, la más reciente <= ese domingo
-  const domHoy = isoDate(domingoDe(d));
+  const domHoy = isoDateDO(domingoDe(d));
   const exact = semanas.find(s => s.domingo === domHoy);
   if (exact) return exact;
   const past = [...semanas].filter(s => s.domingo <= domHoy).sort((a,b)=> a.domingo < b.domingo ? 1 : -1);
   return past[0] || semanas[0];
 }
 
-// === TECLADO ===
+// ====== Teclado ======
 function renderTeclado(){
   tecladoEl.innerHTML = "";
   filasTeclado.forEach(row=>{
@@ -147,9 +165,9 @@ function pressKey(k){
   if (terminado) return;
   const row = filasRef[intentoIdx];
   const tiles = [...row.children];
-  let word = tiles.map(t => t.textContent).join("");
 
   if (k==="ENTER"){
+    const word = tiles.map(t => t.textContent).join("");
     if (word.length !== longitud) return;
     evaluar(word);
     return;
@@ -170,7 +188,7 @@ function pressKey(k){
   }
 }
 
-// === EVALUACIÓN (dos pasadas) ===
+// ====== Evaluación ======
 function evaluar(guessRaw){
   const guess = normalize(guessRaw);
   const res = Array(longitud).fill("no");
@@ -179,10 +197,7 @@ function evaluar(guessRaw){
 
   // Verdes
   for (let i=0;i<longitud;i++){
-    if (guess[i] === solucion[i]){
-      res[i] = "ok";
-      count[guess[i]]--;
-    }
+    if (guess[i] === solucion[i]){ res[i] = "ok"; count[guess[i]]--; }
   }
   // Amarillos
   for (let i=0;i<longitud;i++){
@@ -191,7 +206,6 @@ function evaluar(guessRaw){
     if ((count[ch]||0) > 0){ res[i] = "mid"; count[ch]--; }
   }
 
-  // Pintar fila
   const row = filasRef[intentoIdx];
   const tiles = [...row.children];
   for (let i=0;i<longitud;i++){
@@ -199,14 +213,12 @@ function evaluar(guessRaw){
     tiles[i].innerHTML = `${guess[i] || ""}<span class="icon">${res[i]==="ok"?"✓":res[i]==="mid"?"•":"×"}</span>`;
   }
 
-  // Teclado: mejor estado
   for (let i=0;i<longitud;i++){
     const ch = guess[i];
     keyState[ch] = bestState(keyState[ch], res[i]);
   }
   syncKeyColors();
 
-  // Pista disponible tras 2 intentos
   if (intentoIdx >= 1 && pistasUsadas === 0){
     pistaEl.textContent = "Pista disponible";
     btnPista.disabled = false;
@@ -250,28 +262,26 @@ function gridToJSON(){
   return rows;
 }
 
-// === FIN DE PARTIDA → RPC ===
+// ====== Finalizar → RPC ======
 async function terminar(acierto){
   terminado = true;
   window.removeEventListener("keydown", onKey);
 
   const hoy = hoyDO();
-  const fechaISO = isoDate(hoy);
-  const domISO = isoDate(domingoDe(hoy));
+  const fechaISO = isoDateDO(hoy);
   const esDomingo = hoy.getDay() === 0;
 
-  // XP simple local solo para mostrar antes del RPC (el oficial viene del server)
+  // Preview XP local (visual)
   let xpPreview = 0;
   if (acierto){ xpPreview = 10 + (intentoIdx <= 3 ? 5 : 0) + Math.max(0, 6 - intentoIdx); }
   xpEl.textContent = `+${xpPreview}`;
 
-  // Local streak visual
+  // Racha local
   localStorage.setItem("wb:last", fechaISO);
   const streak = parseInt(localStorage.getItem("wb:streak")||"0",10);
   localStorage.setItem("wb:streak", String(acierto ? (streak+1) : 0));
   rachaEl.textContent = localStorage.getItem("wb:streak");
 
-  // RPC
   const payload = {
     p_fecha: fechaISO,
     p_palabra: solucion,
@@ -289,13 +299,13 @@ async function terminar(acierto){
   try{
     const { data, error } = await sb.rpc("registrar_wordle_jugada", payload);
     if (error) throw error;
-    // Muestra WRP y XP oficiales devueltos por el server
     const wrp = data.wrp;
     const xp = data.xp_otorgado;
     xpEl.textContent = `+${xp}`;
     resumenEl.textContent = (acierto ? "¡Bien! " : "Terminaste. ") + `WRP: ${wrp} • XP: +${xp}`;
   }catch(e){
-    resumenEl.textContent = (acierto ? "¡Bien! " : "Terminaste. ") + "Se guardará cuando haya conexión.";
+    console.error(e);
+    resumenEl.textContent = (acierto ? "¡Bien! " : "Terminaste. ") + "No se pudo enviar a Supabase (se intentará luego).";
   }finally{
     modal.classList.remove("hidden");
   }
