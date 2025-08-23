@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Palabra del día</title>
+  <link rel="stylesheet" href="css/wordle.css"/>
+</head>
+<body>
+  <main class="app">
+    <header class="card header">
+      <div>
+        <h1>Palabra del día</h1>
+        <p id="meta">Tema — <span id="tema">…</span> • <span id="cita">…</span></p>
+      </div>
+      <div class="stats">
+        <div><small>Racha</small><strong id="racha">–</strong></div>
+        <div><small>Intentos</small><strong>6</strong></div>
+        <div><small>XP hoy</small><strong id="xp">+0</strong></div>
+      </div>
+    </header>
+
+    <section class="card grid" id="grid"></section>
+
+    <section class="card pista">
+      <div id="pista-texto" class="muted">Pista disponible tras 2 intentos</div>
+      <button id="btn-pista" disabled>Usar pista</button>
+    </section>
+
+    <section class="card teclado" id="teclado"></section>
+
+    <footer class="footer">
+      <button id="btn-practica" class="muted">Modo práctica</button>
+      <button id="btn-catequesis" class="primary">Catequesis del domingo</button>
+    </footer>
+
+    <!-- Modal resultado -->
+    <div id="modal" class="modal hidden">
+      <div class="modal-card">
+        <h2>Resultado</h2>
+        <p id="resumen"></p>
+        <div class="modal-actions">
+          <button id="cerrar" class="primary">Aceptar</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script>
+    window.__SUPABASE_URL__ = "https://TU-PROYECTO.supabase.co";
+    window.__SUPABASE_ANON__ = "TU-ANON-KEY";
+  </script>
+  <script src="js/wordle.js"></script>
+</body>
+</html>
