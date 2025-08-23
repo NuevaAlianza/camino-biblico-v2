@@ -1,94 +1,47 @@
-.ranking-main {
-  max-width: 560px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background: #fffefc;
-  border-radius: 24px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-}
+:root{ --ok:#16a34a; --mid:#eab308; --no:#9ca3af; --bg:#f8fafc; --card:#fff; --ink:#0f172a; }
+*{ box-sizing:border-box; }
+body{ margin:0; font-family:system-ui,Segoe UI,Arial; background:var(--bg); color:var(--ink); }
+.app{ max-width:720px; margin:24px auto; padding:0 12px; }
 
-.ranking-tabs {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
-  justify-content: center;
-}
+.card{ background:var(--card); border-radius:16px; box-shadow:0 6px 20px rgba(0,0,0,.08); padding:14px 16px; }
+.header{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px; }
+.muted{ color:#64748b; }
+.tiny{ font-size:11px; }
+.big{ font-size:20px; font-weight:800; }
 
-.ranking-tabs button {
-  background: #eee7d9;
-  color: #444;
-  border: none;
-  padding: 0.75rem 1.8rem;
-  border-radius: 2rem 2rem 0 0;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.15s;
-}
+.tabs{ display:flex; gap:8px; }
+.tab{ padding:8px 12px; border-radius:12px; background:#e5e7eb; border:none; font-weight:700; cursor:pointer; }
+.tab.active{ background:#0f172a; color:#fff; }
 
-.ranking-tabs .tab-active {
-  background: #fad07e;
-  color: #1a1925;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  border-bottom: 2px solid #e6b44e;
-}
+.controls{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+.scope{ display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+.seg{ display:flex; background:#e5e7eb; padding:4px; border-radius:12px; }
+.seg-btn{ padding:6px 10px; border:none; border-radius:8px; background:transparent; font-weight:700; cursor:pointer; }
+.seg-btn.active{ background:#fff; box-shadow:0 1px 4px rgba(0,0,0,.1); }
+.input{ background:#eef2f7; border:none; padding:10px 12px; border-radius:10px; outline:none; }
+.input.grow{ flex:1; min-width:180px; }
 
-#ranking-panel {
-  min-height: 160px;
-  margin-top: 1rem;
-}
+.you{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; align-items:center; }
 
-.tabla-ranking {
-  width: 100%;
-  border-collapse: collapse;
-  background: #fff;
-  border-radius: 12px;
-  overflow: hidden;
-  margin-bottom: 1.5rem;
-}
+.podio{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+.podio .p{ position:relative; padding:10px; border-radius:14px; text-align:center; background:#fff8e1; box-shadow:0 6px 16px rgba(0,0,0,.06); }
+.p .rank{ position:absolute; top:-8px; right:-8px; background:#f59e0b; color:#fff; font-size:11px; padding:4px 6px; border-radius:999px; }
+.p .name{ font-weight:800; }
+.p .meta{ font-size:11px; color:#64748b; }
+.p .num{ font-size:24px; font-weight:900; margin-top:6px; }
 
-.tabla-ranking thead {
-  background: #fad07e;
-}
+.table .thead, .table .row{ display:grid; grid-template-columns: 60px 1.6fr 0.7fr 0.8fr 1fr; gap:8px; align-items:center; }
+.table .thead{ font-size:12px; color:#64748b; padding:6px 8px; }
+.table .tbody .row{ background:#fff; border-radius:12px; padding:8px; margin-bottom:6px; }
+.table .row.you{ background:#ecfdf5; }
+.cell.center{ text-align:center; }
+.cell.right{ text-align:right; }
+.empty{ text-align:center; color:#64748b; padding:16px; }
+.more-wrap{ display:flex; justify-content:center; margin-top:10px; }
+.primary{ background:#0f172a; color:#fff; border:none; padding:8px 12px; border-radius:10px; cursor:pointer; }
+.hidden{ display:none; }
 
-.tabla-ranking th,
-.tabla-ranking td {
-  padding: 0.8rem 0.5rem;
-  text-align: center;
-}
+.tag{ display:inline-block; margin-left:6px; font-size:10px; background:#059669; color:#fff; padding:2px 6px; border-radius:999px; }
 
-.tabla-ranking tbody tr {
-  border-bottom: 1px solid #f2e8df;
-}
+.toast{ position:fixed; left:50%; bottom:16px; transform:translateX(-50%); background:#0f172a; color:#fff; padding:8px 12px; border-radius:12px; box-shadow:0 8px 20px rgba(0,0,0,.25); }
 
-.tabla-ranking tbody tr.es-actual {
-  background: #ffeabf;
-  font-weight: bold;
-  color: #1a1925;
-}
-
-.tabla-ranking tbody tr:hover {
-  background: #f7efd5;
-}
-
-.mi-ranking-resumen {
-  background: #fff6e2;
-  border-radius: 10px;
-  padding: 0.7rem 1.1rem;
-  font-size: 1.08rem;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.04);
-  text-align: center;
-  margin: 0 auto 1rem auto;
-  width: 70%;
-}
-
-@media (max-width: 700px) {
-  .ranking-main {
-    padding: 1rem 0.3rem;
-    max-width: 99vw;
-  }
-  .tabla-ranking th, .tabla-ranking td {
-    padding: 0.55rem 0.1rem;
-    font-size: 0.96rem;
-  }
-}
