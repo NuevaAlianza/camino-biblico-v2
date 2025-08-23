@@ -1,29 +1,72 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ranking – Camino Bíblico</title>
-  <link rel="stylesheet" href="css/estilos.css" />
-  <link rel="stylesheet" href="css/ranking.css" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="theme-color" content="#0f172a"/>
+  <title>Ranking</title>
+  <link rel="stylesheet" href="css/ranking.css"/>
 </head>
 <body>
-  <main class="ranking-main">
-    <h1>🏆 Ranking de Camino Bíblico</h1>
-    <div class="ranking-tabs">
-      <button id="btn-ranking-global" class="tab-active">Global</button>
-      <button id="btn-ranking-ciudad">Ciudad</button>
-      <button id="btn-ranking-parroquia">Parroquia</button>
-    </div>
+  <main class="app">
+    <header class="card header">
+      <div>
+        <h1>Ranking</h1>
+        <p class="muted">Semana actual • Domingo ancla • TZ America/Santo_Domingo</p>
+      </div>
+      <div class="tabs">
+        <button id="tab-wordle" class="tab active">Wordle (WRP)</button>
+        <button id="tab-global" class="tab">Global (XP)</button>
+      </div>
+    </header>
 
-    <section id="ranking-panel">
-      <!-- Aquí se cargará el ranking seleccionado -->
+    <section class="card controls">
+      <div class="scope">
+        <span>Ámbito:</span>
+        <div class="seg">
+          <button data-scope="global" class="seg-btn active">Global</button>
+          <button data-scope="parroquia" class="seg-btn">Parroquia</button>
+          <button data-scope="ciudad" class="seg-btn">Ciudad</button>
+        </div>
+        <input id="valor" class="input" placeholder="Nombre de parroquia/ciudad" disabled/>
+      </div>
+      <input id="buscar" class="input grow" placeholder="Buscar jugador…"/>
     </section>
-  </main>
-  <a href="menu.html" id="btn-inicio" title="Volver al inicio">🏠</a>
 
+    <section class="you card">
+      <div>
+        <div class="muted tiny">Tu posición</div>
+        <div id="you-rank" class="big">—</div>
+      </div>
+      <div>
+        <div class="muted tiny">Tu WRP</div>
+        <div id="you-wrp" class="big">—</div>
+      </div>
+      <div>
+        <div class="muted tiny">Tu XP (Wordle→Global)</div>
+        <div id="you-xp" class="big">—</div>
+      </div>
+    </section>
+
+    <section id="podio" class="podio card hidden"></section>
+
+    <section class="card table">
+      <div id="thead" class="thead"></div>
+      <div id="tbody" class="tbody"></div>
+      <div id="empty" class="empty hidden">Sin datos para este filtro.</div>
+      <div id="more-wrap" class="more-wrap">
+        <button id="more" class="primary">Ver más</button>
+      </div>
+    </section>
+
+    <div id="toast" class="toast hidden"></div>
+  </main>
+
+  <!-- 1) SDK UMD -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <!-- 2) Tu cliente global (igual que Trivia) -->
   <script src="supabase.js"></script>
+  <!-- 3) Lógica de ranking -->
   <script src="js/app/ranking.js"></script>
 </body>
 </html>
