@@ -1,0 +1,36 @@
+{
+  "semanas": [
+    {
+      "id": "2025-08-24",
+      "domingo": "2025-08-24",
+      "ciclo": "B",
+      "pericopa": "Jn 4,5–42",
+      "tema": "Mujer Samaritana",
+      "dias": [
+        { "dow": 1, "palabra": "SICAR",   "pista": "Ciudad de Samaria.", "cita": "Jn 4,5-6" },
+        { "dow": 2, "palabra": "JACOB",   "pista": "Pozo de Jacob.",     "cita": "Jn 4,6"   },
+        { "dow": 3, "palabra": "AGUA",    "pista": "«…agua viva…».",     "cita": "Jn 4,10"  },
+        { "dow": 4, "palabra": "CANTARO", "pista": "Lo que deja.",       "cita": "Jn 4,28"  },
+        { "dow": 5, "palabra": "VERDAD",  "pista": "Modo de culto.",     "cita": "Jn 4,23"  },
+        { "dow": 6, "palabra": "MESIAS",  "pista": "A quien espera.",    "cita": "Jn 4,25"  },
+        { "dow": 0, "palabra": "JESÚS",   "pista": "«Yo soy».",          "cita": "Jn 4,26"  }
+      ]
+    },
+    {
+      "id": "2025-08-31",
+      "domingo": "2025-08-31",
+      "ciclo": "B",
+      "pericopa": "Mc 7,1-8.14-15.21-23",
+      "tema": "Lo que sale del corazón",
+      "dias": [
+        { "dow": 1, "palabra": "LABIOS",  "pista": "«Este pueblo me honra…»",   "cita": "Mc 7,6"  },
+        { "dow": 2, "palabra": "MANDATO", "pista": "Tradición vs mandamiento", "cita": "Mc 7,8"  },
+        { "dow": 3, "palabra": "OIR",     "pista": "«Escuchen todos…»",        "cita": "Mc 7,14" },
+        { "dow": 4, "palabra": "CORAZON", "pista": "Fuente de impureza",       "cita": "Mc 7,21" },
+        { "dow": 5, "palabra": "PENSAR",  "pista": "Males que proceden",       "cita": "Mc 7,21" },
+        { "dow": 6, "palabra": "OBRAR",   "pista": "Intenciones y actos",      "cita": "Mc 7,22" },
+        { "dow": 0, "palabra": "INTERIOR","pista": "No lo de fuera",           "cita": "Mc 7,15" }
+      ]
+    }
+  ]
+}
