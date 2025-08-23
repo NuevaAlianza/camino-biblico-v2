@@ -3,19 +3,26 @@ const TZ = "America/Santo_Domingo";
 const MAX_INTENTOS = 6;
 const DATA_URL = "datos/wordle-semanas.json";
 
-// Usa el cliente global creado en js/supabase.js
-const sb = window.supabase;
+// Espera hasta que window.supabase esté listo (evita getUser sobre undefined)
+function waitForSupabase(timeoutMs = 5000) {
+  return new Promise((resolve, reject) => {
+    const start = Date.now();
+    (function spin(){
+      if (window.supabase) return resolve(window.supabase);
+      if (Date.now() - start > timeoutMs) return reject(new Error("Supabase no cargó (revisa <script src=\"supabase.js\"> y la ruta)"));
+      requestAnimationFrame(spin);
+    })();
+  });
+}
 
 // ====== FECHAS (TZ RD) ======
 const hoyDO = () => new Date(new Date().toLocaleString("en-US", { timeZone: TZ }));
-
 function isoDateDO(d) {
   const parts = new Intl.DateTimeFormat("en-CA", {
     timeZone: TZ, year: "numeric", month: "2-digit", day: "2-digit"
   }).formatToParts(d).reduce((acc,p)=> (acc[p.type]=p.value, acc), {});
   return `${parts.year}-${parts.month}-${parts.day}`;
 }
-
 function domingoDe(d) {
   const x = hoyDO();
   x.setFullYear(d.getFullYear(), d.getMonth(), d.getDate());
@@ -46,12 +53,13 @@ const resumenEl = document.getElementById("resumen");
 document.getElementById("cerrar").onclick = () => modal.classList.add("hidden");
 
 // ====== Estado ======
+let sb = null;                 // ← se setea tras waitForSupabase()
 let solucion = "";
 let longitud = 5;
 let intentoIdx = 0;
 let terminado = false;
 let pistasUsadas = 0;
-let hardMode = false; // opcional
+let hardMode = false;
 let keyState = {};
 let startTime = Date.now();
 const filasRef = [];
@@ -75,6 +83,13 @@ async function ensureAuth() {
 
 // ====== Init ======
 (async function init(){
+  try {
+    sb = await waitForSupabase();          // ← ahora sb está listo
+  } catch (e) {
+    console.error(e);
+    alert(e.message);
+    return;
+  }
   await ensureAuth();
 
   const cfg = await fetch(DATA_URL, { cache: "no-store" }).then(r => r.json());
@@ -88,7 +103,6 @@ async function ensureAuth() {
   longitud = solucion.length;
   gridEl.style.setProperty("--n", longitud);
 
-  // Grilla
   for (let r=0; r<MAX_INTENTOS; r++){
     const row = document.createElement("div");
     row.className = "row";
@@ -101,10 +115,8 @@ async function ensureAuth() {
     filasRef.push(row);
   }
 
-  // Teclado
   renderTeclado();
 
-  // Pista
   btnPista.addEventListener("click", ()=>{
     if (btnPista.disabled) return;
     pistasUsadas++;
@@ -112,7 +124,6 @@ async function ensureAuth() {
     btnPista.disabled = true;
   });
 
-  // Racha (display local)
   const last = localStorage.getItem("wb:last");
   const prev = localStorage.getItem("wb:streak") || "0";
   const todayISO = isoDateDO(hoy);
@@ -124,7 +135,6 @@ async function ensureAuth() {
   }
   rachaEl.textContent = localStorage.getItem("wb:streak") || "0";
 
-  // Input
   window.addEventListener("keydown", onKey);
 })();
 
@@ -195,11 +205,9 @@ function evaluar(guessRaw){
   const count = {};
   for (const ch of solucion) count[ch] = (count[ch] || 0) + 1;
 
-  // Verdes
   for (let i=0;i<longitud;i++){
     if (guess[i] === solucion[i]){ res[i] = "ok"; count[guess[i]]--; }
   }
-  // Amarillos
   for (let i=0;i<longitud;i++){
     if (res[i] !== "no") continue;
     const ch = guess[i];
@@ -271,12 +279,10 @@ async function terminar(acierto){
   const fechaISO = isoDateDO(hoy);
   const esDomingo = hoy.getDay() === 0;
 
-  // Preview XP local (visual)
   let xpPreview = 0;
   if (acierto){ xpPreview = 10 + (intentoIdx <= 3 ? 5 : 0) + Math.max(0, 6 - intentoIdx); }
   xpEl.textContent = `+${xpPreview}`;
 
-  // Racha local
   localStorage.setItem("wb:last", fechaISO);
   const streak = parseInt(localStorage.getItem("wb:streak")||"0",10);
   localStorage.setItem("wb:streak", String(acierto ? (streak+1) : 0));
