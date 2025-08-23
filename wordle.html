@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="theme-color" content="#0f172a"/>
   <title>Palabra del día</title>
   <link rel="stylesheet" href="css/wordle.css"/>
 </head>
@@ -35,9 +36,9 @@
     </footer>
 
     <!-- Modal resultado -->
-    <div id="modal" class="modal hidden">
+    <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
       <div class="modal-card">
-        <h2>Resultado</h2>
+        <h2 id="modal-title">Resultado</h2>
         <p id="resumen"></p>
         <div class="modal-actions">
           <button id="cerrar" class="primary">Aceptar</button>
@@ -46,11 +47,11 @@
     </div>
   </main>
 
+  <!-- 1) SDK UMD -->
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-  <script>
-    window.__SUPABASE_URL__ = "https://TU-PROYECTO.supabase.co";
-    window.__SUPABASE_ANON__ = "TU-ANON-KEY";
-  </script>
+  <!-- 2) Tu cliente global con URL/KEY reales -->
+  <script src="js/supabase.js"></script>
+  <!-- 3) Juego -->
   <script src="js/wordle.js"></script>
 </body>
 </html>
