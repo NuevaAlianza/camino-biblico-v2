@@ -11,6 +11,8 @@
   --color-baldosa-hof-fin: #ffd700;
   --color-baldosa-triviaflash-ini: #defcff;
   --color-baldosa-triviaflash-fin: #41bbf4;
+  --color-baldosa-wordle-ini: #a7f3d0; /* verde menta claro */
+  --color-baldosa-wordle-fin: #34d399; /* verde esmeralda */
 }
 
 body {
@@ -186,11 +188,7 @@ body {
     font-size: 1.45rem;
   }
 }
-:root {
-  /* ...lo que ya tienes... */
-  --color-baldosa-wordle-ini: #a7f3d0; /* verde menta claro */
-  --color-baldosa-wordle-fin: #34d399; /* verde esmeralda */
-}
+
 
 .menu-btn.wordle {
   background: linear-gradient(90deg, var(--color-baldosa-wordle-ini) 0%, var(--color-baldosa-wordle-fin) 100%);
