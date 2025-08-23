@@ -186,3 +186,20 @@ body {
     font-size: 1.45rem;
   }
 }
+:root {
+  /* ...lo que ya tienes... */
+  --color-baldosa-wordle-ini: #a7f3d0; /* verde menta claro */
+  --color-baldosa-wordle-fin: #34d399; /* verde esmeralda */
+}
+
+.menu-btn.wordle {
+  background: linear-gradient(90deg, var(--color-baldosa-wordle-ini) 0%, var(--color-baldosa-wordle-fin) 100%);
+  color: #0f5132;
+  border: 2px solid #19875422;
+}
+.menu-btn.wordle:hover,
+.menu-btn.wordle:focus {
+  filter: brightness(1.1);
+  transform: scale(1.028);
+  box-shadow: 0 0 18px #34d39955, 0 2px 8px #34d39933;
+}
