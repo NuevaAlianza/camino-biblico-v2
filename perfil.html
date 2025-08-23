@@ -7,317 +7,281 @@
   <link rel="stylesheet" href="css/estilos.css" />
   <style>
     body {
-  font-family: 'Segoe UI', Arial, sans-serif;
-  padding: 2rem 0.5rem;
-  background: linear-gradient(120deg, #f9f8f6 70%, #ffe5b4 100%);
-  color: #3d3a2f;
-  max-width: 420px;
-  margin: auto;
-  min-height: 100vh;
-}
+      font-family: 'Segoe UI', Arial, sans-serif;
+      padding: 2rem 0.5rem;
+      background: linear-gradient(120deg, #f9f8f6 70%, #ffe5b4 100%);
+      color: #3d3a2f;
+      max-width: 420px;
+      margin: auto;
+      min-height: 100vh;
+    }
+    h1 { text-align: center; margin-bottom: 2.0rem; font-size: 1.9rem; font-weight: bold; letter-spacing: .5px; }
+    section {
+      background: #fffdfa; border-radius: 1.3em; box-shadow: 0 2px 14px #ead19642;
+      padding: 1.6rem 1.2rem 1.1rem; margin-bottom: 1.6rem; transition: box-shadow .18s;
+    }
+    h2 { font-size: 1.1em; margin-bottom: .9rem; font-weight: 600; color: #a97722; }
+    label { margin-bottom: .35rem; font-weight: 500; color: #6e6246; display:block; }
+    input, select {
+      display: block; width: 100%; margin-bottom: 1.0rem; padding: 0.7rem 0.8rem;
+      border: 1.5px solid #ead196b0; border-radius: 9px; background: #fff9f1;
+      font-size: 1.05rem; color: #473e28; transition: border-color .18s;
+    }
+    input:focus, select:focus { outline: none; border-color: #edc96a; background: #fffbe9; }
 
-h1 {
-  text-align: center;
-  margin-bottom: 2.5rem;
-  font-size: 2.1rem;
-  font-weight: bold;
-  letter-spacing: 1px;
-}
+    button {
+      padding: 0.75rem 1.25rem; font-weight: bold; font-size: 1.13em; border-radius: 11px; border: none;
+      background: linear-gradient(90deg, #f3cd7a, #fad493 80%); color: #473e28; margin-top: .2rem; margin-bottom: .2rem;
+      box-shadow: 0 2px 8px #f3cd7a33; cursor: pointer; transition: background .17s, box-shadow .18s;
+      width: 100%;
+    }
+    button:hover, button:focus { background: linear-gradient(90deg, #fad493 60%, #f3cd7a 100%); box-shadow: 0 4px 12px #f3cd7a45; }
+    a.back { display:block; text-align:center; margin-top: .8rem; color:#1a5a8c; text-decoration: underline; }
 
-section {
-  background: #fffdfa;
-  border-radius: 1.3em;
-  box-shadow: 0 2px 14px #ead19642;
-  padding: 2rem 1.3rem 1.3rem 1.3rem;
-  margin-bottom: 2rem;
-  transition: box-shadow 0.18s;
-}
+    #mensaje { margin-top: .8rem; font-size: 1.02em; color: #267e47; font-weight: 600; text-align: center; transition: color .14s; }
+    .error { color: #cc2222 !important; }
 
-h2 {
-  font-size: 1.22em;
-  margin-bottom: 1.2rem;
-  font-weight: 600;
-  color: #a97722;
-}
+    input[readonly] { background: #f5eeda !important; color: #89723d; border-style: dashed; }
+    .oculto { display:none !important; }
 
-label {
-  margin-bottom: 0.3rem;
-  font-weight: 500;
-  color: #6e6246;
-}
-
-input, select {
-  display: block;
-  width: 100%;
-  margin-bottom: 1.1rem;
-  padding: 0.7rem 0.8rem;
-  border: 1.5px solid #ead196b0;
-  border-radius: 9px;
-  background: #fff9f1;
-  font-size: 1.05rem;
-  color: #473e28;
-  transition: border-color 0.18s;
-}
-input:focus, select:focus {
-  outline: none;
-  border-color: #edc96a;
-  background: #fffbe9;
-}
-
-button {
-  padding: 0.75rem 1.25rem;
-  font-weight: bold;
-  font-size: 1.13em;
-  border-radius: 11px;
-  border: none;
-  background: linear-gradient(90deg, #f3cd7a, #fad493 80%);
-  color: #473e28;
-  margin-top: 0.1rem;
-  margin-bottom: 0.1rem;
-  box-shadow: 0 2px 8px #f3cd7a33;
-  cursor: pointer;
-  transition: background 0.17s, box-shadow 0.18s;
-}
-button:hover,
-button:focus {
-  background: linear-gradient(90deg, #fad493 60%, #f3cd7a 100%);
-  box-shadow: 0 4px 12px #f3cd7a45;
-}
-
-button[type="button"] {
-  background: none;
-  color: #1a5a8c;
-  text-decoration: underline;
-  padding: 0;
-  margin-top: -0.6em;
-  font-size: 1em;
-  box-shadow: none;
-}
-
-#mensaje {
-  margin-top: 1.4rem;
-  font-size: 1.07em;
-  color: #267e47;
-  font-weight: bold;
-  text-align: center;
-  transition: color 0.14s;
-}
-.error {
-  color: #cc2222 !important;
-}
-
-.swapper {
-  text-align: center;
-  margin-bottom: 1.3rem;
-}
-
-.oculto {
-  display: none !important;
-}
-
-input[readonly] {
-  background: #f5eeda !important;
-  color: #89723d;
-  border-style: dashed;
-}
-
-/* Responsive design */
-@media (max-width: 540px) {
-  body { padding: 1.1rem 0.4rem; }
-  section { padding: 1.4rem 0.5rem 0.8rem 0.5rem; }
-  h1 { font-size: 1.35rem; }
-  button, input, select { font-size: 1rem; }
-}
-
+    @media (max-width: 540px) {
+      body { padding: 1.1rem .4rem; }
+      section { padding: 1.2rem .7rem .8rem; }
+      h1 { font-size: 1.5rem; }
+      button, input, select { font-size: 1rem; }
+    }
   </style>
+
+  <!-- Supabase UMD + tu cliente -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script src="supabase.js"></script>
 </head>
 <body>
-  <h2>Editar Perfil</h2>
-  <div class="mensaje" id="mensaje"></div>
-  <form id="perfil-form">
-    <label for="nombre">Nombre</label>
-    <input type="text" id="nombre" readonly />
+  <h1>Editar Perfil</h1>
 
-    <label for="parroquia">Parroquia</label>
-    <select id="parroquia" required>
-      <option value="">-- Elige tu parroquia --</option>
-    </select>
+  <section>
+    <form id="perfil-form" novalidate>
+      <h2>Datos visibles en el ranking</h2>
 
-    <label for="ciudad">Ciudad</label>
-    <input type="text" id="ciudad" readonly />
+      <label for="nombre">Nombre público</label>
+      <input type="text" id="nombre" placeholder="Ej: María López" required />
 
-    <label for="pais">País</label>
-    <input type="text" id="pais" readonly />
+      <label for="parroquia">Parroquia</label>
+      <select id="parroquia" required>
+        <option value="">-- Elige tu parroquia --</option>
+      </select>
 
-    <label for="subgrupo">Subgrupo</label>
-    <select id="subgrupo" required disabled>
-      <option value="">-- Elige un subgrupo --</option>
-    </select>
+      <label for="subgrupo">Subgrupo</label>
+      <select id="subgrupo" required disabled>
+        <option value="">-- Elige un subgrupo --</option>
+      </select>
 
-    <button type="submit">Guardar Cambios</button>
-  </form>
-  <a href="menu.html">← Volver al menú</a>
+      <h2>Ubicación (informativo)</h2>
+      <label for="ciudad">Ciudad</label>
+      <input type="text" id="ciudad" readonly />
+
+      <label for="pais">País</label>
+      <input type="text" id="pais" readonly />
+
+      <button type="submit" id="guardar">Guardar cambios</button>
+      <div id="mensaje"></div>
+    </form>
+    <a class="back" href="menu.html">← Volver al menú</a>
+  </section>
 
 <script>
 document.addEventListener('DOMContentLoaded', async () => {
-  let parroquias = [];
-  let subgrupos = [];
   const parroquiaSelect = document.getElementById('parroquia');
-  const subgrupoSelect = document.getElementById('subgrupo');
-  const mensajeDiv = document.getElementById('mensaje');
-  const ciudadInput = document.getElementById('ciudad');
-  const paisInput = document.getElementById('pais');
-  const nombreInput = document.getElementById('nombre');
+  const subgrupoSelect  = document.getElementById('subgrupo');
+  const mensajeDiv      = document.getElementById('mensaje');
+  const ciudadInput     = document.getElementById('ciudad');
+  const paisInput       = document.getElementById('pais');
+  const nombreInput     = document.getElementById('nombre');
+  const form            = document.getElementById('perfil-form');
+  const guardarBtn      = document.getElementById('guardar');
 
-  // --- Obtener sesión y usuario actual ---
-  const { data: sessionData } = await supabase.auth.getSession();
-  const user = sessionData?.session?.user;
+  let parroquias = [];
+  let subgrupos  = [];
+
+  function setMsg(text, isError=false){
+    mensajeDiv.textContent = text || "";
+    mensajeDiv.className = isError ? "error" : "";
+  }
+
+  // --- Sesión (anónima es válida) ---
+  try {
+    const g1 = await supabase.auth.getUser();
+    if (!g1.data.user) await supabase.auth.signInAnonymously();
+  } catch (e) { /* ignore */ }
+
+  const g2 = await supabase.auth.getUser();
+  const user = g2?.data?.user;
   if (!user) {
-    mensajeDiv.textContent = "Debes iniciar sesión para editar tu perfil.";
-    mensajeDiv.className = "mensaje error";
-    document.getElementById('perfil-form').style.display = "none";
+    setMsg("Debes iniciar sesión para editar tu perfil.", true);
+    form.style.display = "none";
     return;
   }
   const meta = user.user_metadata || {};
 
-  // --- 1. Cargar parroquias desde BD ---
-  let { data: parroquiasData, error: parroquiasError } = await supabase
+  // --- 1) Cargar parroquias ---
+  const { data: parroquiasData, error: parroquiasError } = await supabase
     .from("parroquias")
     .select("id, nombre_mostrar, ciudad_mostrar, pais_mostrar")
     .order("nombre_mostrar", { ascending: true });
+
   if (parroquiasError || !parroquiasData) {
-    mensajeDiv.textContent = "No se pudieron cargar las parroquias.";
-    mensajeDiv.className = "mensaje error";
+    setMsg("No se pudieron cargar las parroquias.", true);
     return;
   }
   parroquias = parroquiasData;
   parroquias.forEach(p => {
     const opt = document.createElement('option');
-    opt.value = p.id;
+    opt.value = String(p.id);
     opt.textContent = `${p.nombre_mostrar} (${p.ciudad_mostrar}, ${p.pais_mostrar})`;
     parroquiaSelect.appendChild(opt);
   });
 
-  // --- 2. Cargar subgrupos desde BD (todos) ---
-  let { data: subgruposData, error: subgruposError } = await supabase
+  // --- 2) Cargar subgrupos ---
+  const { data: subgruposData, error: subgruposError } = await supabase
     .from("subgrupos")
     .select("id, nombre, parroquia_id");
+
   if (subgruposError || !subgruposData) {
-    mensajeDiv.textContent = "No se pudieron cargar los subgrupos.";
-    mensajeDiv.className = "mensaje error";
+    setMsg("No se pudieron cargar los subgrupos.", true);
     return;
   }
   subgrupos = subgruposData;
 
-  // --- 3. Rellenar datos del usuario actual ---
- let { data: usuarioData } = await supabase
-  .from("usuarios")
-  .select("nombre, parroquia, ciudad, pais, subgrupo_id")
-  .eq("id", user.id)
-  .maybeSingle();
+  // --- 3) Traer datos de tu tabla usuarios (si existe) ---
+  let usuarioData = null;
+  try {
+    const r = await supabase
+      .from("usuarios")
+      .select("nombre, parroquia, ciudad, pais, subgrupo_id")
+      .eq("id", user.id)
+      .maybeSingle();
+    usuarioData = r.data || null;
+  } catch (e) { /* ignore */ }
 
+  // --- 4) Precargar campos ---
+  // Nombre preferente para ranking
+  nombreInput.value =
+    (meta.nombre_publico || "").trim() ||
+    (usuarioData?.nombre || "").trim() ||
+    (meta.display_name || meta.full_name || meta.name || "").trim();
 
-  nombreInput.value = usuarioData?.nombre || meta.nombre || "";
-
-  if (usuarioData?.parroquia) {
-    // Busca el id de la parroquia por nombre
-    parroquiaSelect.value = parroquias.find(p => p.nombre_mostrar === usuarioData.parroquia)?.id || "";
-    // Rellenar ciudad y país según parroquia seleccionada
-    const parroquiaSel = parroquias.find(p => String(p.id) === String(parroquiaSelect.value));
-    if (parroquiaSel) {
-      ciudadInput.value = parroquiaSel.ciudad_mostrar;
-      paisInput.value = parroquiaSel.pais_mostrar;
+  // Parroquia por nombre (usuarios/metadatos)
+  const parroquiaNombrePreferida = usuarioData?.parroquia || meta.parroquia || "";
+  if (parroquiaNombrePreferida) {
+    const parroquiaObj = parroquias.find(p => p.nombre_mostrar === parroquiaNombrePreferida);
+    if (parroquiaObj) {
+      parroquiaSelect.value = String(parroquiaObj.id);
+      ciudadInput.value = parroquiaObj.ciudad_mostrar;
+      paisInput.value   = parroquiaObj.pais_mostrar;
     }
-    cargarSubgrupos(parroquiaSelect.value, usuarioData.subgrupo);
   }
 
+  // Cargar subgrupos de la parroquia actual
+  function cargarSubgrupos(parroquiaId, selectedId) {
+    subgrupoSelect.innerHTML = '<option value="">-- Elige un subgrupo --</option>';
+    if (!parroquiaId) { subgrupoSelect.disabled = true; return; }
+    const list = subgrupos.filter(sg => String(sg.parroquia_id) === String(parroquiaId));
+    list.forEach(sg => {
+      const opt = document.createElement('option');
+      opt.value = String(sg.id);
+      opt.textContent = sg.nombre;
+      subgrupoSelect.appendChild(opt);
+    });
+    subgrupoSelect.disabled = list.length === 0;
+    if (selectedId) subgrupoSelect.value = String(selectedId);
+  }
+
+  // Subgrupo preseleccionado: id desde usuarios, si no, por nombre desde meta
+  let selectedSubgrupoId = usuarioData?.subgrupo_id || null;
+  if (!selectedSubgrupoId && meta.subgrupo) {
+    const sgByName = subgrupos.find(sg => sg.nombre === meta.subgrupo);
+    if (sgByName) selectedSubgrupoId = sgByName.id;
+  }
+  cargarSubgrupos(parroquiaSelect.value, selectedSubgrupoId);
+
+  // Al cambiar parroquia, refrescar ciudad/pais y subgrupos
   parroquiaSelect.addEventListener('change', (e) => {
     const parroquiaId = e.target.value;
     const parroquiaSel = parroquias.find(p => String(p.id) === String(parroquiaId));
     ciudadInput.value = parroquiaSel ? parroquiaSel.ciudad_mostrar : "";
-    paisInput.value = parroquiaSel ? parroquiaSel.pais_mostrar : "";
+    paisInput.value   = parroquiaSel ? parroquiaSel.pais_mostrar   : "";
     cargarSubgrupos(parroquiaId, null);
   });
 
-  function cargarSubgrupos(parroquiaId, subgrupoIdSeleccionado) {
-    subgrupoSelect.innerHTML = '<option value="">-- Elige un subgrupo --</option>';
-    if (!parroquiaId) {
-      subgrupoSelect.disabled = true;
-      return;
-    }
-    const subgruposFiltrados = subgrupos.filter(sg => String(sg.parroquia_id) === String(parroquiaId));
-    subgruposFiltrados.forEach(sg => {
-      const opt = document.createElement('option');
-      opt.value = sg.id; // aquí value es el id numérico (int4)
-      opt.textContent = sg.nombre;
-      subgrupoSelect.appendChild(opt);
-    });
-    subgrupoSelect.disabled = subgruposFiltrados.length === 0;
-    if (subgrupoIdSeleccionado) {
-      // Aquí selecciona el ID numérico guardado (int4)
-      subgrupoSelect.value = subgrupoIdSeleccionado;
-    }
-  }
-
-  // --- 4. Guardar cambios ---
-  document.getElementById('perfil-form').onsubmit = async e => {
+  // --- 5) Guardar ---
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    mensajeDiv.textContent = "";
+    setMsg("");
 
-    const parroquiaId = parroquiaSelect.value;
-    const subgrupoId = subgrupoSelect.value;
+    const nombre_publico = (nombreInput.value || "").trim();
+    const parroquiaId    = parroquiaSelect.value;
+    const subgrupoId     = subgrupoSelect.value;
 
-    // Busca los nombres según el ID seleccionado
-    const parroquiaObj = parroquias.find(p => String(p.id) === String(parroquiaId));
-    const parroquiaNombre = parroquiaObj ? parroquiaObj.nombre_mostrar : "";
-    const ciudad = parroquiaObj ? parroquiaObj.ciudad_mostrar : "";
-    const pais = parroquiaObj ? parroquiaObj.pais_mostrar : "";
-
-    // Busca el nombre del subgrupo por id
-    const subgrupoObj = subgrupos.find(sg => String(sg.id) === String(subgrupoId));
-    const subgrupoNombre = subgrupoObj ? subgrupoObj.nombre : "";
-
-    if (!parroquiaNombre || !subgrupoId) {
-      mensajeDiv.textContent = "Selecciona parroquia y subgrupo.";
-      mensajeDiv.className = "mensaje error";
+    // Validaciones mínimas
+    if (!nombre_publico || /^tu nombre$/i.test(nombre_publico) || nombre_publico.length < 3) {
+      setMsg("Escribe tu nombre real (mín. 3 caracteres).", true);
+      nombreInput.focus();
+      return;
+    }
+    if (!parroquiaId || !subgrupoId) {
+      setMsg("Selecciona parroquia y subgrupo.", true);
       return;
     }
 
-    // Actualiza metadatos en Auth (opcional)
-    let { error: errorMeta } = await supabase.auth.updateUser({
-     data: {
-  parroquia: parroquiaNombre,
-  ciudad: ciudad,
-  pais: pais,
-  subgrupo_id: parseInt(subgrupoId, 10) // ← aquí el campo se llama subgrupo_id y es id numérico
-}
+    // Resolver nombres por ID
+    const parroquiaObj    = parroquias.find(p => String(p.id) === String(parroquiaId));
+    const subgrupoObj     = subgrupos.find(sg => String(sg.id) === String(subgrupoId));
+    const parroquiaNombre = parroquiaObj ? parroquiaObj.nombre_mostrar : "";
+    const ciudad          = parroquiaObj ? parroquiaObj.ciudad_mostrar : "";
+    const pais            = parroquiaObj ? parroquiaObj.pais_mostrar   : "";
+    const subgrupoNombre  = subgrupoObj ? subgrupoObj.nombre : "";
 
+    // Deshabilitar botón para evitar doble submit
+    guardarBtn.disabled = true;
+
+    // 1) Guardar en Auth meta (lo que usan los leaderboards)
+    const { error: errorMeta } = await supabase.auth.updateUser({
+      data: {
+        nombre_publico,
+        parroquia: parroquiaNombre,
+        subgrupo:  subgrupoNombre,  // texto (lo leen los RPC)
+        ciudad,
+        pais,
+        subgrupo_id: parseInt(subgrupoId, 10) // opcional en meta
+      }
     });
 
-    // Guarda el nombre de parroquia (text) y el id de subgrupo (int4) en la tabla usuarios
-    let { error: errorUsuario } = await supabase
+    // 2) Guardar en tu tabla 'usuarios'
+    const { error: errorUsuario } = await supabase
       .from('usuarios')
       .upsert([{
         id: user.id,
         email: user.email,
-        nombre: nombreInput.value,
-        parroquia: parroquiaNombre, // ← SOLO NOMBRE (text)
-        ciudad: ciudad,
-        pais: pais,
-        subgrupo_id: parseInt(subgrupoId, 10) // ← SOLO ID (int4)
+        nombre: nombre_publico,       // coherente con auth meta
+        parroquia: parroquiaNombre,   // nombre (text)
+        ciudad,
+        pais,
+        subgrupo_id: parseInt(subgrupoId, 10) // id (int4)
       }], { onConflict: ['id'] });
 
-    if (errorMeta || errorUsuario) {
-      mensajeDiv.textContent = "Error al actualizar: " + (errorMeta?.message || "") + (errorUsuario?.message || "");
-      mensajeDiv.className = "mensaje error";
-    } else {
-      mensajeDiv.textContent = "¡Perfil actualizado!";
-      mensajeDiv.className = "mensaje";
-    }
-  };
+    guardarBtn.disabled = false;
 
+    if (errorMeta || errorUsuario) {
+      setMsg("Error al actualizar: " + (errorMeta?.message || errorUsuario?.message || "desconocido"), true);
+      return;
+    }
+
+    setMsg("¡Perfil actualizado! ✓", false);
+
+    // Volver a donde estaba (o ranking.html por defecto)
+    const back = new URLSearchParams(location.search).get("return") || "ranking.html";
+    setTimeout(() => { location.href = back; }, 650);
+  });
 });
 </script>
 </body>
