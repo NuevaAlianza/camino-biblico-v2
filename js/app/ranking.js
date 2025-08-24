@@ -66,6 +66,40 @@ async function ensureAuth() {
   return g2?.user || null;
 }
 
+// ====== HELPERS ======
+function debounce(fn, ms){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); }; }
+function updateValorPlaceholder(){
+  if (scope === "global") {
+    inputValor.placeholder = "";
+  } else if (scope === "parroquia") {
+    inputValor.placeholder = "Escribe la parroquia…";
+  } else {
+    inputValor.placeholder = "Escribe el subgrupo…";
+  }
+}
+function showLoading(){
+  tbodyEl.innerHTML = Array.from({length:6}).map(()=>`
+    <div class="row">
+      <div class="cell center">…</div>
+      <div>
+        <div class="skeleton" style="width:140px;height:10px;margin:6px 0;background:#e5e7eb;border-radius:6px;"></div>
+        <div class="skeleton" style="width:100px;height:8px;background:#eef2f7;border-radius:6px;"></div>
+      </div>
+      <div class="cell center"><div class="skeleton" style="width:40px;height:10px;margin:6px auto;background:#e5e7eb;border-radius:6px;"></div></div>
+      <div class="cell center"><div class="skeleton" style="width:40px;height:10px;margin:6px auto;background:#e5e7eb;border-radius:6px;"></div></div>
+      <div class="cell center"><div class="skeleton" style="width:60px;height:10px;margin:6px auto;background:#e5e7eb;border-radius:6px;"></div></div>
+    </div>
+  `).join("");
+  emptyEl.classList.add("hidden");
+}
+function hideLoading(){ /* no-op */ }
+function toast(msg){
+  toastEl.textContent = msg;
+  toastEl.classList.remove("hidden");
+  setTimeout(()=> toastEl.classList.add("hidden"), 2500);
+}
+function escapeHTML(s){ return (s??"").replace(/[&<>"']/g, m=> ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+
 // ====== INIT ======
 (async function init(){
   try { sb = await waitForSupabase(); } catch(e){ console.error(e); alert(e.message); return; }
@@ -73,27 +107,38 @@ async function ensureAuth() {
 
   // Tabs
   tabWordle.addEventListener("click", ()=> switchTab("wordle"));
-  tabGlobal .addEventListener("click", ()=> switchTab("global"));
+  tabGlobal.addEventListener("click", ()=> switchTab("global"));
 
-  // Scope
+  // Scope buttons
   segBtns.forEach(b=>{
     b.addEventListener("click", ()=>{
       segBtns.forEach(x=>x.classList.remove("active"));
       b.classList.add("active");
-      scope = b.dataset.scope;                 // ahora puede ser 'subgrupo'
+      scope = (b.dataset.scope || "global").trim().toLowerCase(); // normaliza
       inputValor.disabled = (scope === "global");
+      valor = null;
+      inputValor.value = "";
+      updateValorPlaceholder();
+      // Si es global, cargamos; si no, esperamos que escriba un valor
       fetchAndRender(true);
     });
   });
-  inputValor.addEventListener("input", ()=>{
+
+  // Input de valor con debounce
+  inputValor.addEventListener("input", debounce(()=>{
     valor = inputValor.value.trim() || null;
+    if (scope !== "global" && (!valor || valor.length < 2)) return;
     fetchAndRender(true);
-  });
+  }, 200));
+
+  // Búsqueda local en la tabla
   inputBuscar.addEventListener("input", renderTable);
+
+  // Más filas
   moreBtn.addEventListener("click", ()=> { limit += 200; fetchAndRender(true); });
 
-  // Primera carga
-  switchTab("wordle");
+  updateValorPlaceholder();
+  switchTab("wordle"); // Primera carga
 })();
 
 // ====== TABS ======
@@ -106,22 +151,36 @@ async function switchTab(next){
   await fetchAndRender(true);
 }
 
-// ====== FETCH ======
+// ====== FETCH (unificado con get_leaderboard) ======
 async function fetchAndRender(reset=false){
   showLoading();
   try{
-    if (mode === "wordle"){
-      // 👉 usa la nueva función v2 con 'subgrupo' y nombres
-      const { data, error } = await sb.rpc("get_wordle_leaderboard_v2", {
-        p_semana: domingoISO,
-        p_scope: scope,
-        p_valor: scope==="global" ? null : (valor || null),
-        p_limit: limit
-      });
-      if (error) throw error;
-      dataRows = data || [];
+    // Si es parroquia/subgrupo y aún no hay valor, no consultes
+    if (scope !== "global" && (!valor || valor.length < 2)) {
+      dataRows = [];
+      emptyEl.classList.remove("hidden");
+      emptyEl.textContent = `Escribe el nombre de la ${scope === "parroquia" ? "parroquia" : "subgrupo"}…`;
+      tbodyEl.innerHTML = "";
+      hideLoading();
+      return;
+    }
 
-      // Cabecera
+    const payload = {
+      p_semana: domingoISO,
+      p_mode: mode,                       // "wordle" | "global"
+      p_scope: scope,                     // "global" | "parroquia" | "subgrupo"
+      p_valor: scope==="global" ? null : (valor || null),
+      p_limit: limit
+    };
+    console.debug("[RPC get_leaderboard payload]", payload);
+
+    const { data, error } = await sb.rpc("get_leaderboard", payload);
+    if (error) throw error;
+
+    dataRows = data || [];
+
+    if (mode === "wordle"){
+      // Cabecera Wordle
       theadEl.innerHTML = `
         <div class="cell center">#</div>
         <div>Jugador</div>
@@ -129,25 +188,10 @@ async function fetchAndRender(reset=false){
         <div class="cell center">Aciertos</div>
         <div class="cell center">Intentos prom.</div>`;
 
-      // Podio + "Tú"
       renderPodio(dataRows.slice(0,3));
       await renderYouCardWordle(dataRows);
     } else {
-      // 👉 usa el nuevo RPC global con nombres
-      const { data, error } = await sb.rpc("get_global_leaderboard", {
-        p_semana: domingoISO,
-        p_scope: scope,
-        p_valor: scope==="global" ? null : (valor || null),
-        p_limit: limit
-      });
-      if (error) {
-        tabGlobal.classList.add("hidden");
-        toast("Global no disponible (vista/resumen no encontrado).");
-        switchTab("wordle");
-        return;
-      }
-      dataRows = data || [];
-
+      // Cabecera Global
       theadEl.innerHTML = `
         <div class="cell center">#</div>
         <div>Jugador</div>
@@ -176,7 +220,7 @@ function renderPodio(top3){
     <div class="p">
       <div class="rank">#${r.pos}</div>
       <div class="name">${escapeHTML(r.nombre || "Jugador")}</div>
-      <div class="meta">${escapeHTML(r.parroquia||"—")} • ${escapeHTML(r.subgrupo||"—")}</div>
+      <div class="meta">${escapeHTML(r.parroquia || "—")} • ${escapeHTML(r.subgrupo || "—")}</div>
       <div class="num">${r.wrp_total}</div>
       <div class="meta">WRP</div>
     </div>
@@ -200,9 +244,9 @@ function renderTable(){
             <div><strong>${escapeHTML(r.nombre||"Jugador")}</strong>${isYou?' <span class="tag">Tú</span>':''}</div>
             <div class="muted tiny">${escapeHTML(r.parroquia||"—")} • ${escapeHTML(r.subgrupo||"—")}</div>
           </div>
-          <div class="cell center"><strong>${r.wrp_total}</strong></div>
-          <div class="cell center">${r.aciertos}</div>
-          <div class="cell center">${Number(r.prom_intentos||0).toFixed(2)}</div>
+          <div class="cell center"><strong>${r.wrp_total ?? "0"}</strong></div>
+          <div class="cell center">${r.aciertos ?? "0"}</div>
+          <div class="cell center">${Number(r.wordle_prom_intentos||0).toFixed(2)}</div>
         </div>`;
     } else {
       return `
@@ -212,7 +256,7 @@ function renderTable(){
             <div><strong>${escapeHTML(r.nombre||"Jugador")}</strong>${isYou?' <span class="tag">Tú</span>':''}</div>
             <div class="muted tiny">${escapeHTML(r.parroquia||"—")} • ${escapeHTML(r.subgrupo||"—")}</div>
           </div>
-          <div class="cell center"><strong>${r.xp_total_semana}</strong></div>
+          <div class="cell center"><strong>${r.xp_total_semana ?? "0"}</strong></div>
           <div class="cell center">${r.wrp_wordle_semana ?? "—"}</div>
           <div class="cell center">${Number(r.wordle_prom_intentos||0).toFixed(2)}</div>
         </div>`;
@@ -228,8 +272,9 @@ async function renderYouCardWordle(list){
     const row = list[idx];
     youRankEl.textContent = `#${row.pos} / ${list.length}`;
     youWrpEl.textContent  = row.wrp_total ?? "0";
-    youXpEl.textContent   = row.xp_total ?? "0";
+    youXpEl.textContent   = row.xp_total_semana ?? "0"; // ← unificado
   } else {
+    // Fallback a la vista directa (si no estás en top N)
     const { data, error } = await sb
       .from("wordle_v_semana")
       .select("wrp_total, xp_total, prom_intentos, aciertos")
@@ -259,26 +304,3 @@ function renderYouCardGlobal(list){
   }
 }
 
-// ====== HELPERS ======
-function showLoading(){
-  tbodyEl.innerHTML = Array.from({length:6}).map(()=>`
-    <div class="row">
-      <div class="cell center">…</div>
-      <div>
-        <div class="skeleton" style="width:140px;height:10px;margin:6px 0;background:#e5e7eb;border-radius:6px;"></div>
-        <div class="skeleton" style="width:100px;height:8px;background:#eef2f7;border-radius:6px;"></div>
-      </div>
-      <div class="cell center"><div class="skeleton" style="width:40px;height:10px;margin:6px auto;background:#e5e7eb;border-radius:6px;"></div></div>
-      <div class="cell center"><div class="skeleton" style="width:40px;height:10px;margin:6px auto;background:#e5e7eb;border-radius:6px;"></div></div>
-      <div class="cell center"><div class="skeleton" style="width:60px;height:10px;margin:6px auto;background:#e5e7eb;border-radius:6px;"></div></div>
-    </div>
-  `).join("");
-  emptyEl.classList.add("hidden");
-}
-function hideLoading(){ /* no-op */ }
-function toast(msg){
-  toastEl.textContent = msg;
-  toastEl.classList.remove("hidden");
-  setTimeout(()=> toastEl.classList.add("hidden"), 2500);
-}
-function escapeHTML(s){ return (s??"").replace(/[&<>"']/g, m=> ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
