@@ -1,6 +1,10 @@
 // ====== CONFIG ======
 const TZ = "America/Santo_Domingo";
 
+// ====== Debounce timers ======
+let debounceValor = null;
+let debounceBuscar = null;
+
 // Espera hasta que window.supabase esté listo (por si tarda en cargar)
 function waitForSupabase(timeoutMs = 5000) {
   return new Promise((resolve, reject) => {
@@ -109,30 +113,62 @@ function escapeHTML(s){ return (s??"").replace(/[&<>"']/g, m=> ({'&':'&amp;','<'
   tabWordle.addEventListener("click", ()=> switchTab("wordle"));
   tabGlobal.addEventListener("click", ()=> switchTab("global"));
 
-  // Scope buttons
+  // Scope buttons (NO llamamos RPC hasta tener valor cuando no es global)
   segBtns.forEach(b=>{
     b.addEventListener("click", ()=>{
       segBtns.forEach(x=>x.classList.remove("active"));
       b.classList.add("active");
-      scope = (b.dataset.scope || "global").trim().toLowerCase(); // normaliza
+
+      scope = (b.dataset.scope || "global").trim().toLowerCase();
       inputValor.disabled = (scope === "global");
-      valor = null;
-      inputValor.value = "";
       updateValorPlaceholder();
-      // Si es global, cargamos; si no, esperamos que escriba un valor
+
+      if (scope !== "global") {
+        // No llamar aún: esperar a que el usuario escriba 'valor'
+        dataRows = [];
+        podioEl.classList.add("hidden"); podioEl.innerHTML = "";
+        theadEl.innerHTML = (mode === "wordle") ? `
+          <div class="cell center">#</div>
+          <div>Jugador</div>
+          <div class="cell center">WRP</div>
+          <div class="cell center">Aciertos</div>
+          <div class="cell center">Intentos prom.</div>`
+        : `
+          <div class="cell center">#</div>
+          <div>Jugador</div>
+          <div class="cell center">XP (sem.)</div>
+          <div class="cell center">WRP (sem.)</div>
+          <div class="cell center">Intentos prom.</div>`;
+        tbodyEl.innerHTML = "";
+        emptyEl.classList.remove("hidden");
+        emptyEl.textContent = `Escribe el nombre de la ${scope==="parroquia"?"parroquia":"subgrupo"}…`;
+        inputValor.focus();
+        return;
+      }
+
+      // scope = global → sí consultamos de una
       fetchAndRender(true);
     });
   });
 
-  // Input de valor con debounce
+  // Input de valor (parroquia/subgrupo) con debounce
   inputValor.addEventListener("input", debounce(()=>{
-    valor = inputValor.value.trim() || null;
-    if (scope !== "global" && (!valor || valor.length < 2)) return;
-    fetchAndRender(true);
-  }, 200));
+    valor = inputValor.value; // crudo; TRIM en fetch
+    const v = valor && valor.trim();
+    if (scope !== "global" && v && v.length >= 2) {
+      fetchAndRender(true);
+    } else if (scope !== "global") {
+      // sin valor suficiente: no llames
+      dataRows = [];
+      podioEl.classList.add("hidden"); podioEl.innerHTML = "";
+      tbodyEl.innerHTML = "";
+      emptyEl.classList.remove("hidden");
+      emptyEl.textContent = `Escribe el nombre de la ${scope==="parroquia"?"parroquia":"subgrupo"}…`;
+    }
+  }, 250));
 
-  // Búsqueda local en la tabla
-  inputBuscar.addEventListener("input", renderTable);
+  // Búsqueda local en la tabla (debounce suave)
+  inputBuscar.addEventListener("input", debounce(renderTable, 150));
 
   // Más filas
   moreBtn.addEventListener("click", ()=> { limit += 200; fetchAndRender(true); });
@@ -155,14 +191,13 @@ async function switchTab(next){
 async function fetchAndRender(reset = false) {
   showLoading();
   try {
-    // 1) Si el scope requiere valor, úsalo TRIMeado; si falta, no llames al RPC
+    // Guard: si el scope requiere valor y no hay, no llamamos
     const needsVal = scope !== "global";
     const val = needsVal ? (valor && valor.trim() ? valor.trim() : null) : null;
 
     if (needsVal && !val) {
       dataRows = [];
-
-      // Cabeceras según modo para que el usuario vea qué columnas tendrá
+      // Cabeceras según modo
       if (mode === "wordle") {
         theadEl.innerHTML = `
           <div class="cell center">#</div>
@@ -178,36 +213,30 @@ async function fetchAndRender(reset = false) {
           <div class="cell center">WRP (sem.)</div>
           <div class="cell center">Intentos prom.</div>`;
       }
-
-      // Oculta podio si falta el valor (evita confusión)
-      podioEl.classList.add("hidden");
-      podioEl.innerHTML = "";
-
-      // Mensaje de ayuda
+      podioEl.classList.add("hidden"); podioEl.innerHTML = "";
       tbodyEl.innerHTML = "";
       emptyEl.classList.remove("hidden");
       emptyEl.textContent = `Escribe el nombre de la ${scope === "parroquia" ? "parroquia" : "subgrupo"}…`;
-
       hideLoading();
       return;
     }
 
-    // 2) Payload correcto (p_valor solo si aplica)
+    // Payload correcto
     const payload = {
       p_semana: domingoISO,
-      p_mode: mode,                     // "wordle" | "global"
-      p_scope: scope,                   // "global" | "parroquia" | "subgrupo"
-      p_valor: needsVal ? val : null,   // 👈 ya no va null cuando escribes
+      p_mode: mode,                   // "wordle" | "global"
+      p_scope: scope,                 // "global" | "parroquia" | "subgrupo"
+      p_valor: needsVal ? val : null, // 👈 ahora sí mandamos valor
       p_limit: limit
     };
     console.debug("[RPC get_leaderboard payload]", payload);
 
-    // 3) Llamada
+    // Llamada
     const { data, error } = await sb.rpc("get_leaderboard", payload);
     if (error) throw error;
     dataRows = Array.isArray(data) ? data : [];
 
-    // 4) Cabeceras + tarjetas “Tú” + podio según modo
+    // Cabeceras + tarjetas “Tú” + podio según modo
     if (mode === "wordle") {
       theadEl.innerHTML = `
         <div class="cell center">#</div>
@@ -215,23 +244,20 @@ async function fetchAndRender(reset = false) {
         <div class="cell center">WRP</div>
         <div class="cell center">Aciertos</div>
         <div class="cell center">Intentos prom.</div>`;
-
       renderPodio(dataRows.slice(0, 3));              // podio visible
       await renderYouCardWordle(dataRows);
     } else {
       theadEl.innerHTML = `
         <div class="cell center">#</div>
         <div>Jugador</div>
-        <div class="cell center">XP (sem.)</div>      <!-- 👈 rotulado correcto -->
+        <div class="cell center">XP (sem.)</div>      <!-- rotulado correcto -->
         <div class="cell center">WRP (sem.)</div>
         <div class="cell center">Intentos prom.</div>`;
-
-      podioEl.classList.add("hidden");                // podio oculto en Global
-      podioEl.innerHTML = "";
+      podioEl.classList.add("hidden"); podioEl.innerHTML = ""; // podio oculto en Global
       renderYouCardGlobal(dataRows);
     }
 
-    // 5) Render tabla + estados vacíos
+    // Render tabla + estados vacíos
     emptyEl.classList.toggle("hidden", dataRows.length > 0);
     if (!dataRows.length) {
       emptyEl.textContent = "No hay datos esta semana en este filtro.";
@@ -247,7 +273,6 @@ async function fetchAndRender(reset = false) {
     hideLoading();
   }
 }
-
 
 // ====== RENDER PODIO ======
 function renderPodio(top3){
@@ -309,9 +334,10 @@ async function renderYouCardWordle(list){
     const row = list[idx];
     youRankEl.textContent = `#${row.pos} / ${list.length}`;
     youWrpEl.textContent  = row.wrp_total ?? "0";
-    youXpEl.textContent   = row.xp_total_semana ?? "0"; // ← unificado
+    // soporta xp_wordle_semana o xp_total_semana según tu RPC
+    youXpEl.textContent   = (row.xp_wordle_semana ?? row.xp_total_semana ?? "0");
   } else {
-    // Fallback a la vista directa (si no estás en top N)
+    // Fallback a la vista directa (si no estás en el top N)
     const { data, error } = await sb
       .from("wordle_v_semana")
       .select("wrp_total, xp_total, prom_intentos, aciertos")
@@ -340,4 +366,3 @@ function renderYouCardGlobal(list){
     youXpEl.textContent   = "—";
   }
 }
-
