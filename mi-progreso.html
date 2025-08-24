@@ -27,6 +27,29 @@
 
     <!-- Carrusel de rankings -->
     <section class="progreso-slider" aria-label="Rankings y posiciones">
+      <!-- NUEVO: Ranking semanal compacto (Wordle/parroquia y Global/subgrupo) -->
+      <div class="progreso-slide" id="slide-ranking-semanal" aria-live="polite">
+        <h3 style="margin:0 0 .4rem 0;color:#7b4d08;">Ranking semanal</h3>
+
+        <div class="mini-tabs" id="semanal-tabs" role="tablist" aria-label="Selecciona vista de ranking semanal">
+          <button type="button" class="mini-tab active" data-mode="wordle" aria-pressed="true">Wordle (WRP)</button>
+          <button type="button" class="mini-tab" data-mode="global" aria-pressed="false">Global (XP)</button>
+        </div>
+
+        <div class="semanal-subtitle" style="margin:.5rem 0 .4rem;color:#9a6a2a;font-size:.92rem;" aria-live="polite">
+          <!-- se rellena dinámicamente -->
+        </div>
+
+        <div class="mini-you" id="semanal-you">
+          <!-- tarjetas “Tú” dinámicas -->
+        </div>
+
+        <div class="ranking-subgrupo-list" id="semanal-list">
+          <!-- lista Top-5 dinámica -->
+        </div>
+      </div>
+
+      <!-- Tus slides existentes -->
       <div class="progreso-slide" id="slide-ranking-global" aria-live="polite"></div>
       <div class="progreso-slide" id="slide-ranking-parroquia" aria-live="polite"></div>
       <div class="progreso-slide" id="slide-ranking-subgrupos-parroquia" aria-live="polite"></div>
@@ -41,7 +64,7 @@
   <!-- Scripts (defer para no bloquear el render) -->
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script defer src="supabase.js"></script>
+  <!-- Asegúrate de que progreso.js sea la versión ACTUALIZADA que te pasé -->
   <script defer src="js/app/progreso.js"></script>
 </body>
 </html>
-
