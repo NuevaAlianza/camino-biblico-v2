@@ -265,9 +265,14 @@ async function mostrarRankingSemanal(userId, resumen) {
   const subgrupoId = (resumen?.subgrupo ?? null);
 
   const tabsEl = el.querySelector("#semanal-tabs");
-  const youEl  = el.querySelector("#semanal-you");
-  const listEl = el.querySelector("#semanal-list");
-  const subtEl = el.querySelector(".semanal-subtitle");
+  let   youEl  = el.querySelector("#semanal-you");
+  let   listEl = el.querySelector("#semanal-list");
+  let   subtEl = el.querySelector(".semanal-subtitle");
+
+  // Render de carga (por si aún no lo puso el boot)
+  if (listEl && !listEl.innerHTML.trim()) {
+    listEl.innerHTML = '<div class="loading">Cargando…</div>';
+  }
 
   const datasets = { wordleParroquia: [], globalSubgrupo: [] };
   const tasks = [];
@@ -307,16 +312,21 @@ async function mostrarRankingSemanal(userId, resumen) {
   let current = "wordle"; // por defecto
   render(current);
 
-  tabsEl.querySelectorAll(".mini-tab").forEach(btn=>{
-    btn.addEventListener("click", ()=>{
-      tabsEl.querySelectorAll(".mini-tab").forEach(x=>x.classList.remove("active"));
-      btn.classList.add("active");
-      current = btn.dataset.mode; // "wordle" | "global"
-      render(current);
+  if (tabsEl) {
+    tabsEl.querySelectorAll(".mini-tab").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        tabsEl.querySelectorAll(".mini-tab").forEach(x=>x.classList.remove("active"));
+        btn.classList.add("active");
+        current = btn.dataset.mode; // "wordle" | "global"
+        render(current);
+      });
     });
-  });
+  }
 
   function render(mode){
+    // Guards: evita crash si faltara algún nodo
+    if (!youEl || !listEl || !subtEl) return;
+
     const list = (mode === "wordle") ? datasets.wordleParroquia : datasets.globalSubgrupo;
     const idx  = list.findIndex(r => r.user_id === userId);
 
@@ -377,11 +387,14 @@ window.mostrarSlideProgreso = mostrarSlideProgreso;
 
 // ====== Boot ======
 document.addEventListener("DOMContentLoaded", async () => {
-  // Estado inicial (skeletons)
+  // Estado inicial (skeletons) — OJO: NO toques el slide semanal completo
   ["progreso-resumen","progreso-nivel",
-   "slide-ranking-semanal",        // 👈 NUEVO
    "slide-ranking-global","slide-ranking-parroquia",
    "slide-ranking-subgrupos-parroquia","slide-ranking-subgrupo"].forEach(id => setLoading(id));
+
+  // Loading solo dentro de la lista del slide semanal (no reemplazar la estructura)
+  const sList = document.getElementById("semanal-list");
+  if (sList) sList.innerHTML = '<div class="loading">Cargando…</div>';
 
   // Sesión
   const { data: sessionData } = await supabase.auth.getSession();
@@ -449,4 +462,3 @@ function initTouchSlider() {
   });
 }
 document.addEventListener("DOMContentLoaded", () => { initTouchSlider(); });
-
