@@ -152,35 +152,63 @@ async function switchTab(next){
 }
 
 // ====== FETCH (unificado con get_leaderboard) ======
-async function fetchAndRender(reset=false){
+async function fetchAndRender(reset = false) {
   showLoading();
-  try{
-    // Si es parroquia/subgrupo y aún no hay valor, no consultes
-    if (scope !== "global" && (!valor || valor.length < 2)) {
+  try {
+    // 1) Si el scope requiere valor, úsalo TRIMeado; si falta, no llames al RPC
+    const needsVal = scope !== "global";
+    const val = needsVal ? (valor && valor.trim() ? valor.trim() : null) : null;
+
+    if (needsVal && !val) {
       dataRows = [];
+
+      // Cabeceras según modo para que el usuario vea qué columnas tendrá
+      if (mode === "wordle") {
+        theadEl.innerHTML = `
+          <div class="cell center">#</div>
+          <div>Jugador</div>
+          <div class="cell center">WRP</div>
+          <div class="cell center">Aciertos</div>
+          <div class="cell center">Intentos prom.</div>`;
+      } else {
+        theadEl.innerHTML = `
+          <div class="cell center">#</div>
+          <div>Jugador</div>
+          <div class="cell center">XP (sem.)</div>
+          <div class="cell center">WRP (sem.)</div>
+          <div class="cell center">Intentos prom.</div>`;
+      }
+
+      // Oculta podio si falta el valor (evita confusión)
+      podioEl.classList.add("hidden");
+      podioEl.innerHTML = "";
+
+      // Mensaje de ayuda
+      tbodyEl.innerHTML = "";
       emptyEl.classList.remove("hidden");
       emptyEl.textContent = `Escribe el nombre de la ${scope === "parroquia" ? "parroquia" : "subgrupo"}…`;
-      tbodyEl.innerHTML = "";
+
       hideLoading();
       return;
     }
 
+    // 2) Payload correcto (p_valor solo si aplica)
     const payload = {
       p_semana: domingoISO,
-      p_mode: mode,                       // "wordle" | "global"
-      p_scope: scope,                     // "global" | "parroquia" | "subgrupo"
-      p_valor: scope==="global" ? null : (valor || null),
+      p_mode: mode,                     // "wordle" | "global"
+      p_scope: scope,                   // "global" | "parroquia" | "subgrupo"
+      p_valor: needsVal ? val : null,   // 👈 ya no va null cuando escribes
       p_limit: limit
     };
     console.debug("[RPC get_leaderboard payload]", payload);
 
+    // 3) Llamada
     const { data, error } = await sb.rpc("get_leaderboard", payload);
     if (error) throw error;
+    dataRows = Array.isArray(data) ? data : [];
 
-    dataRows = data || [];
-
-    if (mode === "wordle"){
-      // Cabecera Wordle
+    // 4) Cabeceras + tarjetas “Tú” + podio según modo
+    if (mode === "wordle") {
       theadEl.innerHTML = `
         <div class="cell center">#</div>
         <div>Jugador</div>
@@ -188,29 +216,38 @@ async function fetchAndRender(reset=false){
         <div class="cell center">Aciertos</div>
         <div class="cell center">Intentos prom.</div>`;
 
-      renderPodio(dataRows.slice(0,3));
+      renderPodio(dataRows.slice(0, 3));              // podio visible
       await renderYouCardWordle(dataRows);
     } else {
-      // Cabecera Global
       theadEl.innerHTML = `
         <div class="cell center">#</div>
         <div>Jugador</div>
-        <div class="cell center">XP total</div>
+        <div class="cell center">XP (sem.)</div>      <!-- 👈 rotulado correcto -->
         <div class="cell center">WRP (sem.)</div>
         <div class="cell center">Intentos prom.</div>`;
 
-      podioEl.classList.add("hidden");
+      podioEl.classList.add("hidden");                // podio oculto en Global
+      podioEl.innerHTML = "";
       renderYouCardGlobal(dataRows);
     }
 
+    // 5) Render tabla + estados vacíos
+    emptyEl.classList.toggle("hidden", dataRows.length > 0);
+    if (!dataRows.length) {
+      emptyEl.textContent = "No hay datos esta semana en este filtro.";
+    }
     renderTable();
-  }catch(e){
+  } catch (e) {
     console.error(e);
+    tbodyEl.innerHTML = "";
+    emptyEl.classList.remove("hidden");
+    emptyEl.textContent = "No se pudo cargar el ranking.";
     toast("No se pudo cargar el ranking.");
-  }finally{
+  } finally {
     hideLoading();
   }
 }
+
 
 // ====== RENDER PODIO ======
 function renderPodio(top3){
