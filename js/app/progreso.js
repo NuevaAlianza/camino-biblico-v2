@@ -1,8 +1,10 @@
+<script>
 // ====== Helpers & State ======
 let usuarioActual = null;
 let cacheResumen = null;
 
 const SLIDES = [
+  "slide-ranking-semanal",          // 👈 NUEVO slide primero
   "slide-ranking-global",
   "slide-ranking-parroquia",
   "slide-ranking-subgrupos-parroquia",
@@ -17,6 +19,17 @@ function setLoading(id, msg="Cargando...") {
   const el = $(id);
   if (el) el.innerHTML = `<div class="loading">${safe(msg)}</div>`;
 }
+
+// ====== Semana ancla (TZ RD) ======
+const TZ_RD = "America/Santo_Domingo";
+const hoyDO2 = () => new Date(new Date().toLocaleString("en-US", { timeZone: TZ_RD }));
+function isoDateDO2(d) {
+  const parts = new Intl.DateTimeFormat("en-CA", { timeZone: TZ_RD, year:"numeric", month:"2-digit", day:"2-digit" })
+    .formatToParts(d).reduce((a,p)=>(a[p.type]=p.value,a),{});
+  return `${parts.year}-${parts.month}-${parts.day}`;
+}
+function domingoDe2(d){ const x=hoyDO2(); x.setFullYear(d.getFullYear(), d.getMonth(), d.getDate()); x.setHours(0,0,0,0); x.setDate(x.getDate()-x.getDay()); return x; }
+const domingoISO2 = isoDateDO2(domingoDe2(hoyDO2()));
 
 // ====== Data access ======
 async function getResumen(userId) {
@@ -91,9 +104,9 @@ async function mostrarNivel(userId, resumen) {
   `;
 }
 
-// ====== Rankings ======
+// ====== Rankings clásicos ======
 
-// Top Global (preparado para paginación si la activas)
+// Top Global (paginable)
 async function mostrarRankingGlobal(userId, { page = 0, size = 10 } = {}) {
   const el = $("slide-ranking-global");
   if (!el) return;
@@ -135,14 +148,13 @@ async function mostrarRankingGlobal(userId, { page = 0, size = 10 } = {}) {
     }
   `;
 
-  // expone paginator si lo usas
   window.cambiarPaginaGlobal = async (p) => {
     setLoading("slide-ranking-global");
     await mostrarRankingGlobal(userId, { page: p, size });
   };
 }
 
-// Ranking por parroquia (desde vista agregada)
+// Ranking por parroquia (vista agregada)
 async function mostrarRankingParroquia() {
   const el = $("slide-ranking-parroquia");
   if (!el) return;
@@ -208,7 +220,7 @@ async function mostrarRankingSubgruposParroquia(userId, resumen) {
   `;
 }
 
-// Ranking de tu subgrupo (lista de personas por XP)
+// Ranking de tu subgrupo (lista por XP global acumulado)
 async function mostrarRankingSubgrupo(userId, resumen) {
   const el = $("slide-ranking-subgrupo");
   if (!el) return;
@@ -245,6 +257,107 @@ async function mostrarRankingSubgrupo(userId, resumen) {
   `;
 }
 
+// ====== NUEVO: Slide "Ranking semanal" (Wordle/parroquia y Global/subgrupo) ======
+async function mostrarRankingSemanal(userId, resumen) {
+  const el = $("slide-ranking-semanal");
+  if (!el) return;
+
+  const parroquiaNombre = resumen?.parroquia_nombre || resumen?.parroquia || null;
+  const subgrupoId = (resumen?.subgrupo ?? null);
+
+  const tabsEl = el.querySelector("#semanal-tabs");
+  const youEl  = el.querySelector("#semanal-you");
+  const listEl = el.querySelector("#semanal-list");
+  const subtEl = el.querySelector(".semanal-subtitle");
+
+  const datasets = { wordleParroquia: [], globalSubgrupo: [] };
+  const tasks = [];
+
+  if (parroquiaNombre) {
+    tasks.push(
+      supabase.rpc("get_leaderboard", {
+        p_semana: domingoISO2,
+        p_mode: "wordle",
+        p_scope: "parroquia",
+        p_valor: parroquiaNombre,
+        p_limit: 5
+      }).then(({ data, error }) => {
+        if (error) console.warn("RPC wordle/parroquia:", error);
+        datasets.wordleParroquia = Array.isArray(data) ? data : [];
+      })
+    );
+  }
+
+  if (subgrupoId !== null && subgrupoId !== undefined) {
+    tasks.push(
+      supabase.rpc("get_leaderboard", {
+        p_semana: domingoISO2,
+        p_mode: "global",
+        p_scope: "subgrupo",
+        p_valor: String(subgrupoId),
+        p_limit: 5
+      }).then(({ data, error }) => {
+        if (error) console.warn("RPC global/subgrupo:", error);
+        datasets.globalSubgrupo = Array.isArray(data) ? data : [];
+      })
+    );
+  }
+
+  await Promise.all(tasks);
+
+  let current = "wordle"; // por defecto
+  render(current);
+
+  tabsEl.querySelectorAll(".mini-tab").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      tabsEl.querySelectorAll(".mini-tab").forEach(x=>x.classList.remove("active"));
+      btn.classList.add("active");
+      current = btn.dataset.mode; // "wordle" | "global"
+      render(current);
+    });
+  });
+
+  function render(mode){
+    const list = (mode === "wordle") ? datasets.wordleParroquia : datasets.globalSubgrupo;
+    const idx  = list.findIndex(r => r.user_id === userId);
+
+    if (mode === "wordle") {
+      subtEl.textContent = `Wordle (WRP) • ${parroquiaNombre ? parroquiaNombre : "Sin parroquia"}`;
+    } else {
+      subtEl.textContent = `Global (XP) • Subgrupo ${subgrupoId ?? "—"}`;
+    }
+
+    const v1 = (mode === "wordle")
+      ? (idx >= 0 ? (list[idx].wrp_total ?? "—") : "—")
+      : (idx >= 0 ? (list[idx].xp_total_semana ?? "—") : "—");
+    const v2 = (mode === "wordle")
+      ? (idx >= 0 ? Number(list[idx].wordle_prom_intentos||0).toFixed(2) : "—")
+      : (idx >= 0 ? (list[idx].wrp_wordle_semana ?? "—") : "—");
+    const pos = (idx >= 0) ? `#${idx+1} / ${list.length}` : "Fuera del top 5";
+
+    youEl.innerHTML = `
+      <div class="mini-card"><div class="k">Tu posición</div><div class="v">${pos}</div></div>
+      <div class="mini-card"><div class="k">${mode==="wordle"?"Tu WRP":"Tu XP (sem.)"}</div><div class="v">${v1}</div></div>
+      <div class="mini-card"><div class="k">${mode==="wordle"?"Intentos prom.":"WRP (sem.)"}</div><div class="v">${v2}</div></div>
+    `;
+
+    if (!list.length) {
+      listEl.innerHTML = `<div class="loading">No hay datos esta semana para este filtro.</div>`;
+      return;
+    }
+    listEl.innerHTML = list.map((r,i)=>`
+      <div class="ranking-row ${r.user_id===userId ? "actual" : ""}">
+        <span class="pos">#${i+1}</span>
+        <span class="nombre">${safe(r.nombre || "Jugador")}</span>
+        <span class="xp">${mode==="wordle"
+          ? `${r.wrp_total ?? 0} WRP`
+          : `${r.xp_total_semana ?? 0} XP`}</span>
+        ${r.user_id===userId ? "<span class='tuyo'>(Tú)</span>" : ""}
+      </div>
+    `).join("");
+  }
+}
+
 // ====== Slider ======
 let progresoSlideActual = 0;
 function mostrarSlideProgreso(idx) {
@@ -267,6 +380,7 @@ window.mostrarSlideProgreso = mostrarSlideProgreso;
 document.addEventListener("DOMContentLoaded", async () => {
   // Estado inicial (skeletons)
   ["progreso-resumen","progreso-nivel",
+   "slide-ranking-semanal",        // 👈 NUEVO
    "slide-ranking-global","slide-ranking-parroquia",
    "slide-ranking-subgrupos-parroquia","slide-ranking-subgrupo"].forEach(id => setLoading(id));
 
@@ -277,7 +391,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (!userId) {
     const box = $("progreso-resumen");
     if (box) box.innerHTML = "<p>Inicia sesión para ver tu progreso.</p>";
-    // Ocultamos slides si no hay sesión
     SLIDES.forEach(id => { const el = $(id); if (el) el.style.display = "none"; });
     return;
   }
@@ -285,17 +398,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
     const resumen = await getResumen(userId);
 
-    // Cargar en paralelo
     await Promise.all([
       mostrarDashboardResumen(userId, resumen),
       mostrarNivel(userId, resumen),
-      mostrarRankingGlobal(userId),              // Top 10 (paginable)
-      mostrarRankingParroquia(),                 // Vista agregada
-      mostrarRankingSubgruposParroquia(userId, resumen), // RPC
-      mostrarRankingSubgrupo(userId, resumen)    // Lista por tu subgrupo
+      mostrarRankingSemanal(userId, resumen),             // 👈 NUEVO slide
+      mostrarRankingGlobal(userId),                       // Top 10 (paginable)
+      mostrarRankingParroquia(),                          // Vista agregada
+      mostrarRankingSubgruposParroquia(userId, resumen),  // RPC
+      mostrarRankingSubgrupo(userId, resumen)             // Lista por tu subgrupo
     ]);
 
-    // Mostrar primer slide
+    // Primer slide visible
     mostrarSlideProgreso(0);
   } catch (e) {
     console.error(e);
@@ -303,13 +416,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (box) box.innerHTML = "<p>Error cargando tu progreso.</p>";
   }
 });
+
 function initTouchSlider() {
   const container = document.querySelector('.progreso-slider');
   if (!container) return;
 
   let startX = 0, startY = 0, dx = 0, dy = 0, swiping = false;
-  const THRESHOLD = 45;   // mínimo px horizontal para considerar swipe
-  const VERTICAL_BIAS = 1.2; // ignora si hay más vertical que horizontal
+  const THRESHOLD = 45;
+  const VERTICAL_BIAS = 1.2;
 
   container.addEventListener('touchstart', (e) => {
     const t = e.touches[0];
@@ -322,9 +436,7 @@ function initTouchSlider() {
     const t = e.touches[0];
     dx = t.clientX - startX;
     dy = t.clientY - startY;
-    // si el gesto es claramente vertical, no hacemos nada
     if (Math.abs(dy) > Math.abs(dx) * VERTICAL_BIAS) return;
-    // si quieres, puedes hacer un pequeño translateX visual aquí
   }, { passive: true });
 
   container.addEventListener('touchend', () => {
@@ -332,14 +444,10 @@ function initTouchSlider() {
     swiping = false;
     if (Math.abs(dx) < THRESHOLD || Math.abs(dy) > Math.abs(dx) * VERTICAL_BIAS) return;
 
-    const dir = dx < 0 ? +1 : -1; // izquierda→derecha = anterior; derecha→izquierda = siguiente
+    const dir = dx < 0 ? +1 : -1;
     const next = Math.min(Math.max(0, progresoSlideActual + dir), SLIDES.length - 1);
     if (next !== progresoSlideActual) mostrarSlideProgreso(next);
   });
 }
-
-// llama esto después de montar los slides
-document.addEventListener("DOMContentLoaded", () => {
-  // si ya tienes otro DOMContentLoaded, mete esta línea al final de ese callback:
-  initTouchSlider();
-});
+document.addEventListener("DOMContentLoaded", () => { initTouchSlider(); });
+</script>
