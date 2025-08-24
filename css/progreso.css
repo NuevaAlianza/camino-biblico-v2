@@ -1,270 +1,42 @@
-/* =======================
-   Variables globales
-======================= */
-:root {
-  --color-fondo: #f7f2ed;
-  --color-principal: #f4a261;
-  --color-principal-oscuro: #ad6300;
-  --color-secundario: #2a9d8f;
-  --color-acento: #e76f51;
-  --color-texto: #353564;
-  --color-borde: #d0c3b1;
-  --color-blanco: #ffffff;
-  --sombra-suave: rgba(0,0,0,0.08);
+/* ===== Mini tabs (chips) ===== */
+.mini-tabs {
+  display: inline-flex;
+  gap: .4rem;
+  background: #fff4e8;
+  padding: .35rem;
+  border-radius: 999px;
+  box-shadow: 0 2px 8px var(--sombra-suave);
 }
-
-/* =======================
-   Contenedor principal
-======================= */
-.progreso-main {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 2rem 0.8rem 4rem 0.8rem;
-}
-
-.loading {
-  text-align: center;
-  padding: 1rem;
-  font-style: italic;
-  color: var(--color-principal-oscuro);
-}
-
-/* =======================
-   Nivel
-======================= */
-#progreso-nivel {
-  margin: 2.2rem 0 1.3rem 0;
-  background: linear-gradient(120deg, #f8f6f1 80%, #ffe3bb 100%);
-  border-radius: 1.25em;
-  box-shadow: 0 3px 12px var(--sombra-suave);
-  padding: 1.1em 1em 1.2em 1em;
-  display: flex;
-  align-items: center;
-  gap: 1.4em;
-  min-height: 82px;
-  animation: fadeInScale .8s;
-}
-
-.nivel-titulo {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.35em;
-  width: 100%;
-}
-
-.nivel-label {
-  font-weight: bold;
+.mini-tab {
+  font-size: .78rem;
+  padding: .35rem .7rem;
+  border-radius: 999px;
+  border: 0;
+  background: transparent;
   color: #7b4d08;
-  font-size: 1.11em;
-}
-
-.nivel-num {
-  font-size: 1.42em;
-  font-weight: 900;
-  background: linear-gradient(70deg, var(--color-principal), var(--color-acento) 80%);
-  color: var(--color-blanco);
-  border-radius: 0.5em;
-  padding: 0.1em 0.6em;
-  letter-spacing: 0.01em;
-  box-shadow: 0 1px 8px var(--sombra-suave);
-}
-
-.nivel-titulo-nombre {
-  font-size: 1.1em;
-  font-weight: 600;
-  color: var(--color-secundario);
-}
-
-.nivel-progreso {
-  font-size: 0.98em;
-  color: #8b701b;
-}
-
-.nivel-premio {
-  margin-top: 0.38em;
-  font-size: 1.02em;
-  font-weight: bold;
-  color: #cf7114;
-  background: #ffeab0;
-  border-radius: 0.55em;
-  padding: 0.22em 0.8em;
-  box-shadow: 0 2px 6px #ffd07e22;
-}
-
-/* =======================
-   Dashboard resumen
-======================= */
-#progreso-resumen {
-  margin-bottom: 2rem;
-}
-
-.dashboard-resumen {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  background: linear-gradient(100deg, var(--color-principal) 50%, #fff4e3 100%);
-  border-radius: 1.3rem;
-  padding: 1.6rem 1.2rem 1.3rem 1.2rem;
-  box-shadow: 0 2px 10px var(--sombra-suave);
-  animation: fadeInScale .8s;
-}
-
-.dashboard-icon {
-  font-size: 2.6rem;
-  background: var(--color-blanco);
-  border-radius: 50%;
-  width: 54px;
-  height: 54px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 3px 12px #fff3;
-}
-
-.dashboard-metrics h2 {
-  font-size: 1.18rem;
-  margin: 0 0 0.18rem;
-  color: var(--color-principal-oscuro);
-}
-
-.dashboard-metrics p {
-  margin: 0.2rem 0;
-  color: #965c23;
-  font-size: 1.03rem;
-}
-
-.dashboard-bar {
-  background: #ffe4be;
-  border-radius: 12px;
-  height: 18px;
-  margin-top: 0.6rem;
-  overflow: hidden;
-}
-
-.dashboard-bar-inner {
-  height: 100%;
-  background: linear-gradient(90deg, var(--color-secundario) 75%, #6c63ff 100%);
-  border-radius: 12px;
-  transition: width 0.7s cubic-bezier(.45,2,.5,1.1);
-}
-
-/* =======================
-   Slider de rankings
-======================= */
-.progreso-slider {
-  position: relative;
-  margin: 1.4rem auto 2rem auto;
-  max-width: 540px;
-  background: #fffdfa;
-  border-radius: 1em;
-  box-shadow: 0 2px 12px #ead19622;
-  overflow: hidden;
-}
-
-.progreso-slide {
-  display: none;
-  padding: 2rem 1rem 1.6rem 1rem;
-  min-height: 260px;
-}
-
-.progreso-slide.visible {
-  display: block;
-  animation: fadeIn 0.5s;
-}
-
-.progreso-bullets {
-  display: flex;
-  justify-content: center;
-  gap: 0.7em;
-  padding: 1rem 0 0.4rem 0;
-}
-
-.progreso-bullets button {
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  border: none;
-  background: #ead196bb;
-  transition: background 0.2s;
   cursor: pointer;
 }
-
-.progreso-bullets button.active {
-  background: #a97722;
+.mini-tab.active {
+  background: var(--color-blanco);
+  box-shadow: 0 2px 6px var(--sombra-suave);
 }
 
-/* =======================
-   Filas de ranking
-======================= */
-.ranking-subgrupo-list {
-  margin: 0.7em 0 0.3em 0;
+/* ===== Tarjeta compacta “Tú” ===== */
+.mini-you {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: .5rem;
+  margin: .6rem 0 .8rem;
 }
+.mini-card {
+  background: #fff;
+  border-radius: .9rem;
+  padding: .6rem .7rem;
+  box-shadow: 0 1px 8px var(--sombra-suave);
+  text-align: center;
+}
+.mini-card .k { font-size: .7rem; color: #7b4d08; }
+.mini-card .v { font-weight: 800; font-size: 1rem; color: var(--color-texto); }
 
-.ranking-row {
-  display: flex;
-  align-items: center;
-  gap: 1.1em;
-  padding: 0.25em 0.1em;
-  border-bottom: 1px solid #c7e5f3;
-}
-
-.ranking-row:last-child {
-  border-bottom: none;
-}
-
-.ranking-row .pos {
-  font-weight: bold;
-  font-size: 1.1em;
-  color: #0077b6;
-  width: 2.4em;
-}
-
-.ranking-row .nombre {
-  flex: 1.7;
-  color: var(--color-texto);
-  font-size: 1.06em;
-}
-
-.ranking-row .xp {
-  font-weight: 600;
-  color: var(--color-secundario);
-  font-size: 0.97em;
-}
-
-.ranking-row.actual {
-  background: linear-gradient(90deg, #ffedb3 30%, #c2f3e5 100%);
-  border-radius: 0.7em;
-  font-weight: 700;
-}
-
-.ranking-row .tuyo {
-  font-size: 0.93em;
-  color: #cf7114;
-}
-
-/* =======================
-   Animaciones y responsive
-======================= */
-@keyframes fadeInScale {
-  from { opacity: 0; transform: scale(.93); }
-  to   { opacity: 1; transform: scale(1); }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-@media (max-width: 700px) {
-  #progreso-nivel,
-  .progreso-slide {
-    padding: 1em 0.4em;
-  }
-  .nivel-titulo {
-    font-size: 1em;
-  }
-  .ranking-row .nombre {
-    font-size: 1em;
-  }
-}
+/* ===== Afinado lista compacta ===== */
+.ranking-subgrupo-list .ranking-row { padding: .28em .1em; }
