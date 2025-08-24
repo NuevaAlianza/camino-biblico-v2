@@ -30,6 +30,87 @@
         { "dow": 5, "palabra": "PENSAR",  "pista": "Males que proceden",       "cita": "Mc 7,21" },
         { "dow": 6, "palabra": "OBRAR",   "pista": "Intenciones y actos",      "cita": "Mc 7,22" },
         { "dow": 0, "palabra": "INTERIOR","pista": "No lo de fuera",           "cita": "Mc 7,15" }
+]
+    },
+    {
+      "id": "2025-09-07",
+      "domingo": "2025-09-07",
+      "ciclo": "C",
+      "pericopa": "Lc 14,25-33",
+      "tema": "Seguir con la cruz y renunciar",
+      "dias": [
+        { "dow": 1, "palabra": "MULTITUD",  "pista": "Mucha gente lo seguía.",                    "cita": "Lc 14,25" },
+        { "dow": 2, "palabra": "SEGUIR",    "pista": "Caminar detrás del Maestro.",               "cita": "Lc 14,27" },
+        { "dow": 3, "palabra": "DISCIPULO", "pista": "Condición para quien lo sigue.",             "cita": "Lc 14,26-27" },
+        { "dow": 4, "palabra": "TORRE",     "pista": "Obra que hay que calcular.",                 "cita": "Lc 14,28" },
+        { "dow": 5, "palabra": "CALCULAR",  "pista": "Sentarse a ver el gasto.",                   "cita": "Lc 14,28" },
+        { "dow": 6, "palabra": "PAZ",       "pista": "Pedir condiciones antes de la guerra.",      "cita": "Lc 14,32" },
+        { "dow": 0, "palabra": "CRUZ",      "pista": "Cargarla para ser discípulo.",               "cita": "Lc 14,27" }
+      ]
+    },
+    {
+      "id": "2025-09-14",
+      "domingo": "2025-09-14",
+      "ciclo": "C",
+      "pericopa": "Jn 3,13-17",
+      "tema": "Exaltación de la Cruz: amor que salva",
+      "dias": [
+        { "dow": 1, "palabra": "SERPIENTE", "pista": "Figura elevada en el desierto.",             "cita": "Jn 3,14" },
+        { "dow": 2, "palabra": "ELEVADO",   "pista": "El Hijo del hombre así será…",               "cita": "Jn 3,14" },
+        { "dow": 3, "palabra": "HIJO",      "pista": "Enviado para dar vida.",                      "cita": "Jn 3,16-17" },
+        { "dow": 4, "palabra": "UNICO",     "pista": "El Hijo amado del Padre.",                    "cita": "Jn 3,16" },
+        { "dow": 5, "palabra": "CREER",     "pista": "Camino a la vida eterna.",                    "cita": "Jn 3,15-16" },
+        { "dow": 6, "palabra": "VIDA",      "pista": "Promesa que no se acaba.",                    "cita": "Jn 3,15-16" },
+        { "dow": 0, "palabra": "AMOR",      "pista": "Motivo de todo envío.",                       "cita": "Jn 3,16" }
+      ]
+    },
+    {
+      "id": "2025-09-21",
+      "domingo": "2025-09-21",
+      "ciclo": "C",
+      "pericopa": "Lc 16,1-13",
+      "tema": "Administrador y riquezas injustas",
+      "dias": [
+        { "dow": 1, "palabra": "ADMINISTRADOR", "pista": "Debe rendir cuentas.",                   "cita": "Lc 16,1-2" },
+        { "dow": 2, "palabra": "CUENTAS",       "pista": "Revisión de su gestión.",                "cita": "Lc 16,2" },
+        { "dow": 3, "palabra": "RECIBOS",       "pista": "Lo que manda reescribir.",              "cita": "Lc 16,6-7" },
+        { "dow": 4, "palabra": "DEUDA",         "pista": "Se reduce para ganar amigos.",          "cita": "Lc 16,5-7" },
+        { "dow": 5, "palabra": "ASTUTO",        "pista": "Así lo elogia el amo.",                 "cita": "Lc 16,8" },
+        { "dow": 6, "palabra": "FIEL",          "pista": "En lo poco y en lo mucho.",             "cita": "Lc 16,10" },
+        { "dow": 0, "palabra": "RIQUEZAS",      "pista": "No se puede servir a dos señores.",     "cita": "Lc 16,13" }
+      ]
+    },
+    {
+      "id": "2025-09-28",
+      "domingo": "2025-09-28",
+      "ciclo": "C",
+      "pericopa": "Lc 16,19-31",
+      "tema": "El rico y Lázaro",
+      "dias": [
+        { "dow": 1, "palabra": "RICO",     "pista": "Vestía de púrpura y lino.",                   "cita": "Lc 16,19" },
+        { "dow": 2, "palabra": "LAZARO",   "pista": "Pobre cubierto de llagas.",                   "cita": "Lc 16,20" },
+        { "dow": 3, "palabra": "PURPURA",  "pista": "Color del vestido del opulento.",             "cita": "Lc 16,19" },
+        { "dow": 4, "palabra": "LLAGAS",   "pista": "Los perros las lamían.",                      "cita": "Lc 16,21" },
+        { "dow": 5, "palabra": "PERROS",   "pista": "Se acercaban al mendigo.",                    "cita": "Lc 16,21" },
+        { "dow": 6, "palabra": "ABRAHAN",  "pista": "Seno donde es llevado el pobre.",             "cita": "Lc 16,22" },
+        { "dow": 0, "palabra": "ABISMO",   "pista": "Separación imposible de cruzar.",            "cita": "Lc 16,26" }
+      ]
+    },
+    {
+      "id": "2025-10-05",
+      "domingo": "2025-10-05",
+      "ciclo": "C",
+      "pericopa": "Lc 17,5-10",
+      "tema": "Auméntanos la fe / siervos inútiles",
+      "dias": [
+        { "dow": 1, "palabra": "FE",        "pista": "Lo que piden los apóstoles.",               "cita": "Lc 17,5" },
+        { "dow": 2, "palabra": "MOSTAZA",   "pista": "Semilla mínima con gran fuerza.",           "cita": "Lc 17,6" },
+        { "dow": 3, "palabra": "MORERA",    "pista": "Árbol que se arrancaría.",                  "cita": "Lc 17,6" },
+        { "dow": 4, "palabra": "SERVIR",    "pista": "Hacer lo mandado primero.",                 "cita": "Lc 17,7-8" },
+        { "dow": 5, "palabra": "SIERVO",    "pista": "Imagen de la obediencia.",                  "cita": "Lc 17,7-10" },
+        { "dow": 6, "palabra": "HUMILDAD",  "pista": "Actitud después de cumplir.",               "cita": "Lc 17,10" },
+        { "dow": 0, "palabra": "INUTILES",  "pista": "Así nos llamamos tras hacerlo todo.",       "cita": "Lc 17,10" }
+        
       ]
     }
   ]
