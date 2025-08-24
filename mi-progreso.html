@@ -36,6 +36,7 @@
           <button type="button" class="mini-tab" data-mode="global" aria-pressed="false">Global (XP)</button>
         </div>
 
+        <!-- 👇 ESTA LÍNEA ES LA QUE FALTABA -->
         <div class="semanal-subtitle" style="margin:.5rem 0 .4rem;color:#9a6a2a;font-size:.92rem;" aria-live="polite">
           <!-- se rellena dinámicamente -->
         </div>
@@ -64,7 +65,8 @@
   <!-- Scripts (defer para no bloquear el render) -->
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script defer src="supabase.js"></script>
-  <!-- Asegúrate de que progreso.js sea la versión ACTUALIZADA que te pasé -->
+  <!-- Asegúrate de que progreso.js sea la versión ACTUALIZADA sin etiquetas <script> -->
   <script defer src="js/app/progreso.js"></script>
 </body>
 </html>
+
