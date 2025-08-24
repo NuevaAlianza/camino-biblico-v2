@@ -1,4 +1,3 @@
-<script>
 // ====== Helpers & State ======
 let usuarioActual = null;
 let cacheResumen = null;
@@ -450,4 +449,4 @@ function initTouchSlider() {
   });
 }
 document.addEventListener("DOMContentLoaded", () => { initTouchSlider(); });
-</script>
+
