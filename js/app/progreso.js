@@ -269,7 +269,6 @@ async function mostrarRankingSemanal(userId, resumen) {
   let   listEl = el.querySelector("#semanal-list");
   let   subtEl = el.querySelector(".semanal-subtitle");
 
-  // Render de carga (por si aún no lo puso el boot)
   if (listEl && !listEl.innerHTML.trim()) {
     listEl.innerHTML = '<div class="loading">Cargando…</div>';
   }
@@ -323,8 +322,7 @@ async function mostrarRankingSemanal(userId, resumen) {
     });
   }
 
-  function render(mode){
-    // Guards: evita crash si faltara algún nodo
+  async function render(mode){
     if (!youEl || !listEl || !subtEl) return;
 
     const list = (mode === "wordle") ? datasets.wordleParroquia : datasets.globalSubgrupo;
@@ -354,6 +352,8 @@ async function mostrarRankingSemanal(userId, resumen) {
       listEl.innerHTML = `<div class="loading">No hay datos esta semana para este filtro.</div>`;
       return;
     }
+
+    // Render top 5
     listEl.innerHTML = list.map((r,i)=>`
       <div class="ranking-row ${r.user_id===userId ? "actual" : ""}">
         <span class="pos">#${i+1}</span>
@@ -364,8 +364,37 @@ async function mostrarRankingSemanal(userId, resumen) {
         ${r.user_id===userId ? "<span class='tuyo'>(Tú)</span>" : ""}
       </div>
     `).join("");
+
+    // Si no está en el top 5, buscamos y agregamos su fila real
+    if (idx < 0) {
+      const { data: fullData, error } = await supabase.rpc("get_leaderboard", {
+        p_semana: domingoISO2,
+        p_mode: mode,
+        p_scope: (mode === "wordle" ? "parroquia" : "subgrupo"),
+        p_valor: (mode === "wordle" ? parroquiaNombre : String(subgrupoId)),
+        p_limit: 9999
+      });
+
+      if (!error && Array.isArray(fullData)) {
+        const myIdx = fullData.findIndex(r => r.user_id === userId);
+        if (myIdx >= 0) {
+          const me = fullData[myIdx];
+          listEl.innerHTML += `
+            <div class="ranking-row actual extra">
+              <span class="pos">#${myIdx+1}</span>
+              <span class="nombre">${safe(me.nombre || "Jugador")}</span>
+              <span class="xp">${mode==="wordle"
+                ? `${me.wrp_total ?? 0} WRP`
+                : `${me.xp_total_semana ?? 0} XP`}</span>
+              <span class='tuyo'>(Tú)</span>
+            </div>
+          `;
+        }
+      }
+    }
   }
 }
+
 
 // ====== Slider ======
 let progresoSlideActual = 0;
