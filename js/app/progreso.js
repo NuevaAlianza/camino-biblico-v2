@@ -257,143 +257,61 @@ async function mostrarRankingSubgrupo(userId, resumen) {
 }
 
 // ====== NUEVO: Slide "Ranking semanal" (Wordle/parroquia y Global/subgrupo) ======
-async function mostrarRankingSemanal(userId, resumen) {
+async function mostrarRankingSemanal(userId) {
   const el = $("slide-ranking-semanal");
   if (!el) return;
 
-  const parroquiaNombre = resumen?.parroquia_nombre || resumen?.parroquia || null;
-  const subgrupoId = (resumen?.subgrupo ?? null);
+  const youEl  = el.querySelector("#semanal-you");
+  const listEl = el.querySelector("#semanal-list");
+  const subtEl = el.querySelector(".semanal-subtitle");
 
-  const tabsEl = el.querySelector("#semanal-tabs");
-  let   youEl  = el.querySelector("#semanal-you");
-  let   listEl = el.querySelector("#semanal-list");
-  let   subtEl = el.querySelector(".semanal-subtitle");
+  // Semana actual en RD (ya la calculas como domingoISO2)
+  const semanaActual = domingoISO2;
 
-  if (listEl && !listEl.innerHTML.trim()) {
-    listEl.innerHTML = '<div class="loading">Cargando…</div>';
+  // Traer top 20 ordenado por WRP
+  const { data, error } = await supabase
+    .from("wordle_v_semana")
+    .select("*")
+    .eq("semana_id", semanaActual)
+    .order("wrp_total", { ascending: false })
+    .limit(20);
+
+  if (error) {
+    console.error(error);
+    listEl.innerHTML = "<p>Error cargando ranking semanal.</p>";
+    return;
   }
 
-  const datasets = { wordleParroquia: [], globalSubgrupo: [] };
-  const tasks = [];
+  const ranking = data || [];
+  const idx = ranking.findIndex(r => r.user_id === userId);
+  const me = (idx >= 0) ? ranking[idx] : null;
 
-  if (parroquiaNombre) {
-    tasks.push(
-      supabase.rpc("get_leaderboard", {
-        p_semana: domingoISO2,
-        p_mode: "wordle",
-        p_scope: "parroquia",
-        p_valor: parroquiaNombre,
-        p_limit: 5
-      }).then(({ data, error }) => {
-        if (error) console.warn("RPC wordle/parroquia:", error);
-        datasets.wordleParroquia = Array.isArray(data) ? data : [];
-      })
-    );
+  subtEl.textContent = `Ranking semanal (Wordle) • ${semanaActual}`;
+
+  // Tarjetas superiores (tu resumen)
+  youEl.innerHTML = `
+    <div class="mini-card"><div class="k">Tu posición</div><div class="v">${idx>=0 ? `#${idx+1} / ${ranking.length}` : "Fuera del top 20"}</div></div>
+    <div class="mini-card"><div class="k">Tu WRP</div><div class="v">${me ? me.wrp_total : "—"}</div></div>
+    <div class="mini-card"><div class="k">Intentos prom.</div><div class="v">${me ? Number(me.prom_intentos).toFixed(2) : "—"}</div></div>
+  `;
+
+  // Lista del top
+  if (!ranking.length) {
+    listEl.innerHTML = "<div class='loading'>No hay datos esta semana.</div>";
+    return;
   }
 
-  if (subgrupoId !== null && subgrupoId !== undefined) {
-    tasks.push(
-      supabase.rpc("get_leaderboard", {
-        p_semana: domingoISO2,
-        p_mode: "global",
-        p_scope: "subgrupo",
-        p_valor: String(subgrupoId),
-        p_limit: 5
-      }).then(({ data, error }) => {
-        if (error) console.warn("RPC global/subgrupo:", error);
-        datasets.globalSubgrupo = Array.isArray(data) ? data : [];
-      })
-    );
-  }
-
-  await Promise.all(tasks);
-
-  let current = "wordle"; // por defecto
-  render(current);
-
-  if (tabsEl) {
-    tabsEl.querySelectorAll(".mini-tab").forEach(btn=>{
-      btn.addEventListener("click", ()=>{
-        tabsEl.querySelectorAll(".mini-tab").forEach(x=>x.classList.remove("active"));
-        btn.classList.add("active");
-        current = btn.dataset.mode; // "wordle" | "global"
-        render(current);
-      });
-    });
-  }
-
-  async function render(mode){
-    if (!youEl || !listEl || !subtEl) return;
-
-    const list = (mode === "wordle") ? datasets.wordleParroquia : datasets.globalSubgrupo;
-    const idx  = list.findIndex(r => r.user_id === userId);
-
-    if (mode === "wordle") {
-      subtEl.textContent = `Wordle (WRP) • ${parroquiaNombre ? parroquiaNombre : "Sin parroquia"}`;
-    } else {
-      subtEl.textContent = `Global (XP) • Subgrupo ${subgrupoId ?? "—"}`;
-    }
-
-    const v1 = (mode === "wordle")
-      ? (idx >= 0 ? (list[idx].wrp_total ?? "—") : "—")
-      : (idx >= 0 ? (list[idx].xp_total_semana ?? "—") : "—");
-    const v2 = (mode === "wordle")
-      ? (idx >= 0 ? Number(list[idx].wordle_prom_intentos||0).toFixed(2) : "—")
-      : (idx >= 0 ? (list[idx].wrp_wordle_semana ?? "—") : "—");
-    const pos = (idx >= 0) ? `#${idx+1} / ${list.length}` : "Fuera del top 5";
-
-    youEl.innerHTML = `
-      <div class="mini-card"><div class="k">Tu posición</div><div class="v">${pos}</div></div>
-      <div class="mini-card"><div class="k">${mode==="wordle"?"Tu WRP":"Tu XP (sem.)"}</div><div class="v">${v1}</div></div>
-      <div class="mini-card"><div class="k">${mode==="wordle"?"Intentos prom.":"WRP (sem.)"}</div><div class="v">${v2}</div></div>
-    `;
-
-    if (!list.length) {
-      listEl.innerHTML = `<div class="loading">No hay datos esta semana para este filtro.</div>`;
-      return;
-    }
-
-    // Render top 5
-    listEl.innerHTML = list.map((r,i)=>`
-      <div class="ranking-row ${r.user_id===userId ? "actual" : ""}">
-        <span class="pos">#${i+1}</span>
-        <span class="nombre">${safe(r.nombre || "Jugador")}</span>
-        <span class="xp">${mode==="wordle"
-          ? `${r.wrp_total ?? 0} WRP`
-          : `${r.xp_total_semana ?? 0} XP`}</span>
-        ${r.user_id===userId ? "<span class='tuyo'>(Tú)</span>" : ""}
-      </div>
-    `).join("");
-
-    // Si no está en el top 5, buscamos y agregamos su fila real
-    if (idx < 0) {
-      const { data: fullData, error } = await supabase.rpc("get_leaderboard", {
-        p_semana: domingoISO2,
-        p_mode: mode,
-        p_scope: (mode === "wordle" ? "parroquia" : "subgrupo"),
-        p_valor: (mode === "wordle" ? parroquiaNombre : String(subgrupoId)),
-        p_limit: 9999
-      });
-
-      if (!error && Array.isArray(fullData)) {
-        const myIdx = fullData.findIndex(r => r.user_id === userId);
-        if (myIdx >= 0) {
-          const me = fullData[myIdx];
-          listEl.innerHTML += `
-            <div class="ranking-row actual extra">
-              <span class="pos">#${myIdx+1}</span>
-              <span class="nombre">${safe(me.nombre || "Jugador")}</span>
-              <span class="xp">${mode==="wordle"
-                ? `${me.wrp_total ?? 0} WRP`
-                : `${me.xp_total_semana ?? 0} XP`}</span>
-              <span class='tuyo'>(Tú)</span>
-            </div>
-          `;
-        }
-      }
-    }
-  }
+  listEl.innerHTML = ranking.map((r,i)=>`
+    <div class="ranking-row ${r.user_id===userId ? "actual" : ""}">
+      <span class="pos">#${i+1}</span>
+      <span class="nombre">${safe(r.user_id.slice(0,8))}</span>
+      <span class="xp">${r.wrp_total} WRP</span>
+      <span class="detalles">(${Number(r.prom_intentos).toFixed(2)} int. prom.)</span>
+      ${r.user_id===userId ? "<span class='tuyo'>(Tú)</span>" : ""}
+    </div>
+  `).join("");
 }
+
 
 
 // ====== Slider ======
