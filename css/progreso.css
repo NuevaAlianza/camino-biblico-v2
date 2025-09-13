@@ -336,4 +336,46 @@
   .mini-you { grid-template-columns: 1fr; }
 }
 
+/* =======================
+   Ranking con desglose XP
+======================= */
+.xp-desglose {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15em;
+  font-size: 0.92rem;
+  color: #444;
+  flex: 2;
+}
+
+.xp-part {
+  color: #555;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.xp-total {
+  margin-top: 0.2em;
+  font-weight: 700;
+  color: var(--color-secundario);
+  font-size: 0.95rem;
+}
+
+.ranking-row.actual .xp-total {
+  color: #cf7114;
+}
+
+/* Responsive: si hay más espacio, poner en fila */
+@media (min-width: 640px) {
+  .xp-desglose {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6em;
+  }
+  .xp-total {
+    margin-top: 0;
+    margin-left: auto;
+  }
+}
 
