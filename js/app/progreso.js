@@ -132,7 +132,7 @@ async function mostrarRankingGlobal(userId, { page = 0, size = 10 } = {}) {
           <span class="nombre">${safe(u.nombre || u.user_id?.slice(0,8))}</span>
           <div class="xp-desglose">
             <span class="xp-part">🎮 RPG: ${u.xp_rpg ?? 0}</span>
-            <span class="xp-part">❓ Trivia: ${u.xp_trivia ?? 0}</span>
+            <span class="xp-part">🧠 Trivia: ${u.xp_trivia ?? 0}</span>
             <span class="xp-part">🔤 Wordle: ${u.xp_wordle ?? 0}</span>
             <span class="xp-total"><b>Total: ${u.xp_global ?? 0} XP</b></span>
           </div>
