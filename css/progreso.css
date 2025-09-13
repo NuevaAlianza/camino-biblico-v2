@@ -196,114 +196,89 @@
 }
 
 /* =======================
-   Filas de ranking (genérico)
+   Filas de ranking mejoradas
 ======================= */
 .ranking-subgrupo-list {
-  margin: 0.7em 0 0.3em 0;
+  margin: 0.8em 0 0.5em 0;
 }
 
 .ranking-row {
   display: flex;
   align-items: center;
-  gap: 1.1em;
-  padding: 0.25em 0.1em;
-  border-bottom: 1px solid #c7e5f3;
+  justify-content: space-between;
+  gap: 1em;
+  padding: 0.6em 0.8em;
+  border-bottom: 1px solid #eee;
+  background: #fff;
+  border-radius: 0.5em;
+  margin-bottom: 0.4em;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  transition: background 0.2s, transform 0.15s;
 }
-
-.ranking-row:last-child {
-  border-bottom: none;
-}
-
-.ranking-row .pos {
-  font-weight: bold;
-  font-size: 1.1em;
-  color: #0077b6;
-  width: 2.4em;
-}
-
-.ranking-row .nombre {
-  flex: 1.7;
-  color: var(--color-texto);
-  font-size: 1.06em;
-}
-
-.ranking-row .xp {
-  font-weight: 600;
-  color: var(--color-secundario);
-  font-size: 0.97em;
+.ranking-row:hover {
+  background: #faf8f0;
+  transform: scale(1.01);
 }
 
 .ranking-row.actual {
-  background: linear-gradient(90deg, #ffedb3 30%, #c2f3e5 100%);
-  border-radius: 0.7em;
-  font-weight: 700;
+  background: linear-gradient(90deg, #fff8d9, #e8fff4);
+  border-left: 4px solid var(--color-secundario);
+  font-weight: 600;
+  border-radius: 0.6em;
 }
 
-.ranking-row .tuyo {
-  font-size: 0.93em;
-  color: #cf7114;
+/* Posición (#) */
+.ranking-row .pos {
+  flex: 0 0 2.2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1rem;
+  color: #fff;
+  border-radius: 50%;
+  width: 2em;
+  height: 2em;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+.ranking-row:nth-child(1) .pos { background: #ffd700; } /* oro */
+.ranking-row:nth-child(2) .pos { background: #c0c0c0; } /* plata */
+.ranking-row:nth-child(3) .pos { background: #cd7f32; } /* bronce */
+.ranking-row .pos:not(:nth-child(-n+3)) { background: #9aa5b1; }
+
+/* Nombre */
+.ranking-row .nombre {
+  flex: 2;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #333;
 }
 
-/* =======================
-   Ranking semanal (compacto)
-======================= */
+/* Desglose XP */
+.ranking-row .xp-desglose {
+  flex: 3;
+  display: flex;
+  gap: 0.8em;
+  font-size: 0.92rem;
+  flex-wrap: wrap;
+}
+.xp-part {
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
+  font-weight: 500;
+}
+.xp-rpg { color: #6c63ff; }
+.xp-trivia { color: #e76f51; }
+.xp-wordle { color: #2a9d8f; }
 
-/* Subtítulo del slide */
-.semanal-subtitle {
-  margin: .5rem 0 .4rem;
-  color: #9a6a2a;
-  font-size: .92rem;
-}
-
-/* Mini tabs (chips) */
-.mini-tabs {
-  display: inline-flex;
-  gap: .4rem;
-  background: #fff4e8;
-  padding: .35rem;
-  border-radius: 999px;
-  box-shadow: 0 2px 8px var(--sombra-suave);
-}
-.mini-tab {
-  font-size: .78rem;
-  padding: .35rem .7rem;
-  border-radius: 999px;
-  border: 0;
-  background: transparent;
-  color: #7b4d08;
-  cursor: pointer;
-}
-.mini-tab:hover { background: #fffaf3; }
-.mini-tab.active,
-.mini-tab[aria-pressed="true"] {
-  background: var(--color-blanco);
-  box-shadow: 0 2px 6px var(--sombra-suave);
-}
-.mini-tab:focus-visible {
-  outline: 2px solid #e9b46a;
-  outline-offset: 2px;
-}
-
-/* Tarjetas compactas "Tú" */
-.mini-you {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: .5rem;
-  margin: .6rem 0 .8rem;
-}
-.mini-card {
-  background: #fff;
-  border-radius: .9rem;
-  padding: .6rem .7rem;
-  box-shadow: 0 1px 8px var(--sombra-suave);
-  text-align: center;
-}
-.mini-card .k { font-size: .7rem; color: #7b4d08; }
-.mini-card .v { font-weight: 800; font-size: 1rem; color: var(--color-texto); }
-
-/* Afinado Top-5 SOLO en el slide semanal */
-#slide-ranking-semanal .ranking-subgrupo-list .ranking-row {
-  padding: .28em .1em;
+/* Total */
+.ranking-row .xp-total {
+  flex: 0 0 auto;
+  font-weight: 800;
+  font-size: 1rem;
+  color: #d4a017;
+  text-align: right;
 }
 
 /* =======================
@@ -328,54 +303,19 @@
   .ranking-row .nombre { font-size: 1em; }
 }
 
-@media (max-width: 520px) {
-  .mini-you { grid-template-columns: 1fr 1fr; }
-}
-
-@media (max-width: 380px) {
-  .mini-you { grid-template-columns: 1fr; }
-}
-
-/* =======================
-   Ranking con desglose XP
-======================= */
-.xp-desglose {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15em;
-  font-size: 0.92rem;
-  color: #444;
-  flex: 2;
-}
-
-.xp-part {
-  color: #555;
-  font-weight: 500;
-  font-size: 0.9rem;
-}
-
-.xp-total {
-  margin-top: 0.2em;
-  font-weight: 700;
-  color: var(--color-secundario);
-  font-size: 0.95rem;
-}
-
-.ranking-row.actual .xp-total {
-  color: #cf7114;
-}
-
-/* Responsive: si hay más espacio, poner en fila */
-@media (min-width: 640px) {
-  .xp-desglose {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.6em;
+@media (max-width: 600px) {
+  .ranking-row {
+    flex-direction: column;
+    align-items: flex-start;
   }
-  .xp-total {
-    margin-top: 0;
-    margin-left: auto;
+  .ranking-row .xp-desglose {
+    width: 100%;
+    justify-content: flex-start;
+    margin-top: 0.4em;
+  }
+  .ranking-row .xp-total {
+    align-self: flex-end;
+    margin-top: 0.4em;
+    font-size: 1.1rem;
   }
 }
-
