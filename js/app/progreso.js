@@ -105,7 +105,7 @@ async function mostrarNivel(userId, resumen) {
 
 // ====== Rankings clásicos ======
 
-// Top Global (paginable)
+// Top Global (paginable) con desglose RPG / Trivia / Wordle
 async function mostrarRankingGlobal(userId, { page = 0, size = 10 } = {}) {
   const el = $("slide-ranking-global");
   if (!el) return;
@@ -115,7 +115,7 @@ async function mostrarRankingGlobal(userId, { page = 0, size = 10 } = {}) {
 
   const { data, count, error } = await supabase
     .from("resumen_ranking")
-    .select("user_id, nombre, xp_global", { count: 'exact' })
+    .select("user_id, nombre, xp_rpg, xp_trivia, xp_wordle, xp_global", { count: 'exact' })
     .order("xp_global", { ascending: false })
     .range(from, to);
 
@@ -131,7 +131,12 @@ async function mostrarRankingGlobal(userId, { page = 0, size = 10 } = {}) {
         <div class="ranking-row${u.user_id === userId ? " actual" : ""}">
           <span class="pos">#${from + i + 1}</span>
           <span class="nombre">${safe(u.nombre || u.user_id?.slice(0,8))}</span>
-          <span class="xp">${u.xp_global ?? 0} XP</span>
+          <div class="xp-desglose">
+            <span class="xp-part">🎮 RPG: ${u.xp_rpg ?? 0}</span>
+            <span class="xp-part">❓ Trivia: ${u.xp_trivia ?? 0}</span>
+            <span class="xp-part">🔤 Wordle: ${u.xp_wordle ?? 0}</span>
+            <span class="xp-total"><b>Total: ${u.xp_global ?? 0} XP</b></span>
+          </div>
           ${u.user_id === userId ? "<span class='tuyo'>(Tú)</span>" : ""}
         </div>
       `).join("")}
@@ -152,6 +157,7 @@ async function mostrarRankingGlobal(userId, { page = 0, size = 10 } = {}) {
     await mostrarRankingGlobal(userId, { page: p, size });
   };
 }
+
 
 // Ranking por parroquia (vista agregada)
 async function mostrarRankingParroquia() {
