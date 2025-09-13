@@ -3,7 +3,6 @@ let usuarioActual = null;
 let cacheResumen = null;
 
 const SLIDES = [
-  "slide-ranking-semanal",          // 👈 NUEVO slide primero
   "slide-ranking-global",
   "slide-ranking-parroquia",
   "slide-ranking-subgrupos-parroquia",
@@ -103,7 +102,7 @@ async function mostrarNivel(userId, resumen) {
   `;
 }
 
-// ====== Rankings clásicos ======
+// ====== Rankings ======
 
 // Top Global (paginable) con desglose RPG / Trivia / Wordle
 async function mostrarRankingGlobal(userId, { page = 0, size = 10 } = {}) {
@@ -158,8 +157,7 @@ async function mostrarRankingGlobal(userId, { page = 0, size = 10 } = {}) {
   };
 }
 
-
-// Ranking por parroquia (vista agregada)
+// Ranking parroquial
 async function mostrarRankingParroquia() {
   const el = $("slide-ranking-parroquia");
   if (!el) return;
@@ -188,7 +186,7 @@ async function mostrarRankingParroquia() {
   `;
 }
 
-// Ranking de subgrupos de TU parroquia (RPC)
+// Ranking de subgrupos de TU parroquia
 async function mostrarRankingSubgruposParroquia(userId, resumen) {
   const el = $("slide-ranking-subgrupos-parroquia");
   if (!el) return;
@@ -225,7 +223,7 @@ async function mostrarRankingSubgruposParroquia(userId, resumen) {
   `;
 }
 
-// Ranking de tu subgrupo (lista por XP global acumulado)
+// Ranking de tu subgrupo
 async function mostrarRankingSubgrupo(userId, resumen) {
   const el = $("slide-ranking-subgrupo");
   if (!el) return;
@@ -262,64 +260,6 @@ async function mostrarRankingSubgrupo(userId, resumen) {
   `;
 }
 
-// ====== NUEVO: Slide "Ranking semanal" (Wordle/parroquia y Global/subgrupo) ======
-async function mostrarRankingSemanal(userId) {
-  const el = $("slide-ranking-semanal");
-  if (!el) return;
-
-  const youEl  = el.querySelector("#semanal-you");
-  const listEl = el.querySelector("#semanal-list");
-  const subtEl = el.querySelector(".semanal-subtitle");
-
-  // Semana actual en RD (ya la calculas como domingoISO2)
-  const semanaActual = domingoISO2;
-
-  // Traer top 20 ordenado por WRP
-  const { data, error } = await supabase
-    .from("wordle_v_semana")
-    .select("*")
-    .eq("semana_id", semanaActual)
-    .order("wrp_total", { ascending: false })
-    .limit(20);
-
-  if (error) {
-    console.error(error);
-    listEl.innerHTML = "<p>Error cargando ranking semanal.</p>";
-    return;
-  }
-
-  const ranking = data || [];
-  const idx = ranking.findIndex(r => r.user_id === userId);
-  const me = (idx >= 0) ? ranking[idx] : null;
-
-  subtEl.textContent = `Ranking semanal (Wordle) • ${semanaActual}`;
-
-  // Tarjetas superiores (tu resumen)
-  youEl.innerHTML = `
-    <div class="mini-card"><div class="k">Tu posición</div><div class="v">${idx>=0 ? `#${idx+1} / ${ranking.length}` : "Fuera del top 20"}</div></div>
-    <div class="mini-card"><div class="k">Tu WRP</div><div class="v">${me ? me.wrp_total : "—"}</div></div>
-    <div class="mini-card"><div class="k">Intentos prom.</div><div class="v">${me ? Number(me.prom_intentos).toFixed(2) : "—"}</div></div>
-  `;
-
-  // Lista del top
-  if (!ranking.length) {
-    listEl.innerHTML = "<div class='loading'>No hay datos esta semana.</div>";
-    return;
-  }
-
-  listEl.innerHTML = ranking.map((r,i)=>`
-    <div class="ranking-row ${r.user_id===userId ? "actual" : ""}">
-      <span class="pos">#${i+1}</span>
-      <span class="nombre">${safe(r.user_id.slice(0,8))}</span>
-      <span class="xp">${r.wrp_total} WRP</span>
-      <span class="detalles">(${Number(r.prom_intentos).toFixed(2)} int. prom.)</span>
-      ${r.user_id===userId ? "<span class='tuyo'>(Tú)</span>" : ""}
-    </div>
-  `).join("");
-}
-
-
-
 // ====== Slider ======
 let progresoSlideActual = 0;
 function mostrarSlideProgreso(idx) {
@@ -340,16 +280,10 @@ window.mostrarSlideProgreso = mostrarSlideProgreso;
 
 // ====== Boot ======
 document.addEventListener("DOMContentLoaded", async () => {
-  // Estado inicial (skeletons) — OJO: NO toques el slide semanal completo
   ["progreso-resumen","progreso-nivel",
    "slide-ranking-global","slide-ranking-parroquia",
    "slide-ranking-subgrupos-parroquia","slide-ranking-subgrupo"].forEach(id => setLoading(id));
 
-  // Loading solo dentro de la lista del slide semanal (no reemplazar la estructura)
-  const sList = document.getElementById("semanal-list");
-  if (sList) sList.innerHTML = '<div class="loading">Cargando…</div>';
-
-  // Sesión
   const { data: sessionData } = await supabase.auth.getSession();
   usuarioActual = sessionData?.session?.user;
   const userId = usuarioActual?.id;
@@ -366,14 +300,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     await Promise.all([
       mostrarDashboardResumen(userId, resumen),
       mostrarNivel(userId, resumen),
-      mostrarRankingSemanal(userId, resumen),             // 👈 NUEVO slide
-      mostrarRankingGlobal(userId),                       // Top 10 (paginable)
-      mostrarRankingParroquia(),                          // Vista agregada
-      mostrarRankingSubgruposParroquia(userId, resumen),  // RPC
-      mostrarRankingSubgrupo(userId, resumen)             // Lista por tu subgrupo
+      mostrarRankingGlobal(userId),
+      mostrarRankingParroquia(),
+      mostrarRankingSubgruposParroquia(userId, resumen),
+      mostrarRankingSubgrupo(userId, resumen)
     ]);
 
-    // Primer slide visible
     mostrarSlideProgreso(0);
   } catch (e) {
     console.error(e);
@@ -415,3 +347,4 @@ function initTouchSlider() {
   });
 }
 document.addEventListener("DOMContentLoaded", () => { initTouchSlider(); });
+
