@@ -487,51 +487,51 @@ function iniciarTriviaFlash(preguntas, diaSemana, ciclo, idx6) {
   }
 
   function baseXP(total, aciertos) {
-    if (total === 5) {
-      if (aciertos === 5) return 10;
-      if (aciertos === 4) return 5;
-      if (aciertos === 3) return 2;
-      return 0;
-    }
-    if (total === 12) {
-      if (aciertos === 12) return 20;
-      if (aciertos >= 10) return 15; // 10-11
-      if (aciertos >= 8)  return 10; // 8-9
-      if (aciertos >= 6)  return 5;  // 6-7
-      return 0;
-    }
-    // genérico por si cambias cantidades en el futuro:
-    const pct = aciertos / total;
-    if (pct >= 1) return 20;
-    if (pct >= 0.83) return 15;
-    if (pct >= 0.66) return 10;
-    if (pct >= 0.5)  return 5;
+  if (total === 5) {
+    if (aciertos === 5) return 10;
+    if (aciertos === 4) return 6; // subido de 5 → 6
+    if (aciertos === 3) return 3; // subido de 2 → 3
     return 0;
   }
+  if (total === 12) {
+    if (aciertos === 12) return 20;
+    if (aciertos === 11) return 18;
+    if (aciertos === 10) return 16;
+    if (aciertos >= 8)  return 12;
+    if (aciertos >= 6)  return 8;
+    return 0;
+  }
+  // genérico por si cambias cantidades en el futuro
+  const pct = aciertos / total;
+  if (pct >= 1) return 20;
+  if (pct >= 0.9) return 18;
+  if (pct >= 0.83) return 16;
+  if (pct >= 0.66) return 12;
+  if (pct >= 0.5) return 8;
+  return 0;
+}
 
-  function bonusPorRacha(maxRacha, total) {
-    // Bonos escalonados por racha máxima de la sesión.
-    // 5 preguntas: 3→+2, 4→+3, 5→+5
-    if (total === 5) {
-      if (maxRacha >= 5) return 5;
-      if (maxRacha >= 4) return 3;
-      if (maxRacha >= 3) return 2;
-      return 0;
-    }
-    // 12 preguntas (sábado): 3-4:+2, 5-6:+5, 7-8:+9, 9-12:+12
-    if (total === 12) {
-      if (maxRacha >= 9) return 12;
-      if (maxRacha >= 7) return 9;
-      if (maxRacha >= 5) return 5;
-      if (maxRacha >= 3) return 2;
-      return 0;
-    }
-    // genérico
-    if (maxRacha >= Math.ceil(total*0.75)) return 10;
-    if (maxRacha >= Math.ceil(total*0.5))  return 6;
+function bonusPorRacha(maxRacha, total) {
+  if (total === 5) {
+    if (maxRacha >= 5) return 5;
+    if (maxRacha >= 4) return 3;
     if (maxRacha >= 3) return 2;
     return 0;
   }
+  if (total === 12) {
+    if (maxRacha >= 9) return 8; // antes 12
+    if (maxRacha >= 7) return 6; // antes 9
+    if (maxRacha >= 5) return 4; // antes 5
+    if (maxRacha >= 3) return 2;
+    return 0;
+  }
+  // genérico
+  if (maxRacha >= Math.ceil(total*0.75)) return 6;
+  if (maxRacha >= Math.ceil(total*0.5))  return 4;
+  if (maxRacha >= 3) return 2;
+  return 0;
+}
+
 
   async function finalizarTrivia() {
     document.getElementById("trivia-flash-juego").innerHTML = "";
