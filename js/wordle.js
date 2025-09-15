@@ -3,7 +3,7 @@ const TZ = "America/Santo_Domingo";
 const MAX_INTENTOS = 6;
 const DATA_URL = "datos/wordle-semanas.json";
 
-// Espera hasta que window.supabase esté listo (evita getUser sobre undefined)
+// Espera hasta que window.supabase esté listo
 function waitForSupabase(timeoutMs = 5000) {
   return new Promise((resolve, reject) => {
     const start = Date.now();
@@ -53,7 +53,7 @@ const resumenEl = document.getElementById("resumen");
 document.getElementById("cerrar").onclick = () => modal.classList.add("hidden");
 
 // ====== Estado ======
-let sb = null;                 // ← se setea tras waitForSupabase()
+let sb = null;
 let solucion = "";
 let longitud = 5;
 let intentoIdx = 0;
@@ -68,6 +68,10 @@ const filasTeclado = [
   "A S D F G H J K L Ñ".split(" "),
   ["ENTER", ..."Z X C V B N M".split(" "), "BORRAR"]
 ];
+
+// 👇 nuevos helpers
+let uid = null;
+let todayISO = "";
 
 // ====== Auth (anónimo) ======
 async function ensureAuth() {
@@ -84,16 +88,19 @@ async function ensureAuth() {
 // ====== Init ======
 (async function init(){
   try {
-    sb = await waitForSupabase();          // ← ahora sb está listo
+    sb = await waitForSupabase();
   } catch (e) {
     console.error(e);
     alert(e.message);
     return;
   }
   await ensureAuth();
+  const { data: g } = await sb.auth.getUser();
+  uid = g.user.id;
 
   const cfg = await fetch(DATA_URL, { cache: "no-store" }).then(r => r.json());
   const hoy = hoyDO();
+  todayISO = isoDateDO(hoy);
   const semana = pickSemana(cfg.semanas, hoy);
   const item = semana.dias.find(d => d.dow === hoy.getDay()) || semana.dias[0];
 
@@ -103,27 +110,20 @@ async function ensureAuth() {
   longitud = solucion.length;
   gridEl.style.setProperty("--n", longitud);
 
-    // ====== Candado Wordle diario ======
-  const todayISO = isoDateDO(hoyDO());
-
-  // 1. Buscar si ya existe jugada para hoy
-  let { data: jugadas, error: qErr } = await sb
+  // ====== Candado Wordle diario ======
+  let { data: jugada, error: qErr } = await sb
     .from("wordle_jugadas")
     .select("*")
-    .eq("user_id", (await sb.auth.getUser()).data.user.id)
+    .eq("user_id", uid)
     .eq("fecha", todayISO)
     .maybeSingle();
+  if (qErr) console.error("Error buscando jugada de hoy:", qErr);
 
-  if (qErr) {
-    console.error("Error buscando jugada de hoy:", qErr);
-  }
-
-  if (!jugadas) {
-    // 2. No existe → crear registro EN CURSO
+  if (!jugada) {
     const { error: insErr } = await sb
       .from("wordle_jugadas")
       .insert([{
-        user_id: (await sb.auth.getUser()).data.user.id,
+        user_id: uid,
         fecha: todayISO,
         semana_id: semana.domingo,
         palabra: solucion,
@@ -137,28 +137,18 @@ async function ensureAuth() {
         grid: [],
         estado: "en curso"
       }]);
-
-    if (insErr) {
-      console.error("Error creando jugada en curso:", insErr);
-    } else {
-      console.log("Jugada creada en curso");
-    }
-
-  } else if (jugadas.estado === "terminado") {
-    // 3. Ya terminada → bloquear juego y mostrar resumen
+    if (insErr) console.error("Error creando jugada en curso:", insErr);
+  } else if (jugada.estado === "terminado") {
     terminado = true;
     modal.classList.remove("hidden");
-    resumenEl.textContent = `Ya jugaste hoy. WRP: ${jugadas.wrp} • XP: +${jugadas.xp_otorgado}`;
+    resumenEl.textContent = `Ya jugaste hoy. WRP: ${jugada.wrp} • XP: +${jugada.xp_otorgado}`;
     return;
   } else {
-    // 4. Existe EN CURSO → restaurar progreso (opcional)
-    console.log("Restaurando jugada en curso:", jugadas);
-    intentoIdx = jugadas.intentos;
-    pistasUsadas = jugadas.pistas_usadas;
-    // Aquí podrías re-renderizar el grid desde jugadas.grid si quieres
+    intentoIdx = jugada.intentos || 0;
+    pistasUsadas = jugada.pistas_usadas || 0;
   }
 
-
+  // grid vacío
   for (let r=0; r<MAX_INTENTOS; r++){
     const row = document.createElement("div");
     row.className = "row";
@@ -170,8 +160,12 @@ async function ensureAuth() {
     gridEl.appendChild(row);
     filasRef.push(row);
   }
-
   renderTeclado();
+
+  // restaurar si ya había jugada en curso
+  if (jugada && jugada.grid && jugada.grid.length) {
+    restoreFromDB(jugada);
+  }
 
   btnPista.addEventListener("click", ()=>{
     if (btnPista.disabled) return;
@@ -182,7 +176,6 @@ async function ensureAuth() {
 
   const last = localStorage.getItem("wb:last");
   const prev = localStorage.getItem("wb:streak") || "0";
- 
   if (last && last !== todayISO) {
     const y = new Date(last);
     const diff = (hoy - y) / 86400000;
@@ -194,7 +187,7 @@ async function ensureAuth() {
   window.addEventListener("keydown", onKey);
 })();
 
-// ====== Semana activa desde JSON ======
+// ====== Semana activa ======
 function pickSemana(semanas, d){
   const domHoy = isoDateDO(domingoDe(d));
   const exact = semanas.find(s => s.domingo === domHoy);
@@ -231,7 +224,6 @@ function pressKey(k){
   if (terminado) return;
   const row = filasRef[intentoIdx];
   const tiles = [...row.children];
-
   if (k==="ENTER"){
     const word = tiles.map(t => t.textContent).join("");
     if (word.length !== longitud) return;
@@ -293,6 +285,8 @@ function evaluar(guessRaw){
 
   if (acierto || intentoIdx === MAX_INTENTOS){
     terminar(acierto);
+  } else {
+    savePartialProgress();
   }
 }
 
@@ -315,59 +309,101 @@ function gridToJSON(){
   const rows = [];
   for (let r=0;r<intentoIdx;r++){
     const tiles = [...filasRef[r].children];
-    rows.push({
-      guess: tiles.map(t => t.textContent).join(""),
-      result: tiles.map(t =>
-        t.classList.contains("ok") ? "ok" :
-        t.classList.contains("mid") ? "mid" : "no"
-      )
-    });
+    const letters = tiles.map(t => t.textContent.replace(/[✓•×]/g,"").slice(0,1) || "");
+    const result = tiles.map(t =>
+      t.classList.contains("ok") ? "ok" :
+      t.classList.contains("mid") ? "mid" : "no"
+    );
+    rows.push({ guess: letters.join(""), result });
   }
   return rows;
 }
 
-// ====== Finalizar → RPC ======
+// ====== Guardar progreso parcial ======
+async function savePartialProgress() {
+  try {
+    await sb
+      .from("wordle_jugadas")
+      .update({
+        intentos: intentoIdx,
+        pistas_usadas: pistasUsadas,
+        tiempo_seg: Math.round((Date.now() - startTime)/1000),
+        grid: gridToJSON()
+      })
+      .eq("user_id", uid)
+      .eq("fecha", todayISO);
+  } catch (e) {
+    console.error("Error guardando progreso parcial:", e);
+  }
+}
+
+// ====== Restaurar desde DB ======
+function restoreFromDB(jugada){
+  jugada.grid.forEach((g, rIndex) => {
+    if (!filasRef[rIndex]) return;
+    const row = filasRef[rIndex];
+    const clean = (g.guess || "").replace(/[✓•×]/g,"");
+    const letters = clean.split("");
+    for (let c=0; c<Math.min(letters.length, longitud); c++){
+      const tile = row.children[c];
+      const res = g.result?.[c] || "no";
+      tile.className = "tile " + res;
+      tile.innerHTML = `${letters[c] || ""}<span class="icon">${
+        res==="ok" ? "✓" : res==="mid" ? "•" : "×"
+      }</span>`;
+      keyState[letters[c]] = bestState(keyState[letters[c]], res);
+    }
+  });
+  syncKeyColors();
+}
+
+// ====== Finalizar ======
 async function terminar(acierto){
   terminado = true;
   window.removeEventListener("keydown", onKey);
 
   const hoy = hoyDO();
   const fechaISO = isoDateDO(hoy);
-  const esDomingo = hoy.getDay() === 0;
 
-  let xpPreview = 0;
-  if (acierto){ xpPreview = 10 + (intentoIdx <= 3 ? 5 : 0) + Math.max(0, 6 - intentoIdx); }
-  xpEl.textContent = `+${xpPreview}`;
+  let xp = 0;
+  if (acierto){ xp = 10 + (intentoIdx <= 3 ? 5 : 0) + Math.max(0, 6 - intentoIdx); }
+  const wrp = xp * 4; // provisional
+
+  xpEl.textContent = `+${xp}`;
 
   localStorage.setItem("wb:last", fechaISO);
   const streak = parseInt(localStorage.getItem("wb:streak")||"0",10);
   localStorage.setItem("wb:streak", String(acierto ? (streak+1) : 0));
   rachaEl.textContent = localStorage.getItem("wb:streak");
 
-  const payload = {
-    p_fecha: fechaISO,
-    p_palabra: solucion,
-    p_tema: document.getElementById("tema").textContent,
-    p_cita: document.getElementById("cita").textContent,
-    p_intentos: intentoIdx,
-    p_acierto: acierto,
-    p_pistas: pistasUsadas,
-    p_hard: hardMode,
-    p_tiempo_seg: Math.round((Date.now() - startTime)/1000),
-    p_grid: gridToJSON(),
-    p_domingo: esDomingo
-  };
-
   try{
-    const { data, error } = await sb.rpc("registrar_wordle_jugada", payload);
+    const { data, error } = await sb
+      .from("wordle_jugadas")
+      .update({
+        intentos: intentoIdx,
+        acierto: acierto,
+        pistas_usadas: pistasUsadas,
+        hard_mode: hardMode,
+        tiempo_seg: Math.round((Date.now() - startTime)/1000),
+        grid: gridToJSON(),
+        xp_otorgado: xp,
+        wrp: wrp,
+        estado: "terminado"
+      })
+      .eq("user_id", uid)
+      .eq("fecha", fechaISO)
+      .select()
+      .single();
+
     if (error) throw error;
-    const wrp = data.wrp;
-    const xp = data.xp_otorgado;
-    xpEl.textContent = `+${xp}`;
-    resumenEl.textContent = (acierto ? "¡Bien! " : "Terminaste. ") + `WRP: ${wrp} • XP: +${xp}`;
+
+    resumenEl.textContent =
+      (acierto ? "¡Bien! " : "Terminaste. ") + `WRP: ${data.wrp} • XP: +${data.xp_otorgado}`;
+
   }catch(e){
     console.error(e);
-    resumenEl.textContent = (acierto ? "¡Bien! " : "Terminaste. ") + "No se pudo enviar a Supabase (se intentará luego).";
+    resumenEl.textContent =
+      (acierto ? "¡Bien! " : "Terminaste. ") + "No se pudo actualizar en Supabase.";
   }finally{
     modal.classList.remove("hidden");
   }
