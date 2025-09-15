@@ -131,13 +131,16 @@ function renderBarraSemana(intentos, baseDate){
     <div class="semana-wrap">
       <div class="semana-grid">
         ${dias.map((d,i)=>{
-          const idx=i+1; 
-          const y=ymd(d);
-          const row=map.get(idx);
+          const idx = i+1; 
+          const y = ymd(d);
+          const row = map.get(idx);
           const estado = row ? "jugado" : (y < hoyYmd ? "no-jugado" : "pendiente");
+          
+          // ← Aquí usamos concatenación para evitar problemas
           const tip = row 
-            ? `${nombreDia(d.getDay())} • ${row.aciertos}/${idx===6?12:5} • ${row.xp_obtenido} XP`
-            : `${nombreDia(d.getDay())} • ${estado.replace('-',' ')}`;
+            ? nombreDia(d.getDay()) + " • " + row.aciertos + "/" + (idx===6 ? 12 : 5) + " • " + row.xp_obtenido + " XP"
+            : nombreDia(d.getDay()) + " • " + estado.replace("-", " ");
+          
           return `
             <div class="semana-dia ${estado}" title="${tip}">
               <span class="dia-label">${["L","M","X","J","V","S"][i]}</span>
@@ -147,6 +150,7 @@ function renderBarraSemana(intentos, baseDate){
     </div>
   `;
 }
+
 
 async function mostrarRachaSemanalUI(ciclo, hoy){
   const intentos = await obtenerIntentosSemanaActual(ciclo);
