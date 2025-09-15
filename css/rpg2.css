@@ -24,7 +24,6 @@
 
 .rpg-bienvenido { font-size: 1.35em; font-weight: bold; color: #275589; margin-bottom: 0.5em; }
 .rpg-avanza, .mentor-frase { color: #555b77; font-size: 1.05em; margin-bottom: 0.7em; }
-.rpg-xp, .rpg-parroquia { font-size: 1.04em; color: #7b3cdb; }
 
 #titulo-ciclo { font-size: 1.26em; margin-bottom: 0.1em; }
 #descripcion-ciclo { font-size: 1.05em; margin-bottom: 0.5em; color: #666; }
@@ -62,8 +61,8 @@
 .rpg-pregunta { margin: 0.6em 0 1em 0; font-size: 1.1em; color: #243055; }
 .rpg-opciones { display: flex; flex-direction: column; gap: 0.6em; }
 .rpg-btn-op {
-  background: #e4eaff; /* Más fuerte que #eef2fb */
-  color: #1b2053; /* Color oscuro para legibilidad */
+  background: #e4eaff;
+  color: #1b2053;
   border: 1.5px solid #cfd7ec;
   font-weight: 500;
   border-radius: 0.9em;
@@ -76,6 +75,7 @@
 .rpg-btn-op.acierto { background: #baf9d4; color: #166b3e; }
 .rpg-btn-op.fallo { background: #ffd5db; color: #992033; }
 .rpg-btn-op:active { background: #d0d9ee; }
+
 .tip-box {
   background: #f6f9ff;
   border-left: 4px solid #5a9beb;
@@ -154,23 +154,6 @@
 #timer-text { font-size: 1.12em; margin-top: -1.8em; margin-bottom: 0.6em; color: #436fa6; font-weight: 600; }
 .emoji-animado { font-size: 2.0em; margin-bottom: 0.1em; display: inline-block; transition: 0.2s; }
 
-.compact { padding: 0.7em 0.4em; font-size: 0.92em; }
-.oculto { display: none !important; }
-
-button, .btn-principal, .btn-secundario, .compartir-btn {
-  border: none;
-  border-radius: 1.15em;
-  padding: 0.49em 1.2em;
-  font-size: 1.06em;
-  margin: 0.13em 0.18em;
-  background: #5a9beb;
-  color: #fff;
-  cursor: pointer;
-  font-weight: 500;
-  transition: background 0.14s;
-}
-.btn-principal:hover, .btn-secundario:hover, .compartir-btn:hover { background: #4079bd; }
-
 #btn-inicio {
   position: fixed;
   left: 18px;
@@ -194,4 +177,3 @@ button, .btn-principal, .btn-secundario, .compartir-btn {
   .mentor-card { padding: 0.8em 0.2em; }
   .panel-bienvenida, .panel-mensaje-nivel, .panel-mensaje { padding: 1em 0.3em; }
 }
-
