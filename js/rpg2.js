@@ -150,19 +150,13 @@ function mostrarSinCiclo(){
 }
 
 async function prepararPantallaBienvenida(){
-  progresoRPG=await cargarProgresoRPG();
-  const bloqueado = progresoRPG && (
-    progresoRPG.estado==="terminado" ||
-    progresoRPG.completado===true ||
-    progresoRPG.xp>0 ||
-    (progresoRPG.vidas_restantes??3) < 3 ||
-    (progresoRPG.nivel_max??1) > 1
-  );
+  progresoRPG = await cargarProgresoRPG();
 
-  const cont=document.getElementById("bienvenida-stats");
+  const cont = document.getElementById("bienvenida-stats");
 
-  if (bloqueado && progresoRPG.estado!=="terminado"){
-    cont.innerHTML=`
+  // Caso 1: Ya jugó y salió sin terminar → candado
+  if (progresoRPG && progresoRPG.estado==="en curso"){
+    cont.innerHTML = `
       <div class="panel-bienvenida">
         <div class="rpg-bienvenido">Sesión cerrada</div>
         <p>Ya iniciaste tu aventura esta semana. Al salir, tu progreso quedó registrado.</p>
@@ -174,8 +168,9 @@ async function prepararPantallaBienvenida(){
     return;
   }
 
+  // Caso 2: Terminó la partida → solo práctica
   if (progresoRPG?.estado==="terminado" || progresoRPG?.completado){
-    cont.innerHTML=`
+    cont.innerHTML = `
       <div class="panel-bienvenida">
         <div class="rpg-bienvenido">¡Trivia de esta semana completada!</div>
         <p>Rango: <b>${progresoRPG.rango||"-"}</b> · XP: <b>${progresoRPG.xp||0}</b></p>
@@ -192,7 +187,8 @@ async function prepararPantallaBienvenida(){
     return;
   }
 
-  cont.innerHTML=`
+  // Caso 3: No ha jugado → solo oficial
+  cont.innerHTML = `
     <div class="panel-bienvenida">
       <div class="rpg-bienvenido">¡Bienvenido a la Aventura RPG!</div>
       <div class="rpg-avanza">Elige un mentor y comienza. Recuerda: tienes <b>3 vidas</b>.</div>
