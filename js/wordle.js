@@ -103,6 +103,62 @@ async function ensureAuth() {
   longitud = solucion.length;
   gridEl.style.setProperty("--n", longitud);
 
+    // ====== Candado Wordle diario ======
+  const todayISO = isoDateDO(hoyDO());
+
+  // 1. Buscar si ya existe jugada para hoy
+  let { data: jugadas, error: qErr } = await sb
+    .from("wordle_jugadas")
+    .select("*")
+    .eq("user_id", (await sb.auth.getUser()).data.user.id)
+    .eq("fecha", todayISO)
+    .maybeSingle();
+
+  if (qErr) {
+    console.error("Error buscando jugada de hoy:", qErr);
+  }
+
+  if (!jugadas) {
+    // 2. No existe → crear registro EN CURSO
+    const { error: insErr } = await sb
+      .from("wordle_jugadas")
+      .insert([{
+        user_id: (await sb.auth.getUser()).data.user.id,
+        fecha: todayISO,
+        semana_id: semana.domingo,
+        palabra: solucion,
+        tema: semana.tema,
+        cita: item.cita,
+        intentos: 0,
+        acierto: false,
+        pistas_usadas: 0,
+        hard_mode: false,
+        tiempo_seg: 0,
+        grid: [],
+        estado: "en curso"
+      }]);
+
+    if (insErr) {
+      console.error("Error creando jugada en curso:", insErr);
+    } else {
+      console.log("Jugada creada en curso");
+    }
+
+  } else if (jugadas.estado === "terminado") {
+    // 3. Ya terminada → bloquear juego y mostrar resumen
+    terminado = true;
+    modal.classList.remove("hidden");
+    resumenEl.textContent = `Ya jugaste hoy. WRP: ${jugadas.wrp} • XP: +${jugadas.xp_otorgado}`;
+    return;
+  } else {
+    // 4. Existe EN CURSO → restaurar progreso (opcional)
+    console.log("Restaurando jugada en curso:", jugadas);
+    intentoIdx = jugadas.intentos;
+    pistasUsadas = jugadas.pistas_usadas;
+    // Aquí podrías re-renderizar el grid desde jugadas.grid si quieres
+  }
+
+
   for (let r=0; r<MAX_INTENTOS; r++){
     const row = document.createElement("div");
     row.className = "row";
@@ -126,7 +182,7 @@ async function ensureAuth() {
 
   const last = localStorage.getItem("wb:last");
   const prev = localStorage.getItem("wb:streak") || "0";
-  const todayISO = isoDateDO(hoy);
+ 
   if (last && last !== todayISO) {
     const y = new Date(last);
     const diff = (hoy - y) / 86400000;
