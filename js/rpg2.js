@@ -1,416 +1,353 @@
+/* ===================== CONFIG / MENTORES ===================== */
 window.modoPractica = false;
 
-// ====== Definición de mentores ======
 const MENTORES = [
-  {
-    id: "san_juan",
-    nombre: "San Juan Vianney",
-    img: "assets/img/mentor/mentor_cura.png",
-    habilidades: [
-      "+5 segundos por pregunta", "Oración poderosa", "Empatía pastoral",
-      "+10 segundos por pregunta", "Consejo certero", "Ánimo inagotable",
-      "Discernimiento espiritual", "50% de preguntas más fáciles (¡o eso parece!)",
-      "Sabiduría inesperada", "Fortaleza en la adversidad",
-      "Serenidad bajo presión", "Memoria bíblica"
-    ]
-  },
-  {
-    id: "santa_teresa",
-    nombre: "Santa Teresa de Ávila",
-    img: "assets/img/mentor/mentor_teresa.png",
-    habilidades: [
-      "Paciencia legendaria", "+7 segundos por pregunta", "Visión espiritual",
-      "Alegría contagiosa", "Confianza total", "Mente estratégica",
-      "Puedes pedir pista especial", "+2 segundos por pregunta", "Oración profunda",
-      "Inspiración a prueba de dudas", "Paz interior", "Valor ante el miedo"
-    ]
-  },
-  {
-    id: "san_pablo",
-    nombre: "San Pablo",
-    img: "assets/img/mentor/mentor_pablo.png",
-    habilidades: [
-      "+10 segundos por pregunta", "Conversión radical", "Resistencia a la adversidad",
-      "Predicador incansable", "Dominio de la Palabra", "+5 segundos por pregunta",
-      "Coraje misionero", "Sabiduría para responder rápido", "Motivación constante",
-      "Discernimiento de espíritus", "Viajes épicos (¡sin perder el rumbo!)", "Citas bíblicas al instante"
-    ]
-  }
+  { id:"san_juan", nombre:"San Juan Vianney", img:"assets/img/mentor/mentor_cura.png",
+    habilidades:[
+      "+5 segundos por pregunta","Oración poderosa","Empatía pastoral","+10 segundos por pregunta",
+      "Consejo certero","Ánimo inagotable","Discernimiento espiritual",
+      "50% de preguntas más fáciles (¡o eso parece!)","Sabiduría inesperada",
+      "Fortaleza en la adversidad","Serenidad bajo presión","Memoria bíblica"
+    ]},
+  { id:"santa_teresa", nombre:"Santa Teresa de Ávila", img:"assets/img/mentor/mentor_teresa.png",
+    habilidades:[
+      "Paciencia legendaria","+7 segundos por pregunta","Visión espiritual","Alegría contagiosa",
+      "Confianza total","Mente estratégica","Puedes pedir pista especial","+2 segundos por pregunta",
+      "Oración profunda","Inspiración a prueba de dudas","Paz interior","Valor ante el miedo"
+    ]},
+  { id:"san_pablo", nombre:"San Pablo", img:"assets/img/mentor/mentor_pablo.png",
+    habilidades:[
+      "+10 segundos por pregunta","Conversión radical","Resistencia a la adversidad",
+      "Predicador incansable","Dominio de la Palabra","+5 segundos por pregunta",
+      "Coraje misionero","Sabiduría para responder rápido","Motivación constante",
+      "Discernimiento de espíritus","Viajes épicos (¡sin perder el rumbo!)","Citas bíblicas al instante"
+    ]},
 ];
 
-function extraerBonusSegundos(habilidad) {
-  const match = habilidad.match(/\+(\d+)\s*segundos?/i);
-  return match ? parseInt(match[1], 10) : 0;
+function extraerBonusSegundos(txt){ const m=txt.match(/\+(\d+)\s*seg/i); return m?parseInt(m[1],10):0; }
+
+/* ===================== ESTADO GLOBAL ===================== */
+let usuarioActual=null;
+let rpgCiclos={}, cicloActual=isoCicloSemana(new Date());
+let datosCiclo=null, progresoRPG=null;
+
+let mentorElegido=null, habilidadesMentorPartida=[], bonusTiempoMentor=0;
+
+const preguntasPorNivel=[5,4,3,3,3]; // Niveles 1..5
+const EMOJIS_RPG=[{emoji:"😌",hasta:21},{emoji:"🙂",hasta:16},{emoji:"😐",hasta:11},{emoji:"😯",hasta:6},{emoji:"😱",hasta:0}];
+let temporizadorActivo=null;
+
+/* ===================== HELPERS TIEMPO/SONIDO ===================== */
+function isoCicloSemana(date){
+  const d=new Date(date); d.setHours(0,0,0,0);
+  d.setDate(d.getDate()+4-(d.getDay()||7));
+  const yStart=new Date(d.getFullYear(),0,1);
+  const week=Math.ceil((((d-yStart)/86400000)+1)/7);
+  return `${d.getFullYear()}-S${week}`;
 }
 
-// ====== Variables globales ======
-let mentorElegido = null;
-let habilidadesMentorPartida = [];
-let bonusTiempoMentor = 0;
+function reproducirSonido(nombre){
+  try{ const a=new Audio(`assets/sonidos/${nombre}`); a.play(); }catch(_){}
+}
+function sonidoFalloAleatorio(){
+  const arr=["wrong1.mp3","wrong2.mp3","wrong3.mp3","wrong4.mp3"];
+  return arr[Math.floor(Math.random()*arr.length)];
+}
 
-let rpgCiclos = {};
-let cicloActual = obtenerSemanaAnio();
-let datosCiclo = null;
-let progresoRPG = null;
-let usuarioActual = null;
+function crearTemporizadorPregunta(duracion, onTimeout, onTick){
+  let t=duracion; let st=null; let curEmoji="";
+  function tick(){
+    // SVG
+    const c=document.getElementById("timer-circular");
+    const r=40, C=2*Math.PI*r, prog=t/duracion;
+    if (c){ c.style.strokeDasharray=`${C}`; c.style.strokeDashoffset=`${C*(1-prog)}`; }
 
-const preguntasPorNivel = [5, 4, 3, 3, 3];
-
-const EMOJIS_RPG = [
-  { emoji: "😌", hasta: 21 }, { emoji: "🙂", hasta: 16 },
-  { emoji: "😐", hasta: 11 }, { emoji: "😯", hasta: 6 },
-  { emoji: "😱", hasta: 0 }
-];
-let temporizadorActivo = null;
-
-
-
-// ====== VALIDACIÓN DE SESIÓN EN EL DOMContentLoaded ======
-document.addEventListener("DOMContentLoaded", async () => {
-  const { data: sessionData } = await supabase.auth.getSession();
-  usuarioActual = sessionData?.session?.user;
-  if (!usuarioActual) {
-    document.getElementById("bienvenida-stats").innerHTML = `
-      <div class="panel-mensaje">
-        <h2>Por favor, inicia sesión para acceder a la Trivia RPG.</h2>
-        <button onclick="window.location.reload()">Recargar sesión</button>
-      </div>
-    `;
-    document.getElementById("btn-comenzar").style.display = "none";
-    document.getElementById("btn-continuar").style.display = "none";
-    return;
+    // emoji
+    const e = EMOJIS_RPG.find(x=>t>x.hasta) || EMOJIS_RPG.at(-1);
+    if (e && e.emoji!==curEmoji){
+      curEmoji=e.emoji;
+      const el=document.getElementById("emoji-animado");
+      if (el){ el.textContent=curEmoji; el.className="emoji-animado"+(curEmoji==="😱"?" shake":""); }
+    }
+    const txt=document.getElementById("timer-text");
+    if (txt) txt.textContent=`${t}s`;
+    if (onTick) onTick(t);
   }
-  fetch('datos/rpg-preguntas.json')
-    .then(res => res.json())
-    .then(async data => {
-      rpgCiclos = data.ciclos || {};
-      datosCiclo = rpgCiclos[cicloActual];
-      if (!datosCiclo) {
-        mostrarSinCiclo();
-        return;
-      }
-      await mostrarStatsBienvenida();
-      document.getElementById("menu-rpg").classList.remove("oculto");
-      inicializarPanelInicio();
-      inicializarRPG();
-    });
-});
-
-function crearTemporizadorPregunta(duracion, onTimeout, onTick, onEmojiChange) {
-  let tiempoRestante = duracion;
-  let intervalo;
-  let emojiActual = "";
-
-  function actualizarTemporizador() {
-    const circulo = document.getElementById("timer-circular");
-    const radio = 40, circunferencia = 2 * Math.PI * radio;
-    const progreso = tiempoRestante / duracion;
-    if (circulo) {
-      circulo.style.strokeDasharray = `${circunferencia}`;
-      circulo.style.strokeDashoffset = `${circunferencia * (1 - progreso)}`;
-    }
-    const emojiObj = EMOJIS_RPG.find(e => tiempoRestante > e.hasta) || EMOJIS_RPG[EMOJIS_RPG.length - 1];
-    if (emojiObj && emojiActual !== emojiObj.emoji) {
-      emojiActual = emojiObj.emoji;
-      const emojiDiv = document.getElementById("emoji-animado");
-      if (emojiDiv) {
-        emojiDiv.textContent = emojiActual;
-        emojiDiv.className = "emoji-animado" + (emojiActual === "😱" ? " shake" : "");
-        if (onEmojiChange) onEmojiChange(emojiActual);
-      }
-    }
-    const texto = document.getElementById("timer-text");
-    if (texto) texto.textContent = tiempoRestante + "s";
-    if (onTick) onTick(tiempoRestante);
-  }
-
-  actualizarTemporizador();
-
-  intervalo = setInterval(() => {
-    tiempoRestante--;
-    actualizarTemporizador();
-    if (tiempoRestante <= 0) {
-      clearInterval(intervalo);
-      if (onTimeout) onTimeout();
-    }
-  }, 1000);
-
-  temporizadorActivo = {
-    detener: () => clearInterval(intervalo),
-    getTiempo: () => tiempoRestante
-  };
+  tick();
+  st=setInterval(()=>{
+    t--; tick();
+    if (t<=0){ clearInterval(st); onTimeout&&onTimeout(); }
+  },1000);
+  temporizadorActivo={detener:()=>clearInterval(st), getTiempo:()=>t};
   return temporizadorActivo;
 }
+function limpiarTemporizadorPregunta(){ if (temporizadorActivo?.detener) temporizadorActivo.detener(); temporizadorActivo=null; }
 
-function limpiarTemporizadorPregunta() {
-  if (temporizadorActivo && temporizadorActivo.detener) temporizadorActivo.detener();
-  temporizadorActivo = null;
+/* ===================== SUPABASE: PROGRESO ===================== */
+// Tabla rpg_progreso con columnas añadidas: estado TEXT, vidas_restantes INT
+async function cargarProgresoRPG(){
+  const { data: sessionData }=await supabase.auth.getSession();
+  usuarioActual=sessionData?.session?.user;
+  const userId=usuarioActual?.id; if(!userId) return null;
+  const { data } = await supabase.from("rpg_progreso").select("*").eq("user_id",userId).eq("ciclo",cicloActual).maybeSingle();
+  return data||null;
 }
 
-function reproducirSonido(nombre) {
-  try {
-    const audio = new Audio("assets/sonidos/" + nombre);
-    audio.play();
-  } catch (e) {}
+// Upsert de progreso “en curso”
+async function guardarParcial({nivelMax, xp, vidasRestantes}){
+  if (window.modoPractica) return; // no guardar en práctica
+  const { data: sessionData }=await supabase.auth.getSession();
+  const user= sessionData?.session?.user; if(!user) return;
+  const meta=user.user_metadata||{};
+  await supabase.from("rpg_progreso").upsert([{
+    user_id:user.id,
+    ciclo:cicloActual,
+    nivel_max: nivelMax,
+    rango: null,
+    xp: xp,
+    completado:false,
+    estado:"en curso",
+    vidas_restantes: vidasRestantes,
+    fecha_juego: new Date().toISOString(),
+    pais: meta.pais||null, ciudad: meta.ciudad||null, parroquia: meta.parroquia||null
+  }]);
 }
 
-function sonidoFalloAleatorio() {
-  const opciones = ["wrong1.mp3", "wrong2.mp3", "wrong3.mp3", "wrong4.mp3"];
-  const i = Math.floor(Math.random() * opciones.length);
-  return opciones[i];
+// Finalizar: bloquea y cierra la partida
+async function guardarFinal({nivelMax, xp, rango}){
+  if (window.modoPractica) return; // no guardar en práctica
+  const { data: sessionData }=await supabase.auth.getSession();
+  const user= sessionData?.session?.user; if(!user) return;
+  const meta=user.user_metadata||{};
+  await supabase.from("rpg_progreso").upsert([{
+    user_id:user.id,
+    ciclo:cicloActual,
+    nivel_max:nivelMax,
+    rango:rango,
+    xp:xp,
+    completado:true,
+    estado:"terminado",
+    vidas_restantes: 0,
+    fecha_juego:new Date().toISOString(),
+    pais: meta.pais||null, ciudad: meta.ciudad||null, parroquia: meta.parroquia||null
+  }]);
 }
 
-function obtenerSemanaAnio() {
-  const d = new Date();
-  d.setHours(0, 0, 0, 0);
-  d.setDate(d.getDate() + 4 - (d.getDay() || 7));
-  const yearStart = new Date(d.getFullYear(), 0, 1);
-  return d.getFullYear() + "-S" + Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
-}
-
-function mostrarSinCiclo() {
-  document.getElementById("menu-rpg").innerHTML = `
-    <div class="panel-mensaje">
-      <h2>No hay trivia RPG programada para esta semana.</h2>
-      <p>¡Vuelve la próxima semana!</p>
-    </div>
-  `;
-  document.getElementById("btn-comenzar").style.display = "none";
-  document.getElementById("btn-continuar").style.display = "none";
-}
-
-// ====== BIENVENIDA (validando sesión antes de cualquier panel) ======
-async function mostrarStatsBienvenida() {
-  const { data: sessionData } = await supabase.auth.getSession();
-  usuarioActual = sessionData?.session?.user;
-  if (!usuarioActual) {
-    document.getElementById("bienvenida-stats").innerHTML = `
+/* ===================== UI INICIAL ===================== */
+document.addEventListener("DOMContentLoaded", async ()=>{
+  const { data: sessionData }=await supabase.auth.getSession();
+  usuarioActual=sessionData?.session?.user;
+  if (!usuarioActual){
+    document.getElementById("bienvenida-stats").innerHTML=`
       <div class="panel-mensaje">
-        <h2>Debes iniciar sesión para jugar la Trivia RPG.</h2>
+        <h2>Inicia sesión para jugar la Trivia RPG.</h2>
         <button onclick="window.location.reload()">Recargar sesión</button>
-      </div>
-    `;
-    document.getElementById("btn-comenzar").style.display = "none";
-    document.getElementById("btn-continuar").style.display = "none";
+      </div>`;
+    document.getElementById("btn-comenzar").style.display="none";
+    document.getElementById("btn-continuar").style.display="none";
     return;
   }
-  progresoRPG = await cargarProgresoRPG();
-  let yaJugo = progresoRPG && progresoRPG.completado;
 
-  if (yaJugo) {
-    document.getElementById("bienvenida-stats").innerHTML = `
+  // Cargar preguntas del ciclo
+  const res=await fetch("datos/rpg-preguntas.json"); const json=await res.json();
+  rpgCiclos=json.ciclos||{}; datosCiclo=rpgCiclos[cicloActual];
+  if (!datosCiclo){ mostrarSinCiclo(); return; }
+
+  await prepararPantallaBienvenida();
+  document.getElementById("menu-rpg").classList.remove("oculto");
+  inicializarRPG();
+});
+
+function mostrarSinCiclo(){
+  document.getElementById("menu-rpg").innerHTML=`
+    <div class="panel-mensaje">
+      <h2>No hay Trivia RPG programada para esta semana.</h2>
+      <p>Vuelve la próxima semana ✨</p>
+    </div>`;
+  document.getElementById("btn-comenzar").style.display="none";
+  document.getElementById("btn-continuar").style.display="none";
+}
+
+async function prepararPantallaBienvenida(){
+  progresoRPG=await cargarProgresoRPG();
+  const bloqueado = progresoRPG && (
+    progresoRPG.estado==="terminado" ||
+    progresoRPG.completado===true ||
+    progresoRPG.xp>0 ||
+    (progresoRPG.vidas_restantes??3) < 3 ||
+    (progresoRPG.nivel_max??1) > 1
+  );
+
+  const cont=document.getElementById("bienvenida-stats");
+
+  if (bloqueado && progresoRPG.estado!=="terminado"){
+    // Jugó y salió: mostrar cierre y XP parcial
+    cont.innerHTML=`
       <div class="panel-bienvenida">
-        <div class="rpg-bienvenido">¡Ya completaste la Trivia RPG de esta semana!</div>
-        <div>Vuelve la próxima semana para un nuevo reto.<br>
-        <small>(Si quieres, puedes jugar en <b>modo práctica</b>, pero no sumará XP ni logros.)</small></div>
-        <button id="btn-modo-practica" class="btn-secundario">Jugar en modo práctica</button>
-      </div>
-    `;
-    document.getElementById("btn-modo-practica").onclick = () => {
-      window.modoPractica = true;
-      juegoActual = null;
-      mentorElegido = null;
-      bonusTiempoMentor = 0;
-      habilidadesMentorPartida = [];
-      mostrarStatsBienvenidaModoPractica();
+        <div class="rpg-bienvenido">Sesión cerrada</div>
+        <p>Ya iniciaste tu aventura esta semana. Al salir, tu progreso quedó registrado.</p>
+        <p><b>XP acumulada:</b> ${progresoRPG.xp||0} · <b>Nivel alcanzado:</b> ${progresoRPG.nivel_max||1}</p>
+        <small>Podrás jugar de nuevo la próxima semana.</small>
+      </div>`;
+    document.getElementById("btn-comenzar").style.display="none";
+    document.getElementById("btn-continuar").style.display="none";
+    return;
+  }
+
+  if (progresoRPG?.estado==="terminado" || progresoRPG?.completado){
+    cont.innerHTML=`
+      <div class="panel-bienvenida">
+        <div class="rpg-bienvenido">¡Trivia de esta semana completada!</div>
+        <p>Rango: <b>${progresoRPG.rango||"-"}</b> · XP: <b>${progresoRPG.xp||0}</b></p>
+        <small>Puedes usar el <b>modo práctica</b> (no suma XP).</small>
+        <button id="btn-modo-practica" class="btn-secundario">Modo práctica</button>
+      </div>`;
+    document.getElementById("btn-comenzar").style.display="none";
+    document.getElementById("btn-continuar").style.display="none";
+    document.getElementById("btn-modo_practica")?.remove();
+    document.getElementById("btn-modo-practica").onclick=()=>{
+      window.modoPractica=true;
+      mentorElegido=null; habilidadesMentorPartida=[]; bonusTiempoMentor=0;
+      mostrarSelectorMentor();
     };
     return;
   }
 
-  document.getElementById("bienvenida-stats").innerHTML = `
+  // Libre para jugar
+  cont.innerHTML=`
     <div class="panel-bienvenida">
       <div class="rpg-bienvenido">¡Bienvenido a la Aventura RPG!</div>
-      <div class="rpg-avanza">Prepárate para elegir un mentor que te acompañará en esta travesía.<br>
-      ¡Espero que estés listo para afrontar el reto y dejar huella en tu historia bíblica!</div>
-      <button id="btn-elegir-mentor" class="btn-principal">Elegir Mentor</button>
-    </div>
-  `;
-  setTimeout(() => {
-    const btn = document.getElementById("btn-elegir-mentor");
-    if (btn) btn.onclick = mostrarSelectorMentor;
-  }, 100);
+      <div class="rpg-avanza">Elige un mentor y comienza. Recuerda: tienes <b>3 vidas</b>.</div>
+      <button id="btn-elegir-mentor" class="btn-principal">Elegir mentor</button>
+      <button id="btn-modo-practica" class="btn-secundario">Modo práctica</button>
+    </div>`;
+  document.getElementById("btn-elegir-mentor").onclick=mostrarSelectorMentor;
+  document.getElementById("btn-modo-practica").onclick=()=>{
+    window.modoPractica=true; mostrarSelectorMentor();
+  };
 }
 
-function mostrarStatsBienvenidaModoPractica() {
-  document.getElementById("bienvenida-stats").innerHTML = `
-    <div class="panel-bienvenida practica">
-      <div class="rpg-bienvenido">¡Modo práctica activado!</div>
-      <div class="rpg-avanza">Juega para practicar y mejorar.<br>Esta partida no sumará XP ni logros.</div>
-      <button id="btn-elegir-mentor" class="btn-principal">Elegir Mentor</button>
-    </div>
-  `;
-  setTimeout(() => {
-    const btn = document.getElementById("btn-elegir-mentor");
-    if (btn) btn.onclick = mostrarSelectorMentor;
-  }, 100);
-}
+/* ===================== INICIO / CONTINUAR ===================== */
+let juegoActual=null;
 
-// ========== PROGRESO: CARGAR Y GUARDAR ==========
-async function cargarProgresoRPG() {
-  if (window.supabase) {
-    const { data: sessionData } = await supabase.auth.getSession();
-    usuarioActual = sessionData?.session?.user;
-    const userId = usuarioActual?.id;
-    if (!userId) return null;
-    const { data } = await supabase
-      .from("rpg_progreso")
-      .select("*")
-      .eq("user_id", userId)
-      .eq("ciclo", cicloActual)
-      .maybeSingle();
-    return data;
-  }
-  const p = JSON.parse(localStorage.getItem("rpg_progreso")) || {};
-  return p[cicloActual] || null;
-}
+function inicializarRPG(){
+  document.getElementById("btn-logros").onclick=()=>mostrarLogros();
+  document.getElementById("btn-comenzar").onclick=()=>{
+    if (!usuarioActual) return alert("Inicia sesión.");
+    if (!mentorElegido) return mostrarSelectorMentor();
+    juegoActual={ nivel:1, vidas:3, pregunta:0, preguntasNivel:null, xp:0 };
+    mostrarNivel();
+  };
+  document.getElementById("btn-continuar").onclick=()=>{
+    if (!usuarioActual) return alert("Inicia sesión.");
+    if (!mentorElegido) return mostrarSelectorMentor();
+    if (!juegoActual) juegoActual={ nivel:1, vidas:3, pregunta:0, preguntasNivel:null, xp:0 };
+    mostrarNivel();
+  };
 
-async function guardarProgresoRPG({ nivel, rango, xp, completado }) {
-  const { data: sessionData } = await supabase.auth.getSession();
-  usuarioActual = sessionData?.session?.user;
-  const userId = usuarioActual?.id;
-  const meta = usuarioActual?.user_metadata || {};
-  if (!userId) {
-    alert("Error: No se detectó usuario autenticado. Por favor, inicia sesión nuevamente.");
-    return;
-  }
-  await supabase.from("rpg_progreso").upsert([{
-    user_id: userId,
-    ciclo: cicloActual,
-    nivel_max: nivel,
-    rango,
-    xp,
-    completado,
-    fecha_juego: new Date().toISOString(),
-    pais: meta.pais || null,
-    ciudad: meta.ciudad || null,
-    parroquia: meta.parroquia || null
-  }]);
-}
-
-// ========== RAM ==========
-let juegoActual = null;
-
-async function inicializarPanelInicio() {
-  document.getElementById("titulo-ciclo").textContent = datosCiclo.titulo || "Trivia Bíblica RPG";
-  document.getElementById("descripcion-ciclo").textContent = datosCiclo.descripcion || "";
-  document.getElementById("mensaje-rpg").textContent =
-    "Recuerda: solo tienes 3 vidas para demostrar tu valía. ¿Listo para el reto?";
-}
-
-async function inicializarRPG() {
-  progresoRPG = await cargarProgresoRPG();
-  if (progresoRPG && progresoRPG.completado) {
-    document.getElementById("btn-comenzar").style.display = "none";
-    document.getElementById("btn-continuar").style.display = "none";
-    document.getElementById("juego-rpg").classList.add("oculto");
-    document.getElementById("resultados-rpg").classList.add("oculto");
-    document.getElementById("logros-rpg").classList.add("oculto");
-    document.getElementById("menu-rpg").insertAdjacentHTML("beforeend",
-      `<div class="panel-mensaje" style="margin-top:1em;">
-        <strong>¡Ya completaste la Trivia de esta semana!</strong>
-        <br>Vuelve la próxima semana para un nuevo reto.
-      </div>`);
-    return;
-  }
-  document.getElementById("btn-comenzar").style.display = juegoActual ? "none" : "inline-block";
-  document.getElementById("btn-continuar").style.display = juegoActual ? "inline-block" : "none";
+  // Ocultar pantallas de juego al inicio
   document.getElementById("juego-rpg").classList.add("oculto");
   document.getElementById("resultados-rpg").classList.add("oculto");
   document.getElementById("logros-rpg").classList.add("oculto");
 }
 
-// ========== BOTONES ==========
-document.getElementById("btn-comenzar").onclick = () => {
-  if (!usuarioActual) {
-    alert("Por favor, inicia sesión para jugar.");
-    window.location.reload();
-    return;
-  }
-  juegoActual = {
-    nivel: 1,
-    vidas: 3,
-    pregunta: 0,
-    preguntasNivel: null,
-    xp: 0
-  };
-  mostrarNivel();
-};
-document.getElementById("btn-continuar").onclick = () => {
-  if (!usuarioActual) {
-    alert("Por favor, inicia sesión para jugar.");
-    window.location.reload();
-    return;
-  }
-  mostrarNivel();
-};
-document.getElementById("btn-logros").onclick = () => {
-  mostrarLogros();
-};
+/* ===================== MENTOR ===================== */
+function mezclarArray(a){ for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; }
 
-// ========== JUEGO: MOSTRAR NIVEL Y PREGUNTA ==========
-function mostrarNivel() {
-  const juego = document.getElementById("juego-rpg");
-  juego.classList.remove("oculto");
+function mostrarSelectorMentor(){
+  let html=`<div id="modal-mentor" class="modal-mentor"><h2>Elige tu mentor</h2><div class="mentores-lista">`;
+  MENTORES.forEach(m=>{
+    const picks=mezclarArray([...m.habilidades]).slice(0,3);
+    html+=`
+      <div class="mentor-card" data-id="${m.id}">
+        <img src="${m.img}" alt="${m.nombre}" class="mentor-img"/>
+        <h3>${m.nombre}</h3>
+        <ul>${picks.map(h=>`<li>${h}</li>`).join("")}</ul>
+        <button class="btn-seleccionar-mentor" data-id="${m.id}">Elegir</button>
+      </div>`;
+  });
+  html+=`</div><button id="cerrar-mentor" class="btn-cerrar">Cancelar</button></div>`;
+  const ov=document.createElement("div");
+  ov.id="overlay-mentor";
+  ov.style="position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:1000;display:flex;align-items:center;justify-content:center;";
+  ov.innerHTML=html;
+  document.body.appendChild(ov);
+  document.getElementById("cerrar-mentor").onclick=()=>document.body.removeChild(ov);
+  ov.querySelectorAll(".btn-seleccionar-mentor").forEach(b=>{
+    b.onclick=()=>{
+      const id=b.dataset.id;
+      mentorElegido=MENTORES.find(x=>x.id===id);
+      habilidadesMentorPartida=mezclarArray([...mentorElegido.habilidades]).slice(0,3);
+      bonusTiempoMentor=habilidadesMentorPartida.reduce((s,h)=>s+extraerBonusSegundos(h),0);
+      document.body.removeChild(ov);
+      // Mostrar mini confirmación
+      const cont=document.getElementById("bienvenida-stats");
+      cont.innerHTML=`
+        <div class="panel-bienvenida">
+          <div class="rpg-bienvenido">Mentor elegido:</div>
+          <div class="mentor-seleccionado">
+            <img src="${mentorElegido.img}" alt="${mentorElegido.nombre}" style="width:90px;height:90px;border-radius:50%;margin:8px 0;">
+            <div><strong>${mentorElegido.nombre}</strong></div>
+          </div>
+          <button id="btn-iniciar-aventura" class="btn-principal">Iniciar aventura</button>
+        </div>`;
+      document.getElementById("btn-iniciar-aventura").onclick=()=>{
+        document.getElementById("menu-rpg").classList.remove("oculto");
+        document.getElementById("btn-comenzar").click();
+      };
+    };
+  });
+}
+
+/* ===================== JUEGO: NIVELES/PREGUNTAS ===================== */
+function mostrarNivel(){
+  const wrap=document.getElementById("juego-rpg");
+  wrap.classList.remove("oculto");
   document.getElementById("menu-rpg").classList.add("oculto");
   document.getElementById("resultados-rpg").classList.add("oculto");
   document.getElementById("logros-rpg").classList.add("oculto");
 
-  const nivel = juegoActual.nivel;
-  const nivelKey = nivel.toString();
-  const numPreguntas = preguntasPorNivel[nivel - 1] || 3;
-
-  if (!datosCiclo.niveles || !Array.isArray(datosCiclo.niveles[nivelKey])) {
-    juego.innerHTML = `<div class="panel-mensaje">
-      <h2>¡No hay preguntas para el nivel ${nivel}!</h2>
-      <p>Verifica tu archivo <b>rpg-preguntas.json</b></p>
-      <button onclick="window.location.reload()">Volver</button>
-    </div>`;
+  const nivel=juegoActual.nivel;
+  const key=String(nivel);
+  const total=preguntasPorNivel[nivel-1]||3;
+  const niveles = datosCiclo?.niveles||{};
+  if (!Array.isArray(niveles[key])||!niveles[key].length){
+    wrap.innerHTML=`<div class="panel-mensaje"><h2>Sin preguntas para el nivel ${nivel}</h2><p>Verifica rpg-preguntas.json</p><button onclick="window.location.reload()">Volver</button></div>`;
     return;
   }
 
-  function shuffleOpciones(p) {
-    let arr = [...p.opciones];
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    return arr;
+  // Selección y shuffle de opciones
+  if (!juegoActual.preguntasNivel || juegoActual.preguntasNivel.length!==total){
+    const base=mezclarArray([...niveles[key]]).slice(0,total).map(p=>{
+      const ops=[...p.opciones]; // ya vienen como array
+      return {...p, opciones: mezclarArray(ops)};
+    });
+    juegoActual.preguntasNivel=base; juegoActual.pregunta=0;
   }
 
-  if (!juegoActual.preguntasNivel || juegoActual.preguntasNivel.length !== numPreguntas) {
-    juegoActual.preguntasNivel = mezclarArray([...datosCiclo.niveles[nivelKey]]).slice(0, numPreguntas).map(p => ({
-      ...p,
-      opciones: shuffleOpciones(p)
-    }));
-    juegoActual.pregunta = 0;
-  }
+  renderPregunta();
 
-  mostrarPregunta();
-
-  function mostrarPregunta() {
-    const preguntaActual = juegoActual.pregunta || 0;
-    const p = juegoActual.preguntasNivel[preguntaActual];
-
-    if (!p) {
-      if (juegoActual.nivel >= preguntasPorNivel.length) {
-        terminarAventura(true);
-      } else {
-        juegoActual.nivel++;
-        juegoActual.pregunta = 0;
-        juegoActual.preguntasNivel = null;
-        mostrarMensajeNivelPersonalizado(
-          juegoActual.nivel,
-          juegoActual.vidas,
-          mostrarNivel
-        );
+  function renderPregunta(){
+    const i=juegoActual.pregunta||0;
+    const p=juegoActual.preguntasNivel[i];
+    if (!p){
+      // Subió de nivel
+      juegoActual.nivel++;
+      // Guardado parcial: subir nivel_max
+      const nuevoNivelMax = Math.max(progresoRPG?.nivel_max||1, juegoActual.nivel-1);
+      guardarParcial({ nivelMax: nuevoNivelMax, xp: juegoActual.xp, vidasRestantes: juegoActual.vidas }).then(()=>{});
+      if (juegoActual.nivel>preguntasPorNivel.length){
+        terminarAventura(true); // completó todo
+      }else{
+        mostrarIntermedioNivel(juegoActual.nivel, juegoActual.vidas, renderPregunta, mostrarNivel);
       }
       return;
     }
 
-    juego.innerHTML = `
+    wrap.innerHTML=`
       <div class="temporizador-panel">
         <svg width="90" height="90" class="temporizador-svg">
-          <circle cx="45" cy="45" r="40" stroke="#f4a261" stroke-width="7" fill="none" id="timer-circular"/>
+          <circle cx="45" cy="45" r="40" stroke="#f4a261" stroke-width="7" fill="none" id="timer-circular"></circle>
         </svg>
         <span id="emoji-animado" class="emoji-animado">😌</span>
         <div id="timer-text" class="timer-text">25s</div>
@@ -422,334 +359,119 @@ function mostrarNivel() {
         </div>
         <div class="rpg-pregunta"><b>${p.pregunta}</b></div>
         <div class="rpg-opciones">
-          ${p.opciones.map((op, i) => `<button class="rpg-btn-op" data-i="${i}">${op}</button>`).join("")}
+          ${p.opciones.map((op,idx)=>`<button class="rpg-btn-op" data-i="${idx}">${op}</button>`).join("")}
         </div>
-        <small>Si fallas, pierdes una vida. ¡Suerte!</small>
+        <small>Tienes ${3} vidas en total. ¡Suerte!</small>
       </div>
     `;
 
     limpiarTemporizadorPregunta();
     reproducirSonido("go.mp3");
-    crearTemporizadorPregunta(
-      25 + bonusTiempoMentor,
-      () => {
+    crearTemporizadorPregunta(25+bonusTiempoMentor,
+      // Timeout → pierde vida, guarda parcial
+      ()=>{
         juegoActual.vidas--;
-        if (juegoActual.vidas <= 0) {
-          terminarAventura();
-        } else {
-          const vidasEl = document.querySelector('.rpg-vidas');
-          if (vidasEl) {
-            vidasEl.classList.add("shake");
-            setTimeout(() => vidasEl.classList.remove("shake"), 400);
-          }
-          juegoActual.pregunta++;
-          mostrarPregunta();
-        }
+        // guardado parcial (ya perdió vida ⇒ queda bloqueado si sale)
+        guardarParcial({ nivelMax: Math.max(progresoRPG?.nivel_max||1, juegoActual.nivel), xp: juegoActual.xp, vidasRestantes: juegoActual.vidas }).then(()=>{});
+        if (juegoActual.vidas<=0) { terminarAventura(false); return; }
+        // anim vidas
+        const v=document.querySelector(".rpg-vidas");
+        if (v){ v.classList.add("shake"); setTimeout(()=>v.classList.remove("shake"),400); }
+        juegoActual.pregunta=i+1; renderPregunta();
       },
-      (tiempoRestante) => {
-        if (tiempoRestante === 13) reproducirSonido("halfway.mp3");
-        if (tiempoRestante === 5) reproducirSonido("warning.mp3");
-      }
+      // Ticks para sonidos
+      (t)=>{ if (t===13) reproducirSonido("halfway.mp3"); if (t===5) reproducirSonido("warning.mp3"); }
     );
 
-    document.querySelectorAll('.rpg-btn-op').forEach(btn => {
-      btn.onclick = () => {
+    // Clicks
+    wrap.querySelectorAll(".rpg-btn-op").forEach(btn=>{
+      btn.onclick=()=>{
         limpiarTemporizadorPregunta();
-        const correcta = p.opciones[btn.dataset.i] === p.respuesta;
-        if (correcta) {
+        const correcta = p.opciones[btn.dataset.i]==p.respuesta;
+        if (correcta){
           btn.classList.add("acierto");
-          animarAcierto(btn);
           reproducirSonido("correcto.mp3");
-          juegoActual.xp += juegoActual.nivel * 1;
-        } else {
+          juegoActual.xp += (juegoActual.nivel*1);
+          // guardado parcial (avanzó = también bloquea si sale)
+          guardarParcial({ nivelMax: Math.max(progresoRPG?.nivel_max||1, juegoActual.nivel), xp: juegoActual.xp, vidasRestantes: juegoActual.vidas }).then(()=>{});
+        }else{
           btn.classList.add("fallo");
           reproducirSonido(sonidoFalloAleatorio());
           juegoActual.vidas--;
-          const vidasEl = document.querySelector('.rpg-vidas');
-          if (vidasEl) {
-            vidasEl.classList.add("shake");
-            setTimeout(() => vidasEl.classList.remove("shake"), 400);
-          }
+          guardarParcial({ nivelMax: Math.max(progresoRPG?.nivel_max||1, juegoActual.nivel), xp: juegoActual.xp, vidasRestantes: juegoActual.vidas }).then(()=>{});
+          const v=document.querySelector(".rpg-vidas");
+          if (v){ v.classList.add("shake"); setTimeout(()=>v.classList.remove("shake"),400); }
         }
-        setTimeout(() => {
-          juegoActual.pregunta = preguntaActual + 1;
-          if (juegoActual.vidas <= 0) {
-            terminarAventura();
-          } else if (juegoActual.pregunta >= numPreguntas) {
-            juegoActual.nivel++;
-            juegoActual.pregunta = 0;
-            juegoActual.preguntasNivel = null;
-            if (juegoActual.nivel > preguntasPorNivel.length) {
-              terminarAventura(true);
-            } else {
-              mostrarMensajeNivelPersonalizado(
-                juegoActual.nivel,
-                juegoActual.vidas,
-                mostrarNivel
-              );
-            }
-          } else {
-            mostrarPregunta();
-          }
-        }, 700);
+        setTimeout(()=>{
+          if (juegoActual.vidas<=0){ terminarAventura(false); return; }
+          juegoActual.pregunta=i+1; renderPregunta();
+        },650);
       };
     });
   }
 }
 
-// ========== FINALIZAR ==========
-async function terminarAventura(ganoTodo = false) {
-  document.getElementById("juego-rpg").classList.add("oculto");
-  document.getElementById("resultados-rpg").classList.remove("oculto");
-
-  if (window.modoPractica) {
-    document.getElementById("resultados-rpg").innerHTML = `
-      <h2>¡Fin de la práctica!</h2>
-      <p>¡Muy bien! Has completado el reto en <b>modo práctica</b>.</p>
-      <div class="msg-epico">Recuerda: Esta partida no cuenta para tu ranking, XP ni logros.<br>
-      Puedes volver a practicar cuando quieras.</div>
-      <button onclick="window.location.reload()">Volver al inicio</button>
-    `;
-    document.getElementById("btn-comenzar").style.display = "none";
-    document.getElementById("btn-continuar").style.display = "none";
-    return;
-  }
-
-  if (!usuarioActual) {
-    alert("Error: No se detectó usuario autenticado. Por favor, inicia sesión nuevamente.");
-    window.location.reload();
-    return;
-  }
-
-  const rango = obtenerRango(juegoActual.nivel, ganoTodo);
-  await guardarProgresoRPG({
-    nivel: juegoActual.nivel,
-    rango,
-    xp: juegoActual.xp,
-    completado: true,
-  });
-  document.getElementById("resultados-rpg").innerHTML = `
-    <h2>${ganoTodo ? "¡Felicidades, completaste la Trivia!" : "Fin de la aventura"}</h2>
-    <p>Tu rango: <b>${rango}</b></p>
-    <p>XP ganada: ${juegoActual.xp}</p>
-    <div class="msg-epico">⚡️ Has completado el reto semanal. Vuelve la próxima semana para una nueva aventura.</div>
-    <button onclick="window.location.reload()">Volver al inicio</button>
-    <button id="btn-compartir-resultado" class="compartir-btn">Compartir resultado</button>
-  `;
-  document.getElementById("btn-comenzar").style.display = "none";
-  document.getElementById("btn-continuar").style.display = "none";
-  setTimeout(() => {
-    const btn = document.getElementById("btn-compartir-resultado");
-    if (btn) btn.onclick = () => compartirResultadoRPG(rango, juegoActual.xp, ganoTodo);
-  }, 50);
+function mostrarIntermedioNivel(nivel, vidas, cbPregunta, cbNivel){
+  const box=document.getElementById("juego-rpg");
+  const frases=[
+    "¡Vas con todo!","¡Gran avance!","¡Excelente ritmo!","¡Casi en la cima!","¡Último empujón!"
+  ];
+  box.innerHTML=`
+    <div class="panel-mensaje-nivel">
+      <h2>🎉 ¡Subiste al nivel ${nivel}!</h2>
+      <p>${frases[nivel-2]||"¡Sigue así!"}</p>
+      <p>Vidas restantes: <b>${vidas}</b></p>
+      <button id="btn-seguir-nivel">Continuar</button>
+    </div>`;
+  document.getElementById("btn-seguir-nivel").onclick=cbNivel;
 }
 
-// ========== OTROS ==========
-function obtenerRango(nivel, ganoTodo) {
-  if (ganoTodo) return "Maestro de la Palabra";
-  if (nivel === 5) return "Sabio de las Escrituras";
-  if (nivel === 4) return "Guerrero de la Fe";
-  if (nivel === 3) return "Explorador Bíblico";
-  if (nivel === 2) return "Principiante";
+/* ===================== FIN PARTIDA ===================== */
+function obtenerRango(nivel, completo){
+  if (completo) return "Maestro de la Palabra";
+  if (nivel>=5) return "Sabio de las Escrituras";
+  if (nivel===4) return "Guerrero de la Fe";
+  if (nivel===3) return "Explorador Bíblico";
+  if (nivel===2) return "Principiante";
   return "Principiante";
 }
 
-function mezclarArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
+async function terminarAventura(completo=false){
+  document.getElementById("juego-rpg").classList.add("oculto");
+  const panel=document.getElementById("resultados-rpg");
+  panel.classList.remove("oculto");
+
+  const rango = obtenerRango(juegoActual.nivel, completo);
+  if (!window.modoPractica){
+    await guardarFinal({
+      nivelMax: Math.max(progresoRPG?.nivel_max||1, completo ? preguntasPorNivel.length : juegoActual.nivel),
+      xp: juegoActual.xp,
+      rango
+    });
   }
-  return array;
+
+  panel.innerHTML=`
+    <h2>${completo?"¡Completaste la Trivia!":"Fin de la aventura"}</h2>
+    <p>Rango: <b>${rango}</b></p>
+    <p>XP ganada: <b>${juegoActual.xp}</b></p>
+    <div class="msg-epico">${window.modoPractica?"(Modo práctica: no se guardó progreso)": "Vuelve la próxima semana para un nuevo reto."}</div>
+    <button onclick="window.location.reload()">Volver al inicio</button>
+    <button id="btn-compartir-resultado" class="compartir-btn">Compartir resultado</button>
+  `;
+  setTimeout(()=>{
+    document.getElementById("btn-compartir-resultado").onclick=()=>{
+      const msg = `${completo?"🏆 ¡Completé la Trivia Bíblica RPG!":"Jugué la Trivia Bíblica RPG"}\nRango: ${rango}\nXP: ${juegoActual.xp}\n¿Te atreves a superarme?`;
+      if (navigator.share) navigator.share({title:"Resultado RPG", text:msg, url:location.href});
+      else { navigator.clipboard.writeText(msg); alert("¡Copiado!"); }
+    };
+  },50);
 }
 
-function mostrarLogros() {
+/* ===================== LOGROS (placeholder) ===================== */
+function mostrarLogros(){
   document.getElementById("menu-rpg").classList.add("oculto");
   document.getElementById("juego-rpg").classList.add("oculto");
-  document.getElementById("resultados-rpg").classList.add("oculto");
-  document.getElementById("logros-rpg").classList.remove("oculto");
-  document.getElementById("logros-rpg").innerHTML = `
-    <h2>Logros RPG (próximamente)</h2>
-    <button onclick="window.location.reload()">Volver</button>
-  `;
+  const box=document.getElementById("logros-rpg");
+  box.classList.remove("oculto");
+  box.innerHTML=`<h2>Logros RPG (próximamente)</h2><button onclick="window.location.reload()">Volver</button>`;
 }
-
-const tipsPorNivel = [
-  "Recuerda leer con atención las opciones antes de responder.",
-  "Algunas preguntas tienen pistas en los detalles de la pregunta.",
-  "Si tienes dudas, descarta primero las opciones más improbables.",
-  "¡Vas muy bien! Mantén la calma y sigue adelante.",
-  "¡Estás a un paso del rango más alto! Confía en tu intuición."
-];
-function mostrarMensajeNivelPersonalizado(nivel, vidas, callback) {
-  const mensajes = [
-    "¡Buen comienzo!", "¡Vas avanzando muy bien!",
-    "¡Increíble progreso!", "¡Estás entre los mejores!",
-    "¡Nivel máximo alcanzado, eres un crack!"
-  ];
-  const msg = mensajes[nivel-1] || "¡Sigue así!";
-  const tip = tipsPorNivel[nivel-1] || "";
-
-  let mentorHtml = "";
-  if (mentorElegido) {
-    mentorHtml = `
-      <div class="mentor-nivel-panel">
-        <img src="${mentorElegido.img}" class="mentor-img-nivel" alt="${mentorElegido.nombre}" />
-        <div class="mentor-mensaje-nivel">${mentorElegidoFraseNivel()}</div>
-      </div>
-    `;
-  }
-
-  document.getElementById("juego-rpg").innerHTML = `
-    <div class="panel-mensaje-nivel">
-      ${mentorHtml}
-      <h2>🎉 ¡Felicidades!</h2>
-      <p>${msg}</p>
-      <p>Has alcanzado el <b>nivel ${nivel}</b>.<br>
-      Te quedan <b>${vidas}</b> ${vidas === 1 ? "vida" : "vidas"}.</p>
-      <div class="tip-box">
-        <strong>Tip para este nivel:</strong><br>${tip}
-      </div>
-      <button id="btn-seguir-nivel">Continuar</button>
-    </div>
-  `;
-  document.getElementById("btn-seguir-nivel").onclick = callback;
-}
-
-function animarAcierto(btn) {
-  btn.classList.add("acierto-anim");
-  setTimeout(() => btn.classList.remove("acierto-anim"), 500);
-}
-
-function compartirResultadoRPG(rango, xp, completado) {
-  let mensaje = `¡He jugado la Trivia Bíblica RPG!\nObtuve el rango: ${rango}\nXP ganada: ${xp}\n¿Te atreves a superarme?`;
-  if (completado) mensaje = "¡Completé la Trivia Bíblica RPG! 🏆\n" + mensaje;
-
-  if (navigator.share) {
-    navigator.share({
-      title: 'Mi resultado en Trivia Bíblica RPG',
-      text: mensaje,
-      url: window.location.href
-    });
-  } else {
-    navigator.clipboard.writeText(mensaje);
-    alert("¡Resultado copiado! Puedes pegarlo en WhatsApp, Telegram o donde quieras.");
-  }
-}
-
-// === Selector de Mentor ===
-function mostrarSelectorMentor() {
-  if (!usuarioActual) {
-    alert("Tu sesión ha caducado. Por favor, inicia sesión nuevamente para jugar.");
-    window.location.reload();
-    return;
-  }
-  let html = `
-    <div id="modal-mentor" class="modal-mentor">
-      <h2>Elige tu mentor</h2>
-      <div class="mentores-lista">
-  `;
-  MENTORES.forEach(mentor => {
-    const habilidades = mezclarArray(mentor.habilidades).slice(0, 3);
-    html += `
-      <div class="mentor-card" data-id="${mentor.id}">
-        <img src="${mentor.img}" alt="${mentor.nombre}" class="mentor-img"/>
-        <h3>${mentor.nombre}</h3>
-        <ul>
-          ${habilidades.map(hab => `<li>${hab}</li>`).join("")}
-        </ul>
-        <button class="btn-seleccionar-mentor" data-id="${mentor.id}">Elegir</button>
-      </div>
-    `;
-  });
-  html += `
-      </div>
-      <button id="cerrar-mentor" class="btn-cerrar">Cancelar</button>
-    </div>
-  `;
-
-  const contenedor = document.createElement("div");
-  contenedor.id = "overlay-mentor";
-  contenedor.style = "position:fixed;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.65);z-index:1000;display:flex;align-items:center;justify-content:center;";
-  contenedor.innerHTML = html;
-  document.body.appendChild(contenedor);
-
-  document.getElementById("cerrar-mentor").onclick = () => {
-    document.body.removeChild(contenedor);
-  };
-
-  contenedor.querySelectorAll(".btn-seleccionar-mentor").forEach(btn => {
-    btn.onclick = () => {
-      const mentorId = btn.dataset.id;
-      mentorElegido = MENTORES.find(m => m.id === mentorId);
-      habilidadesMentorPartida = mezclarArray(mentorElegido.habilidades).slice(0, 3);
-      bonusTiempoMentor = habilidadesMentorPartida.reduce((total, h) => total + extraerBonusSegundos(h), 0);
-      document.body.removeChild(contenedor);
-      mostrarPanelInicioConMentor();
-    };
-  });
-}
-
-function mostrarPanelInicioConMentor() {
-  document.getElementById("bienvenida-stats").innerHTML = `
-    <div class="panel-bienvenida">
-      <div class="rpg-bienvenido">¡Tu mentor en esta aventura será:</div>
-      <div class="mentor-seleccionado">
-        <img src="${mentorElegido.img}" alt="${mentorElegido.nombre}" style="width:90px;height:90px;border-radius:50%;margin:8px 0;">
-        <div><strong>${mentorElegido.nombre}</strong></div>
-      </div>
-      <div class="mentor-frase">${mentorElegidoFraseMotivacional()}</div>
-      <button id="btn-iniciar-aventura" class="btn-principal">Iniciar aventura</button>
-    </div>
-  `;
-  document.getElementById("btn-iniciar-aventura").onclick = () => {
-    document.getElementById("bienvenida-stats").innerHTML = "";
-    document.getElementById("menu-rpg").classList.remove("oculto");
-    document.getElementById("btn-comenzar").click();
-  };
-}
-
-function mentorElegidoFraseMotivacional() {
-  if (!mentorElegido) return "";
-  const frasesPorMentor = {
-    san_juan: [
-      "¡Recuerda: la oración es tu fuerza secreta!",
-      "No temas equivocarte, sigue adelante.",
-      "Dios siempre camina contigo, ¡ánimo!"
-    ],
-    santa_teresa: [
-      "Nada te turbe, nada te espante...",
-      "Confía, todo pasa, solo Dios basta.",
-      "Aprovecha cada pregunta para aprender."
-    ],
-    san_pablo: [
-      "Todo lo puedo en Aquel que me fortalece.",
-      "No te rindas, la fe mueve montañas.",
-      "Corre la carrera como para ganar el premio."
-    ]
-  };
-  const arr = frasesPorMentor[mentorElegido.id] || ["¡Buena suerte!"];
-  return arr[Math.floor(Math.random() * arr.length)];
-}
-function mentorElegidoFraseNivel() {
-  if (!mentorElegido) return "";
-  const frasesPorMentor = {
-    san_juan: [
-      "La paciencia te llevará lejos, ¡confía en Dios!",
-      "Cada error es una oportunidad de crecer en santidad.",
-      "Sigue adelante, la gracia nunca te abandona."
-    ],
-    santa_teresa: [
-      "No te detengas, ¡la fe mueve todo!",
-      "En cada paso, Dios te acompaña.",
-      "Si caes, levántate con una sonrisa y sigue."
-    ],
-    san_pablo: [
-      "Lucha la buena batalla, ¡no te rindas!",
-      "Dios obra en ti, aun en el cansancio.",
-      "¡El premio espera al final de la carrera!"
-    ]
-  };
-  const arr = frasesPorMentor[mentorElegido.id] || ["¡Sigue, eres capaz!"];
-  return arr[Math.floor(Math.random() * arr.length)];
-}
-
