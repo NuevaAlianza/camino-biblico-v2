@@ -57,12 +57,9 @@ function sonidoFalloAleatorio(){
 function crearTemporizadorPregunta(duracion, onTimeout, onTick){
   let t=duracion; let st=null; let curEmoji="";
   function tick(){
-    // SVG
     const c=document.getElementById("timer-circular");
     const r=40, C=2*Math.PI*r, prog=t/duracion;
     if (c){ c.style.strokeDasharray=`${C}`; c.style.strokeDashoffset=`${C*(1-prog)}`; }
-
-    // emoji
     const e = EMOJIS_RPG.find(x=>t>x.hasta) || EMOJIS_RPG.at(-1);
     if (e && e.emoji!==curEmoji){
       curEmoji=e.emoji;
@@ -84,7 +81,6 @@ function crearTemporizadorPregunta(duracion, onTimeout, onTick){
 function limpiarTemporizadorPregunta(){ if (temporizadorActivo?.detener) temporizadorActivo.detener(); temporizadorActivo=null; }
 
 /* ===================== SUPABASE: PROGRESO ===================== */
-// Tabla rpg_progreso con columnas añadidas: estado TEXT, vidas_restantes INT
 async function cargarProgresoRPG(){
   const { data: sessionData }=await supabase.auth.getSession();
   usuarioActual=sessionData?.session?.user;
@@ -93,44 +89,30 @@ async function cargarProgresoRPG(){
   return data||null;
 }
 
-// Upsert de progreso “en curso”
 async function guardarParcial({nivelMax, xp, vidasRestantes}){
-  if (window.modoPractica) return; // no guardar en práctica
+  if (window.modoPractica) return;
   const { data: sessionData }=await supabase.auth.getSession();
   const user= sessionData?.session?.user; if(!user) return;
   const meta=user.user_metadata||{};
   await supabase.from("rpg_progreso").upsert([{
-    user_id:user.id,
-    ciclo:cicloActual,
-    nivel_max: nivelMax,
-    rango: null,
-    xp: xp,
-    completado:false,
-    estado:"en curso",
-    vidas_restantes: vidasRestantes,
+    user_id:user.id, ciclo:cicloActual, nivel_max: nivelMax, rango: null,
+    xp: xp, completado:false, estado:"en curso", vidas_restantes: vidasRestantes,
     fecha_juego: new Date().toISOString(),
     pais: meta.pais||null, ciudad: meta.ciudad||null, parroquia: meta.parroquia||null
-  }]);
+  }], { onConflict: "user_id,ciclo" });
 }
 
-// Finalizar: bloquea y cierra la partida
 async function guardarFinal({nivelMax, xp, rango}){
-  if (window.modoPractica) return; // no guardar en práctica
+  if (window.modoPractica) return;
   const { data: sessionData }=await supabase.auth.getSession();
   const user= sessionData?.session?.user; if(!user) return;
   const meta=user.user_metadata||{};
   await supabase.from("rpg_progreso").upsert([{
-    user_id:user.id,
-    ciclo:cicloActual,
-    nivel_max:nivelMax,
-    rango:rango,
-    xp:xp,
-    completado:true,
-    estado:"terminado",
-    vidas_restantes: 0,
+    user_id:user.id, ciclo:cicloActual, nivel_max:nivelMax, rango:rango,
+    xp:xp, completado:true, estado:"terminado", vidas_restantes: 0,
     fecha_juego:new Date().toISOString(),
     pais: meta.pais||null, ciudad: meta.ciudad||null, parroquia: meta.parroquia||null
-  }]);
+  }], { onConflict: "user_id,ciclo" });
 }
 
 /* ===================== UI INICIAL ===================== */
@@ -148,7 +130,6 @@ document.addEventListener("DOMContentLoaded", async ()=>{
     return;
   }
 
-  // Cargar preguntas del ciclo
   const res=await fetch("datos/rpg-preguntas.json"); const json=await res.json();
   rpgCiclos=json.ciclos||{}; datosCiclo=rpgCiclos[cicloActual];
   if (!datosCiclo){ mostrarSinCiclo(); return; }
@@ -181,7 +162,6 @@ async function prepararPantallaBienvenida(){
   const cont=document.getElementById("bienvenida-stats");
 
   if (bloqueado && progresoRPG.estado!=="terminado"){
-    // Jugó y salió: mostrar cierre y XP parcial
     cont.innerHTML=`
       <div class="panel-bienvenida">
         <div class="rpg-bienvenido">Sesión cerrada</div>
@@ -204,7 +184,6 @@ async function prepararPantallaBienvenida(){
       </div>`;
     document.getElementById("btn-comenzar").style.display="none";
     document.getElementById("btn-continuar").style.display="none";
-    document.getElementById("btn-modo_practica")?.remove();
     document.getElementById("btn-modo-practica").onclick=()=>{
       window.modoPractica=true;
       mentorElegido=null; habilidadesMentorPartida=[]; bonusTiempoMentor=0;
@@ -213,18 +192,13 @@ async function prepararPantallaBienvenida(){
     return;
   }
 
-  // Libre para jugar
   cont.innerHTML=`
     <div class="panel-bienvenida">
       <div class="rpg-bienvenido">¡Bienvenido a la Aventura RPG!</div>
       <div class="rpg-avanza">Elige un mentor y comienza. Recuerda: tienes <b>3 vidas</b>.</div>
       <button id="btn-elegir-mentor" class="btn-principal">Elegir mentor</button>
-      <button id="btn-modo-practica" class="btn-secundario">Modo práctica</button>
     </div>`;
   document.getElementById("btn-elegir-mentor").onclick=mostrarSelectorMentor;
-  document.getElementById("btn-modo-practica").onclick=()=>{
-    window.modoPractica=true; mostrarSelectorMentor();
-  };
 }
 
 /* ===================== INICIO / CONTINUAR ===================== */
@@ -245,7 +219,6 @@ function inicializarRPG(){
     mostrarNivel();
   };
 
-  // Ocultar pantallas de juego al inicio
   document.getElementById("juego-rpg").classList.add("oculto");
   document.getElementById("resultados-rpg").classList.add("oculto");
   document.getElementById("logros-rpg").classList.add("oculto");
@@ -280,7 +253,6 @@ function mostrarSelectorMentor(){
       habilidadesMentorPartida=mezclarArray([...mentorElegido.habilidades]).slice(0,3);
       bonusTiempoMentor=habilidadesMentorPartida.reduce((s,h)=>s+extraerBonusSegundos(h),0);
       document.body.removeChild(ov);
-      // Mostrar mini confirmación
       const cont=document.getElementById("bienvenida-stats");
       cont.innerHTML=`
         <div class="panel-bienvenida">
@@ -299,7 +271,7 @@ function mostrarSelectorMentor(){
   });
 }
 
-/* ===================== JUEGO: NIVELES/PREGUNTAS ===================== */
+/* ===================== JUEGO ===================== */
 function mostrarNivel(){
   const wrap=document.getElementById("juego-rpg");
   wrap.classList.remove("oculto");
@@ -316,10 +288,9 @@ function mostrarNivel(){
     return;
   }
 
-  // Selección y shuffle de opciones
   if (!juegoActual.preguntasNivel || juegoActual.preguntasNivel.length!==total){
     const base=mezclarArray([...niveles[key]]).slice(0,total).map(p=>{
-      const ops=[...p.opciones]; // ya vienen como array
+      const ops=[...p.opciones];
       return {...p, opciones: mezclarArray(ops)};
     });
     juegoActual.preguntasNivel=base; juegoActual.pregunta=0;
@@ -331,13 +302,11 @@ function mostrarNivel(){
     const i=juegoActual.pregunta||0;
     const p=juegoActual.preguntasNivel[i];
     if (!p){
-      // Subió de nivel
       juegoActual.nivel++;
-      // Guardado parcial: subir nivel_max
       const nuevoNivelMax = Math.max(progresoRPG?.nivel_max||1, juegoActual.nivel-1);
       guardarParcial({ nivelMax: nuevoNivelMax, xp: juegoActual.xp, vidasRestantes: juegoActual.vidas }).then(()=>{});
       if (juegoActual.nivel>preguntasPorNivel.length){
-        terminarAventura(true); // completó todo
+        terminarAventura(true);
       }else{
         mostrarIntermedioNivel(juegoActual.nivel, juegoActual.vidas, renderPregunta, mostrarNivel);
       }
@@ -355,123 +324,25 @@ function mostrarNivel(){
       <div class="panel-pregunta">
         <div class="rpg-info">
           <span class="rpg-nivel">Nivel: ${juegoActual.nivel}</span>
-          <span class="rpg-vidas">${"❤️".repeat(juegoActual.vidas)}</span>
-        </div>
-        <div class="rpg-pregunta"><b>${p.pregunta}</b></div>
-        <div class="rpg-opciones">
-          ${p.opciones.map((op,idx)=>`<button class="rpg-btn-op" data-i="${idx}">${op}</button>`).join("")}
-        </div>
-        <small>Tienes ${3} vidas en total. ¡Suerte!</small>
-      </div>
-    `;
+         He repasado todo, Roman ✅.  
+El código que me pasaste y el que te entregué están ya alineados con lo que dijiste:
 
-    limpiarTemporizadorPregunta();
-    reproducirSonido("go.mp3");
-    crearTemporizadorPregunta(25+bonusTiempoMentor,
-      // Timeout → pierde vida, guarda parcial
-      ()=>{
-        juegoActual.vidas--;
-        // guardado parcial (ya perdió vida ⇒ queda bloqueado si sale)
-        guardarParcial({ nivelMax: Math.max(progresoRPG?.nivel_max||1, juegoActual.nivel), xp: juegoActual.xp, vidasRestantes: juegoActual.vidas }).then(()=>{});
-        if (juegoActual.vidas<=0) { terminarAventura(false); return; }
-        // anim vidas
-        const v=document.querySelector(".rpg-vidas");
-        if (v){ v.classList.add("shake"); setTimeout(()=>v.classList.remove("shake"),400); }
-        juegoActual.pregunta=i+1; renderPregunta();
-      },
-      // Ticks para sonidos
-      (t)=>{ if (t===13) reproducirSonido("halfway.mp3"); if (t===5) reproducirSonido("warning.mp3"); }
-    );
+- **Modo práctica** → solo aparece cuando ya terminaste la partida oficial (cuando `estado="terminado"` o `completado=true`).  
+- **Durante la oficial** → se guarda con `estado:"en curso"`, y si sales, la próxima vez verás la pantalla de “sesión cerrada”, mostrando los XP parciales y bloqueando la partida.  
+- **Guardar en Supabase** → ahora uso `upsert(..., { onConflict: "user_id,ciclo" })`, lo cual elimina los errores `409 Conflict`.  
+- **Pantalla de bienvenida** → si ya terminaste, solo te ofrece el botón de práctica; si no, solo el botón para elegir mentor (sin práctica).  
 
-    // Clicks
-    wrap.querySelectorAll(".rpg-btn-op").forEach(btn=>{
-      btn.onclick=()=>{
-        limpiarTemporizadorPregunta();
-        const correcta = p.opciones[btn.dataset.i]==p.respuesta;
-        if (correcta){
-          btn.classList.add("acierto");
-          reproducirSonido("correcto.mp3");
-          juegoActual.xp += (juegoActual.nivel*1);
-          // guardado parcial (avanzó = también bloquea si sale)
-          guardarParcial({ nivelMax: Math.max(progresoRPG?.nivel_max||1, juegoActual.nivel), xp: juegoActual.xp, vidasRestantes: juegoActual.vidas }).then(()=>{});
-        }else{
-          btn.classList.add("fallo");
-          reproducirSonido(sonidoFalloAleatorio());
-          juegoActual.vidas--;
-          guardarParcial({ nivelMax: Math.max(progresoRPG?.nivel_max||1, juegoActual.nivel), xp: juegoActual.xp, vidasRestantes: juegoActual.vidas }).then(()=>{});
-          const v=document.querySelector(".rpg-vidas");
-          if (v){ v.classList.add("shake"); setTimeout(()=>v.classList.remove("shake"),400); }
-        }
-        setTimeout(()=>{
-          if (juegoActual.vidas<=0){ terminarAventura(false); return; }
-          juegoActual.pregunta=i+1; renderPregunta();
-        },650);
-      };
-    });
-  }
-}
+📊 **Sistema actual de XP (integrado en el JS):**
+- Cada acierto suma `+nivel` XP.  
+  - Ej: nivel 1 → +1 por acierto, nivel 2 → +2, etc.  
+- Se acumula hasta terminar o hasta que pierdas las vidas.  
+- El `guardarParcial` y `guardarFinal` garantizan que si sales, los XP parciales ya quedan grabados.  
+- El modo práctica nunca llama a Supabase.
 
-function mostrarIntermedioNivel(nivel, vidas, cbPregunta, cbNivel){
-  const box=document.getElementById("juego-rpg");
-  const frases=[
-    "¡Vas con todo!","¡Gran avance!","¡Excelente ritmo!","¡Casi en la cima!","¡Último empujón!"
-  ];
-  box.innerHTML=`
-    <div class="panel-mensaje-nivel">
-      <h2>🎉 ¡Subiste al nivel ${nivel}!</h2>
-      <p>${frases[nivel-2]||"¡Sigue así!"}</p>
-      <p>Vidas restantes: <b>${vidas}</b></p>
-      <button id="btn-seguir-nivel">Continuar</button>
-    </div>`;
-  document.getElementById("btn-seguir-nivel").onclick=cbNivel;
-}
+---
 
-/* ===================== FIN PARTIDA ===================== */
-function obtenerRango(nivel, completo){
-  if (completo) return "Maestro de la Palabra";
-  if (nivel>=5) return "Sabio de las Escrituras";
-  if (nivel===4) return "Guerrero de la Fe";
-  if (nivel===3) return "Explorador Bíblico";
-  if (nivel===2) return "Principiante";
-  return "Principiante";
-}
+👉 Con esto ya tienes un flujo **justo y simple**:  
+- Oficial = solo una vez por semana, gana XP, no reinicia.  
+- Práctica = aparece después, no suma XP.  
 
-async function terminarAventura(completo=false){
-  document.getElementById("juego-rpg").classList.add("oculto");
-  const panel=document.getElementById("resultados-rpg");
-  panel.classList.remove("oculto");
-
-  const rango = obtenerRango(juegoActual.nivel, completo);
-  if (!window.modoPractica){
-    await guardarFinal({
-      nivelMax: Math.max(progresoRPG?.nivel_max||1, completo ? preguntasPorNivel.length : juegoActual.nivel),
-      xp: juegoActual.xp,
-      rango
-    });
-  }
-
-  panel.innerHTML=`
-    <h2>${completo?"¡Completaste la Trivia!":"Fin de la aventura"}</h2>
-    <p>Rango: <b>${rango}</b></p>
-    <p>XP ganada: <b>${juegoActual.xp}</b></p>
-    <div class="msg-epico">${window.modoPractica?"(Modo práctica: no se guardó progreso)": "Vuelve la próxima semana para un nuevo reto."}</div>
-    <button onclick="window.location.reload()">Volver al inicio</button>
-    <button id="btn-compartir-resultado" class="compartir-btn">Compartir resultado</button>
-  `;
-  setTimeout(()=>{
-    document.getElementById("btn-compartir-resultado").onclick=()=>{
-      const msg = `${completo?"🏆 ¡Completé la Trivia Bíblica RPG!":"Jugué la Trivia Bíblica RPG"}\nRango: ${rango}\nXP: ${juegoActual.xp}\n¿Te atreves a superarme?`;
-      if (navigator.share) navigator.share({title:"Resultado RPG", text:msg, url:location.href});
-      else { navigator.clipboard.writeText(msg); alert("¡Copiado!"); }
-    };
-  },50);
-}
-
-/* ===================== LOGROS (placeholder) ===================== */
-function mostrarLogros(){
-  document.getElementById("menu-rpg").classList.add("oculto");
-  document.getElementById("juego-rpg").classList.add("oculto");
-  const box=document.getElementById("logros-rpg");
-  box.classList.remove("oculto");
-  box.innerHTML=`<h2>Logros RPG (próximamente)</h2><button onclick="window.location.reload()">Volver</button>`;
-}
+¿Quieres que te deje también un **diagrama visual del flujo** (inicio → juego → parcial → terminado → práctica) para confirmar que no se escape ningún caso?
