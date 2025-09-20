@@ -22,8 +22,34 @@ let tiempoRestante = 35;
 let timer = null;
 let quizFinalizado = false;
 
+// --- Utilidades ---
+function formatoFecha(fechaISO) {
+  const fecha = new Date(fechaISO);
+  return fecha.toLocaleDateString("es-ES", {
+    day: "2-digit", month: "short", year: "numeric"
+  });
+}
+
+function mezclar(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+function mostrarSolo(elementoMostrado) {
+  [inicio, juego, final].forEach(el => {
+    el.classList.add("oculto");
+    el.classList.remove("fade-in");
+  });
+  elementoMostrado.classList.remove("oculto");
+  void elementoMostrado.offsetWidth;
+  elementoMostrado.classList.add("fade-in");
+}
+
 // --- 1. Cargar temporadas y buscar activa ---
-fetch('./datos/temporadas.json')
+fetch("./datos/temporadas.json")
   .then(res => res.json())
   .then(temporadas => {
     const hoy = new Date();
@@ -34,15 +60,17 @@ fetch('./datos/temporadas.json')
     });
     if (!datosTemporada) {
       btnComenzar.disabled = true;
-      document.getElementById("descripcion-temporada").textContent = "No hay temporada activa en este momento.";
+      document.getElementById("descripcion-temporada").textContent =
+        "No hay temporada activa en este momento.";
       return;
     }
     idTemporada = datosTemporada.id;
     preguntas = datosTemporada.preguntas;
     document.getElementById("titulo-temporada").textContent = datosTemporada.titulo;
     document.getElementById("descripcion-temporada").textContent = datosTemporada.descripcion;
-    document.getElementById("fecha-temporada").textContent = `${formatoFecha(datosTemporada.fecha_inicio)} – ${formatoFecha(datosTemporada.fecha_fin)}`;
-    mostrarSolo(inicio); // Muestra solo pantalla de inicio al cargar
+    document.getElementById("fecha-temporada").textContent =
+      `${formatoFecha(datosTemporada.fecha_inicio)} – ${formatoFecha(datosTemporada.fecha_fin)}`;
+    mostrarSolo(inicio);
   });
 
 // --- 2. Comenzar quiz ---
@@ -51,7 +79,7 @@ btnComenzar.addEventListener("click", () => {
     alert("No hay preguntas para esta temporada.");
     return;
   }
-  btnComenzar.disabled = true; // Previene doble click
+  btnComenzar.disabled = true;
   indicePregunta = 0;
   puntaje = 0;
   quizFinalizado = false;
@@ -61,9 +89,8 @@ btnComenzar.addEventListener("click", () => {
 
 // --- 3. Mostrar pregunta actual ---
 function mostrarPregunta() {
-  if (quizFinalizado) return; // Evita avances extras
+  if (quizFinalizado) return;
 
-  // Si terminó el quiz
   if (indicePregunta >= preguntas.length) {
     quizFinalizado = true;
     finalizarJuego();
@@ -74,7 +101,6 @@ function mostrarPregunta() {
   tiempoRestante = 35;
   actualizarBarraTiempo();
 
-  // Inicia temporizador
   timer = setInterval(() => {
     tiempoRestante--;
     actualizarBarraTiempo();
@@ -87,12 +113,11 @@ function mostrarPregunta() {
     }
   }, 1000);
 
-  // Renderiza pregunta y opciones
   const p = preguntas[indicePregunta];
   preguntaDiv.textContent = p.pregunta;
   opcionesDiv.innerHTML = "";
 
-  let opciones = [p.respuesta, p.opcion_1, p.opcion_2, p.opcion_3].sort(() => Math.random() - 0.5);
+  let opciones = mezclar([p.respuesta, p.opcion_1, p.opcion_2, p.opcion_3]);
 
   const opcionesCont = document.createElement("div");
   opcionesCont.className = "trivia-opciones";
@@ -104,19 +129,23 @@ function mostrarPregunta() {
     btn.onclick = () => {
       if (quizFinalizado) return;
       clearInterval(timer);
-      // Deshabilita todas las opciones apenas responde
       opcionesCont.querySelectorAll("button").forEach(b => b.disabled = true);
 
-      if (op === p.respuesta) puntaje++;
+      if (op === p.respuesta) {
+        puntaje++;
+        btn.classList.add("correcta");
+      } else {
+        btn.classList.add("incorrecta");
+      }
+
       indicePregunta++;
-      setTimeout(() => mostrarPregunta(), 260); // Delay visual
+      setTimeout(() => mostrarPregunta(), 400);
     };
     opcionesCont.appendChild(btn);
   });
 
   opcionesDiv.appendChild(opcionesCont);
 
-  // Animación de aparición
   preguntaDiv.classList.remove("fade-in");
   void preguntaDiv.offsetWidth;
   preguntaDiv.classList.add("fade-in");
@@ -128,17 +157,18 @@ function mostrarPregunta() {
   conteoPregunta.textContent = `Pregunta ${indicePregunta + 1} de ${preguntas.length}`;
 }
 
-// --- 4. Barra y contador de tiempo ---
+// --- 4. Barra de tiempo ---
 function actualizarBarraTiempo() {
   contador.textContent = `Tiempo: ${tiempoRestante}s`;
   progresoBar.style.width = `${(tiempoRestante / 35) * 100}%`;
-  if (tiempoRestante > 19) progresoBar.style.background = '#2a9d8f';
-  else if (tiempoRestante > 10) progresoBar.style.background = '#e9c46a';
-  else progresoBar.style.background = '#e76f51';
+  if (tiempoRestante > 19) progresoBar.style.background = "#2a9d8f";
+  else if (tiempoRestante > 10) progresoBar.style.background = "#e9c46a";
+  else progresoBar.style.background = "#e76f51";
 }
 
 // --- 5. Finalizar juego ---
 function finalizarJuego() {
+  if (timer) clearInterval(timer);
   mostrarSolo(final);
   const max = datosTemporada.puntaje_maximo;
   const umbral = datosTemporada.umbral_coleccionable;
@@ -149,8 +179,8 @@ function finalizarJuego() {
 
   if (nota === "A") {
     imgSrc = datosTemporada.coleccionable.imagen_a;
-    mensajeExtra = `<p style="color:#2a9d8f; font-weight:600; margin-top:1rem;">🏆 ¡Excelente! Has desbloqueado el coleccionable especial.</p>`;
-    botonDescarga = `<a href="${imgSrc}" download style="display:inline-block; margin-top:1rem; background:#e9c46a; padding:0.5rem 1rem; border-radius:0.5rem; color:#333; text-decoration:none; font-weight:bold; font-size:0.9rem;">📥 Descargar</a>`;
+    mensajeExtra = `<p class="estado-premio">🏆 ¡Excelente! Has desbloqueado el coleccionable especial.</p>`;
+    botonDescarga = `<a href="${imgSrc}" download class="btn-descargar">📥 Descargar</a>`;
     setTimeout(() => {
       confetti({
         particleCount: 180,
@@ -181,13 +211,13 @@ function finalizarJuego() {
   `;
 
   setTimeout(() => {
-    const btnCompartir = document.getElementById('btn-compartir-temporada');
+    const btnCompartir = document.getElementById("btn-compartir-temporada");
     if (btnCompartir) {
-      btnCompartir.onclick = function() {
+      btnCompartir.onclick = function () {
         compartirResultadoTemporada(nota, puntaje, datosTemporada.titulo);
       };
     }
-  }, 20);
+  }, 50);
 
   guardarProgresoEnNubeTemporada();
 }
@@ -217,36 +247,14 @@ async function guardarProgresoEnNubeTemporada() {
       porcentaje,
       fecha: new Date().toISOString()
     }], {
-      onConflict: ['user_id', 'tipo', 'clave']
+      onConflict: ["user_id", "tipo", "clave"]
     });
 
-  if (error) {
-    console.error("❌ Error al guardar progreso de temporada:", error.message);
-  } else {
-    console.log("✅ Progreso de temporada guardado en Supabase.");
-  }
+  if (error) console.error("❌ Error al guardar progreso:", error.message);
+  else console.log("✅ Progreso de temporada guardado en Supabase.");
 }
 
-// --- 7. Utilidad para formato fecha bonita ---
-function formatoFecha(fechaISO) {
-  const fecha = new Date(fechaISO);
-  return fecha.toLocaleDateString("es-ES", {
-    day: '2-digit', month: 'short', year: 'numeric'
-  });
-}
-
-// --- 8. Función para mostrar solo una sección, con animación ---
-function mostrarSolo(elementoMostrado) {
-  [inicio, juego, final].forEach(el => {
-    el.classList.add("oculto");
-    el.classList.remove("fade-in");
-  });
-  elementoMostrado.classList.remove("oculto");
-  void elementoMostrado.offsetWidth;
-  elementoMostrado.classList.add("fade-in");
-}
-
-// --- 9. Compartir resultado ---
+// --- 7. Compartir resultado ---
 function compartirResultadoTemporada(nota, puntaje, tituloTemporada) {
   const mensaje = `¡Acabo de completar la temporada "${tituloTemporada}" en Camino Bíblico!\n\n`
     + `Puntaje: ${puntaje}\nNota: ${nota}\n`
