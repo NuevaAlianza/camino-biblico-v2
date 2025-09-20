@@ -159,7 +159,21 @@ function limpiarTemporizadorPregunta() {
   temporizadorActivo = null;
 }
 
-// ================= SUPABASE: Guardar progreso =================
+/* ===================== SUPABASE: PROGRESO ===================== */
+async function cargarProgresoRPG() {
+  const { data: s } = await supabase.auth.getSession();
+  usuarioActual = s?.session?.user;
+  const userId = usuarioActual?.id;
+  if (!userId) return null;
+
+  const { data } = await supabase.from("rpg_progreso")
+    .select("*")
+    .eq("user_id", userId)
+    .eq("ciclo", cicloActual)
+    .maybeSingle();
+
+  return data || null;
+}
 
 // Guardado parcial (durante la partida)
 async function guardarParcial({ nivelMax, xp, vidasRestantes }) {
@@ -183,7 +197,7 @@ async function guardarParcial({ nivelMax, xp, vidasRestantes }) {
     pais: meta.pais || null,
     ciudad: meta.ciudad || null,
     parroquia: meta.parroquia || null
-  }], { onConflict: ["user_id", "ciclo"] });  // ✅ Array de columnas
+  }], { onConflict: ["user_id", "ciclo"] });
 }
 
 // Guardado final (al terminar la partida)
@@ -209,9 +223,8 @@ async function guardarFinal({ nivelMax, xp, rango }) {
     pais: meta.pais || null,
     ciudad: meta.ciudad || null,
     parroquia: meta.parroquia || null
-  }], { onConflict: ["user_id", "ciclo"] });  // ✅ Array de columnas
+  }], { onConflict: ["user_id", "ciclo"] });
 }
-
 
 /* ===================== ANTITRAMPAS (cliente) ===================== */
 // 1) Evitar multitab simultáneo
