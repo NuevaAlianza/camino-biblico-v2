@@ -159,64 +159,59 @@ function limpiarTemporizadorPregunta() {
   temporizadorActivo = null;
 }
 
-/* ===================== SUPABASE: PROGRESO ===================== */
-async function cargarProgresoRPG() {
-  const { data: s } = await supabase.auth.getSession();
-  usuarioActual = s?.session?.user;
-  const userId = usuarioActual?.id;
-  if (!userId) return null;
-  const { data } = await supabase.from("rpg_progreso")
-    .select("*")
-    .eq("user_id", userId)
-    .eq("ciclo", cicloActual)
-    .maybeSingle();
-  return data || null;
-}
+// ================= SUPABASE: Guardar progreso =================
 
-// Guardado parcial detallado (versión 1) + session_id
+// Guardado parcial (durante la partida)
 async function guardarParcial({ nivelMax, xp, vidasRestantes }) {
-  if (window.modoPractica) return;
+  if (window.modoPractica) return; // no guardar en práctica
   const { data: s } = await supabase.auth.getSession();
   const u = s?.session?.user;
   if (!u) return;
+
   const meta = u.user_metadata || {};
   await supabase.from("rpg_progreso").upsert([{
     user_id: u.id,
     ciclo: cicloActual,
     nivel_max: nivelMax,
-    rango: null,
     xp,
+    rango: null,
     completado: false,
     estado: "en curso",
     vidas_restantes: vidasRestantes,
     session_id: sesionPartidaId,
-    started_at: new Date().toISOString(),
     fecha_juego: new Date().toISOString(),
-    pais: meta.pais || null, ciudad: meta.ciudad || null, parroquia: meta.parroquia || null
-  }], { onConflict: "user_id,ciclo" });
+    pais: meta.pais || null,
+    ciudad: meta.ciudad || null,
+    parroquia: meta.parroquia || null
+  }], { onConflict: ["user_id", "ciclo"] });  // ✅ Array de columnas
 }
-// Guardado final (versión 1)
+
+// Guardado final (al terminar la partida)
 async function guardarFinal({ nivelMax, xp, rango }) {
   if (window.modoPractica) return;
   const { data: s } = await supabase.auth.getSession();
   const u = s?.session?.user;
   if (!u) return;
+
   const meta = u.user_metadata || {};
   await supabase.from("rpg_progreso").upsert([{
     user_id: u.id,
     ciclo: cicloActual,
     nivel_max: nivelMax,
-    rango,
     xp,
+    rango,
     completado: true,
     estado: "terminado",
     vidas_restantes: 0,
     session_id: sesionPartidaId,
     ended_at: new Date().toISOString(),
     fecha_juego: new Date().toISOString(),
-    pais: meta.pais || null, ciudad: meta.ciudad || null, parroquia: meta.parroquia || null
-  }], { onConflict: "user_id,ciclo" });
+    pais: meta.pais || null,
+    ciudad: meta.ciudad || null,
+    parroquia: meta.parroquia || null
+  }], { onConflict: ["user_id", "ciclo"] });  // ✅ Array de columnas
 }
+
 
 /* ===================== ANTITRAMPAS (cliente) ===================== */
 // 1) Evitar multitab simultáneo
