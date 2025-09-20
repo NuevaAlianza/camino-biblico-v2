@@ -197,7 +197,7 @@ async function guardarParcial({ nivelMax, xp, vidasRestantes }) {
     pais: meta.pais || null,
     ciudad: meta.ciudad || null,
     parroquia: meta.parroquia || null
-  }], { onConflict: ["user_id", "ciclo"] });
+  }], { onConflict: "user_id,ciclo" }); // ✅ corregido
 }
 
 // Guardado final (al terminar la partida)
@@ -223,8 +223,9 @@ async function guardarFinal({ nivelMax, xp, rango }) {
     pais: meta.pais || null,
     ciudad: meta.ciudad || null,
     parroquia: meta.parroquia || null
-  }], { onConflict: ["user_id", "ciclo"] });
+  }], { onConflict: "user_id,ciclo" }); // ✅ corregido
 }
+
 
 /* ===================== ANTITRAMPAS (cliente) ===================== */
 // 1) Evitar multitab simultáneo
