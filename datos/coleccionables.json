@@ -360,6 +360,90 @@
      "img_b": "assets/img/coleccionables/generica_b.png",
       "img_c": "assets/img/coleccionables/generica_c.png",
       "descripcion": "Zaqueo, recaudador transformado por la visita de Jesús a su casa y corazón."
+
+       }
+    },
+  "Niños": {
+  "Dios": {
+    "nombre": "Dios",
+    "categoria": "Niños",
+    "img_a": "assets/img/coleccionables/ninos_dios_a.png",
+    "img_b": "assets/img/coleccionables/generica_b.png",
+    "img_c": "assets/img/coleccionables/generica_c.png",
+    "descripcion": "Dios, creador del cielo y la tierra, Padre bueno que cuida siempre de los niños."
+  },
+  "Jesús": {
+    "nombre": "Jesús",
+    "categoria": "Niños",
+    "img_a": "assets/img/coleccionables/ninos_jesus_a.png",
+    "img_b": "assets/img/coleccionables/generica_b.png",
+    "img_c": "assets/img/coleccionables/generica_c.png",
+    "descripcion": "Jesús, amigo de los niños, Maestro que enseña con amor y dio la vida por nosotros."
+  },
+  "Milagros": {
+    "nombre": "Milagros",
+    "categoria": "Niños",
+    "img_a": "assets/img/coleccionables/ninos_milagros_a.png",
+    "img_b": "assets/img/coleccionables/generica_b.png",
+    "img_c": "assets/img/coleccionables/generica_c.png",
+    "descripcion": "Los milagros de Jesús muestran su poder y amor: sanar enfermos, calmar tormentas, dar vida."
+  },
+  "Amigos de Jesús": {
+    "nombre": "Amigos de Jesús",
+    "categoria": "Niños",
+    "img_a": "assets/img/coleccionables/ninos_amigos_a.png",
+    "img_b": "assets/img/coleccionables/generica_b.png",
+    "img_c": "assets/img/coleccionables/generica_c.png",
+    "descripcion": "Los discípulos fueron los amigos más cercanos de Jesús, lo acompañaron y aprendieron de Él."
+  },
+  "La Creación": {
+    "nombre": "La Creación",
+    "categoria": "Niños",
+    "img_a": "assets/img/coleccionables/ninos_creacion_a.png",
+    "img_b": "assets/img/coleccionables/generica_b.png",
+    "img_c": "assets/img/coleccionables/generica_c.png",
+    "descripcion": "La creación es el regalo de Dios: el cielo, el mar, los animales, las plantas y las personas."
+  },
+  "La Oración": {
+    "nombre": "La Oración",
+    "categoria": "Niños",
+    "img_a": "assets/img/coleccionables/ninos_oracion_a.png",
+    "img_b": "assets/img/coleccionables/generica_b.png",
+    "img_c": "assets/img/coleccionables/generica_c.png",
+    "descripcion": "La oración es hablar con Dios como con un Padre y amigo: agradecer, pedir y alabar."
+  },
+  "Parábolas": {
+    "nombre": "Parábolas",
+    "categoria": "Niños",
+    "img_a": "assets/img/coleccionables/ninos_parabolas_a.png",
+    "img_b": "assets/img/coleccionables/generica_b.png",
+    "img_c": "assets/img/coleccionables/generica_c.png",
+    "descripcion": "Jesús contaba parábolas como historias sencillas para enseñar grandes verdades."
+  },
+  "La Iglesia": {
+    "nombre": "La Iglesia",
+    "categoria": "Niños",
+    "img_a": "assets/img/coleccionables/ninos_iglesia_a.png",
+    "img_b": "assets/img/coleccionables/generica_b.png",
+    "img_c": "assets/img/coleccionables/generica_c.png",
+    "descripcion": "La Iglesia es la familia de Dios, donde los niños participan en la misa y conocen la Biblia."
+  },
+  "Valores": {
+    "nombre": "Valores",
+    "categoria": "Niños",
+    "img_a": "assets/img/coleccionables/ninos_valores_a.png",
+    "img_b": "assets/img/coleccionables/generica_b.png",
+    "img_c": "assets/img/coleccionables/generica_c.png",
+    "descripcion": "Amor, perdón, compartir y respeto son valores que Jesús enseñó y que los niños pueden vivir."
+  },
+  "Pascua y Resurrección": {
+    "nombre": "Pascua y Resurrección",
+    "categoria": "Niños",
+    "img_a": "assets/img/coleccionables/ninos_pascua_a.png",
+    "img_b": "assets/img/coleccionables/generica_b.png",
+    "img_c": "assets/img/coleccionables/generica_c.png",
+    "descripcion": "La Pascua celebra la resurrección de Jesús: alegría, esperanza y vida nueva para todos."
+      
     }
     },
  "logros": {
@@ -370,7 +454,9 @@
     "Profetas": "assets/img/coleccionables/profetas_completo.png",
     "Testigos de Jesús": "assets/img/coleccionables/testigos_completo.png",
     "Misa": "assets/img/coleccionables/misa_completo.png",
-    "Citas Bíblicas": "assets/img/coleccionables/citas_completo.png"
+    "Citas Bíblicas": "assets/img/coleccionables/citas_completo.png",
+    "Niños": "assets/img/coleccionables/ninos_completo.png"
+
   },
  "totales_por_a": {
       "5": "assets/img/coleccionables/logro_5a.png",
