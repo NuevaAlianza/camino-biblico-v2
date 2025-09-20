@@ -166,7 +166,8 @@ async function cargarProgresoRPG() {
   const userId = usuarioActual?.id;
   if (!userId) return null;
 
-  const { data } = await supabase.from("rpg_progreso")
+  const { data } = await supabase
+    .from("rpg_progreso")
     .select("*")
     .eq("user_id", userId)
     .eq("ciclo", cicloActual)
@@ -183,21 +184,24 @@ async function guardarParcial({ nivelMax, xp, vidasRestantes }) {
   if (!u) return;
 
   const meta = u.user_metadata || {};
-  await supabase.from("rpg_progreso").upsert([{
-    user_id: u.id,
-    ciclo: cicloActual,
-    nivel_max: nivelMax,
-    xp,
-    rango: null,
-    completado: false,
-    estado: "en curso",
-    vidas_restantes: vidasRestantes,
-    session_id: sesionPartidaId,
-    fecha_juego: new Date().toISOString(),
-    pais: meta.pais || null,
-    ciudad: meta.ciudad || null,
-    parroquia: meta.parroquia || null
-  }], { onConflict: "user_id,ciclo" }); // ✅ corregido
+  await supabase.from("rpg_progreso").upsert(
+    [{
+      user_id: u.id,
+      ciclo: cicloActual,
+      nivel_max: nivelMax,
+      xp,
+      rango: null,
+      completado: false,
+      estado: "en curso",
+      vidas_restantes: vidasRestantes,
+      session_id: sesionPartidaId,
+      fecha_juego: new Date().toISOString(),
+      pais: meta.pais || null,
+      ciudad: meta.ciudad || null,
+      parroquia: meta.parroquia || null
+    }],
+    { onConflict: "user_id,ciclo" }   // ✅ solo string
+  );
 }
 
 // Guardado final (al terminar la partida)
@@ -208,22 +212,25 @@ async function guardarFinal({ nivelMax, xp, rango }) {
   if (!u) return;
 
   const meta = u.user_metadata || {};
-  await supabase.from("rpg_progreso").upsert([{
-    user_id: u.id,
-    ciclo: cicloActual,
-    nivel_max: nivelMax,
-    xp,
-    rango,
-    completado: true,
-    estado: "terminado",
-    vidas_restantes: 0,
-    session_id: sesionPartidaId,
-    ended_at: new Date().toISOString(),
-    fecha_juego: new Date().toISOString(),
-    pais: meta.pais || null,
-    ciudad: meta.ciudad || null,
-    parroquia: meta.parroquia || null
-  }], { onConflict: "user_id,ciclo" }); // ✅ corregido
+  await supabase.from("rpg_progreso").upsert(
+    [{
+      user_id: u.id,
+      ciclo: cicloActual,
+      nivel_max: nivelMax,
+      xp,
+      rango,
+      completado: true,
+      estado: "terminado",
+      vidas_restantes: 0,
+      session_id: sesionPartidaId,
+      ended_at: new Date().toISOString(),
+      fecha_juego: new Date().toISOString(),
+      pais: meta.pais || null,
+      ciudad: meta.ciudad || null,
+      parroquia: meta.parroquia || null
+    }],
+    { onConflict: "user_id,ciclo" }   // ✅ solo string
+  );
 }
 
 
