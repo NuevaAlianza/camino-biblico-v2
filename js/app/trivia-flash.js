@@ -181,29 +181,37 @@ function adaptarPreguntaRPGaFlash(q){
   const dist = seleccionarUnicos(distractores, 3);
   return { pregunta:q.pregunta, respuesta:q.respuesta, opcion_1:dist[0], opcion_2:dist[1], opcion_3:dist[2] };
 }
-async function cargarPreguntasDesdeRPG(prevCiclo, diaIdx, cantidadDeseada){
+async function cargarPreguntasDesdeRPG(ciclos, diaIdx, cantidadDeseada){
   if (!rpgDataCache){
     const res = await fetch("datos/rpg-preguntas.json");
     if (!res.ok) throw new Error("No se pudo cargar rpg-preguntas.json");
-    const json = await res.json(); rpgDataCache = json?.ciclos || {};
+    const json = await res.json();
+    rpgDataCache = json?.ciclos || {};
   }
-  let cicloObjetivo = prevCiclo;
-  if (!rpgDataCache[cicloObjetivo]){
-    const keys = Object.keys(rpgDataCache).sort();
-    let elegido = null;
-    for (let i=keys.length-1;i>=0;i--){ if (keys[i] <= prevCiclo){ elegido=keys[i]; break; } }
-    if (!elegido) elegido = keys[keys.length-1];
-    cicloObjetivo = elegido;
-  }
-  const niveles = rpgDataCache[cicloObjetivo]?.niveles || {};
+
+  let pool = [];
   const mapaNivelPorDia = {1:"1",2:"2",3:"3",4:"4",5:"5",6:"mix"};
   const nivelKey = mapaNivelPorDia[diaIdx] || "mix";
-  let pool = [];
-  if (nivelKey==="mix"){ Object.keys(niveles).forEach(k=>{ pool=pool.concat(niveles[k]||[]); }); }
-  else { pool = niveles[nivelKey] || []; }
-  if (pool.length < cantidadDeseada){ Object.keys(niveles).forEach(k=>{ if (k!==nivelKey) pool=pool.concat(niveles[k]||[]); }); }
+
+  for (let cicloObjetivo of ciclos){
+    const niveles = rpgDataCache[cicloObjetivo]?.niveles || {};
+    if (nivelKey === "mix"){
+      Object.keys(niveles).forEach(k => pool = pool.concat(niveles[k]||[]));
+    } else {
+      pool = pool.concat(niveles[nivelKey] || []);
+    }
+  }
+
+  // fallback: si hay pocas preguntas, mezcla otros niveles de todas las semanas
+  if (pool.length < cantidadDeseada){
+    ciclos.forEach(cicloObjetivo => {
+      const niveles = rpgDataCache[cicloObjetivo]?.niveles || {};
+      Object.keys(niveles).forEach(k => { pool = pool.concat(niveles[k]||[]); });
+    });
+  }
+
   const seleccion = seleccionarUnicos(pool, cantidadDeseada).map(adaptarPreguntaRPGaFlash);
-  return { preguntas: seleccion, cicloObjetivo };
+  return { preguntas: seleccion, cicloObjetivo: ciclos[0] }; // cicloObjetivo solo para UI, puedes usar el más reciente
 }
 
 /* ===================== CANDADO (Supabase) ===================== */
@@ -344,7 +352,14 @@ document.addEventListener("DOMContentLoaded", async ()=>{
   let preguntasSeleccionadas = [];
   let cicloUsado = prevCiclo;
   try{
-    const { preguntas, cicloObjetivo } = await cargarPreguntasDesdeRPG(prevCiclo, idx6, totalPreguntasDia);
+    // Últimas 3 semanas
+const ciclo1 = cicloSemanaAnterior(hoy);
+const ciclo2 = cicloSemanaAnterior(fechaSemanaAnterior(hoy));
+const ciclo3 = cicloSemanaAnterior(fechaSemanaAnterior(fechaSemanaAnterior(hoy)));
+const ciclosPrevios = [ciclo1, ciclo2, ciclo3];
+
+const { preguntas, cicloObjetivo } = await cargarPreguntasDesdeRPG(ciclosPrevios, idx6, totalPreguntasDia);
+
     preguntasSeleccionadas = preguntas; cicloUsado = cicloObjetivo;
   }catch(e){
     console.error("Error cargando RPG, fallback a quiz.json", e);
