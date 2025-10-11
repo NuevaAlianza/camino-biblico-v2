@@ -30,6 +30,37 @@
         {"parroquia": "Santo Cura de Ars", "participantes": 9, "xp_promedio": 174.0},
         {"parroquia": "Alianza Nueva", "participantes": 1, "xp_promedio": 45.0}
       ]
+    },
+    {
+      "id": "T2",
+      "nombre": "Temporada 2 – Éxodo",
+      "fecha_inicio": "2025-10-01",
+      "fecha_fin": "2025-12-31",
+      "descripcion": "Segunda temporada del Hall of Fame. Rankings actualizados para Camino Bíblico.",
+      "top_xp": [
+        {"nombre":"Andrea Olmos","xp":1032,"xp_rpg":164,"xp_trivia":350,"xp_wordle":518,"rango":"Testigo Ocasional","nivel_rango":0,"parroquia":"Santo Cura de Ars","subgrupo":2,"fecha_ultimo_juego":"2025-10-10 14:52:15.264538"},
+        {"nombre":"Cristopher diaz bello ","xp":968,"xp_rpg":159,"xp_trivia":324,"xp_wordle":485,"rango":"Testigo Ocasional","nivel_rango":0,"parroquia":"Santo Cura de Ars","subgrupo":2,"fecha_ultimo_juego":"2025-10-11 03:36:58.099113"},
+        {"nombre":"Alexandra Rubio","xp":721,"xp_rpg":137,"xp_trivia":196,"xp_wordle":388,"rango":"Semilla en Crecimiento","nivel_rango":1,"parroquia":"Santo Cura de Ars","subgrupo":2,"fecha_ultimo_juego":"2025-10-10 00:34:53.800102"},
+        {"nombre":"Leo love","xp":589,"xp_rpg":94,"xp_trivia":175,"xp_wordle":320,"rango":"Aprendiz del Camino","nivel_rango":2,"parroquia":"Santo Cura de Ars","subgrupo":2,"fecha_ultimo_juego":"2025-10-10 00:34:14.083344"},
+        {"nombre":"Rubén George","xp":255,"xp_rpg":29,"xp_trivia":49,"xp_wordle":177,"rango":null,"nivel_rango":null,"parroquia":"Santo Cura de Ars","subgrupo":1,"fecha_ultimo_juego":"2025-10-09 01:59:00.889526"},
+        {"nombre":"Ámbar Jáquez","xp":254,"xp_rpg":27,"xp_trivia":65,"xp_wordle":162,"rango":null,"nivel_rango":null,"parroquia":"Santo Cura de Ars","subgrupo":6,"fecha_ultimo_juego":"2025-10-04 03:00:24.146629"},
+        {"nombre":"Emely Muñoz","xp":217,"xp_rpg":0,"xp_trivia":0,"xp_wordle":217,"rango":null,"nivel_rango":null,"parroquia":"Santo Cura de Ars","subgrupo":null,"fecha_ultimo_juego":"2025-10-10 18:53:39.42266"},
+        {"nombre":"Lissette Shantall De los santos","xp":179,"xp_rpg":16,"xp_trivia":57,"xp_wordle":106,"rango":"Testigo Ocasional","nivel_rango":0,"parroquia":"Santo Cura de Ars","subgrupo":2,"fecha_ultimo_juego":"2025-10-09 03:31:03.799092"},
+        {"nombre":"Yemerlin Pinales","xp":158,"xp_rpg":13,"xp_trivia":0,"xp_wordle":145,"rango":null,"nivel_rango":null,"parroquia":"Santo Cura de Ars","subgrupo":6,"fecha_ultimo_juego":"2025-10-10 22:17:04.616548"},
+        {"nombre":"Smaily Karina de la rosa","xp":82,"xp_rpg":0,"xp_trivia":0,"xp_wordle":82,"rango":null,"nivel_rango":null,"parroquia":"Santo Cura de Ars","subgrupo":6,"fecha_ultimo_juego":"2025-10-10 01:42:53.051355"},
+        {"nombre":"Lexa Brhianna Molina","xp":40,"xp_rpg":1,"xp_trivia":0,"xp_wordle":39,"rango":null,"nivel_rango":null,"parroquia":"Santo Cura de Ars","subgrupo":7,"fecha_ultimo_juego":"2025-09-22 00:05:55.392395"},
+        {"nombre":"Jeremi javier reyes reyes","xp":26,"xp_rpg":12,"xp_trivia":0,"xp_wordle":14,"rango":null,"nivel_rango":null,"parroquia":"Santo Cura de Ars","subgrupo":7,"fecha_ultimo_juego":"2025-09-18 21:32:19.353311"}
+      ],
+"top_subgrupos": [
+        {"subgrupo_id":2,"nombre":"Nueva Alianza","participantes":9,"xp_promedio":246.0},
+        {"subgrupo_id":1,"nombre":"Sin parroquia","participantes":1,"xp_promedio":0.0},
+        {"subgrupo_id":6,"nombre":"Grupo 6","participantes":3,"xp_promedio":158.0},
+        {"subgrupo_id":7,"nombre":"Grupo 7","participantes":2,"xp_promedio":33.0}
+      ],
+      "top_ciudades": [],
+      "top_parroquias": [
+        {"parroquia":"Santo Cura de Ars","participantes":17,"xp_promedio":232.0},
+        {"parroquia":"Alianza Nueva","participantes":1,"xp_promedio":0.0}]
     }
   ]
 }
