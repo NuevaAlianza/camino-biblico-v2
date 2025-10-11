@@ -110,6 +110,86 @@
         { "dow": 5, "palabra": "SIERVO",    "pista": "Imagen de la obediencia.",                  "cita": "Lc 17,5-10" },
         { "dow": 6, "palabra": "HUMILDAD",  "pista": "Actitud después de cumplir.",               "cita": "Lc 17,5-10" },
         { "dow": 0, "palabra": "INUTILES",  "pista": "Así nos llamamos tras hacerlo todo.",       "cita": "Lc 17,5-10" }
+          ]
+    },
+    {
+      "id": "2025-10-12",
+      "domingo": "2025-10-12",
+      "ciclo": "C",
+      "pericopa": "Lc 17,11-19",
+      "tema": "La gratitud del leproso",
+      "dias": [
+        { "dow": 1, "palabra": "LEPROSO",  "pista": "De los diez enfermos de lepra.",             "cita": "Lc 17,11-19" },
+        { "dow": 2, "palabra": "DIEZ",     "pista": "Número de los leprosos que Jesús sanó.",         "cita": "Lc 17,11-19" },
+        { "dow": 3, "palabra": "VOLVIÓ",   "pista": "Uno regresó para alabar a Jesús.",             "cita": "Lc 17,11-19" },
+        { "dow": 4, "palabra": "SAMARITANO","pista": "De esta región era el que volvió.",             "cita": "Lc 17,11-19" },
+        { "dow": 5, "palabra": "GRATITUD",  "pista": "Virtud de dar gracias a Dios.",                  "cita": "Lc 17,11-19" },
+        { "dow": 6, "palabra": "FE",        "pista": "¿Qué tenía el que fue sanado para curarse?",       "cita": "Lc 17,11-19" },
+        { "dow": 0, "palabra": "SALVO",     "pista": "Dice Jesús: ‘tu fe te ha …’.",                     "cita": "Lc 17,11-19" }
+      ]
+    },
+    {
+      "id": "2025-10-19",
+      "domingo": "2025-10-19",
+      "ciclo": "C",
+      "pericopa": "Lc 18,9-14",
+      "tema": "Fariseo y publicano",
+      "dias": [
+        { "dow": 1, "palabra": "ORAR",        "pista": "Acción que hicimos ambos en el templo.",            "cita": "Lc 18,9-14" },
+        { "dow": 2, "palabra": "FARISEO",     "pista": "Uno de los personajes de la parábola.",            "cita": "Lc 18,9-14" },
+        { "dow": 3, "palabra": "PUBLICANO",   "pista": "El otro que bajaba la cabeza y golpeaba su pecho.", "cita": "Lc 18,9-14" },
+        { "dow": 4, "palabra": "JUSTIFICADO",  "pista": "Así fue el publicano delante de Dios.",               "cita": "Lc 18,9-14" },
+        { "dow": 5, "palabra": "HUMILDAD",    "pista": "Actitud del publicano al orar.",                     "cita": "Lc 18,9-14" },
+        { "dow": 6, "palabra": "ORGULLO",     "pista": "Actitud del fariseo al compararse con otros.",         "cita": "Lc 18,9-14" },
+        { "dow": 0, "palabra": "TENAZ",       "pista": "No cejaba el publicano en su súplica – era persistente.", "cita": "Lc 18,9-14" }
+      ]
+    },
+    {
+      "id": "2025-10-26",
+      "domingo": "2025-10-26",
+      "ciclo": "C",
+      "pericopa": "Lc 18,35-43",
+      "tema": "Curación del ciego",
+      "dias": [
+        { "dow": 1, "palabra": "CIEGO",     "pista": "No veía y estaba junto al camino.",               "cita": "Lc 18,35-43" },
+        { "dow": 2, "palabra": "JESUS",     "pista": "Él le devolvió la vista al ciego.",                  "cita": "Lc 18,35-43" },
+        { "dow": 3, "palabra": "PEDIR",     "pista": "Gritaba, pidiendo que le tuviera misericordia.",     "cita": "Lc 18,35-43" },
+        { "dow": 4, "palabra": "BARTIMEO",  "pista": "Nombre del ciego en la narración.",                  "cita": "Lc 18,35-43" },
+        { "dow": 5, "palabra": "CAMINO",    "pista": "Estaba junto al … por donde Jesús pasaba.",           "cita": "Lc 18,35-43" },
+        { "dow": 6, "palabra": "VOZ",       "pista": "Él gritaba con fuerte … para ser escuchado.",           "cita": "Lc 18,35-43" },
+        { "dow": 0, "palabra": "VER",       "pista": "Al curarse, pudo … lo que antes no veía.",              "cita": "Lc 18,35-43" }
+      ]
+    },
+    {
+      "id": "2025-11-02",
+      "domingo": "2025-11-02",
+      "ciclo": "C",
+      "pericopa": "Lc 19,1-10",
+      "tema": "Zaqueo",
+      "dias": [
+        { "dow": 1, "palabra": "ZAQUEO",    "pista": "Era recaudador de impuestos que trepó a un árbol.",     "cita": "Lc 19,1-10" },
+        { "dow": 2, "palabra": "ARBOL",     "pista": "Desde allí pudo ver a Jesús pasar.",                   "cita": "Lc 19,1-10" },
+        { "dow": 3, "palabra": "JERICÓ",    "pista": "Ciudad donde vivía Zaqueo.",                           "cita": "Lc 19,1-10" },
+        { "dow": 4, "palabra": "SALVACION", "pista": "Jesús vino a buscar y a dar … al que estaba perdido.",   "cita": "Lc 19,1-10" },
+        { "dow": 5, "palabra": "BUSCAR",    "pista": "Quería verlo, y se esforzó por encontrarlo.",           "cita": "Lc 19,1-10" },
+        { "dow": 6, "palabra": "BAJAR",     "pista": "Jesús le dijo: ‘baja pronto, porque hoy he de hospedarte’", "cita": "Lc 19,1-10" },
+        { "dow": 0, "palabra": "CASA",      "pista": "Y recibió a Jesús en su …",                             "cita": "Lc 19,1-10" }
+      ]
+    },
+    {
+      "id": "2025-11-09",
+      "domingo": "2025-11-09",
+      "ciclo": "C",
+      "pericopa": "Lc 20,27-38",
+      "tema": "Resurrección y vida",
+      "dias": [
+        { "dow": 1, "palabra": "RESURRECCION","pista": "Vida después de la muerte según Cristo.",               "cita": "Lc 20,27-38" },
+        { "dow": 2, "palabra": "VIDA",        "pista": "Lo que Dios da a los que resucitan.",                    "cita": "Lc 20,27-38" },
+        { "dow": 3, "palabra": "MUERTE",      "pista": "El estado que quedará atrás para quienes creyeren.",       "cita": "Lc 20,27-38" },
+        { "dow": 4, "palabra": "DIOS",        "pista": "No es Dios de muertos sino de los que viven.",            "cita": "Lc 20,27-38" },
+        { "dow": 5, "palabra": "ANGELES",     "pista": "Se dice que los resucitados serán como ellos.",           "cita": "Lc 20,27-38" },
+        { "dow": 6, "palabra": "ETERNIDAD",   "pista": "Existencia sin fin que Dios promete.",                    "cita": "Lc 20,27-38" },
+        { "dow": 0, "palabra": "PROMESA",     "pista": "Dios hace una … de vida eterna.",                        "cita": "Lc 20,27-38" }
         
       ]
     }
