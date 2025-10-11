@@ -362,6 +362,285 @@
          { "pregunta": "¿A quién le dijo Jesús: «Levántate, toma tu lecho y anda»?", "opciones": ["El paralítico de Betesda", "Bartimeo", "La hemorroísa", "La samaritana"], "respuesta": "El paralítico de Betesda" },
          { "pregunta": "¿A quién le dijo Jesús: «No tengas miedo; basta que tengas fe»?", "opciones": ["Jairo", "Pedro", "Tomás", "Felipe"], "respuesta": "Jairo" } 
 
+
+       ]
+      }
+    },
+    "2025-S42": {
+  "titulo": "Semana 42 – Camino de la Fe: Isaac y Jacob",
+  "descripcion": "Aprende sobre la vida de Isaac y Jacob, su fe, las promesas de Dios y cómo estas continúan la historia de Abraham.",
+  "niveles": {
+    "1": [
+      { "pregunta": "¿Quién era la madre de Isaac?", "opciones": ["Sara", "Agar", "Rebeca", "Raquel"], "respuesta": "Sara" },
+      { "pregunta": "¿Qué bendición recibió Isaac de Dios?", "opciones": ["Descendencia numerosa", "Riquezas inmediatas", "Victoria militar", "Poder sobre las naciones"], "respuesta": "Descendencia numerosa" },
+      { "pregunta": "¿A quién se casó Isaac?", "opciones": ["Rebeca", "Raquel", "Lía", "Sara"], "respuesta": "Rebeca" },
+      { "pregunta": "¿Cómo llegó Rebeca a la familia de Isaac?", "opciones": ["Enviada por un siervo de Abraham", "Por matrimonio forzado", "Se fugó de su casa", "Llegó por casualidad"], "respuesta": "Enviada por un siervo de Abraham" },
+      { "pregunta": "¿Quién era el hermano gemelo de Jacob?", "opciones": ["Esaú", "Leví", "Rubén", "Benjamín"], "respuesta": "Esaú" },
+      { "pregunta": "¿Qué vendió Esaú a Jacob por un plato de lentejas?", "opciones": ["Su primogenitura", "Su herencia material", "Su rebaño", "Su casa"], "respuesta": "Su primogenitura" },
+      { "pregunta": "¿Qué bendición buscó Jacob a través de su madre Rebeca?", "opciones": ["Bendición de Isaac", "Riquezas inmediatas", "Poder sobre las naciones", "Victoria militar"], "respuesta": "Bendición de Isaac" },
+      { "pregunta": "¿Qué animal ayudó a Jacob a engañar a Isaac?", "opciones": ["Cabras", "Ovejas", "Vacas", "Corderos"], "respuesta": "Cabras" },
+      { "pregunta": "¿Qué territorio escogió Jacob para huir de Esaú?", "opciones": ["Padán-aram", "Egipto", "Babilonia", "Sinaí"], "respuesta": "Padán-aram" },
+      { "pregunta": "¿A quién vio Jacob en un sueño que le prometía protección y descendencia?", "opciones": ["Dios con ángeles", "Abraham", "Isaac", "Rebeca"], "respuesta": "Dios con ángeles" }
+    ],
+    "2": [
+      { "pregunta": "¿Qué nombre le dio Jacob a la piedra donde durmió y tuvo el sueño?", "opciones": ["Betel", "Siquem", "Hebrón", "Moria"], "respuesta": "Betel" },
+      { "pregunta": "¿Quién era Labán en la historia de Jacob?", "opciones": ["Tío de Jacob", "Primo de Jacob", "Padre de Esaú", "Hermano de Isaac"], "respuesta": "Tío de Jacob" },
+      { "pregunta": "¿Cuántos años trabajó Jacob para casarse con Raquel?", "opciones": ["14 años", "7 años", "10 años", "20 años"], "respuesta": "14 años" },
+      { "pregunta": "¿Qué hizo Labán para engañar a Jacob inicialmente?", "opciones": ["Le dio a Lea en lugar de Raquel", "Le negó la herencia", "Le pidió un impuesto", "Le mandó lejos"], "respuesta": "Le dio a Lea en lugar de Raquel" },
+      { "pregunta": "¿Quién fue el hijo mayor de Jacob?", "opciones": ["Rubén", "Simeón", "Leví", "Judá"], "respuesta": "Rubén" },
+      { "pregunta": "¿Qué visión tuvo Jacob al regresar a Canaán?", "opciones": ["Se encontró con Dios", "Se perdió en el desierto", "Se reunió con Esaú sin problemas", "Vio un ángel protector"], "respuesta": "Se encontró con Dios" },
+      { "pregunta": "¿Cuál fue la reconciliación importante en la vida de Jacob?", "opciones": ["Con Esaú", "Con Labán", "Con Isaac", "Con Raquel"], "respuesta": "Con Esaú" },
+      { "pregunta": "¿Qué nombre recibió Jacob después de luchar con un ángel?", "opciones": ["Israel", "Jacobo", "Judá", "Efraín"], "respuesta": "Israel" },
+      { "pregunta": "¿Qué significa el nombre Israel?", "opciones": ["El que lucha con Dios", "Hombre de fe", "Predestinado", "Bendito por Dios"], "respuesta": "El que lucha con Dios" },
+      { "pregunta": "¿Qué río cruzó Jacob antes de reencontrarse con Esaú?", "opciones": ["Jaboc", "Éufrates", "Jordán", "Nilo"], "respuesta": "Jaboc" }
+    ],
+    "3": [
+      { "pregunta": "¿Qué simboliza el sueño de la escalera de Jacob?", "opciones": ["Conexión entre cielo y tierra", "Victoria sobre sus enemigos", "Riqueza y poder", "Profecía de guerra"], "respuesta": "Conexión entre cielo y tierra" },
+      { "pregunta": "¿Cuántos hijos tuvo Jacob con Lea y Raquel?", "opciones": ["12", "10", "7", "6"], "respuesta": "12" },
+      { "pregunta": "¿Quién fue la madre de José?", "opciones": ["Raquel", "Lea", "Bilha", "Zilpa"], "respuesta": "Raquel" },
+      { "pregunta": "¿Qué hizo Jacob para consolidar su familia al regresar a Canaán?", "opciones": ["Reunir a todos sus hijos", "Vender tierras", "Hacer sacrificios", "Erigir un altar"], "respuesta": "Reunir a todos sus hijos" },
+      { "pregunta": "¿Qué bendición importante recibió Jacob de Isaac antes de morir?", "opciones": ["Bendición a Judá y sus hermanos", "Riquezas y tierras", "Victoria en la guerra", "Protección divina inmediata"], "respuesta": "Bendición a Judá y sus hermanos" },
+      { "pregunta": "¿Qué palabra describe mejor la vida de Jacob?", "opciones": ["Fe", "Riqueza", "Guerra", "Poder"], "respuesta": "Fe" }
+    ],
+    "4": [
+      { "pregunta": "¿Dónde se estableció Jacob al final de sus días?", "opciones": ["Canaán", "Egipto", "Padán-aram", "Sinaí"], "respuesta": "Canaán" },
+      { "pregunta": "¿Qué hizo Jacob al morir para asegurar la promesa divina?", "opciones": ["Bendijo a sus hijos", "Erigió un altar", "Venció a sus enemigos", "Hizo un sacrificio"], "respuesta": "Bendijo a sus hijos" },
+      { "pregunta": "¿Qué importancia tiene José en la historia de Jacob?", "opciones": ["Mantener la familia unida", "Ganar riquezas", "Ser rey", "Vencer enemigos"], "respuesta": "Mantener la familia unida" },
+      { "pregunta": "¿Qué dificultad enfrentó Jacob con Labán?", "opciones": ["Engaño con las esposas y el trabajo", "Guerra civil", "Pérdida de tierras", "Problemas de salud"], "respuesta": "Engaño con las esposas y el trabajo" },
+      { "pregunta": "¿Qué representa el cambio de nombre de Jacob a Israel en la historia bíblica?", "opciones": ["Nuevo pacto y misión", "Victoria sobre enemigos", "Riqueza y poder", "Seguridad y paz"], "respuesta": "Nuevo pacto y misión" },
+      { "pregunta": "¿Qué signo de fe mostró Jacob al separarse de Labán?", "opciones": ["Confianza en Dios", "Temor al futuro", "Deseo de venganza", "Búsqueda de riquezas"], "respuesta": "Confianza en Dios" }
+    ],
+    "5": [
+      { "pregunta": "¿Qué profecía importante se cumplió a través de Jacob?", "opciones": ["Nacimiento de las tribus de Israel", "Victoria militar de Egipto", "Fundación de Jerusalén", "Creación del Templo"], "respuesta": "Nacimiento de las tribus de Israel" },
+      { "pregunta": "¿Qué actitud mostró Jacob ante los conflictos familiares?", "opciones": ["Paciencia y fe", "Ira y venganza", "Desobediencia", "Indiferencia"], "respuesta": "Paciencia y fe" },
+      { "pregunta": "¿Qué hijo fue el favorito de Jacob?", "opciones": ["José", "Rubén", "Judá", "Benjamín"], "respuesta": "José" },
+      { "pregunta": "¿Qué hizo José para salvar a su familia en tiempos de hambre?", "opciones": ["Administró alimentos en Egipto", "Se rebeló", "Huyó", "Se convirtió en sacerdote"], "respuesta": "Administró alimentos en Egipto" },
+      { "pregunta": "¿Qué muestra la historia de Jacob y José sobre la fe?", "opciones": ["Confianza en Dios y perseverancia", "Riqueza inmediata", "Poder político", "Victoria militar"], "respuesta": "Confianza en Dios y perseverancia" },
+      { "pregunta": "¿Cómo termina la historia de Jacob en la Biblia?", "opciones": ["Bendiciendo a sus hijos y confiando en Dios", "Derrotado por enemigos", "Exiliado sin descendencia", "Olvidado en la historia"], "respuesta": "Bendiciendo a sus hijos y confiando en Dios" }
+
+        ]
+      }
+    },
+    "2025-S43": {
+  "titulo": "Semana 43 – Testigos de Jesús",
+  "descripcion": "Conoce a los personajes que vivieron junto a Jesús, su fe y cómo fueron testigos de su vida, enseñanzas y milagros.",
+  "niveles": {
+    "1": [
+      { "pregunta": "¿Quién fue el primo de Jesús que lo bautizó en el Jordán?", "opciones": ["Juan el Bautista", "Pedro", "Andrés", "Santiago"], "respuesta": "Juan el Bautista" },
+      { "pregunta": "¿Quién fue la madre de Jesús?", "opciones": ["María", "Isabel", "Marta", "María Magdalena"], "respuesta": "María" },
+      { "pregunta": "¿Quién fue el padre terrenal de Jesús?", "opciones": ["José", "Zacarías", "Simón", "Leví"], "respuesta": "José" },
+      { "pregunta": "¿Quién negó a Jesús tres veces antes del amanecer?", "opciones": ["Pedro", "Juan", "Andrés", "Tomás"], "respuesta": "Pedro" },
+      { "pregunta": "¿Qué mujer siguió a Jesús y estuvo presente en la crucifixión?", "opciones": ["María Magdalena", "Marta", "Isabel", "Salomé"], "respuesta": "María Magdalena" },
+      { "pregunta": "¿Quién pidió el cuerpo de Jesús para enterrarlo?", "opciones": ["José de Arimatea", "Nicodemo", "Pilato", "Herodes"], "respuesta": "José de Arimatea" },
+      { "pregunta": "¿Quién fue Nicodemo?", "opciones": ["Fariseo que buscó a Jesús de noche", "Apóstol", "Rey de Judea", "Científico de la época"], "respuesta": "Fariseo que buscó a Jesús de noche" },
+      { "pregunta": "¿Qué mujer tuvo fe al tocar el manto de Jesús y ser sanada?", "opciones": ["La hemorroísa", "María Magdalena", "Marta", "Salomé"], "respuesta": "La hemorroísa" },
+      { "pregunta": "¿Quién fue Zaqueo?", "opciones": ["Recaudador de impuestos que recibió a Jesús en su casa", "Apóstol", "Profeta", "Sacerdote"], "respuesta": "Recaudador de impuestos que recibió a Jesús en su casa" },
+      { "pregunta": "¿Quién fue la mujer samaritana que conversó con Jesús en el pozo?", "opciones": ["Samaritana", "María Magdalena", "Marta", "Isabel"], "respuesta": "Samaritana" }
+    ],
+    "2": [
+      { "pregunta": "¿Qué hizo María Magdalena después de la resurrección de Jesús?", "opciones": ["Anunció la resurrección a los apóstoles", "Se ocultó", "Se fue a Galilea", "Se convirtió en discípula de Juan"], "respuesta": "Anunció la resurrección a los apóstoles" },
+      { "pregunta": "¿Qué hicieron Nicodemo y José de Arimatea juntos?", "opciones": ["Prepararon el sepulcro de Jesús", "Lo denunciaron", "Se marcharon de Jerusalén", "Escribieron un evangelio"], "respuesta": "Prepararon el sepulcro de Jesús" },
+      { "pregunta": "¿Cómo reaccionó Zaqueo al encontrarse con Jesús?", "opciones": ["Se alegró y prometió dar la mitad de sus bienes a los pobres", "Se escondió", "Lo ignoró", "Se enojó"], "respuesta": "Se alegró y prometió dar la mitad de sus bienes a los pobres" },
+      { "pregunta": "¿Qué hizo la mujer adúltera cuando Jesús la defendió?", "opciones": ["Se arrepintió y siguió a Jesús", "Se escondió", "Se enojó", "Se fue sin hablar"], "respuesta": "Se arrepintió y siguió a Jesús" },
+      { "pregunta": "¿Quién fue la mujer que ungió a Jesús en Betania?", "opciones": ["María de Betania", "María Magdalena", "Marta", "Salomé"], "respuesta": "María de Betania" },
+      { "pregunta": "¿Qué muestra la historia de la hemorroísa?", "opciones": ["Fe y perseverancia", "Desobediencia", "Miedo", "Ira"], "respuesta": "Fe y perseverancia" },
+      { "pregunta": "¿Qué hizo la mujer samaritana después de hablar con Jesús?", "opciones": ["Llevó a su pueblo a conocer a Jesús", "Se escondió", "Se rebeló", "Se fue a Jerusalén"], "respuesta": "Llevó a su pueblo a conocer a Jesús" },
+      { "pregunta": "¿Qué hizo José de Arimatea al presentar a Jesús al sepulcro?", "opciones": ["Usó su propio sepulcro", "Lo dejó en la cruz", "Lo ocultó", "Lo quemó"], "respuesta": "Usó su propio sepulcro" },
+      { "pregunta": "¿Qué actitud mostró María Magdalena ante la muerte de Jesús?", "opciones": ["Dolor y fidelidad", "Indiferencia", "Ira", "Miedo"], "respuesta": "Dolor y fidelidad" },
+      { "pregunta": "¿Qué enseñanzas se destacan de los testigos de Jesús?", "opciones": ["Fe, obediencia y valentía", "Riqueza y poder", "Venganza", "Rebeldía"], "respuesta": "Fe, obediencia y valentía" }
+    ],
+    "3": [
+      { "pregunta": "¿Quién fue el principal testigo de la resurrección?", "opciones": ["María Magdalena", "Pedro", "Juan", "Tomás"], "respuesta": "María Magdalena" },
+      { "pregunta": "¿Qué hicieron los discípulos después de la resurrección?", "opciones": ["Anunciar el Evangelio", "Se escondieron", "Se fueron a Egipto", "Construyeron un templo"], "respuesta": "Anunciar el Evangelio" },
+      { "pregunta": "¿Qué muestra Nicodemo en la historia?", "opciones": ["Curiosidad y búsqueda de la verdad", "Indiferencia", "Desobediencia", "Ira"], "respuesta": "Curiosidad y búsqueda de la verdad" },
+      { "pregunta": "¿Qué importancia tiene José de Arimatea en la tradición cristiana?", "opciones": ["Custodió el cuerpo de Jesús", "Traicionó a Jesús", "Ignoró los eventos", "Se rebeló"], "respuesta": "Custodió el cuerpo de Jesús" },
+      { "pregunta": "¿Qué significa ser testigo de Jesús según estas historias?", "opciones": ["Fidelidad y fe activa", "Riqueza y poder", "Miedo y huida", "Ignorancia"], "respuesta": "Fidelidad y fe activa" },
+      { "pregunta": "¿Qué actitud de la hemorroísa refleja la relación con Jesús?", "opciones": ["Confianza plena", "Temor", "Desobediencia", "Indiferencia"], "respuesta": "Confianza plena" }
+    ],
+    "4": [
+      { "pregunta": "¿Qué papel jugaron las mujeres en los testigos de Jesús?", "opciones": ["Transmitir fe y testimonio", "Poder político", "Guerra", "Ignorancia"], "respuesta": "Transmitir fe y testimonio" },
+      { "pregunta": "¿Qué acción de Zaqueo demuestra conversión y fe?", "opciones": ["Dar la mitad de sus bienes a los pobres", "Negarse a cambiar", "Huir", "Rebelarse"], "respuesta": "Dar la mitad de sus bienes a los pobres" },
+      { "pregunta": "¿Qué valor se destaca en los testigos que siguieron a Jesús?", "opciones": ["Obediencia y valentía", "Riqueza", "Poder", "Indiferencia"], "respuesta": "Obediencia y valentía" },
+      { "pregunta": "¿Qué enseñanza se observa en la historia de la mujer adúltera?", "opciones": ["Misericordia y perdón", "Castigo inmediato", "Riqueza", "Rebeldía"], "respuesta": "Misericordia y perdón" },
+      { "pregunta": "¿Qué muestra la historia de María de Betania sobre Jesús?", "opciones": ["Reconocimiento y adoración", "Indiferencia", "Miedo", "Rebeldía"], "respuesta": "Reconocimiento y adoración" },
+      { "pregunta": "¿Qué refleja la fe de la mujer samaritana?", "opciones": ["Anunciar a Jesús a su pueblo", "Indiferencia", "Riqueza", "Venganza"], "respuesta": "Anunciar a Jesús a su pueblo" }
+    ],
+    "5": [
+      { "pregunta": "¿Qué cualidad une a todos los testigos de Jesús?", "opciones": ["Fe y fidelidad", "Riqueza", "Poder político", "Miedo"], "respuesta": "Fe y fidelidad" },
+      { "pregunta": "¿Qué enseñanzas podemos aprender de José de Arimatea?", "opciones": ["Valor y obediencia a Dios", "Desobediencia", "Indiferencia", "Poder"], "respuesta": "Valor y obediencia a Dios" },
+      { "pregunta": "¿Qué actitud deben tener los testigos de Jesús hoy?", "opciones": ["Valentía y testimonio", "Temor y ocultamiento", "Indiferencia", "Venganza"], "respuesta": "Valentía y testimonio" },
+      { "pregunta": "¿Qué refleja María Magdalena ante la resurrección?", "opciones": ["Alegría y anuncio", "Miedo", "Ignorancia", "Indiferencia"], "respuesta": "Alegría y anuncio" },
+      { "pregunta": "¿Qué nos enseñan los testigos de Jesús sobre la vida cristiana?", "opciones": ["Seguir a Cristo con fe y compromiso", "Buscar poder", "Ignorar a Dios", "Riqueza material"], "respuesta": "Seguir a Cristo con fe y compromiso" },
+      { "pregunta": "¿Qué significa realmente ser un testigo de Jesús?", "opciones": ["Anunciar con la vida y palabras", "Buscar fama", "Evitar problemas", "Acumular riquezas"], "respuesta": "Anunciar con la vida y palabras" }
+
+      ]
+      }
+    },
+    "2025-S44": {
+  "titulo": "Semana 44 – Apóstoles y Misión",
+  "descripcion": "Conoce a los doce apóstoles, sus enseñanzas, su envío por Jesús y cómo fueron testigos de la misión de anunciar el Evangelio.",
+  "niveles": {
+    "1": [
+      { "pregunta": "¿Quién fue llamado por Jesús a ser pescador de hombres?", "opciones": ["Pedro", "Juan", "Santiago", "Andrés"], "respuesta": "Pedro" },
+      { "pregunta": "¿Quién era hermano de Pedro y también apóstol?", "opciones": ["Andrés", "Santiago", "Juan", "Tomás"], "respuesta": "Andrés" },
+      { "pregunta": "¿Quién fue llamado 'el discípulo amado'?", "opciones": ["Juan", "Pedro", "Mateo", "Santiago"], "respuesta": "Juan" },
+      { "pregunta": "¿Quién traicionó a Jesús por treinta monedas de plata?", "opciones": ["Judas Iscariote", "Pedro", "Tomás", "Bartolomé"], "respuesta": "Judas Iscariote" },
+      { "pregunta": "¿Qué apóstol dudó de la resurrección hasta tocar las heridas de Jesús?", "opciones": ["Tomás", "Pedro", "Juan", "Santiago"], "respuesta": "Tomás" },
+      { "pregunta": "¿Quién era recaudador de impuestos y fue llamado por Jesús?", "opciones": ["Mateo", "Simón", "Bartolomé", "Judas"], "respuesta": "Mateo" },
+      { "pregunta": "¿Quién fue apodado 'Santiago el Mayor'?", "opciones": ["Hijo de Zebedeo", "Hijo de Alfeo", "Hijo de Jacob", "Hijo de Simón"], "respuesta": "Hijo de Zebedeo" },
+      { "pregunta": "¿Quién fue conocido por su valentía al caminar sobre el agua?", "opciones": ["Pedro", "Juan", "Tomás", "Andrés"], "respuesta": "Pedro" },
+      { "pregunta": "¿Qué enseñó Jesús sobre el servicio a los demás?", "opciones": ["El mayor debe ser servidor", "El fuerte domina", "El rico manda", "El sabio es jefe"], "respuesta": "El mayor debe ser servidor" },
+      { "pregunta": "¿Qué significa 'apóstol'?", "opciones": ["Enviado", "Maestro", "Sacerdote", "Profeta"], "respuesta": "Enviado" }
+    ],
+    "2": [
+      { "pregunta": "¿Qué hizo Pedro después de la resurrección de Jesús?", "opciones": ["Predicó en Jerusalén", "Se escondió", "Huyó a Galilea", "Negó a Jesús"], "respuesta": "Predicó en Jerusalén" },
+      { "pregunta": "¿Qué misión recibieron los apóstoles de Jesús?", "opciones": ["Anunciar el Evangelio", "Ganar riquezas", "Reinar sobre Israel", "Escribir leyes"], "respuesta": "Anunciar el Evangelio" },
+      { "pregunta": "¿Quién escribió uno de los evangelios y fue apóstol?", "opciones": ["Mateo", "Pedro", "Tomás", "Andrés"], "respuesta": "Mateo" },
+      { "pregunta": "¿Qué apóstol fue conocido por predicar en Samaria y Asia Menor?", "opciones": ["Juan", "Pedro", "Santiago", "Bartolomé"], "respuesta": "Juan" },
+      { "pregunta": "¿Qué actitud mostraron los apóstoles ante el envío?", "opciones": ["Fe y obediencia", "Miedo y dudas", "Indiferencia", "Rebeldía"], "respuesta": "Fe y obediencia" },
+      { "pregunta": "¿Quién fue llamado Simón Pedro por Jesús?", "opciones": ["Simón", "Juan", "Mateo", "Andrés"], "respuesta": "Simón" },
+      { "pregunta": "¿Qué significa caminar como Jesús enseñó a los apóstoles?", "opciones": ["Amar y servir a todos", "Buscar poder", "Acumular riquezas", "Evitar problemas"], "respuesta": "Amar y servir a todos" },
+      { "pregunta": "¿Qué hizo Andrés al encontrar a su hermano Pedro?", "opciones": ["Lo llevó a Jesús", "Lo ignoró", "Se peleó con él", "Se marchó"], "respuesta": "Lo llevó a Jesús" },
+      { "pregunta": "¿Qué enseñaba Jesús sobre la humildad?", "opciones": ["El que quiere ser grande, debe servir", "El fuerte domina", "El rico manda", "El sabio es jefe"], "respuesta": "El que quiere ser grande, debe servir" },
+      { "pregunta": "¿Qué evento fortaleció la misión de los apóstoles?", "opciones": ["Pentecostés", "La crucifixión", "El nacimiento de Jesús", "El bautismo"], "respuesta": "Pentecostés" }
+    ],
+    "3": [
+      { "pregunta": "¿Qué muestra la vida de Pedro sobre la fe?", "opciones": ["Confianza y arrepentimiento", "Desobediencia", "Indiferencia", "Miedo"], "respuesta": "Confianza y arrepentimiento" },
+      { "pregunta": "¿Qué acción de Tomás refleja la duda y la fe?", "opciones": ["Quiso ver y tocar a Jesús resucitado", "Huyó por miedo", "Negó a Jesús", "Se rebeló"], "respuesta": "Quiso ver y tocar a Jesús resucitado" },
+      { "pregunta": "¿Qué importancia tiene la obediencia de los apóstoles?", "opciones": ["Cumplir la misión de Jesús", "Ganar poder", "Evitar problemas", "Acumular riquezas"], "respuesta": "Cumplir la misión de Jesús" },
+      { "pregunta": "¿Qué enseña el envío de los apóstoles sobre la evangelización?", "opciones": ["Difundir la fe sin miedo", "Buscar fama", "Huir del peligro", "Acumular bienes"], "respuesta": "Difundir la fe sin miedo" },
+      { "pregunta": "¿Qué actitud de Mateo muestra su conversión?", "opciones": ["De recaudador a seguidor de Jesús", "Se rebeló", "Ignoró a Jesús", "Acumuló riquezas"], "respuesta": "De recaudador a seguidor de Jesús" },
+      { "pregunta": "¿Qué caracteriza a los apóstoles en la misión?", "opciones": ["Fidelidad y valentía", "Indiferencia", "Temor", "Riqueza"], "respuesta": "Fidelidad y valentía" }
+    ],
+    "4": [
+      { "pregunta": "¿Qué enseñanzas prácticas recibieron los apóstoles de Jesús?", "opciones": ["Amor, servicio y humildad", "Poder, riqueza y fama", "Rebeldía", "Indiferencia"], "respuesta": "Amor, servicio y humildad" },
+      { "pregunta": "¿Qué muestra la vida de Andrés al presentar a otros a Jesús?", "opciones": ["Evangelización y generosidad", "Miedo", "Indiferencia", "Rebeldía"], "respuesta": "Evangelización y generosidad" },
+      { "pregunta": "¿Qué aprendizaje nos deja la actitud de Pedro después de negar a Jesús?", "opciones": ["Arrepentimiento y fe", "Desobediencia", "Indiferencia", "Miedo"], "respuesta": "Arrepentimiento y fe" },
+      { "pregunta": "¿Qué importancia tuvo la misión de los apóstoles en la expansión del Evangelio?", "opciones": ["Difundir la Palabra a todas las naciones", "Ganar poder", "Acumular riquezas", "Evitar conflictos"], "respuesta": "Difundir la Palabra a todas las naciones" },
+      { "pregunta": "¿Qué actitud muestra Juan hacia sus hermanos y discípulos?", "opciones": ["Amor y cuidado", "Ignorancia", "Indiferencia", "Rebeldía"], "respuesta": "Amor y cuidado" },
+      { "pregunta": "¿Qué enseñanza se destaca en el envío de los apóstoles?", "opciones": ["Evangelizar con valentía y fe", "Buscar fama", "Acumular bienes", "Huir del peligro"], "respuesta": "Evangelizar con valentía y fe" }
+    ],
+    "5": [
+      { "pregunta": "¿Qué nos enseña la misión de los apóstoles sobre nuestra vida cristiana?", "opciones": ["Seguir a Jesús con compromiso y valentía", "Acumular riqueza", "Evitar problemas", "Buscar fama"], "respuesta": "Seguir a Jesús con compromiso y valentía" },
+      { "pregunta": "¿Qué valor une a todos los apóstoles?", "opciones": ["Fe y obediencia", "Riqueza", "Poder", "Indiferencia"], "respuesta": "Fe y obediencia" },
+      { "pregunta": "¿Qué enseñanza se puede aplicar hoy de la vida de Mateo?", "opciones": ["Conversión y servicio", "Miedo", "Rebeldía", "Acumulación de bienes"], "respuesta": "Conversión y servicio" },
+      { "pregunta": "¿Qué muestra la vida de Tomás sobre la duda y la fe?", "opciones": ["Es natural dudar, pero se puede tener fe", "Nunca se debe dudar", "Ignorar a Dios", "Buscar fama"], "respuesta": "Es natural dudar, pero se puede tener fe" },
+      { "pregunta": "¿Qué actitud debemos tomar ante la misión que Dios nos encomienda?", "opciones": ["Fidelidad y valentía", "Miedo", "Indiferencia", "Rebeldía"], "respuesta": "Fidelidad y valentía" },
+      { "pregunta": "¿Qué nos enseñan los apóstoles sobre el amor al prójimo?", "opciones": ["Servir y amar sin esperar nada a cambio", "Buscar beneficio propio", "Rebeldía", "Evitar responsabilidades"], "respuesta": "Servir y amar sin esperar nada a cambio" }
+
+       ]
+      }
+    },
+    "2025-S45": {
+  "titulo": "Semana 45 – Reyes y Profetas",
+  "descripcion": "Explora la historia de los reyes y profetas de Israel, su obediencia a Dios, sus errores y las promesas que Él les dio.",
+  "niveles": {
+    "1": [
+      { "pregunta": "¿Quién fue el primer rey de Israel?", "opciones": ["Saúl", "David", "Salomón", "Samuel"], "respuesta": "Saúl" },
+      { "pregunta": "¿Quién mató a Goliat?", "opciones": ["David", "Saúl", "Samuel", "Josué"], "respuesta": "David" },
+      { "pregunta": "¿Qué rey construyó el templo en Jerusalén?", "opciones": ["Salomón", "David", "Saúl", "Ezequías"], "respuesta": "Salomón" },
+      { "pregunta": "¿Quién ungió a Saúl como rey?", "opciones": ["Samuel", "David", "Elías", "Isaías"], "respuesta": "Samuel" },
+      { "pregunta": "¿Qué profeta desafió a los profetas de Baal en el monte Carmelo?", "opciones": ["Elías", "Isaías", "Jeremías", "Natán"], "respuesta": "Elías" },
+      { "pregunta": "¿Qué rey fue conocido por su sabiduría?", "opciones": ["Salomón", "David", "Saúl", "Ezequías"], "respuesta": "Salomón" },
+      { "pregunta": "¿Qué profeta anunció la llegada del Mesías y la restauración?", "opciones": ["Isaías", "Elías", "Jeremías", "Oseas"], "respuesta": "Isaías" },
+      { "pregunta": "¿Qué rey fue considerado un hombre conforme al corazón de Dios?", "opciones": ["David", "Saúl", "Salomón", "Ezequías"], "respuesta": "David" },
+      { "pregunta": "¿Qué profeta advirtió sobre la destrucción de Jerusalén?", "opciones": ["Jeremías", "Elías", "Isaías", "Natán"], "respuesta": "Jeremías" },
+      { "pregunta": "¿Qué rey fortaleció Jerusalén y reformó la religión?", "opciones": ["Ezequías", "Saúl", "David", "Salomón"], "respuesta": "Ezequías" }
+    ],
+    "2": [
+      { "pregunta": "¿Qué pecado llevó al rey David a problemas familiares y con Dios?", "opciones": ["El adulterio y asesinato de Urías", "Robo", "Mentira", "Idolatría"], "respuesta": "El adulterio y asesinato de Urías" },
+      { "pregunta": "¿Qué enseñanzas dejó Salomón en sus proverbios?", "opciones": ["Sabiduría y discernimiento", "Guerras", "Riquezas", "Fama"], "respuesta": "Sabiduría y discernimiento" },
+      { "pregunta": "¿Quién aconsejaba a David sobre justicia y decisiones?", "opciones": ["Natán", "Samuel", "Elías", "Isaías"], "respuesta": "Natán" },
+      { "pregunta": "¿Qué rey fue alabado por su fidelidad a Dios durante la invasión?", "opciones": ["Ezequías", "Saúl", "David", "Salomón"], "respuesta": "Ezequías" },
+      { "pregunta": "¿Qué profeta usó signos y milagros para comunicar la voluntad de Dios?", "opciones": ["Elías", "Isaías", "Jeremías", "Samuel"], "respuesta": "Elías" },
+      { "pregunta": "¿Qué mensaje central repetían los profetas?", "opciones": ["Obediencia y arrepentimiento", "Riqueza y poder", "Venganza", "Indiferencia"], "respuesta": "Obediencia y arrepentimiento" },
+      { "pregunta": "¿Qué profeta fue llamado 'el profeta llorón'?", "opciones": ["Jeremías", "Isaías", "Elías", "Natán"], "respuesta": "Jeremías" },
+      { "pregunta": "¿Qué promesa se cumplió a través de David?", "opciones": ["El Mesías vendría de su descendencia", "Tendría riquezas sin fin", "Sería rey de todos los pueblos", "Fundaría un templo eterno"], "respuesta": "El Mesías vendría de su descendencia" },
+      { "pregunta": "¿Qué acto muestra la humildad de Ezequías?", "opciones": ["Oración y fidelidad a Dios", "Construir murallas", "Ganar guerras", "Negociar con reyes"], "respuesta": "Oración y fidelidad a Dios" },
+      { "pregunta": "¿Qué enseñanza nos deja la historia de los reyes?", "opciones": ["Seguir a Dios con fe y obediencia", "Buscar riqueza", "Huir del peligro", "Acumular poder"], "respuesta": "Seguir a Dios con fe y obediencia" }
+    ],
+    "3": [
+      { "pregunta": "¿Qué muestra la vida de David sobre la obediencia y arrepentimiento?", "opciones": ["Confianza y humildad ante Dios", "Indiferencia", "Venganza", "Rebeldía"], "respuesta": "Confianza y humildad ante Dios" },
+      { "pregunta": "¿Qué enseñanza dejó Salomón sobre la sabiduría?", "opciones": ["Buscar entender y discernir", "Acumular riquezas", "Dominar a otros", "Evitar la verdad"], "respuesta": "Buscar entender y discernir" },
+      { "pregunta": "¿Qué actitud destacó en Ezequías durante la crisis?", "opciones": ["Fe y oración", "Temor y huida", "Indiferencia", "Rebeldía"], "respuesta": "Fe y oración" },
+      { "pregunta": "¿Qué mensaje principal de Isaías permanece vigente?", "opciones": ["Esperanza en la salvación y cumplimiento de promesas", "Miedo y guerra", "Acumular riquezas", "Rebeldía"], "respuesta": "Esperanza en la salvación y cumplimiento de promesas" },
+      { "pregunta": "¿Qué enseñanzas dejan los profetas sobre la vida cristiana?", "opciones": ["Arrepentimiento, fidelidad y esperanza", "Riqueza y poder", "Indiferencia", "Venganza"], "respuesta": "Arrepentimiento, fidelidad y esperanza" },
+      { "pregunta": "¿Qué papel tenían los profetas en la historia de Israel?", "opciones": ["Guiar y advertir al pueblo según Dios", "Gobernar", "Acumular riquezas", "Evitar conflictos"], "respuesta": "Guiar y advertir al pueblo según Dios" }
+    ],
+    "4": [
+      { "pregunta": "¿Qué nos enseñan los reyes justos como David y Ezequías?", "opciones": ["Fidelidad, oración y obediencia", "Poder y fama", "Riqueza", "Indiferencia"], "respuesta": "Fidelidad, oración y obediencia" },
+      { "pregunta": "¿Qué importancia tiene arrepentirse ante los errores?", "opciones": ["Recibir perdón y reconciliación con Dios", "Evitar consecuencias", "Acumular poder", "Rebelarse"], "respuesta": "Recibir perdón y reconciliación con Dios" },
+      { "pregunta": "¿Qué muestra la historia de Salomón sobre la sabiduría?", "opciones": ["Tomar decisiones justas y prudentes", "Buscar fama", "Indiferencia", "Riqueza"], "respuesta": "Tomar decisiones justas y prudentes" },
+      { "pregunta": "¿Qué enseñanza central dejan los profetas sobre Dios?", "opciones": ["Dios es fiel y cumple sus promesas", "Dios castiga siempre", "Dios ignora al pueblo", "Dios es indiferente"], "respuesta": "Dios es fiel y cumple sus promesas" },
+      { "pregunta": "¿Qué actitud debemos tomar ante la misión que Dios nos encomienda?", "opciones": ["Obediencia y confianza", "Miedo", "Indiferencia", "Rebeldía"], "respuesta": "Obediencia y confianza" },
+      { "pregunta": "¿Qué mensaje nos deja la fidelidad de los profetas?", "opciones": ["Testimonio y esperanza", "Riqueza", "Venganza", "Rebeldía"], "respuesta": "Testimonio y esperanza" }
+    ],
+    "5": [
+      { "pregunta": "¿Qué cualidad une a todos los reyes y profetas justos?", "opciones": ["Fe y fidelidad", "Riqueza", "Poder", "Miedo"], "respuesta": "Fe y fidelidad" },
+      { "pregunta": "¿Qué nos enseñan sobre obediencia a Dios?", "opciones": ["Seguir sus mandatos con corazón sincero", "Acumular bienes", "Evitar responsabilidades", "Rebelarse"], "respuesta": "Seguir sus mandatos con corazón sincero" },
+      { "pregunta": "¿Qué enseñanza de David y Salomón aplica hoy?", "opciones": ["Buscar justicia, sabiduría y discernimiento", "Buscar fama", "Rebeldía", "Indiferencia"], "respuesta": "Buscar justicia, sabiduría y discernimiento" },
+      { "pregunta": "¿Qué nos enseñan los profetas sobre la esperanza?", "opciones": ["Confiar en la fidelidad de Dios", "Temer al futuro", "Ignorar a Dios", "Acumular riquezas"], "respuesta": "Confiar en la fidelidad de Dios" },
+      { "pregunta": "¿Qué valor debemos practicar siguiendo a los reyes justos?", "opciones": ["Obediencia y amor a Dios", "Poder", "Indiferencia", "Rebeldía"], "respuesta": "Obediencia y amor a Dios" },
+      { "pregunta": "¿Qué legado dejaron los profetas y reyes?", "opciones": ["Enseñanzas de fe, esperanza y obediencia", "Riqueza y poder", "Miedo", "Indiferencia"], "respuesta": "Enseñanzas de fe, esperanza y obediencia" }
+
+
+       ]
+      }
+    },
+
+    "2025-S46": {
+  "titulo": "Semana 46 – Sabiduría y Parábolas",
+  "descripcion": "Aprende de las enseñanzas prácticas de Jesús y los libros sapienciales, aplicando la sabiduría y los valores cristianos a la vida diaria.",
+  "niveles": {
+    "1": [
+      { "pregunta": "¿Qué enseñó Jesús sobre el buen samaritano?", "opciones": ["Amar al prójimo sin distinción", "Solo ayudar a amigos", "Buscar riquezas", "Evitar problemas"], "respuesta": "Amar al prójimo sin distinción" },
+      { "pregunta": "¿Qué representa la semilla que cae en buena tierra?", "opciones": ["Palabra de Dios que da fruto", "Riqueza", "Poder", "Fama"], "respuesta": "Palabra de Dios que da fruto" },
+      { "pregunta": "¿Qué nos enseñan los proverbios sobre la sabiduría?", "opciones": ["Actuar con prudencia y temor de Dios", "Acumular riquezas", "Buscar fama", "Evitar responsabilidades"], "respuesta": "Actuar con prudencia y temor de Dios" },
+      { "pregunta": "¿Qué parábola enseña sobre el perdón y la misericordia?", "opciones": ["Hijo pródigo", "Sembrador", "Buen pastor", "Talentos"], "respuesta": "Hijo pródigo" },
+      { "pregunta": "¿Qué nos enseña la parábola de los talentos?", "opciones": ["Servir y usar los dones recibidos", "Ocultar los talentos", "Buscar fama", "Evitar riesgos"], "respuesta": "Servir y usar los dones recibidos" },
+      { "pregunta": "¿Qué es la sabiduría según los libros sapienciales?", "opciones": ["Discernir y elegir bien", "Poder y riqueza", "Fama y reconocimiento", "Evitar responsabilidades"], "respuesta": "Discernir y elegir bien" },
+      { "pregunta": "¿Qué enseña la parábola del buen pastor?", "opciones": ["Cuidar y proteger a los demás", "Buscar fama", "Evitar problemas", "Acumular riqueza"], "respuesta": "Cuidar y proteger a los demás" },
+      { "pregunta": "¿Qué significa el fruto en la parábola del sembrador?", "opciones": ["Vida transformada por la Palabra de Dios", "Riqueza", "Poder", "Fama"], "respuesta": "Vida transformada por la Palabra de Dios" },
+      { "pregunta": "¿Qué valor destaca en la parábola del hijo pródigo?", "opciones": ["Misericordia y perdón", "Riqueza", "Poder", "Indiferencia"], "respuesta": "Misericordia y perdón" },
+      { "pregunta": "¿Qué actitud debemos tener según los libros sapienciales?", "opciones": ["Humildad y respeto a Dios", "Orgullo y poder", "Riqueza y fama", "Indiferencia"], "respuesta": "Humildad y respeto a Dios" }
+    ],
+    "2": [
+      { "pregunta": "¿Qué enseña la parábola de la oveja perdida?", "opciones": ["Dios busca y salva a todos", "Ignorar a los débiles", "Acumular riquezas", "Evitar problemas"], "respuesta": "Dios busca y salva a todos" },
+      { "pregunta": "¿Qué representa la luz en la enseñanza de Jesús?", "opciones": ["Guiar y dar ejemplo", "Poder", "Riqueza", "Fama"], "respuesta": "Guiar y dar ejemplo" },
+      { "pregunta": "¿Qué valor nos recuerda la parábola del rico insensato?", "opciones": ["No acumular riquezas sino buscar Dios", "Riqueza y poder", "Evitar responsabilidades", "Fama"], "respuesta": "No acumular riquezas sino buscar Dios" },
+      { "pregunta": "¿Qué nos enseñan los libros sapienciales sobre la paciencia?", "opciones": ["Esperar y confiar en Dios", "Impaciencia", "Rebeldía", "Fama"], "respuesta": "Esperar y confiar en Dios" },
+      { "pregunta": "¿Qué enseña Jesús con la parábola del sembrador?", "opciones": ["Escuchar la Palabra y dar fruto", "Acumular riquezas", "Evitar problemas", "Buscar fama"], "respuesta": "Escuchar la Palabra y dar fruto" },
+      { "pregunta": "¿Qué nos enseña la parábola de los talentos sobre nuestras habilidades?", "opciones": ["Desarrollarlas para servir a Dios", "Ocultarlas", "Buscar fama", "Evitar responsabilidades"], "respuesta": "Desarrollarlas para servir a Dios" },
+      { "pregunta": "¿Qué actitud debemos tener ante el prójimo según Jesús?", "opciones": ["Amor y servicio", "Indiferencia", "Rebeldía", "Buscar poder"], "respuesta": "Amor y servicio" },
+      { "pregunta": "¿Qué enseñanza tiene la parábola del buen samaritano?", "opciones": ["Ayudar a los necesitados sin esperar nada", "Evitar problemas", "Acumular riqueza", "Buscar fama"], "respuesta": "Ayudar a los necesitados sin esperar nada" },
+      { "pregunta": "¿Qué valor destaca en la sabiduría del libro de Proverbios?", "opciones": ["Discernimiento y prudencia", "Riqueza", "Fama", "Poder"], "respuesta": "Discernimiento y prudencia" },
+      { "pregunta": "¿Qué nos enseña la parábola de la perla de gran valor?", "opciones": ["Buscar el Reino de Dios sobre todo", "Riqueza", "Poder", "Fama"], "respuesta": "Buscar el Reino de Dios sobre todo" }
+    ],
+    "3": [
+      { "pregunta": "¿Qué muestra la parábola del hijo pródigo sobre Dios?", "opciones": ["Amor y perdón incondicional", "Ignorancia", "Indiferencia", "Rebeldía"], "respuesta": "Amor y perdón incondicional" },
+      { "pregunta": "¿Qué nos enseña la parábola del buen pastor?", "opciones": ["Cuidar y guiar con amor", "Evitar responsabilidades", "Acumular riqueza", "Buscar fama"], "respuesta": "Cuidar y guiar con amor" },
+      { "pregunta": "¿Qué enseñanza central deja la semilla en la buena tierra?", "opciones": ["La Palabra de Dios transforma vidas", "Riqueza", "Poder", "Fama"], "respuesta": "La Palabra de Dios transforma vidas" },
+      { "pregunta": "¿Qué actitud debemos tener según Proverbios sobre el conocimiento?", "opciones": ["Buscarlo con humildad y aplicar la sabiduría", "Ignorancia", "Fama", "Poder"], "respuesta": "Buscarlo con humildad y aplicar la sabiduría" },
+      { "pregunta": "¿Qué nos enseña la parábola del rico insensato?", "opciones": ["No poner la confianza en riquezas", "Acumular poder", "Evitar problemas", "Buscar fama"], "respuesta": "No poner la confianza en riquezas" },
+      { "pregunta": "¿Qué enseñanza práctica deja la parábola de los talentos?", "opciones": ["Usar los dones de Dios para servir", "Ocultarlos", "Evitar responsabilidades", "Acumular fama"], "respuesta": "Usar los dones de Dios para servir" }
+    ],
+    "4": [
+      { "pregunta": "¿Qué nos enseñan los libros sapienciales sobre la vida diaria?", "opciones": ["Vivir con prudencia, justicia y amor", "Acumular riquezas", "Buscar fama", "Rebeldía"], "respuesta": "Vivir con prudencia, justicia y amor" },
+      { "pregunta": "¿Qué actitud debemos tener hacia los demás según las parábolas?", "opciones": ["Amor, misericordia y servicio", "Indiferencia", "Rebeldía", "Acumular poder"], "respuesta": "Amor, misericordia y servicio" },
+      { "pregunta": "¿Qué valor resalta la parábola de la perla de gran valor?", "opciones": ["Buscar el Reino de Dios con todo el corazón", "Riqueza", "Fama", "Poder"], "respuesta": "Buscar el Reino de Dios con todo el corazón" },
+      { "pregunta": "¿Qué muestra la parábola del buen samaritano sobre la ayuda al prójimo?", "opciones": ["Ayudar sin esperar nada a cambio", "Evitar responsabilidades", "Acumular riqueza", "Buscar fama"], "respuesta": "Ayudar sin esperar nada a cambio" },
+      { "pregunta": "¿Qué actitud debemos tener al escuchar la Palabra de Dios?", "opciones": ["Aplicarla en nuestra vida", "Ignorarla", "Evitar problemas", "Buscar fama"], "respuesta": "Aplicarla en nuestra vida" },
+      { "pregunta": "¿Qué enseñanza se destaca en todas las parábolas de Jesús?", "opciones": ["Amor, justicia y servicio", "Acumular poder", "Indiferencia", "Fama"], "respuesta": "Amor, justicia y servicio" }
+    ],
+    "5": [
+      { "pregunta": "¿Qué nos enseñan las parábolas sobre la vida cristiana?", "opciones": ["Vivir con amor, servicio y fe", "Acumular riquezas", "Evitar responsabilidades", "Buscar fama"], "respuesta": "Vivir con amor, servicio y fe" },
+      { "pregunta": "¿Qué valor debemos practicar según los libros sapienciales?", "opciones": ["Discernimiento, prudencia y justicia", "Poder", "Indiferencia", "Rebeldía"], "respuesta": "Discernimiento, prudencia y justicia" },
+      { "pregunta": "¿Qué mensaje central nos deja Jesús en sus parábolas?", "opciones": ["Seguir a Dios con corazón sincero", "Buscar riqueza", "Evitar responsabilidades", "Acumular fama"], "respuesta": "Seguir a Dios con corazón sincero" },
+      { "pregunta": "¿Qué nos enseñan sobre la misericordia y el perdón?", "opciones": ["Ser compasivos y perdonar a los demás", "Venganza", "Acumular poder", "Indiferencia"], "respuesta": "Ser compasivos y perdonar a los demás" },
+      { "pregunta": "¿Qué actitud debemos tener ante los dones recibidos de Dios?", "opciones": ["Usarlos para servir y dar fruto", "Ocultarlos", "Buscar fama", "Evitar responsabilidades"], "respuesta": "Usarlos para servir y dar fruto" },
+      { "pregunta": "¿Qué nos enseñan las parábolas sobre el Reino de Dios?", "opciones": ["Es de gran valor y debemos buscarlo primero", "Riqueza", "Poder", "Fama"], "respuesta": "Es de gran valor y debemos buscarlo primero" }
+
+    
  ]
       }
        
