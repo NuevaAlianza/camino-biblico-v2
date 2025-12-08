@@ -663,6 +663,269 @@
       "opcion_2": "El sermón de la montaña",
       "opcion_3": "La resurrección de Lázaro"
 
+       }
+    ]
+  },
+  {
+
+
+    "id": "T8",
+    "titulo": "Adviento: Tiempo de Esperanza",
+    "descripcion": "Prepárate para la venida del Salvador conociendo los signos, profetas y el sentido de este tiempo litúrgico.",
+    "fecha_inicio": "2025-11-30",
+    "fecha_fin": "2025-12-20",
+    "puntaje_maximo": 10,
+    "umbral_coleccionable": 9,
+    "coleccionable": {
+      "nombre": "Temporada 8 – Corona de Adviento",
+      "imagen_a": "assets/img/coleccionables/temporada8_a.png",
+      "imagen_b": "assets/img/coleccionables/generica_b.png",
+      "imagen_c": "assets/img/coleccionables/generica_c.png"
+    },
+    "preguntas": [
+      {
+        "pregunta": "¿Cuál es el color litúrgico principal del tiempo de Adviento?",
+        "respuesta": "Morado",
+        "opcion_1": "Blanco",
+        "opcion_2": "Verde",
+        "opcion_3": "Rojo"
+      },
+      {
+        "pregunta": "¿Qué significa la palabra 'Adviento'?",
+        "respuesta": "Venida o llegada",
+        "opcion_1": "Ayuno y penitencia",
+        "opcion_2": "Nacimiento",
+        "opcion_3": "Manifestación"
+      },
+      {
+        "pregunta": "¿Qué simboliza la forma circular de la corona de Adviento?",
+        "respuesta": "El amor de Dios que no tiene principio ni fin (eternidad)",
+        "opcion_1": "El mundo creado por Dios",
+        "opcion_2": "La unidad de los cristianos",
+        "opcion_3": "El ciclo de las cuatro estaciones"
+      },
+      {
+        "pregunta": "¿De qué color es la vela que se enciende el tercer domingo de Adviento (Domingo Gaudete)?",
+        "respuesta": "Rosada",
+        "opcion_1": "Blanca",
+        "opcion_2": "Roja",
+        "opcion_3": "Dorada"
+      },
+      {
+        "pregunta": "¿Qué profeta del Antiguo Testamento es el más leído durante el Adviento por sus anuncios mesiánicos?",
+        "respuesta": "Isaías",
+        "opcion_1": "Jeremías",
+        "opcion_2": "Ezequiel",
+        "opcion_3": "Daniel"
+      },
+      {
+        "pregunta": "¿Quién es el 'Precursor' que prepara el camino del Señor y es figura central en el Adviento?",
+        "respuesta": "Juan el Bautista",
+        "opcion_1": "San José",
+        "opcion_2": "San Pedro",
+        "opcion_3": "El profeta Elías"
+      },
+      {
+        "pregunta": "¿Cuáles son las dos 'venidas' de Cristo que recordamos en Adviento?",
+        "respuesta": "Su encarnación histórica y su segunda venida gloriosa al final de los tiempos",
+        "opcion_1": "Su nacimiento y su bautismo",
+        "opcion_2": "Su muerte y su resurrección",
+        "opcion_3": "Su llegada a Egipto y su regreso a Nazaret"
+      },
+      {
+        "pregunta": "¿Qué gran solemnidad mariana se celebra durante el Adviento (el 8 de diciembre)?",
+        "respuesta": "La Inmaculada Concepción",
+        "opcion_1": "La Asunción",
+        "opcion_2": "La Anunciación",
+        "opcion_3": "Nuestra Señora de Guadalupe"
+      },
+      {
+        "pregunta": "¿Cuál es la actitud espiritual fundamental a la que nos llama el Adviento?",
+        "respuesta": "La vigilancia y la esperanza activa",
+        "opcion_1": "La tristeza y el luto",
+        "opcion_2": "El ayuno estricto",
+        "opcion_3": "El descanso pasivo"
+      },
+      {
+        "pregunta": "¿Cuándo termina oficialmente el tiempo de Adviento?",
+        "respuesta": "Con las primeras vísperas de Navidad (tarde del 24 de diciembre)",
+        "opcion_1": "El último domingo antes de Navidad",
+        "opcion_2": "El día de Año Nuevo",
+        "opcion_3": "Con la fiesta de la Epifanía"
+      }
+    ]
+  },
+  {
+    "id": "T9",
+    "titulo": "Navidad: El Misterio de la Encarnación",
+    "descripcion": "Celebra el nacimiento del Hijo de Dios y profundiza en el misterio de la Palabra hecha carne.",
+    "fecha_inicio": "2025-12-24",
+    "fecha_fin": "2026-01-05",
+    "puntaje_maximo": 10,
+    "umbral_coleccionable": 9,
+    "coleccionable": {
+      "nombre": "Temporada 9 – La Natividad",
+      "imagen_a": "assets/img/coleccionables/temporada9_a.png",
+      "imagen_b": "assets/img/coleccionables/generica_b.png",
+      "imagen_c": "assets/img/coleccionables/generica_c.png"
+    },
+    "preguntas": [
+      {
+        "pregunta": "¿Qué celebramos centralmente en la Navidad?",
+        "respuesta": "El misterio de la Encarnación: Dios se hace hombre",
+        "opcion_1": "La llegada de los Reyes Magos",
+        "opcion_2": "La huida a Egipto",
+        "opcion_3": "El bautismo de Jesús"
+      },
+      {
+        "pregunta": "¿Cuál es el color litúrgico propio del tiempo de Navidad, que simboliza alegría y pureza?",
+        "respuesta": "Blanco (o dorado)",
+        "opcion_1": "Morado",
+        "opcion_2": "Verde",
+        "opcion_3": "Rojo"
+      },
+      {
+        "pregunta": "¿Qué es la 'Octava de Navidad'?",
+        "respuesta": "Los ocho días siguientes a Navidad que se celebran como una sola gran fiesta",
+        "opcion_1": "Los ocho villancicos principales",
+        "opcion_2": "Las ocho misas del día de Navidad",
+        "opcion_3": "Los ocho profetas que anunciaron el nacimiento"
+      },
+      {
+        "pregunta": "¿A quiénes se les anunció primero el nacimiento de Jesús según el Evangelio de Lucas?",
+        "respuesta": "A unos pastores que vigilaban sus rebaños",
+        "opcion_1": "A los Reyes Magos de Oriente",
+        "opcion_2": "Al rey Herodes el Grande",
+        "opcion_3": "A los sumos sacerdotes del Templo"
+      },
+      {
+        "pregunta": "¿Qué significa 'Belén', la ciudad donde nació Jesús?",
+        "respuesta": "Casa del Pan",
+        "opcion_1": "Ciudad de David",
+        "opcion_2": "Lugar de Paz",
+        "opcion_3": "Fuente de Vida"
+      },
+      {
+        "pregunta": "¿Qué solemnidad celebra la Iglesia el 1 de enero, octava de Navidad?",
+        "respuesta": "Santa María, Madre de Dios",
+        "opcion_1": "La Sagrada Familia",
+        "opcion_2": "El Santísimo Nombre de Jesús",
+        "opcion_3": "La Epifanía del Señor"
+      },
+      {
+        "pregunta": "¿Qué santo, el primer mártir de la Iglesia, se celebra inmediatamente después de Navidad (26 de diciembre)?",
+        "respuesta": "San Esteban",
+        "opcion_1": "San Juan Apóstol",
+        "opcion_2": "Santo Tomás Becket",
+        "opcion_3": "San Pablo"
+      },
+      {
+        "pregunta": "¿Por qué la Sagrada Familia tuvo que huir a Egipto poco después del nacimiento?",
+        "respuesta": "Porque Herodes buscaba al niño para matarlo",
+        "opcion_1": "Para cumplir un censo romano",
+        "opcion_2": "Para visitar a los parientes de José",
+        "opcion_3": "Porque había una hambruna en Belén"
+      },
+      {
+        "pregunta": "Completa la frase del canto de los ángeles: 'Gloria a Dios en el cielo, y en la tierra...'",
+        "respuesta": "...paz a los hombres que ama el Señor",
+        "opcion_1": "...alegría para todo el mundo",
+        "opcion_2": "...esperanza para los pecadores",
+        "opcion_3": "...luz para las naciones"
+      },
+      {
+        "pregunta": "En el prólogo de San Juan, leído en Navidad, ¿cómo se le llama a Jesús antes de encarnarse?",
+        "respuesta": "El Verbo (o la Palabra)",
+        "opcion_1": "El Mesías prometido",
+        "opcion_2": "El Hijo del Hombre",
+        "opcion_3": "El Cordero de Dios"
+      }
+    ]
+  },
+  {
+    "id": "T10",
+    "titulo": "Epifanía y Bautismo: La Manifestación",
+    "descripcion": "Descubre cómo Jesús se da a conocer al mundo, desde los magos de oriente hasta su bautismo en el Jordán.",
+    "fecha_inicio": "2026-01-06",
+    "fecha_fin": "2026-01-15",
+    "puntaje_maximo": 10,
+    "umbral_coleccionable": 9,
+    "coleccionable": {
+      "nombre": "Temporada 10 – La Estrella de Oriente",
+      "imagen_a": "assets/img/coleccionables/temporada10_a.png",
+      "imagen_b": "assets/img/coleccionables/generica_b.png",
+      "imagen_c": "assets/img/coleccionables/generica_c.png"
+    },
+    "preguntas": [
+      {
+        "pregunta": "¿Qué significa la palabra griega 'Epifanía'?",
+        "respuesta": "Manifestación o revelación",
+        "opcion_1": "Regalo divino",
+        "opcion_2": "Viaje largo",
+        "opcion_3": "Adoración nocturna"
+      },
+      {
+        "pregunta": "¿Qué representan teológicamente los Magos de Oriente?",
+        "respuesta": "La manifestación de Jesús a todos los pueblos gentiles (no judíos)",
+        "opcion_1": "La sabiduría de la astrología antigua",
+        "opcion_2": "Los tres continentes conocidos entonces",
+        "opcion_3": "Las tres edades del hombre"
+      },
+      {
+        "pregunta": "¿Cuál de los regalos de los Magos reconoce a Jesús como Rey?",
+        "respuesta": "Oro",
+        "opcion_1": "Incienso",
+        "opcion_2": "Mirra",
+        "opcion_3": "Ninguno de los anteriores"
+      },
+      {
+        "pregunta": "¿Cuál de los regalos de los Magos reconoce la divinidad de Jesús (se usa en la adoración)?",
+        "respuesta": "Incienso",
+        "opcion_1": "Oro",
+        "opcion_2": "Mirra",
+        "opcion_3": "Las especias aromáticas"
+      },
+      {
+        "pregunta": "¿Cuál de los regalos prefigura la pasión y muerte humana de Jesús (usado para embalsamar)?",
+        "respuesta": "Mirra",
+        "opcion_1": "Oro",
+        "opcion_2": "Incienso",
+        "opcion_3": "Aceite de oliva"
+      },
+      {
+        "pregunta": "¿Con qué fiesta litúrgica concluye definitivamente el tiempo de Navidad?",
+        "respuesta": "El Bautismo del Señor",
+        "opcion_1": "La Epifanía",
+        "opcion_2": "La Presentación en el Templo (Candelaria)",
+        "opcion_3": "El Miércoles de Ceniza"
+      },
+      {
+        "pregunta": "¿En qué río fue bautizado Jesús?",
+        "respuesta": "Río Jordán",
+        "opcion_1": "Río Nilo",
+        "opcion_2": "Mar de Galilea",
+        "opcion_3": "Río Tíber"
+      },
+      {
+        "pregunta": "¿Quién bautizó a Jesús, aunque inicialmente se resistía a hacerlo?",
+        "respuesta": "Juan el Bautista",
+        "opcion_1": "El Sumo Sacerdote",
+        "opcion_2": "Su padre José",
+        "opcion_3": "Un ángel del Señor"
+      },
+      {
+        "pregunta": "En el bautismo de Jesús, se oyó la voz del Padre diciendo:",
+        "respuesta": "'Este es mi Hijo amado, en quien me complazco'",
+        "opcion_1": "'He aquí el Cordero de Dios'",
+        "opcion_2": "'Seguidle, porque él es la verdad'",
+        "opcion_3": "'Os ha nacido hoy un Salvador'"
+      },
+      {
+        "pregunta": "¿En qué forma corporal descendió el Espíritu Santo sobre Jesús durante su bautismo?",
+        "respuesta": "Como una paloma",
+        "opcion_1": "Como lenguas de fuego",
+        "opcion_2": "Como un viento huracanado",
+        "opcion_3": "Como una nube luminosa"
               
             }
     ]
