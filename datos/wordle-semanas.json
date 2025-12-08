@@ -191,6 +191,136 @@
         { "dow": 6, "palabra": "ETERNIDAD",   "pista": "Existencia sin fin que Dios promete.",                    "cita": "Lc 20,27-38" },
         { "dow": 0, "palabra": "PROMESA",     "pista": "Dios hace una … de vida eterna.",                        "cita": "Lc 20,27-38" }
         
+          ]
+    },
+    {
+           "id": "2025-11-16",
+      "domingo": "2025-11-16",
+      "ciclo": "C",
+      "pericopa": "Lc 21,5-19",
+      "tema": "Perseverancia y final de los tiempos (XXXIII T.O.)",
+      "dias": [
+        { "dow": 1, "palabra": "CIEGO",    "pista": "Gritaba 'Hijo de David, ten compasión'.", "cita": "Lc 18,35-43" },
+        { "dow": 2, "palabra": "ZAQUEO",   "pista": "Bajó aprisa y recibió a Jesús con alegría.", "cita": "Lc 19,1-10" },
+        { "dow": 3, "palabra": "MINAS",    "pista": "Monedas entregadas para negociar.", "cita": "Lc 19,11-28" },
+        { "dow": 4, "palabra": "LLANTO",   "pista": "Jesús lloró sobre Jerusalén.", "cita": "Lc 19,41-44" },
+        { "dow": 5, "palabra": "CUEVA",    "pista": "Habéis hecho de mi casa una ... de bandidos.", "cita": "Lc 19,45-48" },
+        { "dow": 6, "palabra": "DIOS",     "pista": "No es Dios de muertos, sino de vivos (Sta. Cecilia).", "cita": "Lc 20,27-40" },
+        { "dow": 0, "palabra": "CABELLO",  "pista": "Ni un ... de vuestra cabeza perecerá.", "cita": "Lc 21,5-19" }
+      ]
+    },
+    {
+      "id": "2025-11-23",
+      "domingo": "2025-11-23",
+      "ciclo": "C",
+      "pericopa": "Lc 23,35-43",
+      "tema": "Jesucristo, Rey del Universo",
+      "dias": [
+        { "dow": 1, "palabra": "VIUDA",    "pista": "Echó más que todos en el tesoro.", "cita": "Lc 21,1-4" },
+        { "dow": 2, "palabra": "PIEDRA",   "pista": "No quedará ... sobre ...", "cita": "Lc 21,5-11" },
+        { "dow": 3, "palabra": "NOMBRE",   "pista": "Os perseguirán por causa de mi ...", "cita": "Lc 21,12-19" },
+        { "dow": 4, "palabra": "JERUSALEN","pista": "Será pisoteada por los gentiles.", "cita": "Lc 21,20-28" },
+        { "dow": 5, "palabra": "HIGUERA",  "pista": "Miradla para saber cuándo llega el verano.", "cita": "Lc 21,29-33" },
+        { "dow": 6, "palabra": "ALERTA",   "pista": "Estad siempre despiertos pidiendo fuerza.", "cita": "Lc 21,34-36" },
+        { "dow": 0, "palabra": "PARAISO",  "pista": "Hoy estarás conmigo en el ...", "cita": "Lc 23,35-43" }
+      ]
+    },
+    {
+      "id": "2025-11-30",
+      "domingo": "2025-11-30",
+      "ciclo": "A",
+      "pericopa": "Mt 24,37-44",
+      "tema": "¡Velad! (I Domingo de Adviento)",
+      "dias": [
+        { "dow": 1, "palabra": "CENTURION","pista": "No soy digno de que entres en mi casa.", "cita": "Mt 8,5-11" },
+        { "dow": 2, "palabra": "PEQUEÑOS", "pista": "Has revelado estas cosas a los ...", "cita": "Lc 10,21-24" },
+        { "dow": 3, "palabra": "PANES",    "pista": "Siete ... y unos pocos peces.", "cita": "Mt 15,29-37" },
+        { "dow": 4, "palabra": "ROCA",     "pista": "Hombre prudente que edifica sobre...", "cita": "Mt 7,21.24-27" },
+        { "dow": 5, "palabra": "OJOS",     "pista": "Se les abrieron los ... a los ciegos.", "cita": "Mt 9,27-31" },
+        { "dow": 6, "palabra": "GRATIS",   "pista": "... lo recibisteis, dadlo ...", "cita": "Mt 9,35–10,1..." },
+        { "dow": 0, "palabra": "LADRON",   "pista": "Si el dueño supiera a qué hora viene el ...", "cita": "Mt 24,37-44" }
+      ]
+    },
+    {
+      "id": "2025-12-07",
+      "domingo": "2025-12-07",
+      "ciclo": "A",
+      "pericopa": "Mt 3,1-12",
+      "tema": "Juan el Bautista (II Domingo de Adviento)",
+      "dias": [
+        { "dow": 1, "palabra": "ESCLAVA",  "pista": "He aquí la ... del Señor (Inmaculada).", "cita": "Lc 1,26-38" },
+        { "dow": 2, "palabra": "OVEJA",    "pista": "Busca a la extraviada y deja las 99.", "cita": "Mt 18,12-14" },
+        { "dow": 3, "palabra": "YUGO",     "pista": "Mi ... es suave y mi carga ligera.", "cita": "Mt 11,28-30" },
+        { "dow": 4, "palabra": "VIOLENCIA","pista": "El Reino de los cielos sufre ...", "cita": "Mt 11,11-15" },
+        { "dow": 5, "palabra": "ISABEL",   "pista": "Visitada por María en la montaña (Guadalupe/Visitación).", "cita": "Lc 1,39-47" },
+        { "dow": 6, "palabra": "ELIAS",    "pista": "Ya vino y no lo reconocieron.", "cita": "Mt 17,10-13" },
+        { "dow": 0, "palabra": "CONVERTIOS","pista": "... porque está cerca el Reino.", "cita": "Mt 3,1-12" }
+      ]
+    },
+    {
+      "id": "2025-12-14",
+      "domingo": "2025-12-14",
+      "ciclo": "A",
+      "pericopa": "Mt 11,2-11",
+      "tema": "Gaudete / ¿Eres tú? (III Domingo de Adviento)",
+      "dias": [
+        { "dow": 1, "palabra": "AUTORIDAD","pista": "¿Con qué ... haces esto?", "cita": "Mt 21,23-27" },
+        { "dow": 2, "palabra": "DOS",      "pista": "Parábola de los ... hijos enviados a la viña.", "cita": "Mt 21,28-32" },
+        { "dow": 3, "palabra": "GENEALOGIA","pista": "Libro del origen de Jesucristo.", "cita": "Mt 1,1-17" },
+        { "dow": 4, "palabra": "SUEÑO",    "pista": "El ángel le habló a José en ...", "cita": "Mt 1,18-25" },
+        { "dow": 5, "palabra": "MUDO",     "pista": "Zacarías se quedó ... por no creer.", "cita": "Lc 1,5-25" },
+        { "dow": 6, "palabra": "GABRIEL",  "pista": "Ángel enviado a una virgen de Nazaret.", "cita": "Lc 1,26-38" },
+        { "dow": 0, "palabra": "ESPERAMOS","pista": "¿Eres tú el que ha de venir o ... a otro?", "cita": "Mt 11,2-11" } 
+      
+          ]
+    },
+    {
+      "id": "2025-12-21",
+      "domingo": "2025-12-21",
+      "ciclo": "A",
+      "pericopa": "Mt 1,18-24",
+      "tema": "El sueño de José (IV Domingo de Adviento)",
+      "dias": [
+        { "dow": 1, "palabra": "MAGNIFICAT", "pista": "El alma de María proclama la grandeza del Señor.", "cita": "Lc 1,46-56" },
+        { "dow": 2, "palabra": "JUAN",       "pista": "El nombre que Zacarías escribió en la tablilla.", "cita": "Lc 1,57-66" },
+        { "dow": 3, "palabra": "SOL",        "pista": "Nos visitará el ... que nace de lo alto.", "cita": "Lc 1,67-79" },
+        { "dow": 4, "palabra": "CARNE",      "pista": "Y el Verbo se hizo ... y habitó entre nosotros (Navidad).", "cita": "Jn 1,1-18" },
+        { "dow": 5, "palabra": "ESTEBAN",    "pista": "Primer mártir, que vio los cielos abiertos.", "cita": "Mt 10,17-22" },
+        { "dow": 6, "palabra": "CORRER",     "pista": "Pedro y el otro discípulo fueron a ... al sepulcro.", "cita": "Jn 20,1-8" },
+        { "dow": 0, "palabra": "EMMANUEL",   "pista": "Significa 'Dios con nosotros'.", "cita": "Mt 1,18-24" }
+      ]
+    },
+    {
+      "id": "2025-12-28",
+      "domingo": "2025-12-28",
+      "ciclo": "A",
+      "pericopa": "Mt 2,13-15.19-23",
+      "tema": "La Sagrada Familia",
+      "dias": [
+        { "dow": 1, "palabra": "ESPADA",     "pista": "Una ... te atravesará el alma (Profecía de Simeón).", "cita": "Lc 2,22-35" },
+        { "dow": 2, "palabra": "ANA",        "pista": "Profetisa que no se apartaba del templo.", "cita": "Lc 2,36-40" },
+        { "dow": 3, "palabra": "PRINCIPIO",  "pista": "En el ... existía el Verbo.", "cita": "Jn 1,1-18" },
+        { "dow": 4, "palabra": "MARIA",      "pista": "Conservaba todas estas cosas en su corazón (Madre de Dios).", "cita": "Lc 2,16-21" },
+        { "dow": 5, "palabra": "SANDALIA",   "pista": "No soy digno de desatar la correa de su ...", "cita": "Jn 1,19-28" },
+        { "dow": 6, "palabra": "CORDERO",    "pista": "Este es el ... de Dios que quita el pecado.", "cita": "Jn 1,29-34" },
+        { "dow": 0, "palabra": "EGIPTO",     "pista": "Huye a ... porque Herodes busca al niño.", "cita": "Mt 2,13-15.19-23" }
+      ]
+    },
+    {
+      "id": "2026-01-04",
+      "domingo": "2026-01-04",
+      "ciclo": "A",
+      "pericopa": "Jn 1,1-18",
+      "tema": "II Domingo de Navidad (o Epifanía trasladada)",
+      "dias": [
+        { "dow": 1, "palabra": "SIGUEME",    "pista": "Jesús encuentra a Felipe y le dice...", "cita": "Jn 1,43-51" },
+        { "dow": 2, "palabra": "MAGOS",      "pista": "Vieron su estrella en Oriente (Epifanía del Señor).", "cita": "Mt 2,1-12" },
+        { "dow": 3, "palabra": "PUEBLO",     "pista": "El ... que habitaba en tinieblas vio una gran luz.", "cita": "Mt 4,12-17" },
+        { "dow": 4, "palabra": "UNIDO",      "pista": "El Espíritu del Señor está sobre mí, me ha...", "cita": "Lc 4,14-22" },
+        { "dow": 5, "palabra": "LEPROSO",    "pista": "Se postró rostro en tierra rogando curación.", "cita": "Lc 5,12-16" },
+        { "dow": 6, "palabra": "MENGUAR",    "pista": "Él tiene que crecer, y yo tengo que...", "cita": "Jn 3,22-30" },
+        { "dow": 0, "palabra": "VERBO",      "pista": "En el mundo estaba, y el mundo se hizo por medio de él.", "cita": "Jn 1,1-18" }
+      
       ]
     }
   ]
