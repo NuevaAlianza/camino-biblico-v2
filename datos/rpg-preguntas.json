@@ -640,6 +640,223 @@
       { "pregunta": "¿Qué actitud debemos tener ante los dones recibidos de Dios?", "opciones": ["Usarlos para servir y dar fruto", "Ocultarlos", "Buscar fama", "Evitar responsabilidades"], "respuesta": "Usarlos para servir y dar fruto" },
       { "pregunta": "¿Qué nos enseñan las parábolas sobre el Reino de Dios?", "opciones": ["Es de gran valor y debemos buscarlo primero", "Riqueza", "Poder", "Fama"], "respuesta": "Es de gran valor y debemos buscarlo primero" }
 
+        ]
+      }
+    },
+
+    "2025-S50": {
+      "titulo": "Semana 50 – Juan el Bautista: La Voz en el Desierto",
+      "descripcion": "Conoce al precursor de Jesús, su mensaje de conversión y cómo preparó el camino para el Mesías en este tiempo de Adviento.",
+      "niveles": {
+        "1": [
+          { "pregunta": "¿Quiénes eran los padres de Juan el Bautista?", "opciones": ["Zacarías e Isabel", "José y María", "Joaquín y Ana", "Abraham y Sara"], "respuesta": "Zacarías e Isabel" },
+          { "pregunta": "¿Dónde predicaba Juan el Bautista?", "opciones": ["En el desierto de Judea", "En el templo de Jerusalén", "En el palacio de Herodes", "En Galilea"], "respuesta": "En el desierto de Judea" },
+          { "pregunta": "¿Con qué bautizaba Juan?", "opciones": ["Con agua", "Con fuego", "Con aceite", "Con vino"], "respuesta": "Con agua" },
+          { "pregunta": "¿Qué alimento comía Juan en el desierto?", "opciones": ["Langostas y miel silvestre", "Pan y pescado", "Maná", "Frutas y verduras"], "respuesta": "Langostas y miel silvestre" },
+          { "pregunta": "¿Cómo vestía Juan el Bautista?", "opciones": ["Piel de camello y cinturón de cuero", "Túnica de lino fino", "Armadura de soldado", "Manto real"], "respuesta": "Piel de camello y cinturón de cuero" },
+          { "pregunta": "¿Qué parentesco tenía Juan con Jesús?", "opciones": ["Primos", "Hermanos", "Tío y sobrino", "Desconocidos"], "respuesta": "Primos" },
+          { "pregunta": "¿Qué río usaba Juan para bautizar?", "opciones": ["Río Jordán", "Río Nilo", "Río Tigris", "Río Éufrates"], "respuesta": "Río Jordán" },
+          { "pregunta": "¿Qué dijo Juan cuando vio a Jesús acercarse?", "opciones": ["He aquí el Cordero de Dios", "Aquí viene el Rey", "Salve Maestro", "Huyan del fuego"], "respuesta": "He aquí el Cordero de Dios" },
+          { "pregunta": "¿Qué mensaje principal predicaba Juan?", "opciones": ["Arrepentíos, porque el Reino está cerca", "Haced guerra a Roma", "Acumulad riquezas", "Descansad y comed"], "respuesta": "Arrepentíos, porque el Reino está cerca" },
+          { "pregunta": "¿Qué pasó cuando Juan bautizó a Jesús?", "opciones": ["El cielo se abrió y el Espíritu bajó como paloma", "El río se secó", "Hubo un terremoto", "Llovieron flores"], "respuesta": "El cielo se abrió y el Espíritu bajó como paloma" }
+        ],
+        "2": [
+          { "pregunta": "¿Qué rey encarceló a Juan el Bautista?", "opciones": ["Herodes Antipas", "Pilato", "César Augusto", "Faraón"], "respuesta": "Herodes Antipas" },
+          { "pregunta": "¿Por qué fue encarcelado Juan?", "opciones": ["Por denunciar el matrimonio de Herodes", "Por no pagar impuestos", "Por robar", "Por predicar en el templo"], "respuesta": "Por denunciar el matrimonio de Herodes" },
+          { "pregunta": "¿Qué profeta del Antiguo Testamento se asocia con la misión de Juan?", "opciones": ["Elías", "Jeremías", "Daniel", "Jonás"], "respuesta": "Elías" },
+          { "pregunta": "¿Qué dijo Juan sobre el que vendría después de él?", "opciones": ["No soy digno de desatar su sandalia", "Será mi discípulo", "Somos iguales", "Yo soy mayor que él"], "respuesta": "No soy digno de desatar su sandalia" },
+          { "pregunta": "¿Cómo murió Juan el Bautista?", "opciones": ["Decapitado", "Crucificado", "Apedreado", "De vejez"], "respuesta": "Decapitado" },
+          { "pregunta": "¿Quién pidió la cabeza de Juan en una bandeja?", "opciones": ["La hija de Herodías (Salomé)", "María Magdalena", "La esposa de Pilato", "Isabel"], "respuesta": "La hija de Herodías (Salomé)" },
+          { "pregunta": "¿Qué ocurrió con Zacarías, padre de Juan, cuando el ángel le anunció el nacimiento?", "opciones": ["Quedó mudo hasta el nacimiento", "Se quedó ciego", "Murió al instante", "Rejuveneció"], "respuesta": "Quedó mudo hasta el nacimiento" },
+          { "pregunta": "¿Qué significa el nombre Juan?", "opciones": ["Dios es misericordioso", "Dios es fuerte", "Regalo de Dios", "Hijo del trueno"], "respuesta": "Dios es misericordioso" },
+          { "pregunta": "¿Qué saltó de alegría en el vientre de Isabel cuando llegó María?", "opciones": ["El niño (Juan)", "Su corazón", "Su espíritu", "Nada"], "respuesta": "El niño (Juan)" },
+          { "pregunta": "¿Qué respondió Juan a los soldados que le preguntaron qué hacer?", "opciones": ["No extorsionen a nadie y conténtense con su sueldo", "Dejen el ejército", "Ataquen a Roma", "Den todo a los pobres"], "respuesta": "No extorsionen a nadie y conténtense con su sueldo" }
+        ],
+        "3": [
+          { "pregunta": "¿Qué cántico entonó Zacarías tras el nacimiento de Juan?", "opciones": ["Benedictus", "Magníficat", "Gloria", "Nunc Dimittis"], "respuesta": "Benedictus" },
+          { "pregunta": "¿Qué secta judía se cree que pudo influir en el estilo de vida de Juan?", "opciones": ["Esenios", "Fariseos", "Saduceos", "Zelotes"], "respuesta": "Esenios" },
+          { "pregunta": "¿Qué dijo Jesús sobre Juan el Bautista?", "opciones": ["No hay nadie mayor nacido de mujer", "Es un profeta menor", "Fue un buen hombre", "Se equivocó en todo"], "respuesta": "No hay nadie mayor nacido de mujer" },
+          { "pregunta": "¿Qué pregunta enviaron los sacerdotes y levitas a Juan?", "opciones": ["¿Quién eres tú?", "¿Por qué no comes?", "¿Dónde vives?", "¿Cuándo moriras?"], "respuesta": "¿Quién eres tú?" },
+          { "pregunta": "¿Qué frase usó Isaías para profetizar sobre Juan?", "opciones": ["Voz que clama en el desierto", "Luz de las naciones", "Siervo sufriente", "Pastor de Israel"], "respuesta": "Voz que clama en el desierto" },
+          { "pregunta": "¿Qué bautismo dijo Juan que traería el Mesías?", "opciones": ["Espíritu Santo y fuego", "Solo agua", "Aceite y mirra", "Sangre"], "respuesta": "Espíritu Santo y fuego" }
+        ],
+        "4": [
+          { "pregunta": "¿Qué duda tuvo Juan estando en la cárcel?", "opciones": ["Si Jesús era el que había de venir", "Si iba a ser liberado", "Si Dios lo había abandonado", "Si Elías volvería"], "respuesta": "Si Jesús era el que había de venir" },
+          { "pregunta": "¿Qué respondió Jesús a los discípulos de Juan sobre su duda?", "opciones": ["Los ciegos ven, los cojos andan...", "Díganle que tenga fe", "Yo soy el Rey", "No respondió nada"], "respuesta": "Los ciegos ven, los cojos andan..." },
+          { "pregunta": "¿Qué actitud de Juan demuestra su humildad extrema?", "opciones": ["Es necesario que Él crezca y yo disminuya", "Quiero ser el primero", "Yo bauticé al Mesías", "Seguidme a mí"], "respuesta": "Es necesario que Él crezca y yo disminuya" },
+          { "pregunta": "¿Qué le sucedió a Isabel siendo estéril y anciana?", "opciones": ["Concibió por gracia de Dios", "Adoptó a Juan", "Murió sin hijos", "Se quedó ciega"], "respuesta": "Concibió por gracia de Dios" },
+          { "pregunta": "¿En qué evangelio inicia narrando el ministerio de Juan el Bautista?", "opciones": ["Marcos", "Hechos", "Apocalipsis", "Génesis"], "respuesta": "Marcos" },
+          { "pregunta": "¿Qué representa el 'aventador' en la predicación de Juan?", "opciones": ["El juicio para separar el trigo de la paja", "El viento del Espíritu", "La cosecha abundante", "La paz"], "respuesta": "El juicio para separar el trigo de la paja" }
+        ],
+        "5": [
+          { "pregunta": "¿Qué arcángel anunció el nacimiento de Juan a Zacarías?", "opciones": ["Gabriel", "Miguel", "Rafael", "Uriel"], "respuesta": "Gabriel" },
+          { "pregunta": "¿Qué día se celebra la Natividad de San Juan Bautista?", "opciones": ["24 de junio", "25 de diciembre", "1 de enero", "15 de agosto"], "respuesta": "24 de junio" },
+          { "pregunta": "¿Qué significa teológicamente que Juan sea el 'Precursor'?", "opciones": ["Que va delante preparando el camino", "Que es superior a Jesús", "Que es el primer apóstol", "Que reemplaza a los profetas"], "respuesta": "Que va delante preparando el camino" },
+          { "pregunta": "¿Qué título le dio Jesús a Juan respecto a Elías?", "opciones": ["Elías que había de venir", "Un falso Elías", "Mejor que Elías", "El hijo de Elías"], "respuesta": "Elías que había de venir" },
+          { "pregunta": "¿Por qué Juan se resistía a bautizar a Jesús?", "opciones": ["Reconocía su propia necesidad de ser bautizado por Jesús", "No tenía agua", "Jesús no tenía pecados", "No lo conocía"], "respuesta": "Reconocía su propia necesidad de ser bautizado por Jesús" },
+          { "pregunta": "¿Cuál es la diferencia principal entre el bautismo de Juan y el cristiano?", "opciones": ["El de Juan era de arrepentimiento, el cristiano da el Espíritu", "El agua usada", "El lugar", "Las palabras dichas"], "respuesta": "El de Juan era de arrepentimiento, el cristiano da el Espíritu" }
+        ]
+      }
+    },
+    "2025-S51": {
+      "titulo": "Semana 51 – San José: El Custodio del Redentor",
+      "descripcion": "Descubre la figura de San José, su obediencia en el silencio y su papel crucial en la Sagrada Familia antes de la Navidad.",
+      "niveles": {
+        "1": [
+          { "pregunta": "¿Cuál era el oficio de San José?", "opciones": ["Carpintero", "Pescador", "Pastor", "Sacerdote"], "respuesta": "Carpintero" },
+          { "pregunta": "¿Con quién estaba desposada María cuando concibió a Jesús?", "opciones": ["José", "Zacarías", "Simeón", "Juan"], "respuesta": "José" },
+          { "pregunta": "¿De qué rey era descendiente José?", "opciones": ["Rey David", "Rey Saúl", "Rey Herodes", "Rey Salomón"], "respuesta": "Rey David" },
+          { "pregunta": "¿Cómo supo José que no debía temer recibir a María?", "opciones": ["Un ángel le habló en sueños", "María le explicó", "Leyó una carta", "Fue al templo"], "respuesta": "Un ángel le habló en sueños" },
+          { "pregunta": "¿A qué ciudad tuvo que ir José para el censo?", "opciones": ["Belén", "Nazaret", "Jerusalén", "Egipto"], "respuesta": "Belén" },
+          { "pregunta": "¿Por qué fueron a Belén?", "opciones": ["Porque era de la casa y familia de David", "Porque allí había trabajo", "Para visitar a Isabel", "Para huir de Roma"], "respuesta": "Porque era de la casa y familia de David" },
+          { "pregunta": "¿Qué nombre le puso José al niño según la orden del ángel?", "opciones": ["Jesús", "Emanuel", "Juan", "David"], "respuesta": "Jesús" },
+          { "pregunta": "¿A qué país huyó José con María y el niño para escapar de Herodes?", "opciones": ["Egipto", "Siria", "Grecia", "Roma"], "respuesta": "Egipto" },
+          { "pregunta": "¿Cómo se le llama a José por cuidar de Jesús?", "opciones": ["Padre adoptivo / Custodio", "Padre biológico", "Tío", "Padrino"], "respuesta": "Padre adoptivo / Custodio" },
+          { "pregunta": "¿En qué ciudad se estableció la Sagrada Familia al volver de Egipto?", "opciones": ["Nazaret", "Belén", "Cafarnaúm", "Jericó"], "respuesta": "Nazaret" }
+        ],
+        "2": [
+          { "pregunta": "¿Cuántas palabras de José están registradas en la Biblia?", "opciones": ["Ninguna", "Diez", "Cincuenta", "Una oración"], "respuesta": "Ninguna" },
+          { "pregunta": "¿Qué título describe a José en el Evangelio de Mateo?", "opciones": ["Hombre justo", "Hombre rico", "Profeta mayor", "Rey de Israel"], "respuesta": "Hombre justo" },
+          { "pregunta": "¿Qué pensó hacer José cuando supo del embarazo de María antes del sueño?", "opciones": ["Repudiarla en secreto", "Denunciarla públicamente", "Casarse de inmediato", "Huir solo"], "respuesta": "Repudiarla en secreto" },
+          { "pregunta": "¿Qué fiesta de San José se celebra el 19 de marzo?", "opciones": ["San José Esposo de la Virgen", "San José Obrero", "La Huida a Egipto", "La Muerte de José"], "respuesta": "San José Esposo de la Virgen" },
+          { "pregunta": "¿Qué fiesta de San José se celebra el 1 de mayo?", "opciones": ["San José Obrero", "San José Castísimo", "San José Patriarca", "San José Dormido"], "respuesta": "San José Obrero" },
+          { "pregunta": "¿Cuándo se dio cuenta José que Jesús se había perdido en el templo?", "opciones": ["Al día siguiente de camino", "Inmediatamente", "Después de una semana", "Al llegar a casa"], "respuesta": "Al día siguiente de camino" },
+          { "pregunta": "¿Qué significa el nombre José?", "opciones": ["Dios añadirá", "Dios salva", "Quién como Dios", "Amado"], "respuesta": "Dios añadirá" },
+          { "pregunta": "¿Qué ofrecieron José y María en el templo al presentar a Jesús?", "opciones": ["Un par de tórtolas o pichones", "Un cordero", "Oro", "Incienso"], "respuesta": "Un par de tórtolas o pichones" },
+          { "pregunta": "¿Quién era el emperador romano durante el censo de José?", "opciones": ["César Augusto", "Tiberio", "Nerón", "Julio César"], "respuesta": "César Augusto" },
+          { "pregunta": "¿Qué virtud destaca principalmente en San José?", "opciones": ["La obediencia y el silencio", "La predicación", "La riqueza", "El poder político"], "respuesta": "La obediencia y el silencio" }
+        ],
+        "3": [
+          { "pregunta": "¿Cuántos sueños de José se relatan en el Evangelio de Mateo?", "opciones": ["Cuatro", "Uno", "Dos", "Siete"], "respuesta": "Cuatro" },
+          { "pregunta": "¿Quién era el padre de José según la genealogía de Mateo?", "opciones": ["Jacob", "Elí", "Natán", "Salomón"], "respuesta": "Jacob" },
+          { "pregunta": "¿Qué profecía cumplió José al llevar a Jesús a Nazaret?", "opciones": ["Será llamado Nazareno", "Nacerá en Belén", "De Egipto llamé a mi hijo", "Voz en el desierto"], "respuesta": "Será llamado Nazareno" },
+          { "pregunta": "¿Por qué José tuvo miedo de volver a Judea tras Egipto?", "opciones": ["Porque reinaba Arquelao", "Porque no tenía dinero", "Porque el camino era largo", "Porque María estaba enferma"], "respuesta": "Porque reinaba Arquelao" },
+          { "pregunta": "¿Qué título le dio el Papa Pío IX a San José en 1870?", "opciones": ["Patrono de la Iglesia Universal", "Custodio de Tierra Santa", "Terror de los demonios", "Patrono de los obreros"], "respuesta": "Patrono de la Iglesia Universal" },
+          { "pregunta": "¿Qué simboliza la vara florida de San José en el arte?", "opciones": ["Su elección por Dios como esposo", "Su oficio de carpintero", "Su pureza", "Su autoridad real"], "respuesta": "Su elección por Dios como esposo" }
+        ],
+        "4": [
+          { "pregunta": "¿Qué significa que José era un hombre 'justo' en el sentido bíblico?", "opciones": ["Que ajustaba su vida a la Ley de Dios", "Que era juez", "Que pagaba sus deudas", "Que era estricto"], "respuesta": "Que ajustaba su vida a la Ley de Dios" },
+          { "pregunta": "¿Qué papel juega José en la genealogía de Jesús?", "opciones": ["Le da la descendencia legal davídica", "Le da la naturaleza divina", "Ninguno", "Solo biológico"], "respuesta": "Le da la descendencia legal davídica" },
+          { "pregunta": "¿Qué evangelista narra la infancia de Jesús desde la perspectiva de José?", "opciones": ["Mateo", "Lucas", "Juan", "Marcos"], "respuesta": "Mateo" },
+          { "pregunta": "¿Qué indica el silencio de José en los evangelios?", "opciones": ["Su vida interior y prontitud para actuar", "Que no sabía hablar", "Que no era importante", "Que estaba ausente"], "respuesta": "Su vida interior y prontitud para actuar" },
+          { "pregunta": "¿Cómo se llama la carta apostólica del Papa Francisco sobre San José?", "opciones": ["Patris Corde", "Redemptoris Custos", "Amoris Laetitia", "Fratelli Tutti"], "respuesta": "Patris Corde" },
+          { "pregunta": "¿Qué ocurrió con José durante la vida pública de Jesús?", "opciones": ["Se asume que ya había muerto", "Era uno de los apóstoles", "Se opuso a Jesús", "Viajó a Roma"], "respuesta": "Se asume que ya había muerto" }
+        ],
+        "5": [
+          { "pregunta": "¿Qué significa el título 'Terror de los demonios' aplicado a José?", "opciones": ["Su pureza y obediencia aterran al mal", "Que era violento", "Que expulsaba demonios públicamente", "Que era un ángel"], "respuesta": "Su pureza y obediencia aterran al mal" },
+          { "pregunta": "¿Qué es el 'Sueño de San José' en la iconografía?", "opciones": ["El momento de la revelación del ángel", "Su muerte", "Su descanso en Egipto", "Su trabajo"], "respuesta": "El momento de la revelación del ángel" },
+          { "pregunta": "¿Por qué José es patrono de la buena muerte?", "opciones": ["Porque murió en brazos de Jesús y María", "Porque murió joven", "Porque murió mártir", "Porque resucitó"], "respuesta": "Porque murió en brazos de Jesús y María" },
+          { "pregunta": "¿Qué prefiguración del Antiguo Testamento se asocia a San José?", "opciones": ["José el soñador (hijo de Jacob)", "Moisés", "Abraham", "Josué"], "respuesta": "José el soñador (hijo de Jacob)" },
+          { "pregunta": "¿Qué implicaba el desposorio judío en tiempos de José?", "opciones": ["Un vínculo legal verdadero antes de convivir", "Un simple compromiso", "Una amistad", "Un contrato de prueba"], "respuesta": "Un vínculo legal verdadero antes de convivir" },
+          { "pregunta": "¿Qué enseñanza nos deja José ante las dificultades?", "opciones": ["Valentía creativa y confianza en Dios", "Quejarse", "Rendirse", "Buscar culpables"], "respuesta": "Valentía creativa y confianza en Dios" }
+        ]
+      }
+    },
+    "2025-S52": {
+      "titulo": "Semana 52 – ¡Ha nacido el Salvador! La Navidad",
+      "descripcion": "Celebra el misterio del Nacimiento de Jesús, los pastores, el pesebre y el cumplimiento de la promesa de Dios.",
+      "niveles": {
+        "1": [
+          { "pregunta": "¿Dónde nació Jesús?", "opciones": ["En un pesebre en Belén", "En un palacio en Jerusalén", "En una casa en Nazaret", "En el desierto"], "respuesta": "En un pesebre en Belén" },
+          { "pregunta": "¿Qué significa 'Navidad'?", "opciones": ["Nacimiento", "Regalos", "Fiesta", "Invierno"], "respuesta": "Nacimiento" },
+          { "pregunta": "¿Qué señal dieron los ángeles a los pastores?", "opciones": ["Un niño envuelto en pañales", "Una estrella fugaz", "Un rayo de luz", "Una paloma"], "respuesta": "Un niño envuelto en pañales" },
+          { "pregunta": "¿Por qué no nacieron en una posada?", "opciones": ["Porque no había lugar para ellos", "Porque no tenían dinero", "Porque no les gustaba", "Porque estaba cerrada"], "respuesta": "Porque no había lugar para ellos" },
+          { "pregunta": "¿Qué cantaron los ángeles la noche de Navidad?", "opciones": ["Gloria a Dios en el cielo", "Aleluya", "Santo, Santo, Santo", "Hosanna"], "respuesta": "Gloria a Dios en el cielo" },
+          { "pregunta": "¿Quiénes fueron los primeros en visitar a Jesús?", "opciones": ["Los pastores", "Los reyes magos", "Herodes", "Los soldados"], "respuesta": "Los pastores" },
+          { "pregunta": "¿Qué envolvía al niño Jesús en el pesebre?", "opciones": ["Pañales", "Seda", "Oro", "Pieles"], "respuesta": "Pañales" },
+          { "pregunta": "¿Qué día celebramos la Navidad?", "opciones": ["25 de diciembre", "1 de enero", "6 de enero", "24 de junio"], "respuesta": "25 de diciembre" },
+          { "pregunta": "¿Cómo se llamaba el césar que ordenó el censo?", "opciones": ["Augusto", "Tiberio", "Nerón", "Claudio"], "respuesta": "Augusto" },
+          { "pregunta": "¿Qué hicieron los pastores después de ver al niño?", "opciones": ["Se volvieron alabando a Dios", "Se quedaron dormidos", "Huyeron asustados", "Guardaron silencio"], "respuesta": "Se volvieron alabando a Dios" }
+        ],
+        "2": [
+          { "pregunta": "¿Qué es la 'Misa de Gallo'?", "opciones": ["La misa de medianoche en Navidad", "La misa de Pascua", "La misa de difuntos", "Una misa al amanecer"], "respuesta": "La misa de medianoche en Navidad" },
+          { "pregunta": "¿Qué profecía de Miqueas se cumple en Navidad?", "opciones": ["Y tú, Belén Efrata...", "La virgen concebirá", "De Egipto llamé a mi hijo", "Voz que clama"], "respuesta": "Y tú, Belén Efrata..." },
+          { "pregunta": "¿Qué significa que el Verbo se hizo carne?", "opciones": ["Que Dios se hizo hombre", "Que escribió un libro", "Que habló fuerte", "Que hizo un milagro"], "respuesta": "Que Dios se hizo hombre" },
+          { "pregunta": "¿Quién guardaba todas estas cosas en su corazón?", "opciones": ["María", "José", "Isabel", "Ana"], "respuesta": "María" },
+          { "pregunta": "¿Qué representa el árbol de Navidad cristianizado?", "opciones": ["La vida eterna y la luz de Cristo", "El bosque", "El invierno", "La madera de la cruz"], "respuesta": "La vida eterna y la luz de Cristo" },
+          { "pregunta": "¿Qué es el Adviento respecto a la Navidad?", "opciones": ["El tiempo de preparación", "La fiesta posterior", "El día anterior", "La octava"], "respuesta": "El tiempo de preparación" },
+          { "pregunta": "¿Qué título recibe Jesús como 'Recién Nacido'?", "opciones": ["Príncipe de Paz", "León de Judá", "Guerrero", "Juez"], "respuesta": "Príncipe de Paz" },
+          { "pregunta": "¿Cuántos días dura la Octava de Navidad?", "opciones": ["Ocho días", "Doce días", "Un mes", "Cuarenta días"], "respuesta": "Ocho días" },
+          { "pregunta": "¿Qué evangelistas narran el nacimiento de Jesús?", "opciones": ["Lucas y Mateo", "Marcos y Juan", "Solo Lucas", "Solo Juan"], "respuesta": "Lucas y Mateo" },
+          { "pregunta": "¿Qué actitud de los pastores debemos imitar?", "opciones": ["La prontitud para ir a Jesús", "La duda", "El miedo", "La riqueza"], "respuesta": "La prontitud para ir a Jesús" }
+        ],
+        "3": [
+          { "pregunta": "¿Qué significa el nombre de la ciudad 'Belén'?", "opciones": ["Casa del Pan", "Casa de Dios", "Ciudad de Paz", "Fuente de Vida"], "respuesta": "Casa del Pan" },
+          { "pregunta": "¿Quién era Quirinio en el relato de Navidad?", "opciones": ["Gobernador de Siria", "Rey de Judea", "Sumo Sacerdote", "Un pastor"], "respuesta": "Gobernador de Siria" },
+          { "pregunta": "¿Qué fiesta interrumpe la alegría de Navidad recordando a los inocentes?", "opciones": ["Los Santos Inocentes (28 dic)", "San Esteban", "San Juan", "Epifanía"], "respuesta": "Los Santos Inocentes (28 dic)" },
+          { "pregunta": "¿Qué misterio teológico celebramos centralmente en Navidad?", "opciones": ["La Encarnación", "La Resurrección", "La Ascensión", "La Transfiguración"], "respuesta": "La Encarnación" },
+          { "pregunta": "¿Qué villancico famoso se compuso en una noche de paz?", "opciones": ["Noche de Paz", "Campana sobre campana", "Los peces en el río", "El tamborilero"], "respuesta": "Noche de Paz" },
+          { "pregunta": "¿Qué regalo espiritual nos trae Jesús en Navidad?", "opciones": ["La paz con Dios y los hombres", "Riqueza material", "Poder político", "Salud eterna"], "respuesta": "La paz con Dios y los hombres" }
+        ],
+        "4": [
+          { "pregunta": "¿Qué significa 'Emanuel' en el contexto de Navidad?", "opciones": ["Dios con nosotros", "Dios salva", "Dios es grande", "Dios provee"], "respuesta": "Dios con nosotros" },
+          { "pregunta": "¿Qué relación hay entre el pesebre y la Eucaristía?", "opciones": ["Jesús es el Pan de Vida puesto donde se come", "Ninguna", "Es casualidad", "Representa la pobreza"], "respuesta": "Jesús es el Pan de Vida puesto donde se come" },
+          { "pregunta": "¿Quién creó el primer pesebre viviente?", "opciones": ["San Francisco de Asís", "San Antonio", "Santo Domingo", "San Pedro"], "respuesta": "San Francisco de Asís" },
+          { "pregunta": "¿Qué dice el Prólogo de Juan sobre la Navidad?", "opciones": ["La Palabra se hizo carne y habitó entre nosotros", "Nació en Belén", "Los pastores vinieron", "Herodes se enojó"], "respuesta": "La Palabra se hizo carne y habitó entre nosotros" },
+          { "pregunta": "¿Qué es la 'Kenosis' en relación al nacimiento?", "opciones": ["El anonadamiento o abajamiento de Dios", "La gloria visible", "La riqueza divina", "El poder real"], "respuesta": "El anonadamiento o abajamiento de Dios" },
+          { "pregunta": "¿Qué fiesta cierra el tiempo de Navidad?", "opciones": ["El Bautismo del Señor", "La Epifanía", "La Candelaria", "Año Nuevo"], "respuesta": "El Bautismo del Señor" }
+        ],
+        "5": [
+          { "pregunta": "¿Qué dogma mariano está intrínsecamente ligado a la Navidad?", "opciones": ["La Virginidad Perpetua (antes, en y después del parto)", "La Asunción", "La Inmaculada", "La Corredención"], "respuesta": "La Virginidad Perpetua (antes, en y después del parto)" },
+          { "pregunta": "¿Qué significa 'Gloria in excelsis Deo'?", "opciones": ["Gloria a Dios en las alturas", "Paz en la tierra", "Dios con nosotros", "Alabado sea Dios"], "respuesta": "Gloria a Dios en las alturas" },
+          { "pregunta": "¿Qué simboliza teológicamente que Jesús naciera de noche?", "opciones": ["Que es la Luz que brilla en las tinieblas", "Que hacía frío", "Para esconderse", "Fue casualidad"], "respuesta": "Que es la Luz que brilla en las tinieblas" },
+          { "pregunta": "¿Por qué la genealogía de Jesús es importante en Mateo 1?", "opciones": ["Para mostrar que es hijo de David y Abraham", "Para contar gente", "Para llenar espacio", "No es importante"], "respuesta": "Para mostrar que es hijo de David y Abraham" },
+          { "pregunta": "¿Qué herejía negaba que Jesús hubiera nacido realmente en carne?", "opciones": ["Docetismo", "Arrianismo", "Pelagianismo", "Nestorianismo"], "respuesta": "Docetismo" },
+          { "pregunta": "¿Qué nos enseña la pobreza del nacimiento de Jesús?", "opciones": ["La humildad de Dios y el valor de lo sencillo", "Que Dios es pobre", "Que debemos ser miserables", "Que el dinero es malo"], "respuesta": "La humildad de Dios y el valor de lo sencillo" }
+        ]
+      }
+    },
+    "2026-S01": {
+      "titulo": "Semana 01 (2026) – Madre de Dios y Comienzo",
+      "descripcion": "Inicia el año nuevo con la Solemnidad de Santa María Madre de Dios y la imposición del nombre de Jesús.",
+      "niveles": {
+        "1": [
+          { "pregunta": "¿Qué celebramos el 1 de enero en la Iglesia?", "opciones": ["Santa María, Madre de Dios", "La Resurrección", "San José", "Los Santos Inocentes"], "respuesta": "Santa María, Madre de Dios" },
+          { "pregunta": "¿Cuántos días después de Navidad se circuncidaba al niño judío?", "opciones": ["Ocho días", "Diez días", "Tres días", "Un mes"], "respuesta": "Ocho días" },
+          { "pregunta": "¿Qué nombre recibió el niño a los ocho días?", "opciones": ["Jesús", "Emanuel", "Juan", "Mesías"], "respuesta": "Jesús" },
+          { "pregunta": "¿Quién le puso el nombre a Jesús?", "opciones": ["El ángel lo había dicho antes de ser concebido", "Los sacerdotes", "Los reyes magos", "Herodes"], "respuesta": "El ángel lo había dicho antes de ser concebido" },
+          { "pregunta": "¿Qué significa el título 'Madre de Dios'?", "opciones": ["Que es madre de Jesús, que es Dios", "Que creó a Dios", "Que es una diosa", "Que es madre del Espíritu Santo"], "respuesta": "Que es madre de Jesús, que es Dios" },
+          { "pregunta": "¿Qué hacían los pastores al regresar de ver al niño?", "opciones": ["Glorificaban y alababan a Dios", "Guardaban silencio", "Dudaban", "Lloraban"], "respuesta": "Glorificaban y alababan a Dios" },
+          { "pregunta": "¿Qué hacía María con todo lo que sucedía?", "opciones": ["Lo conservaba y meditaba en su corazón", "Se asustaba", "Lo olvidaba", "Se enojaba"], "respuesta": "Lo conservaba y meditaba en su corazón" },
+          { "pregunta": "¿Qué jornada mundial se celebra el 1 de enero?", "opciones": ["Jornada Mundial de la Paz", "Jornada de la Juventud", "Jornada de las Misiones", "Jornada del Enfermo"], "respuesta": "Jornada Mundial de la Paz" },
+          { "pregunta": "¿Cómo termina la Bendición de Aarón (Primera Lectura de Año Nuevo)?", "opciones": ["El Señor te conceda la paz", "El Señor te haga rico", "El Señor te castigue", "El Señor te olvide"], "respuesta": "El Señor te conceda la paz" },
+          { "pregunta": "¿Cuál es el color litúrgico de las fiestas de la Virgen María y Navidad?", "opciones": ["Blanco", "Rojo", "Verde", "Morado"], "respuesta": "Blanco" }
+        ],
+        "2": [
+          { "pregunta": "¿Qué término griego define a María como Madre de Dios?", "opciones": ["Theotokos", "Christotokos", "Kyrios", "Logos"], "respuesta": "Theotokos" },
+          { "pregunta": "¿En qué concilio se proclamó a María como Madre de Dios?", "opciones": ["Concilio de Éfeso", "Concilio de Nicea", "Concilio de Trento", "Vaticano II"], "respuesta": "Concilio de Éfeso" },
+          { "pregunta": "¿Qué herejía combatía el título 'Madre de Dios'?", "opciones": ["Nestorianismo", "Arrianismo", "Gnosticismo", "Pelagianismo"], "respuesta": "Nestorianismo" },
+          { "pregunta": "¿Por qué es importante que Jesús tuviera un nombre humano?", "opciones": ["Muestra su verdadera humanidad e identidad", "Era costumbre", "Para distinguirlo", "No es importante"], "respuesta": "Muestra su verdadera humanidad e identidad" },
+          { "pregunta": "¿Qué significa invocar el 'Dulce Nombre de Jesús'?", "opciones": ["Pedir con fe en su poder salvador", "Decirlo muchas veces", "Escribirlo", "Gritarlo"], "respuesta": "Pedir con fe en su poder salvador" },
+          { "pregunta": "¿Qué virtud de María destacamos al inicio del año?", "opciones": ["Su fe y meditación", "Su pobreza", "Su silencio", "Su viaje"], "respuesta": "Su fe y meditación" },
+          { "pregunta": "¿Qué fiesta se aproxima después de Año Nuevo?", "opciones": ["La Epifanía (Reyes Magos)", "Cuaresma", "Pentecostés", "Semana Santa"], "respuesta": "La Epifanía (Reyes Magos)" },
+          { "pregunta": "¿Quién dijo: 'Salve, Madre Santa, tú diste a luz al Rey'?", "opciones": ["La Liturgia (Antífona de entrada)", "El ángel Gabriel", "Isabel", "Pedro"], "respuesta": "La Liturgia (Antífona de entrada)" },
+          { "pregunta": "¿Qué significa que María es 'Reina de la Paz'?", "opciones": ["Que dio a luz al Príncipe de la Paz", "Que nunca se enoja", "Que detiene guerras sola", "Que gobierna el mundo"], "respuesta": "Que dio a luz al Príncipe de la Paz" },
+          { "pregunta": "¿Qué se nos invita a pedir al comenzar el año?", "opciones": ["La bendición de Dios", "Dinero", "Suerte", "Poder"], "respuesta": "La bendición de Dios" }
+        ],
+        "3": [
+          { "pregunta": "¿Cuál es el dogma mariano más antiguo?", "opciones": ["Maternidad Divina", "Inmaculada Concepción", "Asunción", "Virginidad"], "respuesta": "Maternidad Divina" },
+          { "pregunta": "¿Qué frase bíblica resume la actitud contemplativa de María?", "opciones": ["Guardaba todas estas cosas en su corazón", "Hagan lo que él les diga", "No tienen vino", "He aquí la esclava"], "respuesta": "Guardaba todas estas cosas en su corazón" },
+          { "pregunta": "¿Qué significa que Jesús nació 'bajo la ley' (Gálatas 4)?", "opciones": ["Que asumió la condición humana y judía", "Que era abogado", "Que estaba preso", "Que era romano"], "respuesta": "Que asumió la condición humana y judía" },
+          { "pregunta": "¿Qué relación tiene el 1 de enero con la circuncisión?", "opciones": ["Era la antigua fiesta de la Circuncisión del Señor", "No tiene relación", "Es el día del bautismo", "Es día de ayuno"], "respuesta": "Era la antigua fiesta de la Circuncisión del Señor" },
+          { "pregunta": "¿Por qué decimos que María es Madre de la Iglesia?", "opciones": ["Porque es madre de Cristo, la Cabeza", "Porque fundó la Iglesia", "Porque es la primera cristiana", "Porque manda al Papa"], "respuesta": "Porque es madre de Cristo, la Cabeza" },
+          { "pregunta": "¿Qué nos enseña la 'Bendición de Aarón' sobre el rostro de Dios?", "opciones": ["Que Dios ilumine su rostro sobre nosotros", "Que Dios se esconda", "Que Dios se enoje", "Que Dios duerma"], "respuesta": "Que Dios ilumine su rostro sobre nosotros" }
+        ],
+        "4": [
+          { "pregunta": "¿Qué defendió San Cirilo de Alejandría?", "opciones": ["El título de Theotokos", "El Arrianismo", "La iconoclasia", "El gnosticismo"], "respuesta": "El título de Theotokos" },
+          { "pregunta": "¿Qué implica que María sea Madre de Dios para nosotros?", "opciones": ["Que es nuestra poderosa intercesora", "Que es una diosa", "Que no es humana", "Que está lejos"], "respuesta": "Que es nuestra poderosa intercesora" },
+          { "pregunta": "¿Qué significa 'Jesuah' (Jesús) en hebreo?", "opciones": ["Yahveh salva", "Dios es fuerte", "Padre eterno", "Luz de luz"], "respuesta": "Yahveh salva" },
+          { "pregunta": "¿Qué festividad mariana es de precepto el 1 de enero?", "opciones": ["Santa María Madre de Dios", "Inmaculada", "Asunción", "Dolores"], "respuesta": "Santa María Madre de Dios" },
+          { "pregunta": "¿Cómo se llama la oración 'Bajo tu amparo' en latín?", "opciones": ["Sub tuum praesidium", "Salve Regina", "Memorare", "Magnificat"], "respuesta": "Sub tuum praesidium" },
+          { "pregunta": "¿Qué nos enseña el inicio del año litúrgico civil con María?", "opciones": ["Caminar el año de la mano de la Madre", "Olvidar el pasado", "Solo hacer fiestas", "Ignorar la fe"], "respuesta": "Caminar el año de la mano de la Madre" }
+        ],
+        "5": [
+          { "pregunta": "¿Qué es la unión hipostática?", "opciones": ["Unión de naturaleza divina y humana en una persona", "Unión de María y José", "Unión de los apóstoles", "Unión de la Iglesia"], "respuesta": "Unión de naturaleza divina y humana en una persona" },
+          { "pregunta": "¿Por qué Nestorio se equivocaba sobre María?", "opciones": ["Decía que solo era madre del hombre Jesús, no de Dios", "Decía que no era virgen", "Decía que era diosa", "Decía que no existió"], "respuesta": "Decía que solo era madre del hombre Jesús, no de Dios" },
+          { "pregunta": "¿Qué significa que el tiempo es 'kairós' en el cristianismo?", "opciones": ["Tiempo de gracia y salvación", "Tiempo cronológico", "Tiempo perdido", "Tiempo de espera"], "respuesta": "Tiempo de gracia y salvación" },
+          { "pregunta": "¿Qué relación tiene el nombre de Jesús con la misión?", "opciones": ["Su nombre contiene su misión: Salvar", "Es solo un nombre bonito", "Es un nombre romano", "No tiene misión"], "respuesta": "Su nombre contiene su misión: Salvar" },
+          { "pregunta": "¿Qué oración del Rosario menciona 'Santa María, Madre de Dios'?", "opciones": ["El Ave María", "El Padre Nuestro", "El Gloria", "El Credo"], "respuesta": "El Ave María" },
+          { "pregunta": "¿Cómo podemos imitar a María al inicio del año?", "opciones": ["Meditando la Palabra y confiando en Dios", "Haciendo mucho ruido", "Preocupándonos", "Siendo indiferentes"], "respuesta": "Meditando la Palabra y confiando en Dios" }
     
  ]
       }
