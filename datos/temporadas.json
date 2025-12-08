@@ -672,8 +672,8 @@
     "id": "T8",
     "titulo": "Adviento: Tiempo de Esperanza",
     "descripcion": "Prepárate para la venida del Salvador conociendo los signos, profetas y el sentido de este tiempo litúrgico.",
-    "fecha_inicio": "2025-30-11",
-    "fecha_fin": "2025-20-12",
+    "fecha_inicio": "2025-11-30",
+    "fecha_fin": "2025-12-20",
     "puntaje_maximo": 10,
     "umbral_coleccionable": 9,
     "coleccionable": {
@@ -759,8 +759,8 @@
     "id": "T9",
     "titulo": "Navidad: El Misterio de la Encarnación",
     "descripcion": "Celebra el nacimiento del Hijo de Dios y profundiza en el misterio de la Palabra hecha carne.",
-    "fecha_inicio": "2025-24-12",
-    "fecha_fin": "2026-05-01",
+    "fecha_inicio": "2025-12-24",
+    "fecha_fin": "2026-01-05",
     "puntaje_maximo": 10,
     "umbral_coleccionable": 9,
     "coleccionable": {
@@ -846,8 +846,8 @@
     "id": "T10",
     "titulo": "Epifanía y Bautismo: La Manifestación",
     "descripcion": "Descubre cómo Jesús se da a conocer al mundo, desde los magos de oriente hasta su bautismo en el Jordán.",
-    "fecha_inicio": "2026-06-01",
-    "fecha_fin": "2026-15-01",
+    "fecha_inicio": "2026-01-06",
+    "fecha_fin": "2026-01-09",
     "puntaje_maximo": 10,
     "umbral_coleccionable": 9,
     "coleccionable": {
