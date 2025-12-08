@@ -672,7 +672,7 @@
     "id": "T8",
     "titulo": "Adviento: Tiempo de Esperanza",
     "descripcion": "Prepárate para la venida del Salvador conociendo los signos, profetas y el sentido de este tiempo litúrgico.",
-    "fecha_inicio": "2025-11-30",
+    "fecha_inicio": "2025-12-13",
     "fecha_fin": "2025-12-20",
     "puntaje_maximo": 10,
     "umbral_coleccionable": 9,
@@ -760,7 +760,7 @@
     "titulo": "Navidad: El Misterio de la Encarnación",
     "descripcion": "Celebra el nacimiento del Hijo de Dios y profundiza en el misterio de la Palabra hecha carne.",
     "fecha_inicio": "2025-12-24",
-    "fecha_fin": "2026-01-05",
+    "fecha_fin": "2025-12-31",
     "puntaje_maximo": 10,
     "umbral_coleccionable": 9,
     "coleccionable": {
