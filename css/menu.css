@@ -201,3 +201,28 @@ body {
   transform: scale(1.028);
   box-shadow: 0 0 18px #34d39955, 0 2px 8px #34d39933;
 }
+
+/* Espaciado para el contenedor desplegable */
+#contenedor-mas {
+    background: rgba(0, 0, 0, 0.03); /* Un toque sutil de fondo */
+    padding: 10px 0;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    border: 1px dashed #ead196;
+}
+
+/* El botón Reto VS resalta sobre los demás */
+.menu-btn.reto-vs {
+    background: linear-gradient(135deg, #d4af37, #8b4513) !important;
+    color: white !important;
+    border: 2px solid #fff !important;
+    font-weight: bold;
+}
+
+/* Botón de expansión más discreto */
+.menu-btn.extra {
+    background: #fdf5e6;
+    border: 1px solid #ead196;
+    color: #8b4513;
+    margin-top: 15px;
+}
