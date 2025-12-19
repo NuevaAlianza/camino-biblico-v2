@@ -131,3 +131,55 @@ if (registroForm) {
     });
   }
 });
+
+// --- 3. Lógica para el Duelo de Fe (Reto VS) ---
+
+async function prepararRetoDiario() {
+    try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) {
+            alert("Debes iniciar sesión para participar en el Duelo.");
+            return;
+        }
+
+        const userId = session.user.id;
+        const hoy = new Date().toISOString().split('T')[0];
+
+        // Verificar si el usuario ya jugó hoy
+        const { data: yaJugado } = await supabase
+            .from('resultados_retos')
+            .select('id')
+            .eq('user_id', userId)
+            .eq('fecha_reto', hoy)
+            .maybeSingle();
+
+        if (yaJugado) {
+            alert("Ya has completado el reto de hoy. ¡Mira el ranking para ver tu posición!");
+            window.location.href = 'reto-vs.html?ver_ranking=true';
+            return;
+        }
+
+        // Cargar 5 preguntas (puedes añadir filtros por dificultad o categoría aquí)
+        const { data: preguntas, error } = await supabase
+            .from('preguntas')
+            .select('*')
+            .limit(5);
+
+        if (error || !preguntas) throw error;
+
+        // Guardar preguntas en localStorage para la siguiente pantalla
+        localStorage.setItem('preguntas_duelo_activa', JSON.stringify(preguntas));
+        window.location.href = 'reto-vs.html';
+
+    } catch (err) {
+        console.error("Error al preparar el reto:", err);
+        alert("Hubo un error al conectar con el servidor de retos.");
+    }
+}
+
+// Escuchar el clic del botón en el menú (asegúrate de que el botón tenga la clase o ID correcto)
+document.addEventListener('click', (e) => {
+    if (e.target.closest('.rpg') || e.target.id === 'btn-duelo') {
+        prepararRetoDiario();
+    }
+});
