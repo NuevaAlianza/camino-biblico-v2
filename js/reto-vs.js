@@ -7,24 +7,36 @@ const quizSection = document.getElementById('quiz-section');
 const startScreen = document.getElementById('start-screen');
 const resultScreen = document.getElementById('result-screen');
 
-// 1. Obtener 5 preguntas aleatorias del día (usando semilla de fecha)
+// 1. Obtener 5 preguntas aleatorias del día
 async function cargarPreguntasDelDia() {
-    const { data, error } = await supabase
-        .from('preguntas')
-        .select('*')
-        .limit(5); // Aquí podrías filtrar por fecha o categoría
+    // Si guardaste preguntas en localStorage desde el menú (auth.js), las usamos
+    const guardadas = localStorage.getItem('preguntas_duelo_activa');
+    
+    if (guardadas) {
+        preguntas = JSON.parse(guardadas);
+        localStorage.removeItem('preguntas_duelo_activa');
+    } else {
+        // Si no hay guardadas, pedimos 5 a Supabase directamente
+        const { data, error } = await supabase
+            .from('preguntas')
+            .select('*')
+            .limit(5);
 
-    if (error) console.error("Error cargando preguntas:", error);
-    else preguntas = data;
+        if (error) console.error("Error cargando preguntas:", error);
+        else preguntas = data;
+    }
 }
 
 // 2. Iniciar el juego
 document.getElementById('btn-comenzar').onclick = () => {
+    if (preguntas.length === 0) {
+        alert("Cargando preguntas, por favor espera un segundo...");
+        return;
+    }
     startScreen.style.display = 'none';
     quizSection.style.display = 'block';
     startTime = performance.now();
     
-    // Iniciar cronómetro visual
     timerInterval = setInterval(() => {
         const ahora = (performance.now() - startTime) / 1000;
         document.getElementById('timer').innerText = ahora.toFixed(1) + "s";
@@ -33,21 +45,24 @@ document.getElementById('btn-comenzar').onclick = () => {
     mostrarPregunta();
 };
 
-// 3. Mostrar Pregunta y Mezclar Opciones
+// 3. MOSTRAR PREGUNTA (SECCIÓN MODIFICADA)
 function mostrarPregunta() {
     if (indiceActual >= preguntas.length) return finalizarReto();
 
     const p = preguntas[indiceActual];
     document.getElementById('texto-pregunta').innerText = p.pregunta;
     
-    // Actualizar barra de progreso
-    document.getElementById('progreso-llenado').style.width = `${(indiceActual / 5) * 100}%`;
+    document.getElementById('progreso-llenado').style.width = `${((indiceActual + 1) / preguntas.length) * 100}%`;
 
     const container = document.getElementById('opciones-container');
     container.innerHTML = "";
 
-    // Unir correcta con distractores y mezclar
-    const opciones = [...p.distractores, p.respuesta_correcta].sort(() => Math.random() - 0.5);
+    // --- EL CAMBIO ESTÁ AQUÍ ---
+    // Convertimos el texto "Opción 1, Opción 2" en una lista real
+    const listaDistractores = p.distractores.split(',').map(item => item.trim());
+
+    // Unir la correcta con los distractores y mezclar
+    const opciones = [...listaDistractores, p.respuesta_correcta].sort(() => Math.random() - 0.5);
 
     opciones.forEach(op => {
         const btn = document.createElement('button');
@@ -77,31 +92,41 @@ async function finalizarReto() {
     document.getElementById('final-aciertos').innerText = aciertos;
     document.getElementById('final-tiempo').innerText = tiempoTotal;
 
-    // Guardar en Supabase
     const { data: { user } } = await supabase.auth.getUser();
     
-    const { error } = await supabase
-        .from('resultados_retos')
-        .insert([
-            { 
-                user_id: user.id, 
-                aciertos: aciertos, 
-                tiempo_segundos: parseFloat(tiempoTotal) 
-            }
-        ]);
+    if (user) {
+        const hoy = new Date().toISOString().split('T')[0];
+        const { error } = await supabase
+            .from('resultados_retos')
+            .insert([
+                { 
+                    user_id: user.id, 
+                    aciertos: aciertos, 
+                    tiempo_segundos: parseFloat(tiempoTotal),
+                    fecha_reto: hoy
+                }
+            ]);
 
-    if (error) console.error("Error al guardar:", error);
+        if (error) console.error("Error al guardar:", error);
+    }
+    
     cargarRanking();
 }
 
-// 6. Cargar Ranking del día
+// 6. Cargar Ranking (Usa la Vista si la creaste, o la tabla directa)
 async function cargarRanking() {
+    // Si creaste la vista 'ranking_duelo', cambia el nombre aquí
     const { data, error } = await supabase
-        .from('resultados_retos')
-        .select(`aciertos, tiempo_segundos, user_id`) // Aquí podrías hacer un join con perfiles para el nombre
+        .from('resultados_retos') 
+        .select(`aciertos, tiempo_segundos, user_id`)
         .order('aciertos', { ascending: false })
         .order('tiempo_segundos', { ascending: true })
         .limit(5);
+
+    if (error) {
+        console.error("Error ranking:", error);
+        return;
+    }
 
     const lista = document.getElementById('lista-ranking');
     lista.innerHTML = data.map((res, i) => 
