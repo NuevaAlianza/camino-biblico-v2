@@ -125,3 +125,37 @@
 .btn-opcion:active {
     transform: scale(0.95);
 }
+
+.bloqueo-container {
+    padding: 10px;
+    animation: fadeIn 0.5s ease;
+}
+
+.titulo-dorado {
+    color: #d4af37;
+    margin-bottom: 5px;
+}
+
+.stats-box-mini {
+    background: #fff9ed;
+    border: 1px dashed #d4af37;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.menu-btn-refrescar {
+    background: #ead196;
+    color: #4a3728;
+    border: none;
+    padding: 10px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
