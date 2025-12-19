@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reto VS – Camino Bíblico</title>
+    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="css/reto-vs.css">
+</head>
+<body>
+    <div id="game-container">
+        <header class="game-header">
+            <div id="progreso-bar">
+                <div id="progreso-llenado"></div>
+            </div>
+            <div id="timer">00.0s</div>
+        </header>
+
+        <section id="start-screen">
+            <h2>Duelo de Fe Diario</h2>
+            <p>5 preguntas • Mismo reto para todos</p>
+            <button id="btn-comenzar" class="menu-btn">¡EMPEZAR RETO!</button>
+        </section>
+
+        <section id="quiz-section" style="display: none;">
+            <div id="pregunta-box">
+                <h3 id="texto-pregunta">Cargando pregunta...</h3>
+            </div>
+            <div id="opciones-container">
+                </div>
+        </section>
+
+        <section id="result-screen" style="display: none;">
+            <h2>¡Reto Completado!</h2>
+            <div class="stats-box">
+                <p>Aciertos: <span id="final-aciertos">0</span>/5</p>
+                <p>Tiempo: <span id="final-tiempo">0.0</span>s</p>
+            </div>
+            <div id="ranking-mini">
+                <h4>Ranking del Día</h4>
+                <ul id="lista-ranking">
+                    </ul>
+            </div>
+            <button onclick="window.location.href='menu.html'" class="menu-btn">Volver al Menú</button>
+        </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script src="supabase.js"></script> <script src="js/reto-vs.js"></script>
+</body>
+</html>
