@@ -58,3 +58,70 @@
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     margin-bottom: 20px;
 }
+/* Estilos para el Ranking con Mapa de Emojis */
+#lista-ranking {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+}
+
+.ranking-item {
+    background: rgba(255, 255, 255, 0.1);
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: left;
+    border-left: 4px solid #ffd700; /* Color dorado para el top */
+}
+
+.ranking-info {
+    font-size: 0.9rem;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.ranking-mapa {
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+/* Pantalla de Bloqueo (Estado cuando ya jugó) */
+#start-screen h2 {
+    color: #ffd700;
+}
+
+#start-screen p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+/* Efecto de pulso para el timer */
+#timer {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    color: #ff4757;
+    text-shadow: 0 0 5px rgba(255, 71, 87, 0.5);
+}
+
+/* Ajustes de botones */
+.btn-opcion {
+    width: 100%;
+    padding: 12px;
+    margin: 5px 0;
+    border-radius: 25px;
+    border: none;
+    background: #f1f2f6;
+    color: #2f3542;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.btn-opcion:active {
+    transform: scale(0.95);
+}
