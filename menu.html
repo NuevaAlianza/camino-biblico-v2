@@ -7,108 +7,112 @@
   <link rel="stylesheet" href="css/estilos.css" />
   <link rel="stylesheet" href="css/menu.css" />
 
-  <!-- Favicon e iconos -->
   <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-192.png">
   <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/icon-192.png">
 
-  <!-- Manifest y PWA -->
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#ead196">
 
-  <!-- APPLE/Safari iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="Camino Bíblico">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <!-- Splash (opcional) -->
   <link rel="apple-touch-startup-image" href="assets/icons/icon-512.png">
 
-  <!-- Android Chrome -->
   <meta name="application-name" content="Camino Bíblico">
   <meta name="mobile-web-app-capable" content="yes">
-  <!-- Color para Windows tiles -->
   <meta name="msapplication-TileColor" content="#ead196">
 </head>
 <body>
   <main class="menu">
     <h1>Camino Bíblico</h1>
-    <div id="bienvenida">¡Bienvenido/a, <strong>Roman</strong>!</div>
+    <div id="bienvenida">Cargando...</div>
+    
     <nav>
+      <button class="menu-btn reto-vs" onclick="window.location.href='reto-vs.html'">
+        <span class="emoji">🔥</span> Reto VS Diario
+      </button>
 
-<!-- Justo después del div #bienvenida -->
-<!--button id="btn-perfil" class="btn-perfil" title="Editar perfil" style="position:absolute; top:1.2rem; right:1.4rem; background:rgba(255,255,255,0.75); border:none; border-radius:50%; font-size:1.32em; box-shadow:0 2px 8px #0001; cursor:pointer; padding:0.27em 0.41em; z-index:50;">
-  <span class="emoji">👤</span>
-    </button-->
+      <button class="menu-btn rpg" onclick="window.location.href='rpg2.html'">
+        <span class="emoji">⚔️</span> Trivia Bíblica RPG
+      </button>
 
-      <button class="menu-btn quiz" onclick="window.location.href='quiz.html'">
-    <span class="emoji">🎲</span>
-    Jugar Quiz
-  </button>
-  <button class="menu-btn temporada" id="btn-temporada" style="display:none;">
-    <span class="emoji">🔔</span>
-    Nueva Alianza
-  </button>
-  <button class="menu-btn aleatorio" onclick="window.location.href='aleatorio-grupal.html'">
-    <span class="emoji">🤹</span>
-    Quiz Aleatorio
-  </button>
-  <button class="menu-btn rpg" onclick="window.location.href='rpg2.html'">
-    <span class="emoji">⚔️</span>
-    Trivia Bíblica RPG
-  </button>
-  <button class="menu-btn coleccion" onclick="window.location.href='coleccionables-v2.html'">
-    <span class="emoji">🧩</span>
-    Ver Coleccionables
-  </button>
-  <button class="menu-btn progreso" onclick="window.location.href='mi-progreso.html'">
-    <span class="emoji">📊</span>
-    Mi Progreso
-  </button>
-  <button class="menu-btn halloffame" onclick="window.location.href='hall_of_fame.html'">
-    <span class="emoji">🏆</span>
-    Hall of <span style="text-decoration:line-through; color:#bbb;">Fame</span>
-    <span style="color:#2ec085; font-weight:bold;">Faith</span>
-  </button>
-  <button class="menu-btn triviaflash" onclick="window.location.href='trivia-flash.html'">
-    <span class="emoji">⚡</span>
-    Trivia Flash
-  </button>
+      <button class="menu-btn triviaflash" onclick="window.location.href='trivia-flash.html'">
+        <span class="emoji">⚡</span> Trivia Flash
+      </button>
+
       <button class="menu-btn wordle" onclick="window.location.href='wordle.html'">
-  <span class="emoji">🧩</span>
-  Wordle Bíblico
-</button>
+        <span class="emoji">🧩</span> Wordle Bíblico
+      </button>
 
-</nav>
+      <button class="menu-btn extra" id="btn-toggle-mas">
+        <span class="emoji">➕</span> Más Desafíos
+      </button>
 
-    <!-- Botón de instalación PWA -->
+      <div id="contenedor-mas" style="display: none; flex-direction: column; width: 100%;">
+        <button class="menu-btn quiz" onclick="window.location.href='quiz.html'">
+          <span class="emoji">🎲</span> Jugar Quiz
+        </button>
+        <button class="menu-btn aleatorio" onclick="window.location.href='aleatorio-grupal.html'">
+          <span class="emoji">🤹</span> Quiz Aleatorio
+        </button>
+        <button class="menu-btn coleccion" onclick="window.location.href='coleccionables-v2.html'">
+          <span class="emoji">🧩</span> Ver Coleccionables
+        </button>
+        <button class="menu-btn progreso" onclick="window.location.href='mi-progreso.html'">
+          <span class="emoji">📊</span> Mi Progreso
+        </button>
+        <button class="menu-btn halloffame" onclick="window.location.href='hall_of_fame.html'">
+          <span class="emoji">🏆</span> Hall of Faith
+        </button>
+        <button class="menu-btn temporada" id="btn-temporada" style="display:none;"></button>
+      </div>
+    </nav>
+
     <button id="btn-instalar-pwa" style="display:none;position:fixed;bottom:2rem;right:2rem;z-index:1200;">
       📲 Instalar App
     </button>
 
-    <button id="btn-logout"><span class="emoji">📕</span>Cerrar sesión</button>
+    <button id="btn-logout"><span class="emoji">📕</span> Cerrar sesión</button>
   </main>
-  
-  <!-- SCRIPTS AL FINAL, SOLO UNA VEZ -->
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script src="supabase.js"></script>
   <script src="js/auth.js"></script>
+  
   <script>
-    // Redirección si no hay sesión
+    // 1. Redirección y Bienvenida
     supabase.auth.getSession().then(({ data }) => {
       if (!data.session) window.location.href = "index.html";
     });
-    // Mostrar usuario (nombre preferido, sino email)
+
     supabase.auth.getUser().then(({ data }) => {
       const user = data?.user;
       let nombre = user?.user_metadata?.nombre || user?.email || "Usuario";
       document.getElementById('bienvenida').innerHTML = `¡Bienvenido/a, <strong>${nombre}</strong>!`;
     });
-    // Logout
+
+    // 2. Lógica Menú Desplegable
+    const btnToggle = document.getElementById('btn-toggle-mas');
+    const contenedorMas = document.getElementById('contenedor-mas');
+
+    btnToggle.onclick = () => {
+      if (contenedorMas.style.display === "none") {
+        contenedorMas.style.display = "flex";
+        btnToggle.innerHTML = `<span class="emoji">➖</span> Menos Desafíos`;
+      } else {
+        contenedorMas.style.display = "none";
+        btnToggle.innerHTML = `<span class="emoji">➕</span> Más Desafíos`;
+      }
+    };
+
+    // 3. Logout
     document.getElementById('btn-logout').addEventListener('click', async () => {
       await supabase.auth.signOut();
       window.location.href = "index.html";
     });
-    // Botón temporada activa/próxima
+
+    // 4. Temporadas (Se mantiene igual pero dentro del desplegable)
     fetch("datos/temporadas.json")
       .then(res => res.json())
       .then(temporadas => {
@@ -121,7 +125,6 @@
           const fin = new Date(temp.fecha_fin);
           if (hoy >= ini && hoy <= fin) {
             btn.style.display = "inline-block";
-            btn.disabled = false;
             btn.innerHTML = `<span class="emoji">🔔</span> ${temp.titulo}`;
             btn.onclick = () => window.location.href = `temporada.html?id=${temp.id}`;
             hayActiva = true;
@@ -136,33 +139,18 @@
           const ini = new Date(proxima.fecha_inicio);
           const diffMs = ini - hoy;
           const diffDias = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
-          btn.innerHTML = `<span class="emoji">⏳</span> Próxima: ${proxima.titulo} (en ${diffDias} día${diffDias===1?'':'s'})`;
+          btn.innerHTML = `<span class="emoji">⏳</span> Próxima: ${proxima.titulo} (${diffDias}d)`;
           btn.disabled = true;
-          btn.style.opacity = 0.7;
-          btn.style.cursor = "not-allowed";
-          btn.onclick = null;
+          btn.style.opacity = 0.6;
         }
       });
   </script>
-  <!-- Instalar PWA solo como archivo externo -->
+
   <script src="./js/app/instalar-pwa.js"></script>
-  <!-- Registro del Service Worker -->
   <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./sw.js')
-        .then(reg => console.log('✅ Service Worker registrado', reg.scope))
-        .catch(err => console.error('❌ Error al registrar SW:', err));
+      navigator.serviceWorker.register('./sw.js').catch(err => console.error('SW Error:', err));
     }
   </script>
-  <!--script>
-  document.getElementById('btn-perfil').onclick = function () {
-    window.location.href = "perfil.html";
-  };
-</script-->
-
-<!--  <a href="trivia-flash.html" id="btn-trivia-flash" title="Trivia Flash">🔦</a> -->
-
 </body>
 </html>
-
-
