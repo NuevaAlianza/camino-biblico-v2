@@ -9,14 +9,14 @@ const startScreen = document.getElementById('start-screen');
 const resultScreen = document.getElementById('result-screen');
 const btnComenzar = document.getElementById('btn-comenzar');
 
-// 1. Verificar si ya jugó y cargar 7 preguntas aleatorias
+// 1. Inicializar Reto: Bloqueo y Carga Determinista (Mismas preguntas para todos hoy)
 async function inicializarRetoDiario() {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
 
     const hoy = new Date().toISOString().split('T')[0];
 
-    // VERIFICAR SI YA JUGÓ HOY (Trayendo nombre del usuario)
+    // VERIFICAR BLOQUEO Y TRAER NOMBRE
     const { data: registro } = await supabase
         .from('resultados_retos')
         .select('aciertos, tiempo_segundos, mapa_respuestas, usuarios(nombre)')
@@ -49,19 +49,36 @@ async function inicializarRetoDiario() {
         return;
     }
 
-    // SI NO HA JUGADO: CARGAR 7 PREGUNTAS
+    // CARGAR PREGUNTAS CON SEMILLA DIARIA
     const { data, error } = await supabase.from('preguntas').select('*');
     if (error) {
         console.error("Error cargando preguntas:", error);
-    } else {
-        preguntas = data.sort(() => 0.5 - Math.random()).slice(0, 7);
+    } else if (data) {
+        // Generamos una semilla numérica basada en la fecha (ej: 20251219)
+        const semilla = parseInt(hoy.replace(/-/g, ''));
+        
+        // Mezclamos el array de forma que siempre dé el mismo orden hoy
+        const shuffleConSemilla = (array, seed) => {
+            let m = array.length, t, i;
+            while (m) {
+                // Algoritmo determinista basado en el seno de la semilla
+                i = Math.floor(Math.abs(Math.sin(seed++)) * m--);
+                t = array[m];
+                array[m] = array[i];
+                array[i] = t;
+            }
+            return array;
+        };
+
+        const preguntasMezcladas = shuffleConSemilla([...data], semilla);
+        preguntas = preguntasMezcladas.slice(0, 7);
     }
 }
 
 // 2. Iniciar el juego
 btnComenzar.onclick = () => {
     if (preguntas.length < 7) {
-        alert("Preparando las 7 preguntas del reto...");
+        alert("Preparando las 7 preguntas del día...");
         return;
     }
     startScreen.style.display = 'none';
@@ -123,10 +140,10 @@ async function finalizarReto() {
     document.getElementById('final-aciertos').innerText = `${aciertos}/7`;
     document.getElementById('final-tiempo').innerText = tiempoTotal + "s";
 
-    // Crear botón de compartir dinámicamente
+    // Botón Compartir
     const shareBtn = document.createElement('button');
     shareBtn.className = 'menu-btn';
-    shareBtn.style.background = '#25D366'; // Color WhatsApp
+    shareBtn.style.background = '#25D366';
     shareBtn.innerText = 'Compartir Resultado 💬';
     shareBtn.onclick = () => compartirResultado(aciertos, tiempoTotal, stringMapa);
     resultScreen.insertBefore(shareBtn, resultScreen.lastElementChild);
@@ -135,23 +152,19 @@ async function finalizarReto() {
     
     if (user) {
         const hoy = new Date().toISOString().split('T')[0];
-        const { error } = await supabase
-            .from('resultados_retos')
-            .insert([{ 
-                user_id: user.id, 
-                aciertos: aciertos, 
-                tiempo_segundos: parseFloat(tiempoTotal),
-                fecha_reto: hoy,
-                mapa_respuestas: stringMapa 
-            }]);
-
-        if (error) console.error("Error al guardar:", error);
+        await supabase.from('resultados_retos').insert([{ 
+            user_id: user.id, 
+            aciertos: aciertos, 
+            tiempo_segundos: parseFloat(tiempoTotal),
+            fecha_reto: hoy,
+            mapa_respuestas: stringMapa 
+        }]);
     }
     
     cargarRanking('lista-ranking');
 }
 
-// 6. Ranking dinámico con nombres de la tabla 'usuarios'
+// 6. Ranking dinámico (Join con tabla usuarios para mostrar nombres)
 async function cargarRanking(idLista = 'lista-ranking') {
     const hoy = new Date().toISOString().split('T')[0];
     const { data, error } = await supabase
@@ -185,14 +198,14 @@ async function cargarRanking(idLista = 'lista-ranking') {
     }).join('');
 }
 
-// 7. Función para compartir (estilo Wordle)
+// 7. Compartir estilo Wordle
 function compartirResultado(pts, sec, emojis) {
     const texto = `Reto Bíblico Diario 📖\nResultado: ${pts}/7\n${emojis}\nTiempo: ${sec}s\n¡Supérame en Camino Bíblico! 🚀`;
     if (navigator.share) {
         navigator.share({ title: 'Reto VS', text: texto });
     } else {
         navigator.clipboard.writeText(texto);
-        alert("¡Copiado al portapapeles! Pégalo en tu WhatsApp.");
+        alert("¡Copiado al portapapeles!");
     }
 }
 
