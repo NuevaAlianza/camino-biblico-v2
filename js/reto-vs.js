@@ -2,35 +2,56 @@ let preguntas = [];
 let indiceActual = 0;
 let aciertos = 0;
 let startTime, timerInterval;
+let mapaEmojis = []; // Nuevo: para registrar ✅ y ❌
 
 const quizSection = document.getElementById('quiz-section');
 const startScreen = document.getElementById('start-screen');
 const resultScreen = document.getElementById('result-screen');
+const btnComenzar = document.getElementById('btn-comenzar');
 
-// 1. Obtener 5 preguntas aleatorias del día
-async function cargarPreguntasDelDia() {
-    // Si guardaste preguntas en localStorage desde el menú (auth.js), las usamos
-    const guardadas = localStorage.getItem('preguntas_duelo_activa');
-    
-    if (guardadas) {
-        preguntas = JSON.parse(guardadas);
-        localStorage.removeItem('preguntas_duelo_activa');
+// 1. Verificar si ya jugó y cargar 7 preguntas aleatorias
+async function inicializarRetoDiario() {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+
+    const hoy = new Date().toISOString().split('T')[0];
+
+    // VERIFICAR BLOQUEO
+    const { data: registro } = await supabase
+        .from('resultados_retos')
+        .select('id')
+        .eq('user_id', user.id)
+        .eq('fecha_reto', hoy)
+        .maybeSingle();
+
+    if (registro) {
+        // Si ya existe registro, bloqueamos el inicio
+        startScreen.innerHTML = `
+            <h2>Reto Cumplido 🌟</h2>
+            <p>Ya participaste en el reto de hoy. ¡Vuelve mañana!</p>
+            <div id="ranking-inmediato"></div>
+        `;
+        cargarRanking();
+        return;
+    }
+
+    // CARGAR 7 PREGUNTAS
+    const { data, error } = await supabase
+        .from('preguntas')
+        .select('*');
+
+    if (error) {
+        console.error("Error cargando preguntas:", error);
     } else {
-        // Si no hay guardadas, pedimos 5 a Supabase directamente
-        const { data, error } = await supabase
-            .from('preguntas')
-            .select('*')
-            .limit(5);
-
-        if (error) console.error("Error cargando preguntas:", error);
-        else preguntas = data;
+        // Mezclar y tomar 7
+        preguntas = data.sort(() => 0.5 - Math.random()).slice(0, 7);
     }
 }
 
 // 2. Iniciar el juego
-document.getElementById('btn-comenzar').onclick = () => {
-    if (preguntas.length === 0) {
-        alert("Cargando preguntas, por favor espera un segundo...");
+btnComenzar.onclick = () => {
+    if (preguntas.length < 7) {
+        alert("Preparando las 7 preguntas del reto...");
         return;
     }
     startScreen.style.display = 'none';
@@ -45,23 +66,20 @@ document.getElementById('btn-comenzar').onclick = () => {
     mostrarPregunta();
 };
 
-// 3. MOSTRAR PREGUNTA (SECCIÓN MODIFICADA)
+// 3. Mostrar Pregunta
 function mostrarPregunta() {
     if (indiceActual >= preguntas.length) return finalizarReto();
 
     const p = preguntas[indiceActual];
     document.getElementById('texto-pregunta').innerText = p.pregunta;
     
+    // Progreso visual (sobre 7)
     document.getElementById('progreso-llenado').style.width = `${((indiceActual + 1) / preguntas.length) * 100}%`;
 
     const container = document.getElementById('opciones-container');
     container.innerHTML = "";
 
-    // --- EL CAMBIO ESTÁ AQUÍ ---
-    // Convertimos el texto "Opción 1, Opción 2" en una lista real
     const listaDistractores = p.distractores.split(',').map(item => item.trim());
-
-    // Unir la correcta con los distractores y mezclar
     const opciones = [...listaDistractores, p.respuesta_correcta].sort(() => Math.random() - 0.5);
 
     opciones.forEach(op => {
@@ -73,24 +91,29 @@ function mostrarPregunta() {
     });
 }
 
-// 4. Verificar y Siguiente
+// 4. Verificar y registrar en el mapa
 function verificarRespuesta(elegida, correcta) {
-    if (elegida === correcta) aciertos++;
+    if (elegida === correcta) {
+        aciertos++;
+        mapaEmojis.push("✅");
+    } else {
+        mapaEmojis.push("❌");
+    }
     indiceActual++;
     mostrarPregunta();
 }
 
-// 5. Finalizar y enviar a Supabase
+// 5. Finalizar y enviar Mapa de Emojis
 async function finalizarReto() {
     clearInterval(timerInterval);
-    const endTime = performance.now();
-    const tiempoTotal = ((endTime - startTime) / 1000).toFixed(2);
+    const tiempoTotal = ((performance.now() - startTime) / 1000).toFixed(2);
+    const stringMapa = mapaEmojis.join(""); // Convertimos el array en string "✅❌✅..."
 
     quizSection.style.display = 'none';
     resultScreen.style.display = 'block';
 
-    document.getElementById('final-aciertos').innerText = aciertos;
-    document.getElementById('final-tiempo').innerText = tiempoTotal;
+    document.getElementById('final-aciertos').innerText = `${aciertos}/7`;
+    document.getElementById('final-tiempo').innerText = tiempoTotal + "s";
 
     const { data: { user } } = await supabase.auth.getUser();
     
@@ -103,7 +126,8 @@ async function finalizarReto() {
                     user_id: user.id, 
                     aciertos: aciertos, 
                     tiempo_segundos: parseFloat(tiempoTotal),
-                    fecha_reto: hoy
+                    fecha_reto: hoy,
+                    mapa_respuestas: stringMapa // Guardamos el mapa
                 }
             ]);
 
@@ -113,25 +137,27 @@ async function finalizarReto() {
     cargarRanking();
 }
 
-// 6. Cargar Ranking (Usa la Vista si la creaste, o la tabla directa)
+// 6. Ranking con el mapa visual
 async function cargarRanking() {
-    // Si creaste la vista 'ranking_duelo', cambia el nombre aquí
     const { data, error } = await supabase
         .from('resultados_retos') 
-        .select(`aciertos, tiempo_segundos, user_id`)
+        .select(`aciertos, tiempo_segundos, mapa_respuestas, user_id`)
+        .eq('fecha_reto', new Date().toISOString().split('T')[0]) // Solo hoy
         .order('aciertos', { ascending: false })
         .order('tiempo_segundos', { ascending: true })
-        .limit(5);
+        .limit(10);
 
-    if (error) {
-        console.error("Error ranking:", error);
-        return;
-    }
+    if (error) return console.error("Error ranking:", error);
 
     const lista = document.getElementById('lista-ranking');
     lista.innerHTML = data.map((res, i) => 
-        `<li>#${i+1} - ${res.aciertos}/5 en ${res.tiempo_segundos}s</li>`
+        `<li class="ranking-item">
+            <div class="ranking-info">
+                <strong>#${i+1} - ${res.aciertos}/7</strong> en ${res.tiempo_segundos}s
+            </div>
+            <div class="ranking-mapa">${res.mapa_respuestas}</div>
+        </li>`
     ).join('');
 }
 
-cargarPreguntasDelDia();
+inicializarRetoDiario();
