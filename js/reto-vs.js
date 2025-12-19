@@ -2,7 +2,7 @@ let preguntas = [];
 let indiceActual = 0;
 let aciertos = 0;
 let startTime, timerInterval;
-let mapaEmojis = []; // Nuevo: para registrar ✅ y ❌
+let mapaEmojis = [];
 
 const quizSection = document.getElementById('quiz-section');
 const startScreen = document.getElementById('start-screen');
@@ -16,34 +16,44 @@ async function inicializarRetoDiario() {
 
     const hoy = new Date().toISOString().split('T')[0];
 
-    // VERIFICAR BLOQUEO
+    // VERIFICAR SI YA JUGÓ HOY (Trayendo nombre del usuario)
     const { data: registro } = await supabase
         .from('resultados_retos')
-        .select('id')
+        .select('aciertos, tiempo_segundos, mapa_respuestas, usuarios(nombre)')
         .eq('user_id', user.id)
         .eq('fecha_reto', hoy)
         .maybeSingle();
 
     if (registro) {
-        // Si ya existe registro, bloqueamos el inicio
+        const nombreUser = registro.usuarios ? registro.usuarios.nombre : "Discípulo";
         startScreen.innerHTML = `
-            <h2>Reto Cumplido 🌟</h2>
-            <p>Ya participaste en el reto de hoy. ¡Vuelve mañana!</p>
-            <div id="ranking-inmediato"></div>
+            <div class="bloqueo-container">
+                <h2 class="titulo-dorado">¡Buen trabajo, ${nombreUser}! 🌟</h2>
+                <p>Ya cumpliste tu misión de hoy. Así va la tabla:</p>
+                
+                <div class="stats-box-mini">
+                    <p>Tu marca: <strong>${registro.aciertos}/7</strong> en <strong>${registro.tiempo_segundos}s</strong></p>
+                    <div class="ranking-mapa">${registro.mapa_respuestas}</div>
+                </div>
+
+                <div id="ranking-diario-completo">
+                    <h4>🏆 Ranking del Día</h4>
+                    <ul id="lista-ranking-bloqueo"></ul>
+                </div>
+
+                <button onclick="window.location.href='menu.html'" class="menu-btn" style="margin-top:20px;">Volver al Menú</button>
+                <button onclick="location.reload()" class="menu-btn-refrescar">Actualizar Ranking 🔄</button>
+            </div>
         `;
-        cargarRanking();
+        cargarRanking('lista-ranking-bloqueo');
         return;
     }
 
-    // CARGAR 7 PREGUNTAS
-    const { data, error } = await supabase
-        .from('preguntas')
-        .select('*');
-
+    // SI NO HA JUGADO: CARGAR 7 PREGUNTAS
+    const { data, error } = await supabase.from('preguntas').select('*');
     if (error) {
         console.error("Error cargando preguntas:", error);
     } else {
-        // Mezclar y tomar 7
         preguntas = data.sort(() => 0.5 - Math.random()).slice(0, 7);
     }
 }
@@ -72,8 +82,6 @@ function mostrarPregunta() {
 
     const p = preguntas[indiceActual];
     document.getElementById('texto-pregunta').innerText = p.pregunta;
-    
-    // Progreso visual (sobre 7)
     document.getElementById('progreso-llenado').style.width = `${((indiceActual + 1) / preguntas.length) * 100}%`;
 
     const container = document.getElementById('opciones-container');
@@ -91,7 +99,7 @@ function mostrarPregunta() {
     });
 }
 
-// 4. Verificar y registrar en el mapa
+// 4. Verificar respuesta
 function verificarRespuesta(elegida, correcta) {
     if (elegida === correcta) {
         aciertos++;
@@ -103,11 +111,11 @@ function verificarRespuesta(elegida, correcta) {
     mostrarPregunta();
 }
 
-// 5. Finalizar y enviar Mapa de Emojis
+// 5. Finalizar y mostrar botón de compartir
 async function finalizarReto() {
     clearInterval(timerInterval);
     const tiempoTotal = ((performance.now() - startTime) / 1000).toFixed(2);
-    const stringMapa = mapaEmojis.join(""); // Convertimos el array en string "✅❌✅..."
+    const stringMapa = mapaEmojis.join("");
 
     quizSection.style.display = 'none';
     resultScreen.style.display = 'block';
@@ -115,49 +123,77 @@ async function finalizarReto() {
     document.getElementById('final-aciertos').innerText = `${aciertos}/7`;
     document.getElementById('final-tiempo').innerText = tiempoTotal + "s";
 
+    // Crear botón de compartir dinámicamente
+    const shareBtn = document.createElement('button');
+    shareBtn.className = 'menu-btn';
+    shareBtn.style.background = '#25D366'; // Color WhatsApp
+    shareBtn.innerText = 'Compartir Resultado 💬';
+    shareBtn.onclick = () => compartirResultado(aciertos, tiempoTotal, stringMapa);
+    resultScreen.insertBefore(shareBtn, resultScreen.lastElementChild);
+
     const { data: { user } } = await supabase.auth.getUser();
     
     if (user) {
         const hoy = new Date().toISOString().split('T')[0];
         const { error } = await supabase
             .from('resultados_retos')
-            .insert([
-                { 
-                    user_id: user.id, 
-                    aciertos: aciertos, 
-                    tiempo_segundos: parseFloat(tiempoTotal),
-                    fecha_reto: hoy,
-                    mapa_respuestas: stringMapa // Guardamos el mapa
-                }
-            ]);
+            .insert([{ 
+                user_id: user.id, 
+                aciertos: aciertos, 
+                tiempo_segundos: parseFloat(tiempoTotal),
+                fecha_reto: hoy,
+                mapa_respuestas: stringMapa 
+            }]);
 
         if (error) console.error("Error al guardar:", error);
     }
     
-    cargarRanking();
+    cargarRanking('lista-ranking');
 }
 
-// 6. Ranking con el mapa visual
-async function cargarRanking() {
+// 6. Ranking dinámico con nombres de la tabla 'usuarios'
+async function cargarRanking(idLista = 'lista-ranking') {
+    const hoy = new Date().toISOString().split('T')[0];
     const { data, error } = await supabase
         .from('resultados_retos') 
-        .select(`aciertos, tiempo_segundos, mapa_respuestas, user_id`)
-        .eq('fecha_reto', new Date().toISOString().split('T')[0]) // Solo hoy
+        .select(`
+            aciertos, 
+            tiempo_segundos, 
+            mapa_respuestas, 
+            usuarios ( nombre )
+        `)
+        .eq('fecha_reto', hoy)
         .order('aciertos', { ascending: false })
         .order('tiempo_segundos', { ascending: true })
         .limit(10);
 
     if (error) return console.error("Error ranking:", error);
 
-    const lista = document.getElementById('lista-ranking');
-    lista.innerHTML = data.map((res, i) => 
-        `<li class="ranking-item">
+    const lista = document.getElementById(idLista);
+    if (!lista) return;
+
+    lista.innerHTML = data.map((res, i) => {
+        const nombreUser = res.usuarios ? res.usuarios.nombre : "Anónimo";
+        return `
+        <li class="ranking-item">
             <div class="ranking-info">
-                <strong>#${i+1} - ${res.aciertos}/7</strong> en ${res.tiempo_segundos}s
+                <strong>#${i+1} ${nombreUser}</strong>
+                <span>${res.aciertos}/7 - ${res.tiempo_segundos}s</span>
             </div>
             <div class="ranking-mapa">${res.mapa_respuestas}</div>
-        </li>`
-    ).join('');
+        </li>`;
+    }).join('');
+}
+
+// 7. Función para compartir (estilo Wordle)
+function compartirResultado(pts, sec, emojis) {
+    const texto = `Reto Bíblico Diario 📖\nResultado: ${pts}/7\n${emojis}\nTiempo: ${sec}s\n¡Supérame en Camino Bíblico! 🚀`;
+    if (navigator.share) {
+        navigator.share({ title: 'Reto VS', text: texto });
+    } else {
+        navigator.clipboard.writeText(texto);
+        alert("¡Copiado al portapapeles! Pégalo en tu WhatsApp.");
+    }
 }
 
 inicializarRetoDiario();
