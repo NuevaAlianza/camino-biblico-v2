@@ -278,6 +278,27 @@
       margin     : 18px 0 10px;
       opacity    : .5;
     }
+
+    /* ── Sec toggle ── */
+    .sec-toggle {
+      width       : 100%;
+      background  : rgba(255,255,255,0.03);
+      border      : 1px solid var(--border);
+      border-radius: 10px;
+      padding     : 10px 16px;
+      color       : var(--text2);
+      font-family : inherit;
+      font-size   : 13px;
+      cursor      : pointer;
+      display     : flex;
+      justify-content: space-between;
+      align-items : center;
+      margin-top  : 6px;
+      transition  : all .2s;
+    }
+    .sec-toggle:hover { background: rgba(255,255,255,0.06); color: var(--text); }
+    .sec-toggle-arrow { transition: transform .25s; font-size: 18px; }
+    .sec-toggle.open .sec-toggle-arrow { transform: rotate(90deg); }
   </style>
 </head>
 <body>
@@ -350,9 +371,12 @@
 
   <div class="divider"></div>
 
-  <!-- Navegación secundaria -->
-  <div class="section-label">Mi cuenta</div>
-  <div class="secondary-nav">
+  <!-- Navegación secundaria — oculta por defecto -->
+  <button class="sec-toggle" id="btn-mi-cuenta">
+    <span>👤 Mi cuenta</span>
+    <span class="sec-toggle-arrow">›</span>
+  </button>
+  <div class="secondary-nav" id="secondary-nav" style="display:none; margin-top:8px;">
     <a href="mi-progreso.html" class="sec-btn">
       <span class="icon">📈</span>Mi Progreso
     </a>
@@ -477,6 +501,14 @@ fetch("datos/temporadas.json")
   })
   .catch(() => {}); // silencioso si no existe el JSON
 
+
+// ── Toggle Mi cuenta ────────────────────────────────────────
+document.getElementById("btn-mi-cuenta").addEventListener("click", function() {
+  const nav = document.getElementById("secondary-nav");
+  const open = nav.style.display === "none";
+  nav.style.display = open ? "grid" : "none";
+  this.classList.toggle("open", open);
+});
 // ── PWA Install ─────────────────────────────────────────────
 let deferredPrompt = null;
 window.addEventListener("beforeinstallprompt", e => {
