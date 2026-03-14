@@ -1,158 +1,188 @@
-// === CONFIG ===
-const TZ = "America/Santo_Domingo";
-const MAX_INTENTOS = 6;
+// =====================================================================
+// wordle.js  — Camino Bíblico v2
+// Multi-palabra por día: 2 de lun-sáb, 3 los domingos
+// Cada palabra se guarda como fila separada en wordle_jugadas
+// con el campo palabra_idx (0, 1, 2…)
+// =====================================================================
+
+const TZ       = "America/Santo_Domingo";
+const MAX_INT  = 6;
 const DATA_URL = "datos/wordle-semanas.json";
 
-// Espera hasta que window.supabase esté listo
-function waitForSupabase(timeoutMs = 5000) {
+// ─── Esperar Supabase ────────────────────────────────────────────────
+function waitForSupabase(ms = 5000) {
   return new Promise((resolve, reject) => {
-    const start = Date.now();
-    (function spin(){
+    const t0 = Date.now();
+    (function poll() {
       if (window.supabase) return resolve(window.supabase);
-      if (Date.now() - start > timeoutMs) return reject(new Error("Supabase no cargó (revisa <script src=\"supabase.js\"> y la ruta)"));
-      requestAnimationFrame(spin);
+      if (Date.now() - t0 > ms) return reject(new Error("Supabase no cargó. Verifica supabase.js"));
+      requestAnimationFrame(poll);
     })();
   });
 }
 
-// ====== FECHAS (TZ RD) ======
+// ─── Fechas (zona RD) ────────────────────────────────────────────────
 const hoyDO = () => new Date(new Date().toLocaleString("en-US", { timeZone: TZ }));
+
 function isoDateDO(d) {
-  const parts = new Intl.DateTimeFormat("en-CA", {
+  const p = new Intl.DateTimeFormat("en-CA", {
     timeZone: TZ, year: "numeric", month: "2-digit", day: "2-digit"
-  }).formatToParts(d).reduce((acc,p)=> (acc[p.type]=p.value, acc), {});
-  return `${parts.year}-${parts.month}-${parts.day}`;
-}
-function domingoDe(d) {
-  const x = hoyDO();
-  x.setFullYear(d.getFullYear(), d.getMonth(), d.getDate());
-  x.setHours(0,0,0,0);
-  const dow = x.getDay(); // 0=Dom
-  x.setDate(x.getDate() - dow);
-  return x;
+  }).formatToParts(d).reduce((a, x) => (a[x.type] = x.value, a), {});
+  return `${p.year}-${p.month}-${p.day}`;
 }
 
-// ====== NORMALIZACIÓN (ES) ======
-const normalize = s => (s||"")
+// ─── Normalización español ───────────────────────────────────────────
+const normalize = s => (s || "")
   .toUpperCase()
   .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-  .replace(/Á/g,"A").replace(/É/g,"E").replace(/Í/g,"I").replace(/Ó/g,"O").replace(/Ú/g,"U")
-  .replace(/Ü/g,"U");
+  .replace(/Á/g,"A").replace(/É/g,"E").replace(/Í/g,"I")
+  .replace(/Ó/g,"O").replace(/Ú/g,"U").replace(/Ü/g,"U");
 
-// ====== UI refs ======
-const gridEl = document.getElementById("grid");
-const tecladoEl = document.getElementById("teclado");
-const temaEl = document.getElementById("tema");
-const citaEl = document.getElementById("cita");
-const xpEl = document.getElementById("xp");
-const rachaEl = document.getElementById("racha");
-const pistaEl = document.getElementById("pista-texto");
-const btnPista = document.getElementById("btn-pista");
-const modal = document.getElementById("modal");
-const resumenEl = document.getElementById("resumen");
-document.getElementById("cerrar").onclick = () => modal.classList.add("hidden");
+// ─── Refs UI ─────────────────────────────────────────────────────────
+const $ = id => document.getElementById(id);
+const gridEl    = $("grid");
+const tecladoEl = $("teclado");
+const temaEl    = $("tema");
+const citaEl    = $("cita");
+const xpTotalEl = $("xp-total");
+const rachaEl   = $("racha");
+const pistaEl   = $("pista-texto");
+const btnPista  = $("btn-pista");
+const dotsEl    = $("progress-dots");
+const wordLabel = $("word-label");
+const modal     = $("modal");
+const modalFin  = $("modal-fin");
 
-// ====== Estado ======
-let sb = null;
-let solucion = "";
-let longitud = 5;
-let intentoIdx = 0;
-let terminado = false;
+// ─── Estado global ───────────────────────────────────────────────────
+let sb, uid, todayISO;
+let palabrasHoy = [];    // [{palabra, pista, cita, tema}, ...]
+let wordIdx     = 0;     // índice de la palabra activa
+let xpAcumulado = 0;
+
+// ─── Estado por ronda ────────────────────────────────────────────────
+let solucion    = "";
+let longitud    = 5;
+let intentoIdx  = 0;
+let terminado   = false;
 let pistasUsadas = 0;
-let hardMode = false;
-let keyState = {};
-let startTime = Date.now();
-const filasRef = [];
-const filasTeclado = [
+let keyState    = {};
+let startTime   = Date.now();
+const filasRef  = [];
+
+const FILAS_TECLADO = [
   "Q W E R T Y U I O P".split(" "),
   "A S D F G H J K L Ñ".split(" "),
   ["ENTER", ..."Z X C V B N M".split(" "), "BORRAR"]
 ];
 
-// 👇 nuevos helpers
-let uid = null;
-let todayISO = "";
-
-// ====== Auth (anónimo) ======
+// ─── Auth anónima ────────────────────────────────────────────────────
 async function ensureAuth() {
-  const { data: g } = await sb.auth.getUser();
-  if (!g?.user) {
+  const { data } = await sb.auth.getUser();
+  if (!data?.user) {
     const { error } = await sb.auth.signInAnonymously();
-    if (error) {
-      console.error("Auth anónima falló:", error);
-      alert("No se pudo iniciar sesión (anónimo). Revisa Auth → Anonymous en Supabase.");
-    }
+    if (error) console.error("Auth anónima falló:", error);
   }
 }
 
-// ====== Init ======
-(async function init(){
-  try {
-    sb = await waitForSupabase();
-  } catch (e) {
-    console.error(e);
-    alert(e.message);
-    return;
-  }
+// ─────────────────────────────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────────────────────────────
+(async function init() {
+  try { sb = await waitForSupabase(); }
+  catch (e) { alert(e.message); return; }
+
   await ensureAuth();
-  const { data: g } = await sb.auth.getUser();
-  uid = g.user.id;
+  uid = (await sb.auth.getUser()).data.user.id;
 
-  const cfg = await fetch(DATA_URL, { cache: "no-store" }).then(r => r.json());
+  // ── Cargar JSON ──
+  let cfg;
+  try { cfg = await fetch(DATA_URL, { cache: "no-store" }).then(r => r.json()); }
+  catch (e) { alert("No se pudo cargar " + DATA_URL); return; }
+
   const hoy = hoyDO();
-  todayISO = isoDateDO(hoy);
-  const semana = pickSemana(cfg.semanas, hoy);
-  const item = semana.dias.find(d => d.dow === hoy.getDay()) || semana.dias[0];
+  todayISO  = isoDateDO(hoy);
 
-  temaEl.textContent = `${semana.tema}`;
-  citaEl.textContent = `${item.cita}`;
-  solucion = normalize(item.palabra);
-  longitud = solucion.length;
-  gridEl.style.setProperty("--n", longitud);
+  // ── Resolver palabras del día ──
+  // Formato NUEVO: { "2026-03-15": [{palabra,pista,cita,tema},...] }
+  // Formato VIEJO: { semanas: [...] }  ← compatibilidad
+  if (cfg[todayISO]) {
+    palabrasHoy = cfg[todayISO];
+  } else if (cfg.semanas) {
+    palabrasHoy = resolverDesdeFormatoViejo(cfg.semanas, hoy);
+  } else {
+    alert("No hay palabras para hoy en el JSON."); return;
+  }
 
-  // ====== Candado Wordle diario ======
-  let { data: jugada, error: qErr } = await sb
+  if (!palabrasHoy.length) { alert("Array de palabras vacío para hoy."); return; }
+
+  // ── Racha desde localStorage ──
+  const lastDate  = localStorage.getItem("wb:last");
+  const prevStreak = parseInt(localStorage.getItem("wb:streak") || "0", 10);
+  if (lastDate && lastDate !== todayISO) {
+    const diff = (hoy - new Date(lastDate)) / 86400000;
+    if (diff > 2) localStorage.setItem("wb:streak", "0");
+  }
+  rachaEl.textContent = localStorage.getItem("wb:streak") || "0";
+
+  // ── Consultar jugadas de hoy en Supabase ──
+  const { data: jugadas } = await sb
     .from("wordle_jugadas")
     .select("*")
     .eq("user_id", uid)
-    .eq("fecha", todayISO)
-    .maybeSingle();
-  if (qErr) console.error("Error buscando jugada de hoy:", qErr);
+    .eq("fecha", todayISO);
 
-  if (!jugada) {
-    const { error: insErr } = await sb
-      .from("wordle_jugadas")
-      .insert([{
-        user_id: uid,
-        fecha: todayISO,
-        semana_id: semana.domingo,
-        palabra: solucion,
-        tema: semana.tema,
-        cita: item.cita,
-        intentos: 0,
-        acierto: false,
-        pistas_usadas: 0,
-        hard_mode: false,
-        tiempo_seg: 0,
-        grid: [],
-        estado: "en curso"
-      }]);
-    if (insErr) console.error("Error creando jugada en curso:", insErr);
-  } else if (jugada.estado === "terminado") {
-    terminado = true;
-    modal.classList.remove("hidden");
-    resumenEl.textContent = `Ya jugaste hoy. WRP: ${jugada.wrp} • XP: +${jugada.xp_otorgado}`;
-    return;
-  } else {
-    intentoIdx = jugada.intentos || 0;
-    pistasUsadas = jugada.pistas_usadas || 0;
+  const completadas = (jugadas || []).filter(j => j.estado === "terminado");
+  xpAcumulado = completadas.reduce((s, j) => s + (j.xp_otorgado || 0), 0);
+  xpTotalEl.textContent = `+${xpAcumulado}`;
+
+  // ── Buscar primera palabra pendiente ──
+  wordIdx = completadas.length;
+  if (wordIdx >= palabrasHoy.length) {
+    mostrarFinDelDia(completadas); return;
   }
 
-  // grid vacío
-  for (let r=0; r<MAX_INTENTOS; r++){
+  // Buscar jugada en curso para esta palabra (si el usuario cerró antes de terminar)
+  const enCurso = (jugadas || []).find(
+    j => j.palabra_idx === wordIdx && j.estado !== "terminado"
+  ) || null;
+
+  await cargarPalabra(wordIdx, enCurso);
+})();
+
+// ─────────────────────────────────────────────────────────────────────
+// CARGAR PALABRA
+// ─────────────────────────────────────────────────────────────────────
+async function cargarPalabra(idx, jugadaExistente) {
+  // Limpiar estado anterior
+  gridEl.innerHTML   = "";
+  tecladoEl.innerHTML = "";
+  filasRef.length    = 0;
+  keyState           = {};
+  intentoIdx         = 0;
+  terminado          = false;
+  pistasUsadas       = 0;
+  startTime          = Date.now();
+  window.removeEventListener("keydown", onKey);
+
+  pistaEl.textContent = "Pista disponible tras 2 intentos";
+  btnPista.disabled   = true;
+
+  const item = palabrasHoy[idx];
+  solucion   = normalize(item.palabra);
+  longitud   = solucion.length;
+
+  temaEl.textContent  = item.tema  || "—";
+  citaEl.textContent  = item.cita  || "";
+  wordLabel.textContent = `Palabra ${idx + 1} de ${palabrasHoy.length}`;
+  gridEl.style.setProperty("--n", longitud);
+
+  renderDots(idx);
+
+  // ── Construir grilla ──
+  for (let r = 0; r < MAX_INT; r++) {
     const row = document.createElement("div");
     row.className = "row";
-    for (let c=0; c<longitud; c++){
+    for (let c = 0; c < longitud; c++) {
       const t = document.createElement("div");
       t.className = "tile";
       row.appendChild(t);
@@ -160,52 +190,67 @@ async function ensureAuth() {
     gridEl.appendChild(row);
     filasRef.push(row);
   }
+
   renderTeclado();
 
-  // restaurar si ya había jugada en curso
-  if (jugada && jugada.grid && jugada.grid.length) {
-    restoreFromDB(jugada);
+  // ── Crear o recuperar jugada en Supabase ──
+  if (!jugadaExistente) {
+    await sb.from("wordle_jugadas").insert([{
+      user_id    : uid,
+      fecha      : todayISO,
+      palabra_idx: idx,
+      palabra    : solucion,
+      tema       : item.tema || "",
+      cita       : item.cita || "",
+      intentos   : 0,
+      acierto    : false,
+      pistas_usadas: 0,
+      tiempo_seg : 0,
+      grid       : [],
+      estado     : "en curso",
+      xp_otorgado: 0,
+      wrp        : 0
+    }]);
+  } else {
+    intentoIdx   = jugadaExistente.intentos    || 0;
+    pistasUsadas = jugadaExistente.pistas_usadas || 0;
+    if (jugadaExistente.grid?.length) restoreFromDB(jugadaExistente);
   }
 
-  btnPista.addEventListener("click", ()=>{
+  // Botón pista
+  btnPista.onclick = () => {
     if (btnPista.disabled) return;
     pistasUsadas++;
-    pistaEl.textContent = `Pista: ${item.pista}`;
-    btnPista.disabled = true;
-  });
-
-  const last = localStorage.getItem("wb:last");
-  const prev = localStorage.getItem("wb:streak") || "0";
-  if (last && last !== todayISO) {
-    const y = new Date(last);
-    const diff = (hoy - y) / 86400000;
-    const newStreak = diff <= 2 ? (parseInt(prev,10) || 0) : 0;
-    localStorage.setItem("wb:streak", String(newStreak));
-  }
-  rachaEl.textContent = localStorage.getItem("wb:streak") || "0";
+    pistaEl.textContent = `💡 ${item.pista}`;
+    btnPista.disabled   = true;
+  };
 
   window.addEventListener("keydown", onKey);
-})();
-
-// ====== Semana activa ======
-function pickSemana(semanas, d){
-  const domHoy = isoDateDO(domingoDe(d));
-  const exact = semanas.find(s => s.domingo === domHoy);
-  if (exact) return exact;
-  const past = [...semanas].filter(s => s.domingo <= domHoy).sort((a,b)=> a.domingo < b.domingo ? 1 : -1);
-  return past[0] || semanas[0];
 }
 
-// ====== Teclado ======
-function renderTeclado(){
+// ─── Puntos de progreso ──────────────────────────────────────────────
+function renderDots(completadas) {
+  dotsEl.innerHTML = "";
+  palabrasHoy.forEach((_, i) => {
+    const d = document.createElement("div");
+    d.className = "dot"
+      + (i < completadas  ? " done"   : "")
+      + (i === completadas ? " active" : "");
+    dotsEl.appendChild(d);
+  });
+}
+
+// ─── Teclado ─────────────────────────────────────────────────────────
+function renderTeclado() {
   tecladoEl.innerHTML = "";
-  filasTeclado.forEach(row=>{
-    const r = document.createElement("div"); r.className = "krow";
-    row.forEach(k=>{
+  FILAS_TECLADO.forEach(row => {
+    const r = document.createElement("div");
+    r.className = "krow";
+    row.forEach(k => {
       const b = document.createElement("div");
-      b.className = "key" + (k==="ENTER"||k==="BORRAR" ? " action": "");
+      b.className = "key" + (k === "ENTER" || k === "BORRAR" ? " action" : "");
       b.textContent = k;
-      b.addEventListener("click", ()=> pressKey(k));
+      b.addEventListener("click", () => pressKey(k));
       r.appendChild(b);
     });
     tecladoEl.appendChild(r);
@@ -213,198 +258,282 @@ function renderTeclado(){
   syncKeyColors();
 }
 
-function onKey(e){
-  const key = e.key.toUpperCase();
-  if (/^[A-ZÑ]$/.test(key)) pressKey(key);
-  else if (key === "BACKSPACE") pressKey("BORRAR");
-  else if (key === "ENTER") pressKey("ENTER");
+function onKey(e) {
+  const k = e.key.toUpperCase();
+  if (/^[A-ZÑ]$/.test(k)) pressKey(k);
+  else if (k === "BACKSPACE") pressKey("BORRAR");
+  else if (k === "ENTER")    pressKey("ENTER");
 }
 
-function pressKey(k){
+function pressKey(k) {
   if (terminado) return;
-  const row = filasRef[intentoIdx];
+  const row   = filasRef[intentoIdx];
+  if (!row) return;
   const tiles = [...row.children];
-  if (k==="ENTER"){
-    const word = tiles.map(t => t.textContent).join("");
-    if (word.length !== longitud) return;
+
+  if (k === "ENTER") {
+    const word = tiles.map(t => t.textContent.replace(/[✓•×]/g,"").trim()).join("");
+    if (word.length !== longitud) { shakeRow(row); return; }
     evaluar(word);
     return;
   }
-  if (k==="BORRAR"){
-    for (let i=longitud-1;i>=0;i--) {
-      if (tiles[i].textContent){ tiles[i].textContent = ""; break; }
+  if (k === "BORRAR") {
+    for (let i = longitud - 1; i >= 0; i--) {
+      if (tiles[i].dataset.letter) {
+        tiles[i].textContent = "";
+        tiles[i].dataset.letter = "";
+        tiles[i].classList.remove("filled");
+        break;
+      }
     }
     return;
   }
-  if (/^[A-ZÑ]$/.test(k)){
-    for (let i=0;i<longitud;i++){
-      if (!tiles[i].textContent){
-        tiles[i].textContent = k;
+  if (/^[A-ZÑ]$/.test(k)) {
+    for (let i = 0; i < longitud; i++) {
+      if (!tiles[i].dataset.letter) {
+        tiles[i].textContent  = k;
+        tiles[i].dataset.letter = k;
+        tiles[i].classList.add("filled");
         break;
       }
     }
   }
 }
 
-// ====== Evaluación ======
-function evaluar(guessRaw){
+function shakeRow(row) {
+  row.classList.add("shake");
+  row.addEventListener("animationend", () => row.classList.remove("shake"), { once: true });
+}
+
+// ─── Evaluación ──────────────────────────────────────────────────────
+function evaluar(guessRaw) {
   const guess = normalize(guessRaw);
-  const res = Array(longitud).fill("no");
+  const res   = Array(longitud).fill("no");
   const count = {};
   for (const ch of solucion) count[ch] = (count[ch] || 0) + 1;
 
-  for (let i=0;i<longitud;i++){
-    if (guess[i] === solucion[i]){ res[i] = "ok"; count[guess[i]]--; }
+  // Primero exactas
+  for (let i = 0; i < longitud; i++) {
+    if (guess[i] === solucion[i]) { res[i] = "ok"; count[guess[i]]--; }
   }
-  for (let i=0;i<longitud;i++){
+  // Luego presentes
+  for (let i = 0; i < longitud; i++) {
     if (res[i] !== "no") continue;
     const ch = guess[i];
-    if ((count[ch]||0) > 0){ res[i] = "mid"; count[ch]--; }
+    if ((count[ch] || 0) > 0) { res[i] = "mid"; count[ch]--; }
   }
 
-  const row = filasRef[intentoIdx];
-  const tiles = [...row.children];
-  for (let i=0;i<longitud;i++){
-    tiles[i].className = "tile " + res[i];
-    tiles[i].innerHTML = `${guess[i] || ""}<span class="icon">${res[i]==="ok"?"✓":res[i]==="mid"?"•":"×"}</span>`;
-  }
+  const tiles = [...filasRef[intentoIdx].children];
+  tiles.forEach((tile, i) => {
+    setTimeout(() => {
+      tile.dataset.letter = "";
+      tile.className = `tile ${res[i]} reveal`;
+      tile.innerHTML = `${guess[i]}<span class="icon">${
+        res[i]==="ok" ? "✓" : res[i]==="mid" ? "•" : "×"
+      }</span>`;
+    }, i * 80);
+  });
 
-  for (let i=0;i<longitud;i++){
-    const ch = guess[i];
-    keyState[ch] = bestState(keyState[ch], res[i]);
+  for (let i = 0; i < longitud; i++) {
+    keyState[guess[i]] = bestState(keyState[guess[i]], res[i]);
   }
-  syncKeyColors();
+  setTimeout(() => syncKeyColors(), longitud * 80 + 60);
 
-  if (intentoIdx >= 1 && pistasUsadas === 0){
+  // Desbloquear pista tras 2 intentos
+  if (intentoIdx >= 1 && pistasUsadas === 0) {
     pistaEl.textContent = "Pista disponible";
-    btnPista.disabled = false;
+    btnPista.disabled   = false;
   }
 
-  const acierto = res.every(x => x==="ok");
+  const acierto = res.every(x => x === "ok");
   intentoIdx++;
 
-  if (acierto || intentoIdx === MAX_INTENTOS){
-    terminar(acierto);
+  const delay = longitud * 80 + 160;
+  if (acierto || intentoIdx === MAX_INT) {
+    setTimeout(() => terminar(acierto), delay);
   } else {
-    savePartialProgress();
+    setTimeout(() => guardarParcial(), 300);
   }
 }
 
-function bestState(prev, now){
+function bestState(prev, now) {
   const p = { ok:3, mid:2, no:1, undefined:0 };
-  return (p[now] > p[prev]) ? now : prev;
+  return p[now] > p[prev] ? now : prev;
 }
 
-function syncKeyColors(){
-  [...tecladoEl.querySelectorAll(".key")].forEach(k=>{
-    const label = k.textContent;
-    if (label==="ENTER"||label==="BORRAR") return;
-    const st = keyState[label];
-    k.classList.remove("ok","mid","no");
-    if (st) k.classList.add(st);
+function syncKeyColors() {
+  tecladoEl.querySelectorAll(".key").forEach(k => {
+    if (k.textContent === "ENTER" || k.textContent === "BORRAR") return;
+    const st = keyState[k.textContent];
+    k.className = "key" + (st ? ` ${st}` : "");
   });
 }
 
-function gridToJSON(){
+function gridToJSON() {
   const rows = [];
-  for (let r=0;r<intentoIdx;r++){
-    const tiles = [...filasRef[r].children];
-    const letters = tiles.map(t => t.textContent.replace(/[✓•×]/g,"").slice(0,1) || "");
+  for (let r = 0; r < intentoIdx; r++) {
+    const tiles  = [...filasRef[r].children];
+    const guess  = tiles.map(t => t.textContent.replace(/[✓•×]/g,"").slice(0,1)).join("");
     const result = tiles.map(t =>
-      t.classList.contains("ok") ? "ok" :
+      t.classList.contains("ok")  ? "ok"  :
       t.classList.contains("mid") ? "mid" : "no"
     );
-    rows.push({ guess: letters.join(""), result });
+    rows.push({ guess, result });
   }
   return rows;
 }
 
-// ====== Guardar progreso parcial ======
-async function savePartialProgress() {
+// ─── Guardar progreso parcial ────────────────────────────────────────
+async function guardarParcial() {
   try {
-    await sb
-      .from("wordle_jugadas")
-      .update({
-        intentos: intentoIdx,
-        pistas_usadas: pistasUsadas,
-        tiempo_seg: Math.round((Date.now() - startTime)/1000),
-        grid: gridToJSON()
-      })
-      .eq("user_id", uid)
-      .eq("fecha", todayISO);
-  } catch (e) {
-    console.error("Error guardando progreso parcial:", e);
-  }
+    await sb.from("wordle_jugadas").update({
+      intentos     : intentoIdx,
+      pistas_usadas: pistasUsadas,
+      tiempo_seg   : Math.round((Date.now() - startTime) / 1000),
+      grid         : gridToJSON()
+    })
+    .eq("user_id",     uid)
+    .eq("fecha",       todayISO)
+    .eq("palabra_idx", wordIdx);
+  } catch (e) { console.error("guardarParcial:", e); }
 }
 
-// ====== Restaurar desde DB ======
-function restoreFromDB(jugada){
-  jugada.grid.forEach((g, rIndex) => {
-    if (!filasRef[rIndex]) return;
-    const row = filasRef[rIndex];
-    const clean = (g.guess || "").replace(/[✓•×]/g,"");
-    const letters = clean.split("");
-    for (let c=0; c<Math.min(letters.length, longitud); c++){
-      const tile = row.children[c];
-      const res = g.result?.[c] || "no";
-      tile.className = "tile " + res;
-      tile.innerHTML = `${letters[c] || ""}<span class="icon">${
+// ─── Restaurar desde DB ──────────────────────────────────────────────
+function restoreFromDB(jugada) {
+  (jugada.grid || []).forEach((g, ri) => {
+    if (!filasRef[ri]) return;
+    const letters = (g.guess || "").split("");
+    [...filasRef[ri].children].forEach((tile, ci) => {
+      const res = g.result?.[ci] || "no";
+      tile.className = `tile ${res}`;
+      tile.innerHTML = `${letters[ci] || ""}<span class="icon">${
         res==="ok" ? "✓" : res==="mid" ? "•" : "×"
       }</span>`;
-      keyState[letters[c]] = bestState(keyState[letters[c]], res);
-    }
+      if (letters[ci]) keyState[letters[ci]] = bestState(keyState[letters[ci]], res);
+    });
   });
   syncKeyColors();
 }
 
-// ====== Finalizar ======
-async function terminar(acierto){
+// ─────────────────────────────────────────────────────────────────────
+// TERMINAR UNA PALABRA
+// ─────────────────────────────────────────────────────────────────────
+async function terminar(acierto) {
   terminado = true;
   window.removeEventListener("keydown", onKey);
 
-  const hoy = hoyDO();
-  const fechaISO = isoDateDO(hoy);
-
+  // ── Calcular XP ──
   let xp = 0;
-  if (acierto){ xp = 10 + (intentoIdx <= 3 ? 5 : 0) + Math.max(0, 6 - intentoIdx); }
-  const wrp = xp * 4; // provisional
-
-  xpEl.textContent = `+${xp}`;
-
-  localStorage.setItem("wb:last", fechaISO);
-  const streak = parseInt(localStorage.getItem("wb:streak")||"0",10);
-  localStorage.setItem("wb:streak", String(acierto ? (streak+1) : 0));
-  rachaEl.textContent = localStorage.getItem("wb:streak");
-
-  try{
-    const { data, error } = await sb
-      .from("wordle_jugadas")
-      .update({
-        intentos: intentoIdx,
-        acierto: acierto,
-        pistas_usadas: pistasUsadas,
-        hard_mode: hardMode,
-        tiempo_seg: Math.round((Date.now() - startTime)/1000),
-        grid: gridToJSON(),
-        xp_otorgado: xp,
-        wrp: wrp,
-        estado: "terminado"
-      })
-      .eq("user_id", uid)
-      .eq("fecha", fechaISO)
-      .select()
-      .single();
-
-    if (error) throw error;
-
-    resumenEl.textContent =
-      (acierto ? "¡Bien! " : "Terminaste. ") + `WRP: ${data.wrp} • XP: +${data.xp_otorgado}`;
-
-  }catch(e){
-    console.error(e);
-    resumenEl.textContent =
-      (acierto ? "¡Bien! " : "Terminaste. ") + "No se pudo actualizar en Supabase.";
-  }finally{
-    modal.classList.remove("hidden");
+  if (acierto) {
+    xp = 10;
+    if (intentoIdx <= 2) xp += 8;       // muy rápido
+    else if (intentoIdx <= 3) xp += 5;  // rápido
+    else if (intentoIdx <= 4) xp += 2;  // normal
+    if (pistasUsadas === 0) xp += 3;    // sin pista
   }
+  const wrp = xp * 4;
+
+  xpAcumulado += xp;
+  xpTotalEl.textContent = `+${xpAcumulado}`;
+
+  // ── Racha ──
+  const streak = parseInt(localStorage.getItem("wb:streak") || "0", 10);
+  const newStreak = acierto ? streak + 1 : 0;
+  localStorage.setItem("wb:streak", String(newStreak));
+  localStorage.setItem("wb:last",   todayISO);
+  rachaEl.textContent = String(newStreak);
+
+  // ── Guardar en Supabase ──
+  try {
+    await sb.from("wordle_jugadas").update({
+      intentos     : intentoIdx,
+      acierto,
+      pistas_usadas: pistasUsadas,
+      tiempo_seg   : Math.round((Date.now() - startTime) / 1000),
+      grid         : gridToJSON(),
+      xp_otorgado  : xp,
+      wrp,
+      estado       : "terminado"
+    })
+    .eq("user_id",     uid)
+    .eq("fecha",       todayISO)
+    .eq("palabra_idx", wordIdx);
+  } catch (e) { console.error("terminar:", e); }
+
+  // ── Modal ──
+  const esUltima = wordIdx >= palabrasHoy.length - 1;
+
+  $("modal-emoji").textContent = acierto
+    ? (intentoIdx <= 2 ? "🔥" : "🎉") : "📖";
+
+  $("modal-title").textContent = acierto
+    ? (intentoIdx <= 2 ? "¡Increíble!" : intentoIdx <= 3 ? "¡Excelente!" : "¡Correcto!")
+    : `Respuesta: ${palabrasHoy[wordIdx].palabra}`;
+
+  $("modal-body").textContent = acierto
+    ? `Resolviste en ${intentoIdx} ${intentoIdx === 1 ? "intento" : "intentos"}.${pistasUsadas ? "" : " Sin pista 🏅"}`
+    : `La palabra era "${palabrasHoy[wordIdx].palabra}". ¡Mañana va mejor!`;
+
+  $("m-xp").textContent       = `+${xp}`;
+  $("m-intentos").textContent = intentoIdx;
+  $("m-racha").textContent    = newStreak;
+
+  const btn = $("modal-btn");
+  if (esUltima) {
+    btn.textContent = "Ver resumen del día 🏆";
+    btn.onclick = () => {
+      modal.classList.add("hidden");
+      mostrarFinDelDia(null);
+    };
+  } else {
+    btn.textContent = `Siguiente palabra (${wordIdx + 2}/${palabrasHoy.length}) →`;
+    btn.onclick = async () => {
+      modal.classList.add("hidden");
+      wordIdx++;
+      await cargarPalabra(wordIdx, null);
+    };
+  }
+
+  modal.classList.remove("hidden");
+}
+
+// ─── Fin del día ─────────────────────────────────────────────────────
+function mostrarFinDelDia(jugadas) {
+  const xpFinal = jugadas
+    ? jugadas.reduce((s, j) => s + (j.xp_otorgado || 0), 0)
+    : xpAcumulado;
+  $("fin-body").textContent =
+    `Completaste las ${palabrasHoy.length} palabras de hoy. ` +
+    `Total XP ganado: +${xpFinal} 🎖️`;
+  modalFin.classList.remove("hidden");
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// COMPATIBILIDAD CON FORMATO ANTERIOR
+// ─────────────────────────────────────────────────────────────────────
+function resolverDesdeFormatoViejo(semanas, hoy) {
+  const dow = hoy.getDay(); // 0=dom
+  const domFecha = new Date(hoy);
+  domFecha.setDate(domFecha.getDate() - dow);
+  domFecha.setHours(0,0,0,0);
+  const domISO = isoDateDO(domFecha);
+
+  const semana = semanas.find(s => s.domingo === domISO)
+    || [...semanas]
+        .filter(s => s.domingo <= domISO)
+        .sort((a,b) => b.domingo.localeCompare(a.domingo))[0]
+    || semanas[0];
+
+  const item = semana.dias?.find(d => d.dow === dow) || semana.dias?.[0];
+  if (!item) return [];
+
+  const base = [{ palabra: item.palabra, pista: item.pista, cita: item.cita, tema: semana.tema }];
+
+  // Si es domingo y hay extras en el viejo formato
+  if (dow === 0 && semana.domingoExtra?.length) {
+    return [...base, ...semana.domingoExtra.map(e => ({
+      palabra: e.palabra, pista: e.pista, cita: e.cita, tema: semana.tema
+    }))];
+  }
+  return base;
 }
