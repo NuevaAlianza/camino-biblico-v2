@@ -3,7 +3,7 @@
 // Actualizado: archivos unificados (quiz, wordle, junior)
 // =============================================================
 
-const CACHE_VERSION = 'v10.0';
+const CACHE_VERSION = 'v10.1';
 const CACHE_NAME    = `camino-biblico-${CACHE_VERSION}`;
 
 const FILES_TO_CACHE = [
@@ -53,12 +53,27 @@ const FILES_TO_CACHE = [
   //       (preguntas vienen de Supabase por nivel)
 
   // ── Sonidos ───────────────────────────────────────────────
-  './assets/sonidos/inicio.mp3',
   './assets/sonidos/click.mp3',
   './assets/sonidos/correcto.mp3',
   './assets/sonidos/incorrecto.mp3',
-  './assets/sonidos/warning.mp3',
+  './assets/sonidos/go.mp3',
+  './assets/sonidos/start.mp3',
+  './assets/sonidos/inicio.mp3',
   './assets/sonidos/end.mp3',
+  './assets/sonidos/warning.mp3',
+  './assets/sonidos/halfway.mp3',
+  './assets/sonidos/nota_a.mp3',
+  './assets/sonidos/nota_b.mp3',
+  './assets/sonidos/nota_c.mp3',
+  './assets/sonidos/resultado_alto.mp3',
+  './assets/sonidos/resultado_medio.mp3',
+  './assets/sonidos/resultado_bajo.mp3',
+  './assets/sonidos/wrong1.mp3',
+  './assets/sonidos/wrong2.mp3',
+  './assets/sonidos/wrong3.mp3',
+  './assets/sonidos/wrong4.mp3',
+  // background.mp3 y background2.mp3 se excluyen del precaché
+  // (son pesados y se cargan bajo demanda)
 
   // ── Iconos PWA ────────────────────────────────────────────
   './assets/icons/icon-192.png',
