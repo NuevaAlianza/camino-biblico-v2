@@ -1,156 +1,497 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Menú Principal – Camino Bíblico</title>
-  <link rel="stylesheet" href="css/estilos.css" />
-  <link rel="stylesheet" href="css/menu.css" />
 
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-192.png">
   <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/icon-192.png">
-
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#ead196">
 
+  <meta name="theme-color" content="#0d1b2a">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="Camino Bíblico">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <link rel="apple-touch-startup-image" href="assets/icons/icon-512.png">
-
-  <meta name="application-name" content="Camino Bíblico">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="msapplication-TileColor" content="#ead196">
+
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg      : #0d1b2a;
+      --bg2     : #122233;
+      --card    : #1a2e45;
+      --border  : #1e3a5a;
+      --gold    : #c0a060;
+      --gold-lt : #d4b483;
+      --text    : #f0ead6;
+      --text2   : #7a9ab5;
+      --green   : #22c55e;
+      --amber   : #f59e0b;
+      --purple  : #a855f7;
+      --blue    : #38bdf8;
+      --red     : #ef4444;
+    }
+
+    body {
+      font-family : 'Segoe UI', system-ui, Arial, sans-serif;
+      background  : var(--bg);
+      color       : var(--text);
+      min-height  : 100vh;
+      overflow-x  : hidden;
+    }
+
+    /* ── Background glow ── */
+    body::before {
+      content   : '';
+      position  : fixed;
+      top: -30%; left: -20%;
+      width: 70%; height: 70%;
+      background: radial-gradient(ellipse, rgba(192,160,96,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* ── Layout ── */
+    .menu {
+      max-width : 440px;
+      margin    : 0 auto;
+      padding   : 0 16px 100px;
+      position  : relative;
+    }
+
+    /* ── Header ── */
+    .menu-header {
+      padding    : 24px 0 16px;
+      text-align : center;
+      position   : relative;
+    }
+    .menu-logo     { font-size: 38px; margin-bottom: 6px; }
+    .menu-title    { font-size: 22px; font-weight: 900; color: var(--gold); letter-spacing: 1.5px; }
+    .menu-sub      { font-size: 12px; color: var(--text2); margin-top: 2px; letter-spacing: 1px; text-transform: uppercase; }
+    .menu-welcome  {
+      background  : rgba(192,160,96,0.08);
+      border      : 1px solid rgba(192,160,96,0.2);
+      border-radius: 30px;
+      padding     : 6px 18px;
+      font-size   : 13px;
+      color       : var(--gold-lt);
+      margin-top  : 12px;
+      display     : inline-block;
+    }
+
+    /* ── Stats bar ── */
+    .stats-bar {
+      display       : flex;
+      gap           : 8px;
+      margin        : 14px 0 20px;
+      justify-content: center;
+    }
+    .stat-pill {
+      background  : var(--bg2);
+      border      : 1px solid var(--border);
+      border-radius: 30px;
+      padding     : 6px 14px;
+      display     : flex;
+      align-items : center;
+      gap         : 6px;
+      font-size   : 13px;
+      font-weight : 700;
+      cursor      : pointer;
+      transition  : border-color .2s;
+      text-decoration: none;
+      color       : var(--text);
+    }
+    .stat-pill:hover { border-color: var(--gold); }
+    .stat-pill .icon { font-size: 16px; }
+    .stat-pill small { font-size: 10px; color: var(--text2); display: block; font-weight: 400; }
+
+    /* ── Section label ── */
+    .section-label {
+      font-size     : 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color         : var(--text2);
+      margin        : 20px 0 10px 4px;
+    }
+
+    /* ── Game buttons ── */
+    .game-grid {
+      display               : grid;
+      grid-template-columns : 1fr 1fr;
+      gap                   : 10px;
+      margin-bottom         : 10px;
+    }
+    .game-grid.full { grid-template-columns: 1fr; }
+
+    .game-btn {
+      background   : var(--card);
+      border       : 1px solid var(--border);
+      border-radius: 16px;
+      padding      : 16px 14px;
+      cursor       : pointer;
+      text-align   : left;
+      color        : var(--text);
+      font-family  : inherit;
+      text-decoration: none;
+      display      : flex;
+      flex-direction: column;
+      gap          : 6px;
+      transition   : all .2s;
+      position     : relative;
+      overflow     : hidden;
+    }
+    .game-btn::before {
+      content   : '';
+      position  : absolute;
+      top: 0; left: 0; right: 0;
+      height    : 3px;
+      background: var(--btn-color, var(--gold));
+      border-radius: 16px 16px 0 0;
+    }
+    .game-btn:hover {
+      border-color : var(--btn-color, var(--gold));
+      background   : rgba(255,255,255,0.05);
+      transform    : translateY(-2px);
+    }
+    .game-btn:active { transform: scale(.97); }
+
+    .btn-emoji  { font-size: 28px; line-height: 1; }
+    .btn-name   { font-size: 14px; font-weight: 800; line-height: 1.2; }
+    .btn-desc   { font-size: 11px; color: var(--text2); line-height: 1.3; }
+    .btn-badge  {
+      position    : absolute;
+      top         : 10px;
+      right       : 10px;
+      background  : var(--btn-color, var(--gold));
+      color       : #000;
+      font-size   : 9px;
+      font-weight : 800;
+      padding     : 2px 7px;
+      border-radius: 20px;
+      letter-spacing: .5px;
+    }
+
+    /* ── Wide btn (1 col) ── */
+    .game-btn.wide {
+      flex-direction: row;
+      align-items   : center;
+      gap           : 14px;
+    }
+    .game-btn.wide .btn-emoji { font-size: 32px; }
+    .game-btn.wide .btn-info  { flex: 1; }
+
+    /* ── Secondary nav ── */
+    .secondary-nav {
+      display       : grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap           : 8px;
+      margin-top    : 10px;
+    }
+    .sec-btn {
+      background   : rgba(255,255,255,0.04);
+      border       : 1px solid var(--border);
+      border-radius: 12px;
+      padding      : 12px 8px;
+      text-align   : center;
+      cursor       : pointer;
+      color        : var(--text2);
+      font-family  : inherit;
+      font-size    : 12px;
+      text-decoration: none;
+      display      : flex;
+      flex-direction: column;
+      align-items  : center;
+      gap          : 5px;
+      transition   : all .2s;
+    }
+    .sec-btn:hover { background: rgba(255,255,255,0.08); color: var(--text); border-color: rgba(255,255,255,0.2); }
+    .sec-btn .icon { font-size: 20px; }
+
+    /* ── Temporada banner ── */
+    #banner-temporada {
+      background  : linear-gradient(135deg, rgba(245,158,11,0.15), rgba(192,160,96,0.1));
+      border      : 1px solid rgba(245,158,11,0.3);
+      border-radius: 14px;
+      padding     : 14px 16px;
+      display     : none;
+      align-items : center;
+      gap         : 12px;
+      cursor      : pointer;
+      margin-bottom: 10px;
+      transition  : opacity .2s;
+    }
+    #banner-temporada:hover { opacity: .85; }
+    #banner-temporada .t-emoji { font-size: 28px; flex-shrink: 0; }
+    #banner-temporada .t-info  { flex: 1; }
+    #banner-temporada .t-name  { font-size: 14px; font-weight: 700; color: var(--amber); }
+    #banner-temporada .t-sub   { font-size: 11px; color: var(--text2); margin-top: 2px; }
+    #banner-temporada .t-arrow { color: var(--amber); font-size: 18px; }
+
+    /* ── Bottom bar ── */
+    .bottom-bar {
+      position    : fixed;
+      bottom      : 0;
+      left        : 0;
+      right       : 0;
+      background  : rgba(13,27,42,0.95);
+      border-top  : 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      padding     : 10px 20px 20px;
+      display     : flex;
+      justify-content: space-between;
+      align-items : center;
+      gap         : 10px;
+      z-index     : 100;
+    }
+    .logout-btn {
+      background  : transparent;
+      border      : 1px solid rgba(255,255,255,0.1);
+      color       : var(--text2);
+      padding     : 8px 16px;
+      border-radius: 8px;
+      cursor      : pointer;
+      font-family : inherit;
+      font-size   : 13px;
+      transition  : all .2s;
+    }
+    .logout-btn:hover { border-color: var(--red); color: var(--red); }
+
+    .install-btn {
+      background  : linear-gradient(135deg, #0d5c5c, var(--gold));
+      color       : white;
+      border      : none;
+      padding     : 8px 18px;
+      border-radius: 8px;
+      cursor      : pointer;
+      font-family : inherit;
+      font-size   : 13px;
+      font-weight : 700;
+      display     : none;
+    }
+
+    /* ── Divider ── */
+    .divider {
+      height     : 1px;
+      background : var(--border);
+      margin     : 18px 0 10px;
+      opacity    : .5;
+    }
+  </style>
 </head>
 <body>
-  <main class="menu">
-    <h1>Camino Bíblico</h1>
-    <div id="bienvenida">Cargando...</div>
-    
-    <nav>
-      <button class="menu-btn reto-vs" onclick="window.location.href='reto-vs.html'">
-        <span class="emoji">🔥</span> Reto VS Diario
-      </button>
 
-      <button class="menu-btn rpg" onclick="window.location.href='rpg2.html'">
-        <span class="emoji">⚔️</span> Trivia Bíblica RPG
-      </button>
+<main class="menu">
 
-      <button class="menu-btn triviaflash" onclick="window.location.href='trivia-flash.html'">
-        <span class="emoji">⚡</span> Trivia Flash
-      </button>
+  <!-- Header -->
+  <div class="menu-header">
+    <div class="menu-logo">📖</div>
+    <div class="menu-title">CAMINO BÍBLICO</div>
+    <div class="menu-sub">Arquidiócesis de Santo Domingo</div>
+    <div class="menu-welcome" id="bienvenida">Cargando...</div>
+  </div>
 
-      <button class="menu-btn wordle" onclick="window.location.href='wordle.html'">
-        <span class="emoji">🧩</span> Wordle Bíblico
-      </button>
+  <!-- Stats rápidas -->
+  <div class="stats-bar">
+    <a href="mi-progreso.html" class="stat-pill">
+      <span class="icon">📊</span>
+      <div><strong id="stat-xp">—</strong><small>XP total</small></div>
+    </a>
+    <a href="ranking.html" class="stat-pill">
+      <span class="icon">🏆</span>
+      <div><strong id="stat-rank">—</strong><small>Ranking</small></div>
+    </a>
+    <a href="mi-progreso.html" class="stat-pill">
+      <span class="icon">🔥</span>
+      <div><strong id="stat-racha">—</strong><small>Racha</small></div>
+    </a>
+  </div>
 
-      <button class="menu-btn extra" id="btn-toggle-mas">
-        <span class="emoji">➕</span> Más Desafíos
-      </button>
+  <!-- Temporada activa (se muestra si hay una) -->
+  <div id="banner-temporada">
+    <div class="t-emoji">🔔</div>
+    <div class="t-info">
+      <div class="t-name" id="temp-nombre"></div>
+      <div class="t-sub"  id="temp-sub"></div>
+    </div>
+    <div class="t-arrow">›</div>
+  </div>
 
-      <div id="contenedor-mas" style="display: none; flex-direction: column; width: 100%;">
-        <button class="menu-btn quiz" onclick="window.location.href='quiz.html'">
-          <span class="emoji">🎲</span> Jugar Quiz
-        </button>
-        <button class="menu-btn aleatorio" onclick="window.location.href='aleatorio-grupal.html'">
-          <span class="emoji">🤹</span> Quiz Aleatorio
-        </button>
-        <button class="menu-btn coleccion" onclick="window.location.href='coleccionables-v2.html'">
-          <span class="emoji">🧩</span> Ver Coleccionables
-        </button>
-        <button class="menu-btn progreso" onclick="window.location.href='mi-progreso.html'">
-          <span class="emoji">📊</span> Mi Progreso
-        </button>
-        <button class="menu-btn halloffame" onclick="window.location.href='hall_of_fame.html'">
-          <span class="emoji">🏆</span> Hall of Faith
-        </button>
-        <button class="menu-btn temporada" id="btn-temporada" style="display:none;"></button>
-      </div>
-    </nav>
+  <!-- Juegos principales -->
+  <div class="section-label">Modos de juego</div>
 
-    <button id="btn-instalar-pwa" style="display:none;position:fixed;bottom:2rem;right:2rem;z-index:1200;">
-      📲 Instalar App
-    </button>
+  <div class="game-grid">
+    <!-- Quiz Mundos -->
+    <a href="quiz.html" class="game-btn" style="--btn-color:#22c55e;">
+      <span class="btn-emoji">⚔️</span>
+      <span class="btn-name">Quiz Bíblico</span>
+      <span class="btn-desc">Mundos y niveles</span>
+      <span class="btn-badge">ARENA</span>
+    </a>
 
-    <button id="btn-logout"><span class="emoji">📕</span> Cerrar sesión</button>
-  </main>
+    <!-- Wordle -->
+    <a href="wordle.html" class="game-btn" style="--btn-color:#c0a060;">
+      <span class="btn-emoji">🔤</span>
+      <span class="btn-name">Palabra del Día</span>
+      <span class="btn-desc">Wordle bíblico</span>
+    </a>
+  </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-  <script src="supabase.js"></script>
-  <script src="js/auth.js"></script>
-  
-  <script>
-    // 1. Redirección y Bienvenida
-    supabase.auth.getSession().then(({ data }) => {
-      if (!data.session) window.location.href = "index.html";
-    });
+  <!-- Junior — full width -->
+  <a href="junior.html" class="game-btn wide" style="--btn-color:#38bdf8;">
+    <span class="btn-emoji">🌟</span>
+    <div class="btn-info">
+      <div class="btn-name">Versión Junior</div>
+      <div class="btn-desc">Para niños · Preguntas sencillas · Con confetti</div>
+    </div>
+    <span class="btn-badge">NIÑOS</span>
+  </a>
 
-    supabase.auth.getUser().then(({ data }) => {
-      const user = data?.user;
-      let nombre = user?.user_metadata?.nombre || user?.email || "Usuario";
-      document.getElementById('bienvenida').innerHTML = `¡Bienvenido/a, <strong>${nombre}</strong>!`;
-    });
+  <div class="divider"></div>
 
-    // 2. Lógica Menú Desplegable
-    const btnToggle = document.getElementById('btn-toggle-mas');
-    const contenedorMas = document.getElementById('contenedor-mas');
+  <!-- Navegación secundaria -->
+  <div class="section-label">Mi cuenta</div>
+  <div class="secondary-nav">
+    <a href="mi-progreso.html" class="sec-btn">
+      <span class="icon">📈</span>Mi Progreso
+    </a>
+    <a href="ranking.html" class="sec-btn">
+      <span class="icon">🏆</span>Ranking
+    </a>
+    <a href="hall_of_fame.html" class="sec-btn">
+      <span class="icon">⭐</span>Hall of Faith
+    </a>
+    <a href="perfil.html" class="sec-btn">
+      <span class="icon">👤</span>Mi Perfil
+    </a>
+    <a href="coleccionables-v2.html" class="sec-btn" id="btn-colec">
+      <span class="icon">🎨</span>Colecciones
+    </a>
+    <a href="#" class="sec-btn" id="btn-install-sec" style="display:none;">
+      <span class="icon">📲</span>Instalar App
+    </a>
+  </div>
 
-    btnToggle.onclick = () => {
-      if (contenedorMas.style.display === "none") {
-        contenedorMas.style.display = "flex";
-        btnToggle.innerHTML = `<span class="emoji">➖</span> Menos Desafíos`;
-      } else {
-        contenedorMas.style.display = "none";
-        btnToggle.innerHTML = `<span class="emoji">➕</span> Más Desafíos`;
-      }
-    };
+</main>
 
-    // 3. Logout
-    document.getElementById('btn-logout').addEventListener('click', async () => {
-      await supabase.auth.signOut();
-      window.location.href = "index.html";
-    });
+<!-- Bottom bar fija -->
+<div class="bottom-bar">
+  <button class="logout-btn" id="btn-logout">📕 Cerrar sesión</button>
+  <button class="install-btn" id="btn-instalar-pwa">📲 Instalar App</button>
+</div>
 
-    // 4. Temporadas (Se mantiene igual pero dentro del desplegable)
-    fetch("datos/temporadas.json")
-      .then(res => res.json())
-      .then(temporadas => {
-        const hoy = new Date();
-        const btn = document.getElementById("btn-temporada");
-        let hayActiva = false;
-        let proxima = null;
-        for (const temp of temporadas) {
-          const ini = new Date(temp.fecha_inicio);
-          const fin = new Date(temp.fecha_fin);
-          if (hoy >= ini && hoy <= fin) {
-            btn.style.display = "inline-block";
-            btn.innerHTML = `<span class="emoji">🔔</span> ${temp.titulo}`;
-            btn.onclick = () => window.location.href = `temporada.html?id=${temp.id}`;
-            hayActiva = true;
-            break;
-          }
-          if (ini > hoy && (!proxima || ini < new Date(proxima.fecha_inicio))) {
-            proxima = temp;
-          }
-        }
-        if (!hayActiva && proxima) {
-          btn.style.display = "inline-block";
-          const ini = new Date(proxima.fecha_inicio);
-          const diffMs = ini - hoy;
-          const diffDias = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
-          btn.innerHTML = `<span class="emoji">⏳</span> Próxima: ${proxima.titulo} (${diffDias}d)`;
-          btn.disabled = true;
-          btn.style.opacity = 0.6;
-        }
-      });
-  </script>
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="supabase.js"></script>
+<script src="js/auth.js"></script>
 
-  <script src="./js/app/instalar-pwa.js"></script>
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./sw.js').catch(err => console.error('SW Error:', err));
+<script>
+// ── Auth guard ──────────────────────────────────────────────
+supabase.auth.getSession().then(({ data }) => {
+  if (!data.session) window.location.href = "index.html";
+});
+
+supabase.auth.getUser().then(({ data }) => {
+  const user   = data?.user;
+  const nombre = user?.user_metadata?.nombre
+    || user?.email?.split("@")[0]
+    || "Usuario";
+  document.getElementById("bienvenida").textContent = `¡Bienvenido, ${nombre}!`;
+  loadStats(user?.id);
+});
+
+// ── Stats del usuario ───────────────────────────────────────
+async function loadStats(uid) {
+  if (!uid) return;
+  try {
+    // XP total desde resumen_ranking
+    const { data } = await supabase
+      .from("resumen_ranking")
+      .select("xp_global, nivel")
+      .eq("user_id", uid)
+      .maybeSingle();
+
+    if (data) {
+      document.getElementById("stat-xp").textContent    = (data.xp_global || 0).toLocaleString();
+      document.getElementById("stat-rank").textContent  = `Nv.${data.nivel || 1}`;
     }
-  </script>
+
+    // Racha desde localStorage (wordle)
+    const racha = localStorage.getItem("wb:streak") || "0";
+    document.getElementById("stat-racha").textContent = racha;
+  } catch (e) {
+    console.warn("Stats no disponibles:", e);
+  }
+}
+
+// ── Logout ──────────────────────────────────────────────────
+document.getElementById("btn-logout").addEventListener("click", async () => {
+  await supabase.auth.signOut();
+  window.location.href = "index.html";
+});
+
+// ── Temporadas ──────────────────────────────────────────────
+fetch("datos/temporadas.json")
+  .then(r => r.json())
+  .then(temporadas => {
+    const hoy    = new Date();
+    const banner = document.getElementById("banner-temporada");
+    let activa   = null;
+    let proxima  = null;
+
+    for (const t of temporadas) {
+      const ini = new Date(t.fecha_inicio);
+      const fin = new Date(t.fecha_fin);
+      if (hoy >= ini && hoy <= fin) { activa = t; break; }
+      if (ini > hoy && (!proxima || ini < new Date(proxima.fecha_inicio))) proxima = t;
+    }
+
+    if (activa) {
+      document.getElementById("temp-nombre").textContent = activa.titulo;
+      document.getElementById("temp-sub").textContent    = "Temporada activa — ¡juega ahora!";
+      banner.style.display = "flex";
+      // Las temporadas ahora van al quiz con parámetro
+      banner.onclick = () => window.location.href = `quiz.html?temporada=${activa.id}`;
+    } else if (proxima) {
+      const dias = Math.ceil((new Date(proxima.fecha_inicio) - hoy) / 86400000);
+      document.getElementById("temp-nombre").textContent = proxima.titulo;
+      document.getElementById("temp-sub").textContent    = `Comienza en ${dias} días`;
+      banner.style.display = "flex";
+      banner.style.opacity = "0.6";
+      banner.style.cursor  = "default";
+    }
+  })
+  .catch(() => {}); // silencioso si no existe el JSON
+
+// ── PWA Install ─────────────────────────────────────────────
+let deferredPrompt = null;
+window.addEventListener("beforeinstallprompt", e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById("btn-instalar-pwa").style.display = "block";
+  document.getElementById("btn-install-sec").style.display  = "flex";
+});
+
+async function instalarPWA() {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  if (outcome === "accepted") {
+    document.getElementById("btn-instalar-pwa").style.display = "none";
+    document.getElementById("btn-install-sec").style.display  = "none";
+  }
+  deferredPrompt = null;
+}
+document.getElementById("btn-instalar-pwa").onclick = instalarPWA;
+document.getElementById("btn-install-sec").onclick  = instalarPWA;
+</script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("./sw.js").catch(e => console.error("SW:", e));
+}
+</script>
+
 </body>
 </html>
