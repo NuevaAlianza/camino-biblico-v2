@@ -1,410 +1,503 @@
-// =======================
-// quiz.js – Camino Bíblico
-// =======================
+// =============================================================================
+// quiz.js — Camino Bíblico v2
+// Quiz unificado — Modo Arena con Mundos y Niveles
+// Reemplaza: quiz.js, rpg.js, rpg2.js, trivia-flash.js, reto-vs.js,
+//            temporada.js, aleatorio.js
+// Fuente de datos: Supabase (tablas mundos, niveles, preguntas, progreso_usuario)
+// =============================================================================
 
-// Variables globales
-let datos = [];
-let preguntas = [];
-let preguntaActual = 0;
-let puntaje = 0;
-let tiempo = 35;
-let intervalo;
+// ─── Config ──────────────────────────────────────────────────────────────────
+const VIDAS_INICIAL = 3;
+const MENTOR = {
+  neutral  : "🧙",
+  happy    : "😄",
+  fire     : "🤩",
+  sad      : "😔",
+  thinking : "🤔",
+  victory  : "🎉",
+};
+const MSGS = {
+  happy   : ["¡Correcto! 🎉", "¡Muy bien!", "¡Exacto!", "¡Sigue así!"],
+  fire    : ["¡En racha! 🔥", "¡Imparable!", "¡Increíble!"],
+  sad     : ["Casi... 📖", "Eso se aprende", "Recuerda este versículo"],
+  neutral : ["Piensa bien...", "Tómate tu tiempo", "¿Cuál crees tú?"],
+};
 
-// Elementos del DOM
-const categoriaSelect    = document.getElementById("categoria");
-const temaSelect         = document.getElementById("tema");
-const iniciarBtn         = document.getElementById("iniciar");
-const seleccionForm      = document.getElementById("seleccion-tema-form");
+// ─── Estado global ────────────────────────────────────────────────────────────
+let sb, uid;
+let worlds       = [];
+let activeWorld  = null;
+let activeLevel  = null;
+let questions    = [];
+let qi           = 0;
+let vidas        = VIDAS_INICIAL;
+let xp           = 0;
+let streak       = 0;
+let maxStreak    = 0;
+let correctas    = 0;
+let answered     = false;
+let userProgress = {};   // { nivel_id: { estrellas, completado, xp } }
 
-const juego              = document.getElementById("juego");
-const preguntaEl         = document.getElementById("pregunta");
-const opcionesEl         = document.getElementById("opciones");
-const comentarioEl       = document.getElementById("comentario");
-const resultadoEl        = document.getElementById("resultado");
-const detalleResultado   = document.getElementById("detalle-resultado");
-const mensajeResultado   = document.getElementById("mensaje-resultado");
-const reiniciarBtn       = document.getElementById("reiniciar");
-const volverBtn          = document.getElementById("volver");
-const conteoPreguntaEl   = document.getElementById("conteo-pregunta");
-const barraProgreso      = document.getElementById("progreso");
-const contadorEl         = document.getElementById("contador");
+// ─── Helpers UI ──────────────────────────────────────────────────────────────
+const $ = id => document.getElementById(id);
+function showScreen(name) {
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  $(`screen-${name}`).classList.add("active");
+}
+function setLoading(msg, pct) {
+  $("loading-msg").textContent = msg;
+  $("loading-progress").style.width = pct + "%";
+}
+function rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
-// Sonidos
-const sonidoInicio     = new Audio("assets/sonidos/inicio.mp3");
-const sonidoAdvertencia= new Audio("assets/sonidos/warning.mp3");
-const sonidoFin        = new Audio("assets/sonidos/end.mp3");
-const sonidoClick      = new Audio("assets/sonidos/click.mp3");
-const sonidoCorrecto   = new Audio("assets/sonidos/correcto.mp3");
-const sonidoIncorrecto = new Audio("assets/sonidos/incorrecto.mp3");
-const sonidoNotaA = new Audio("assets/sonidos/nota_a.mp3");
-const sonidoNotaB = new Audio("assets/sonidos/nota_b.mp3");
-const sonidoNotaC = new Audio("assets/sonidos/nota_c.mp3");
-
-
-function reproducirSonido(audio) {
-  audio.currentTime = 0;
-  audio.play();
+// ─── Auth ─────────────────────────────────────────────────────────────────────
+function waitForSupabase(ms = 5000) {
+  return new Promise((res, rej) => {
+    const t0 = Date.now();
+    (function poll() {
+      if (window.supabase) return res(window.supabase);
+      if (Date.now() - t0 > ms) return rej(new Error("Supabase no cargó"));
+      requestAnimationFrame(poll);
+    })();
+  });
+}
+async function ensureAuth() {
+  const { data } = await sb.auth.getUser();
+  if (!data?.user) await sb.auth.signInAnonymously();
 }
 
-// ===============================
-// 1. Selección de categoría y tema
-// ===============================
+// =============================================================================
+// INIT
+// =============================================================================
+(async function init() {
+  showScreen("loading");
+  try {
+    sb = await waitForSupabase();
+  } catch (e) { alert(e.message); return; }
 
-function actualizarBotonIniciar() {
-  iniciarBtn.disabled = !(categoriaSelect.value && temaSelect.value);
+  setLoading("Autenticando...", 15);
+  await ensureAuth();
+  uid = (await sb.auth.getUser()).data.user.id;
+
+  setLoading("Cargando mundos...", 35);
+  await loadWorlds();
+
+  setLoading("Cargando progreso...", 65);
+  await loadUserProgress();
+
+  setLoading("¡Listo!", 100);
+  setTimeout(() => {
+    renderWorldMap();
+    showScreen("map");
+  }, 300);
+})();
+
+// =============================================================================
+// CARGA DE DATOS
+// =============================================================================
+async function loadWorlds() {
+  const { data: wData, error: wErr } = await sb
+    .from("mundos")
+    .select("*, niveles(*)")
+    .eq("activo", true)
+    .order("orden");
+
+  if (wErr) { console.error("Error cargando mundos:", wErr); worlds = []; return; }
+  worlds = wData || [];
 }
 
-// Carga el JSON de preguntas y popula categorías
-fetch("datos/quiz.json")
-  .then(res => res.json())
-  .then(json => {
-    datos = json.filter(item => item.tipo === "quiz comentado");
-    const categorias = [...new Set(datos.map(item => item.categoria))];
-    categorias.forEach(categoria => {
-      const option = document.createElement("option");
-      option.value = categoria;
-      option.textContent = categoria;
-      categoriaSelect.appendChild(option);
-    });
+async function loadUserProgress() {
+  const { data } = await sb
+    .from("progreso_usuario")
+    .select("*")
+    .eq("user_id", uid);
+
+  userProgress = {};
+  (data || []).forEach(p => {
+    userProgress[p.nivel_id] = {
+      estrellas : p.estrellas || 0,
+      completado: p.completado || false,
+      xp        : p.xp || 0,
+    };
   });
 
-// Cambiar categoría → carga temas
-categoriaSelect.addEventListener("change", () => {
-  temaSelect.innerHTML = '<option value="">-- Elige un tema --</option>';
-  const categoria = categoriaSelect.value;
-  if (!categoria) {
-    temaSelect.disabled = true;
-    actualizarBotonIniciar();
+  // XP total y estrellas totales para el header
+  const totalXP    = Object.values(userProgress).reduce((s, p) => s + p.xp, 0);
+  const totalStars = Object.values(userProgress).reduce((s, p) => s + p.estrellas, 0);
+  $("total-xp").textContent    = totalXP;
+  $("total-stars").textContent = totalStars;
+}
+
+async function loadLevelQuestions(levelId) {
+  const { data, error } = await sb
+    .from("preguntas")
+    .select("id, pregunta, respuesta_correcta, distractores, categoria, subcategoria, dificultad, puntos")
+    .eq("nivel_id", levelId)
+    .eq("activo", true)
+    .order("orden");
+
+  if (error) { console.error("Error cargando preguntas:", error); return []; }
+
+  // Convertir formato DB real al formato interno
+  // DB: respuesta_correcta = texto completo, distractores = "op1|op2|op3"
+  return (data || []).map(q => parseQuestion(q)).sort(() => Math.random() - 0.5);
+}
+
+// Convierte formato DB → formato interno con opcion_a/b/c/d
+// La tabla existente usa: respuesta_correcta=texto, distractores=texto separado por |
+function parseQuestion(q) {
+  const correct = (q.respuesta_correcta || "").trim();
+  const raw     = (q.distractores || "").trim();
+
+  // Detectar separador
+  let wrong = [];
+  if      (raw.includes("|"))  wrong = raw.split("|");
+  else if (raw.includes(";;")) wrong = raw.split(";;");
+  else if (raw.includes("\n")) wrong = raw.split("\n");
+  else if (raw)                wrong = [raw];
+  wrong = wrong.map(s => s.trim()).filter(Boolean);
+
+  // Mezclar opciones
+  const pool = [correct, ...wrong.slice(0, 3)].filter(Boolean);
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+
+  // Asignar letras y detectar correcta
+  const letras = ["a","b","c","d"];
+  const out    = { ...q, referencia: q.subcategoria || q.categoria || "" };
+  let   corrLetter = "a";
+  pool.slice(0, 4).forEach((opt, i) => {
+    out[`opcion_${letras[i]}`] = opt;
+    if (opt === correct) corrLetter = letras[i];
+  });
+  out.respuesta_correcta = corrLetter;
+  return out;
+}
+
+// =============================================================================
+// MAPA DE MUNDOS
+// =============================================================================
+function renderWorldMap() {
+  const container = $("worlds-list");
+  container.innerHTML = "";
+
+  if (!worlds.length) {
+    container.innerHTML = `<div class="empty-state">
+      <div style="font-size:48px">📖</div>
+      <p>No hay mundos disponibles todavía.<br>Vuelve pronto.</p>
+    </div>`;
     return;
   }
-  const temas = [...new Set(datos
-    .filter(item => item.categoria === categoria)
-    .map(item => item.tema)
-  )];
-  temas.forEach(tema => {
-    const option = document.createElement("option");
-    option.value = tema;
-    option.textContent = tema;
-    temaSelect.appendChild(option);
+
+  worlds.forEach((world, wi) => {
+    const niveles    = world.niveles || [];
+    const completados = niveles.filter(n => userProgress[n.id]?.completado).length;
+    const estrellasMundo = niveles.reduce((s, n) => s + (userProgress[n.id]?.estrellas || 0), 0);
+    const maxEstrellas   = niveles.length * 3;
+    const pct = niveles.length ? (completados / niveles.length) : 0;
+
+    // Desbloquear: primer mundo siempre libre; los demás cuando el anterior está 100%
+    const prevWorld      = worlds[wi - 1];
+    const prevCompleted  = !prevWorld || (prevWorld.niveles || []).every(n => userProgress[n.id]?.completado);
+    const desbloqueado   = world.desbloqueado && prevCompleted;
+
+    const card = document.createElement("div");
+    card.className = `world-card${desbloqueado ? "" : " locked"}`;
+    card.style.setProperty("--wcolor", world.color || "#22C55E");
+    card.innerHTML = `
+      <div class="world-icon">${desbloqueado ? (world.emoji || "🌍") : "🔒"}</div>
+      <div class="world-info">
+        <div class="world-name">Mundo ${world.orden}: ${world.nombre}</div>
+        <div class="world-desc">${world.descripcion || ""}</div>
+        ${desbloqueado ? `
+          <div class="world-bar-wrap">
+            <div class="world-bar"><div style="width:${pct*100}%"></div></div>
+            <span class="world-bar-label">${completados}/${niveles.length} · ${estrellasMundo}/${maxEstrellas}⭐</span>
+          </div>` : `<div class="world-desc locked-msg">Completa el mundo anterior para desbloquear</div>`}
+      </div>
+      <div class="world-arrow">${desbloqueado ? "›" : ""}</div>
+    `;
+    if (desbloqueado) card.addEventListener("click", () => openWorld(world));
+    container.appendChild(card);
   });
-  temaSelect.disabled = false;
-  actualizarBotonIniciar();
-});
-
-// Cambiar tema → habilita botón si ambos select tienen valor
-temaSelect.addEventListener("change", actualizarBotonIniciar);
-
-// Usar evento submit del form para iniciar quiz
-seleccionForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  if (iniciarBtn.disabled) return;
-  reproducirSonido(sonidoClick);
-  const categoria = categoriaSelect.value;
-  const tema      = temaSelect.value;
-  if (!categoria || !tema) return;
-
-  preguntas = datos
-    .filter(item => item.categoria === categoria && item.tema === tema)
-    .sort(() => 0.5 - Math.random())
-    .slice(0, 15);
-
-  preguntaActual = 0;
-  puntaje        = 0;
-
-  document.querySelector(".seleccion-tema-v2").classList.add("oculto");
-  resultadoEl.classList.add("oculto");
-  juego.classList.remove("oculto");
-  mostrarPregunta();
-});
-
-// =========================
-// 2. Lógica de juego / Quiz
-// =========================
-
-function mostrarPregunta() {
-  resetearEstado();
-  reproducirSonido(sonidoInicio);
-
-  const actual = preguntas[preguntaActual];
-  preguntaEl.textContent = actual.pregunta;
-
-  const opciones = [
-    actual.respuesta,
-    actual.opcion_1,
-    actual.opcion_2,
-    actual.opcion_3
-  ].sort(() => 0.5 - Math.random());
-
-  opciones.forEach(op => {
-    const btn = document.createElement("button");
-    btn.textContent = op;
-    btn.classList.add("opcion");
-    btn.addEventListener("click", () => {
-      reproducirSonido(sonidoClick);
-      seleccionarOpcion(op, actual);
-    });
-    opcionesEl.appendChild(btn);
-  });
-
-  conteoPreguntaEl.textContent = `Pregunta ${preguntaActual + 1} de ${preguntas.length}`;
-  // Si quieres mostrar el tiempo, desoculta esta línea:
-  // contadorEl.textContent = `Tiempo: 58s`;
-  iniciarTemporizador();
 }
 
-function seleccionarOpcion(opcion, actual) {
-  detenerTemporizador();
+// =============================================================================
+// MAPA DE NIVELES
+// =============================================================================
+function openWorld(world) {
+  activeWorld = world;
+  const header = $("level-header");
+  header.style.setProperty("--wcolor", world.color || "#22C55E");
+  $("level-world-title").textContent = `${world.emoji || ""} ${world.nombre}`;
+  $("level-world-desc").textContent  = world.descripcion || "";
 
-  const botones = opcionesEl.querySelectorAll("button");
-  botones.forEach(btn => {
-    btn.disabled = true;
-    if (btn.textContent === actual.respuesta) {
-      btn.classList.add("correcto");
-    } else if (btn.textContent === opcion) {
-      btn.classList.add("incorrecto");
-    }
+  renderLevels(world.niveles || []);
+  showScreen("levels");
+}
+
+function renderLevels(niveles) {
+  const container = $("levels-list");
+  container.innerHTML = "";
+
+  niveles.forEach((nivel, ni) => {
+    const prog        = userProgress[nivel.id];
+    const completado  = prog?.completado || false;
+    const estrellas   = prog?.estrellas  || 0;
+    const prevNivel   = niveles[ni - 1];
+    const desbloqueado = ni === 0 || userProgress[prevNivel?.id]?.completado;
+    const tienePre    = nivel.preguntas_count > 0 || true; // siempre mostrar
+
+    const card = document.createElement("div");
+    card.className = `level-card${completado ? " done" : ""}${!desbloqueado ? " locked" : ""}`;
+    card.style.setProperty("--wcolor", activeWorld.color || "#22C55E");
+    card.innerHTML = `
+      <div class="level-icon">${!desbloqueado ? "🔒" : (nivel.emoji || "📖")}</div>
+      <div class="level-info">
+        <div class="level-name">Nivel ${ni + 1}: ${nivel.nombre}</div>
+        <div class="level-meta">${completado ? "Completado ✓" : (desbloqueado ? "Listo para jugar" : "Bloqueado")}</div>
+      </div>
+      <div class="level-stars">
+        ${[1,2,3].map(s => `<span class="star${s <= estrellas ? " lit" : ""}">⭐</span>`).join("")}
+      </div>
+    `;
+    if (desbloqueado) card.addEventListener("click", () => startLevel(nivel));
+    container.appendChild(card);
   });
+}
 
-  // Muestra el comentario dependiendo del resultado
-  if (opcion === actual.respuesta) {
-    puntaje++;
-    reproducirSonido(sonidoCorrecto);
-    comentarioEl.textContent = actual["cita biblica"];
-  } else {
-    reproducirSonido(sonidoIncorrecto);
-    comentarioEl.textContent = "¡Fallaste! Inténtalo en la próxima pregunta.";
+// =============================================================================
+// JUEGO — INICIO
+// =============================================================================
+async function startLevel(nivel) {
+  activeLevel = nivel;
+  showScreen("loading");
+  setLoading("Cargando preguntas...", 50);
+
+  questions = await loadLevelQuestions(nivel.id);
+  if (!questions.length) {
+    alert("Este nivel no tiene preguntas todavía. ¡Pronto estará listo!");
+    showScreen("levels");
+    return;
   }
-  comentarioEl.classList.remove("oculto");
 
-  // Oculta el comentario suavemente antes de la próxima pregunta
+  // Resetear estado
+  qi        = 0;
+  vidas     = VIDAS_INICIAL;
+  xp        = 0;
+  streak    = 0;
+  maxStreak = 0;
+  correctas = 0;
+  answered  = false;
+
+  setLoading("¡A jugar!", 100);
   setTimeout(() => {
-    comentarioEl.classList.add("oculto");
-  }, 5300);
+    showScreen("game");
+    renderQuestion();
+  }, 250);
 
-  setTimeout(() => {
-    preguntaActual++;
-    // Si era la última, fuerza mostrarResultado:
-    if (preguntaActual >= preguntas.length) {
-      mostrarResultado();
-    } else {
-      mostrarPregunta();
+  // Botón salir
+  $("btn-quit").onclick = () => {
+    if (confirm("¿Abandonar el nivel? Perderás el progreso de esta partida.")) {
+      showScreen("levels");
     }
-  }, 6000);
-}
-
-// ====================
-// 3. Resultado final
-// ====================
-
-function mostrarResultado() {
-  juego.classList.add("oculto");
-  resultadoEl.classList.remove("oculto");
-  detalleResultado.textContent = `Respondiste correctamente ${puntaje} de ${preguntas.length} preguntas.`;
-
-  // Mensaje personalizado según puntaje
-  let mensaje = "";
-  const porcentaje = (puntaje / preguntas.length) * 100;
-  if (porcentaje >= 90) mensaje = "¡Increíble! Eres un maestro del tema 🎉";
-  else if (porcentaje >= 75) mensaje = "¡Muy bien! Sigue practicando 👏";
-  else if (porcentaje >= 60) mensaje = "¡Bien hecho! Pero puedes mejorar 👍";
-  else mensaje = "¡Ánimo! Practica un poco más y lo lograrás 💡";
-  mensajeResultado.textContent = mensaje;
-
-  // Guardar localmente
-  guardarProgreso("quiz comentado", temaSelect.value, puntaje, preguntas.length);
-
-  // Sincronizar con Supabase si hay sesión activa
-  guardarProgresoEnNube();
-
-  // Determinar nota y mostrar botón coleccionables
-  let nota = "F";
-  if (porcentaje >= 90) nota = "A";
-  else if (porcentaje >= 75) nota = "B";
-  else if (porcentaje >= 60) nota = "C";
-  else if (porcentaje >= 40) nota = "D";
-
-// Reproducir sonido según nota
-if (nota === "A") {
-  sonidoNotaA.currentTime = 0; sonidoNotaA.play();
-} else if (nota === "B") {
-  sonidoNotaB.currentTime = 0; sonidoNotaB.play();
-} else if (nota === "C") {
-  sonidoNotaC.currentTime = 0; sonidoNotaC.play();
-}
-
-  const btnColeccionable = document.getElementById("ver-coleccionables");
-  // Limpia listeners viejos
-  const nuevoBtn = btnColeccionable.cloneNode(true);
-  btnColeccionable.parentNode.replaceChild(nuevoBtn, btnColeccionable);
-
-  if (["A", "B", "C"].includes(nota)) {
-    nuevoBtn.classList.remove("oculto");
-    nuevoBtn.addEventListener("click", () => {
-      reproducirSonido(sonidoClick);
-      if (navigator.vibrate) navigator.vibrate(100);
-      window.location.href = "coleccionables-v2.html";
-    });
-  } else {
-    nuevoBtn.classList.add("oculto");
-  }
-}
-
-// ==================
-// 4. Temporizador
-// ==================
-function resetearEstado() {
-  opcionesEl.innerHTML = "";
-  comentarioEl.classList.add("oculto");
-  barraProgreso.style.width = "100%";
-  // contadorEl.textContent = "Tiempo: 35s"; // solo si lo usas
-}
-
-function iniciarTemporizador() {
-  tiempo = 35;
-  barraProgreso.style.width = "100%";
-  // contadorEl.textContent = `Tiempo: ${tiempo}s`; // solo si lo usas
-  intervalo = setInterval(() => {
-    tiempo--;
-    const pct = (tiempo / 35) * 100;
-    barraProgreso.style.width = `${pct}%`;
-
-    // contadorEl.textContent = `Tiempo: ${tiempo}s`; // solo si lo usas
-
-    if (tiempo === 20 || tiempo === 10) reproducirSonido(sonidoAdvertencia);
-
-    if (tiempo <= 0) {
-      clearInterval(intervalo);
-      reproducirSonido(sonidoFin);
-      seleccionarOpcion("tiempo agotado", preguntas[preguntaActual]);
-    }
-  }, 1000);
-}
-
-function detenerTemporizador() {
-  clearInterval(intervalo);
-}
-
-// =======================
-// 5. Botones reinicio/nav
-// =======================
-reiniciarBtn.addEventListener("click", () => {
-  document.querySelector(".seleccion-tema-v2").classList.remove("oculto");
-  resultadoEl.classList.add("oculto");
-});
-
-volverBtn.addEventListener("click", () => {
-  window.location.href = "menu.html";
-});
-
-// ===============================
-// 6. Guardado de progreso local
-// ===============================
-function guardarProgreso(tipo, tema, puntaje, total) {
-  const fecha = new Date().toISOString();
-
-  // Historial
-  const historial = JSON.parse(localStorage.getItem("historial")) || [];
-  historial.push({ tipo, tema, puntaje, total, fecha });
-  localStorage.setItem("historial", JSON.stringify(historial));
-
-  // Calcular nota
-  const porcentaje = (puntaje / total) * 100;
-  let nota = "F";
-  if (porcentaje >= 90) nota = "A";
-  else if (porcentaje >= 75) nota = "B";
-  else if (porcentaje >= 60) nota = "C";
-  else if (porcentaje >= 40) nota = "D";
-
-  // Categoría real
-  const ejemplo = datos.find(p => p.tema === tema);
-  const categoriaReal = ejemplo?.categoria || "Sin categoría";
-
-  // Construir objeto de progreso v2
-  const progreso = JSON.parse(localStorage.getItem("progreso")) || { version: 2, categorias: {} };
-  if (!progreso.categorias[categoriaReal]) progreso.categorias[categoriaReal] = {};
-  progreso.categorias[categoriaReal][tema] = {
-    porcentaje: Math.round(porcentaje),
-    nota,
-    estado: "completado"
   };
-  localStorage.setItem("progreso", JSON.stringify(progreso));
 }
 
-// ===============================
-// 7. Sincronización con Supabase
-// ===============================
-async function guardarProgresoEnNube() {
-  const { data: sessionData } = await supabase.auth.getSession();
-  const userId = sessionData?.session?.user?.id;
-  if (!userId) {
-    console.warn("No hay sesión activa.");
-    return;
-  }
+// =============================================================================
+// JUEGO — PREGUNTA
+// =============================================================================
+function renderQuestion() {
+  answered = false;
+  $("answer-footer").classList.add("hidden");
+  $("streak-badge").classList.add("hidden");
 
-  // Datos principales
-  const tipo = "quiz comentado";
-  const clave = temaSelect.value;
-  const porcentaje = Math.round((puntaje / preguntas.length) * 100);
-  let nota = "F";
-  if (porcentaje >= 90) nota = "A";
-  else if (porcentaje >= 75) nota = "B";
-  else if (porcentaje >= 60) nota = "C";
-  else if (porcentaje >= 40) nota = "D";
+  const q   = questions[qi];
+  const pct = ((qi) / questions.length) * 100;
 
-  // Guarda progreso (último intento, una fila por usuario-tipo-clave)
- const { error } = await supabase
-  .from("progreso")
-  .upsert([{
-    user_id: userId,
-    tipo,
-    clave,
-    nota,
-    porcentaje,
-    fecha: new Date().toISOString()
-  }], {
-    onConflict: ['user_id', 'tipo', 'clave']
+  $("game-progress-bar").style.width = pct + "%";
+  $("game-q-counter").textContent    = `${qi + 1}/${questions.length}`;
+  $("game-xp").textContent           = `${xp} XP`;
+  $("q-category").textContent        = q.categoria || activeLevel?.nombre || "";
+  $("q-text").textContent            = q.pregunta;
+
+  // Vidas
+  $("lives-display").innerHTML = [0,1,2].map(i =>
+    `<span class="life${i < vidas ? " active" : ""}">❤️</span>`
+  ).join("");
+
+  // Mentor neutral
+  setMentor("neutral", "");
+
+  // Construir opciones
+  const grid  = $("options-grid");
+  grid.innerHTML = "";
+  const opts  = [
+    { text: q.opcion_a, idx: 0 },
+    { text: q.opcion_b, idx: 1 },
+    { text: q.opcion_c, idx: 2 },
+    { text: q.opcion_d, idx: 3 },
+  ].filter(o => o.text); // solo opciones con texto
+
+  // Ajustar grid según cantidad de opciones
+  grid.className = `options-grid opts-${opts.length}`;
+
+  const correctIdx = ["a","b","c","d"].indexOf(q.respuesta_correcta?.toLowerCase());
+
+  opts.forEach(({ text, idx }) => {
+    const btn = document.createElement("button");
+    btn.className  = "opt-btn";
+    btn.dataset.idx = idx;
+    btn.innerHTML  = `<span class="opt-letter">${["A","B","C","D"][idx]}</span><span class="opt-text">${text}</span>`;
+    btn.addEventListener("click", () => pickAnswer(btn, idx, correctIdx, q.referencia));
+    grid.appendChild(btn);
   });
 
-if (error) {
-  console.error("❌ Error al guardar progreso en nube:", error.message);
-} else {
-  console.log("✅ Progreso guardado en Supabase.");
+  // Animación entrada
+  $("question-card").classList.remove("enter");
+  requestAnimationFrame(() => $("question-card").classList.add("enter"));
 }
 
+function pickAnswer(btn, chosen, correct, ref) {
+  if (answered) return;
+  answered = true;
 
-  // Guarda historial (todas las sesiones, cada intento)
-  const { error: histError } = await supabase
-    .from("historial")
-    .insert([{
-      user_id: userId,
-      tipo,
-      clave,
-      puntaje,
-      total: preguntas.length,
-      fecha: new Date().toISOString()
-    }]);
-  if (histError) {
-    console.error("❌ Error al guardar historial en nube:", histError.message);
+  const isCorrect = chosen === correct;
+  const allBtns   = $("options-grid").querySelectorAll(".opt-btn");
+
+  // Colorear opciones
+  allBtns.forEach(b => {
+    const i = parseInt(b.dataset.idx);
+    if (i === correct) {
+      b.classList.add("correct");
+    } else if (i === chosen && !isCorrect) {
+      b.classList.add("wrong");
+    } else {
+      b.classList.add("dim");
+    }
+    b.disabled = true;
+  });
+
+  // XP y racha
+  if (isCorrect) {
+    correctas++;
+    streak++;
+    if (streak > maxStreak) maxStreak = streak;
+    const bonus = streak >= 3 ? 20 : streak >= 2 ? 15 : 10;
+    xp += bonus;
+
+    const mentorState = streak >= 3 ? "fire" : "happy";
+    setMentor(mentorState, rand(MSGS[mentorState]));
+
+    if (streak >= 2) {
+      $("streak-badge").classList.remove("hidden");
+      $("streak-num").textContent = streak;
+    }
   } else {
-    console.log("✅ Historial guardado en Supabase.");
+    vidas--;
+    streak = 0;
+    setMentor("sad", rand(MSGS.sad));
+    $("lives-display").querySelectorAll(".life").forEach((l, i) => {
+      if (i >= vidas) l.classList.add("lost");
+    });
   }
+
+  $("game-xp").textContent = `${xp} XP`;
+
+  // Footer con referencia
+  $("ref-line").textContent  = ref ? `📖 ${ref}` : "";
+  $("answer-footer").classList.remove("hidden");
+
+  const isLast = qi >= questions.length - 1;
+  const noLives = vidas <= 0;
+
+  $("btn-next").textContent = (isLast || noLives)
+    ? "Ver resultado 🏆"
+    : "Siguiente →";
+
+  $("btn-next").onclick = () => {
+    if (isLast || noLives) {
+      finishLevel();
+    } else {
+      qi++;
+      renderQuestion();
+    }
+  };
 }
-// Habilita/deshabilita botón siempre que cambie categoría o tema
-categoriaSelect.addEventListener("change", actualizarBotonIniciar);
-temaSelect.addEventListener("change", actualizarBotonIniciar);
 
-// Si la categoría cambia, forzar limpiar y desactivar el tema
-categoriaSelect.addEventListener("change", () => {
-  if (!categoriaSelect.value) {
-    temaSelect.value = "";
-    temaSelect.disabled = true;
-  }
-  actualizarBotonIniciar();
-});
+function setMentor(state, msg) {
+  $("mentor-emoji").textContent = MENTOR[state] || "🧙";
+  $("mentor-msg").textContent   = msg || "";
+}
 
-// Cada vez que se agreguen temas, asegúrate que se habilita bien:
-categoriaSelect.addEventListener("change", () => {
-  // ...ya tienes esto, pero asegúrate que:
-  temaSelect.disabled = temaSelect.options.length <= 1;
-});
+// =============================================================================
+// JUEGO — FINALIZAR NIVEL
+// =============================================================================
+async function finishLevel() {
+  const total     = questions.length;
+  const estrellas = calcEstrellas(correctas, total, vidas);
+  const prevProg  = userProgress[activeLevel.id];
+  const bestEst   = Math.max(estrellas, prevProg?.estrellas || 0);
 
+  // Guardar en Supabase
+  try {
+    await sb.from("progreso_usuario").upsert({
+      user_id   : uid,
+      nivel_id  : activeLevel.id,
+      mundo_id  : activeWorld.id,
+      estrellas : bestEst,
+      completado: estrellas > 0,
+      xp        : Math.max(xp, prevProg?.xp || 0),
+      updated_at: new Date().toISOString(),
+    }, { onConflict: "user_id,nivel_id" });
+  } catch (e) { console.error("Error guardando progreso:", e); }
+
+  // Actualizar cache local
+  userProgress[activeLevel.id] = { estrellas: bestEst, completado: estrellas > 0, xp };
+
+  // Modal resultado
+  const emoji    = ["😔","📖","👍","🏆"][estrellas];
+  const titulo   = ["Sin estrellas","¡Bien!","¡Excelente!","¡Perfecto!"][estrellas];
+  const cuerpo   = estrellas === 0
+    ? `Respondiste ${correctas} de ${total}. ¡Intenta de nuevo!`
+    : `Respondiste ${correctas} de ${total} correctas.${vidas > 0 ? "" : " Sin vidas restantes."}`;
+
+  $("res-emoji").textContent   = emoji;
+  $("res-title").textContent   = titulo;
+  $("res-body").textContent    = cuerpo;
+  $("r-xp").textContent        = xp;
+  $("r-correct").textContent   = `${correctas}/${total}`;
+  $("r-streak").textContent    = maxStreak;
+
+  // Estrellas
+  $("res-stars").innerHTML = [1,2,3].map(s =>
+    `<span class="res-star${s <= estrellas ? " lit" : ""}" 
+     style="animation-delay:${(s-1)*0.15}s">⭐</span>`
+  ).join("");
+
+  $("btn-retry").onclick   = () => {
+    $("modal-result").classList.add("hidden");
+    startLevel(activeLevel);
+  };
+  $("btn-continue").onclick = () => {
+    $("modal-result").classList.add("hidden");
+    // Actualizar UI del mapa
+    loadUserProgress().then(() => {
+      renderLevels(activeWorld.niveles || []);
+      renderWorldMap();
+      showScreen("levels");
+    });
+  };
+
+  $("modal-result").classList.remove("hidden");
+}
+
+function calcEstrellas(correctas, total, vidas) {
+  const pct = correctas / total;
+  if (pct < 0.5) return 0;
+  if (pct < 0.7) return 1;
+  if (pct < 0.9 || vidas === 0) return 2;
+  return 3;
+}
