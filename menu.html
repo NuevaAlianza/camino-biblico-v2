@@ -339,7 +339,7 @@
   </div>
 
   <!-- Junior — full width -->
-  <a href="junior.html" class="game-btn wide" style="--btn-color:#38bdf8;">
+  <a href="junior.html" class="game-btn wide" style="--btn-color:#38bdf8;" id="btn-junior">
     <span class="btn-emoji">🌟</span>
     <div class="btn-info">
       <div class="btn-name">Versión Junior</div>
@@ -387,7 +387,20 @@
 <script src="js/auth.js"></script>
 
 <script>
-// ── Auth guard ──────────────────────────────────────────────
+// ── Detectar nombre real del archivo junior ──────────────────
+// Prueba los posibles nombres en orden hasta encontrar el correcto
+(async function detectJunior() {
+  const names = ["junior.html", "quiz-junior.html", "biblico-junior.html"];
+  for (const name of names) {
+    try {
+      const r = await fetch(name, { method: "HEAD" });
+      if (r.ok) {
+        document.getElementById("btn-junior").href = name;
+        return;
+      }
+    } catch(_) {}
+  }
+})();
 supabase.auth.getSession().then(({ data }) => {
   if (!data.session) window.location.href = "index.html";
 });
