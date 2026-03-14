@@ -3,55 +3,76 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="theme-color" content="#0f172a"/>
-  <title>Palabra del día</title>
+  <meta name="theme-color" content="#0d1b2a"/>
+  <title>Palabra del Día · Camino Bíblico</title>
   <link rel="stylesheet" href="css/wordle.css"/>
 </head>
 <body>
   <main class="app">
-    <header class="card header">
-      <div>
-        <h1>Palabra del día</h1>
-        <p id="meta">Tema — <span id="tema">…</span> • <span id="cita">…</span></p>
+
+    <!-- Header -->
+    <header class="header">
+      <button class="icon-btn" onclick="history.back()">←</button>
+      <div class="header-center">
+        <h1>Palabra del Día</h1>
+        <div id="progress-dots" class="progress-dots"></div>
       </div>
-      <div class="stats">
-        <div><small>Racha</small><strong id="racha">–</strong></div>
-        <div><small>Intentos</small><strong>6</strong></div>
-        <div><small>XP hoy</small><strong id="xp">+0</strong></div>
+      <div class="stats-mini">
+        <div class="stat"><span id="racha">0</span><small>racha</small></div>
+        <div class="stat"><span id="xp-total">+0</span><small>XP</small></div>
       </div>
     </header>
 
-    <section class="card grid" id="grid"></section>
-
-    <section class="card pista">
-      <div id="pista-texto" class="muted">Pista disponible tras 2 intentos</div>
-      <button id="btn-pista" disabled>Usar pista</button>
-    </section>
-
-    <section class="card teclado" id="teclado"></section>
-
-    <footer class="footer">
-      <button id="btn-practica" class="muted">Modo práctica</button>
-      <button id="btn-catequesis" class="primary">Catequesis del domingo</button>
-    </footer>
-
-    <!-- Modal -->
-    <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-      <div class="modal-card">
-        <h2 id="modal-title">Resultado</h2>
-        <p id="resumen"></p>
-        <div class="modal-actions">
-          <button id="cerrar" class="primary">Aceptar</button>
-        </div>
-      </div>
+    <!-- Tema / cita -->
+    <div class="meta-card">
+      <div class="meta-label" id="word-label">Cargando...</div>
+      <div class="meta-tema" id="tema">—</div>
+      <div class="meta-cita" id="cita">—</div>
     </div>
+
+    <!-- Grid de letras -->
+    <section id="grid" class="grid"></section>
+
+    <!-- Pista -->
+    <div class="pista-bar">
+      <span id="pista-texto" class="pista-text">Pista disponible tras 2 intentos</span>
+      <button id="btn-pista" class="btn-pista" disabled>💡 Pista</button>
+    </div>
+
+    <!-- Teclado -->
+    <section id="teclado" class="teclado"></section>
+
   </main>
 
-  <!-- 1) SDK UMD -->
+  <!-- Modal resultado de una palabra -->
+  <div id="modal" class="modal hidden" role="dialog">
+    <div class="modal-card">
+      <div id="modal-emoji" class="modal-emoji">🎉</div>
+      <h2 id="modal-title">¡Correcto!</h2>
+      <p id="modal-body"></p>
+      <div class="modal-stats">
+        <div class="mstat"><strong id="m-xp">+0</strong><small>XP</small></div>
+        <div class="mstat"><strong id="m-intentos">0</strong><small>intentos</small></div>
+        <div class="mstat"><strong id="m-racha">0</strong><small>racha</small></div>
+      </div>
+      <button id="modal-btn" class="btn-primary">Continuar →</button>
+    </div>
+  </div>
+
+  <!-- Modal día completo -->
+  <div id="modal-fin" class="modal hidden" role="dialog">
+    <div class="modal-card">
+      <div class="modal-emoji">🏆</div>
+      <h2>¡Día completado!</h2>
+      <p id="fin-body"></p>
+      <button onclick="document.getElementById('modal-fin').classList.add('hidden')"
+              class="btn-primary">Cerrar</button>
+    </div>
+  </div>
+
+  <!-- Supabase SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-  <!-- 2) Tu cliente (raíz, como en Trivia) -->
   <script src="supabase.js"></script>
-  <!-- 3) Juego -->
   <script src="js/wordle.js"></script>
 </body>
 </html>
