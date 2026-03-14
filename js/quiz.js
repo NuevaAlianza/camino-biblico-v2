@@ -149,26 +149,36 @@ function parseQuestion(q) {
   const correct = (q.respuesta_correcta || "").trim();
   const raw     = (q.distractores || "").trim();
 
-  // Detectar separador
+  // Detectar separador — probar todos los posibles
   let wrong = [];
   if      (raw.includes("|"))  wrong = raw.split("|");
   else if (raw.includes(";;")) wrong = raw.split(";;");
+  else if (raw.includes(";"))  wrong = raw.split(";");
   else if (raw.includes("\n")) wrong = raw.split("\n");
   else if (raw)                wrong = [raw];
-  wrong = wrong.map(s => s.trim()).filter(Boolean);
+  wrong = wrong.map(s => s.trim()).filter(s => s && s !== correct);
 
-  // Mezclar opciones
-  const pool = [correct, ...wrong.slice(0, 3)].filter(Boolean);
+  // Siempre necesitamos 4 opciones en total (1 correcta + 3 distractores)
+  // Si hay menos de 3 distractores, rellenar con opciones genéricas
+  const FILLERS = ["Ninguna de las anteriores","No se menciona en la Biblia","No aplica"];
+  let fi = 0;
+  while (wrong.length < 3) {
+    wrong.push(FILLERS[fi % FILLERS.length]);
+    fi++;
+  }
+
+  // Mezclar las 4 opciones
+  const pool = [correct, ...wrong.slice(0, 3)];
   for (let i = pool.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [pool[i], pool[j]] = [pool[j], pool[i]];
   }
 
-  // Asignar letras y detectar correcta
+  // Asignar letras a/b/c/d
   const letras = ["a","b","c","d"];
   const out    = { ...q, referencia: q.subcategoria || q.categoria || "" };
   let   corrLetter = "a";
-  pool.slice(0, 4).forEach((opt, i) => {
+  pool.forEach((opt, i) => {
     out[`opcion_${letras[i]}`] = opt;
     if (opt === correct) corrLetter = letras[i];
   });
@@ -331,7 +341,9 @@ function renderQuestion() {
   // Mentor neutral
   setMentor("neutral", "");
 
-  // Construir opciones
+  // Construir opciones — parseQuestion ya asignó opcion_a/b/c/d
+  // Siempre mostrar 4 opciones. Si alguna es vacía, el pool de parseQuestion
+  // la rellenó con distractores válidos.
   const grid  = $("options-grid");
   grid.innerHTML = "";
   const opts  = [
@@ -339,14 +351,20 @@ function renderQuestion() {
     { text: q.opcion_b, idx: 1 },
     { text: q.opcion_c, idx: 2 },
     { text: q.opcion_d, idx: 3 },
-  ].filter(o => o.text); // solo opciones con texto
+  ].filter(o => o.text && o.text.trim() !== "");
 
-  // Ajustar grid según cantidad de opciones
-  grid.className = `options-grid opts-${opts.length}`;
+  // Si parseQuestion devolvió menos de 4, completar con "—" para no romper el layout
+  while (opts.length < 4) {
+    opts.push({ text: null, idx: opts.length }); // se filtra abajo en el render
+  }
+  const optsValidas = opts.filter(o => o.text);
+
+  // Ajustar grid según cantidad de opciones válidas
+  grid.className = `options-grid opts-${optsValidas.length}`;
 
   const correctIdx = ["a","b","c","d"].indexOf(q.respuesta_correcta?.toLowerCase());
 
-  opts.forEach(({ text, idx }) => {
+  optsValidas.forEach(({ text, idx }) => {
     const btn = document.createElement("button");
     btn.className  = "opt-btn";
     btn.dataset.idx = idx;
