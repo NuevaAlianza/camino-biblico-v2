@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="theme-color" content="#0a1a3a"/>
+  <title>Quiz Junior · Camino Bíblico</title>
+  <link rel="stylesheet" href="css/junior.css"/>
+</head>
+<body>
+
+  <!-- CARGANDO -->
+  <div id="screen-loading" class="screen active">
+    <div class="jr-loading">
+      <div class="jr-loading-emoji">🌟</div>
+      <h2>¡Cargando<br>tu aventura!</h2>
+      <div class="jr-bar"><div id="jr-bar-fill"></div></div>
+    </div>
+  </div>
+
+  <!-- MENU DE MUNDOS -->
+  <div id="screen-map" class="screen">
+    <div class="jr-header">
+      <button class="jr-back" onclick="history.back()">←</button>
+      <h1>Camino Junior</h1>
+      <div class="jr-stars-total">⭐ <span id="jr-total-stars">0</span></div>
+    </div>
+    <p class="jr-subtitle">¡Elige tu historia!</p>
+    <div id="jr-worlds" class="jr-worlds"></div>
+  </div>
+
+  <!-- JUEGO -->
+  <div id="screen-game" class="screen">
+    <!-- Top -->
+    <div class="jr-game-top">
+      <button class="jr-back small" id="jr-quit">✕</button>
+      <div class="jr-dots" id="jr-dots"></div>
+      <div class="jr-score">⭐ <span id="jr-score">0</span></div>
+    </div>
+
+    <!-- Emoji grande de la pregunta -->
+    <div class="jr-question-emoji" id="jr-q-emoji">🌍</div>
+
+    <!-- Pregunta -->
+    <div class="jr-question-box">
+      <p id="jr-q-text">¿Quién creó el mundo?</p>
+    </div>
+
+    <!-- Opciones (máx 3) -->
+    <div id="jr-options" class="jr-options"></div>
+
+    <!-- Siguiente (aparece después de responder) -->
+    <div id="jr-next-wrap" class="jr-next-wrap hidden">
+      <div id="jr-ref" class="jr-ref"></div>
+      <button id="jr-next-btn" class="jr-next-btn">¡Siguiente! 🚀</button>
+    </div>
+  </div>
+
+  <!-- CELEBRACIÓN FINAL -->
+  <div id="screen-end" class="screen">
+    <div class="jr-end">
+      <div class="jr-end-emoji" id="jr-end-emoji">🌟</div>
+      <h2 id="jr-end-title">¡Lo lograste!</h2>
+      <p id="jr-end-body"></p>
+      <div class="jr-end-stars" id="jr-end-stars"></div>
+      <button id="jr-btn-replay" class="jr-btn-big">🔄 Jugar otra vez</button>
+      <button id="jr-btn-menu"   class="jr-btn-outline">← Volver al menú</button>
+    </div>
+    <!-- Confetti container -->
+    <div id="jr-confetti" class="jr-confetti"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="supabase.js"></script>
+  <script src="js/junior.js"></script>
+</body>
+</html>
