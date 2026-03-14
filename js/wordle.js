@@ -9,6 +9,31 @@ const TZ       = "America/Santo_Domingo";
 const MAX_INT  = 6;
 const DATA_URL = "datos/wordle-semanas.json";
 
+// ─── Sound Manager ────────────────────────────────────────────────────────────
+const SND = {
+  _cache: {},
+  _muted: localStorage.getItem("cb:muted") === "1",
+  play(name, vol = 1) {
+    if (this._muted) return;
+    try {
+      if (!this._cache[name]) {
+        const a = new Audio(`./assets/sonidos/${name}.mp3`);
+        a.preload = "auto";
+        this._cache[name] = a;
+      }
+      const a = this._cache[name];
+      a.currentTime = 0;
+      a.volume = vol;
+      a.play().catch(() => {});
+    } catch(e) {}
+  },
+  nota(idx) {
+    // idx 0-5 → nota_a, nota_b, nota_c según posición
+    const notas = ["nota_a","nota_b","nota_a","nota_b","nota_c","nota_c"];
+    this.play(notas[Math.min(idx, notas.length - 1)], 0.5);
+  }
+};
+
 // ─── Esperar Supabase ────────────────────────────────────────────────
 function waitForSupabase(ms = 5000) {
   return new Promise((resolve, reject) => {
@@ -343,6 +368,7 @@ function evaluar(guessRaw) {
       tile.innerHTML = `${guess[i]}<span class="icon">${
         res[i]==="ok" ? "✓" : res[i]==="mid" ? "•" : "×"
       }</span>`;
+      SND.nota(i);  // nota musical por cada tile revelado
     }, i * 80);
   });
 
@@ -437,6 +463,13 @@ function restoreFromDB(jugada) {
 async function terminar(acierto) {
   terminado = true;
   window.removeEventListener("keydown", onKey);
+
+  // ── Sonido de resultado ──
+  if (acierto) {
+    SND.play(intentoIdx <= 2 ? "resultado_alto" : "resultado_medio", 0.9);
+  } else {
+    SND.play("resultado_bajo", 0.8);
+  }
 
   // ── Calcular XP ──
   let xp = 0;
