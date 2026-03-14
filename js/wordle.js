@@ -164,7 +164,7 @@ async function cargarPalabra(idx, jugadaExistente) {
   startTime          = Date.now();
   window.removeEventListener("keydown", onKey);
 
-  pistaEl.textContent = "Pista disponible tras 2 intentos";
+  pistaEl.textContent = "Pista disponible tras el 4.º intento";
   btnPista.disabled   = true;
 
   const item = palabrasHoy[idx];
@@ -172,7 +172,7 @@ async function cargarPalabra(idx, jugadaExistente) {
   longitud   = solucion.length;
 
   temaEl.textContent  = item.tema  || "—";
-  citaEl.textContent  = item.cita  || "";
+  citaEl.textContent  = "";   // ocultar cita hasta el 4.º intento
   wordLabel.textContent = `Palabra ${idx + 1} de ${palabrasHoy.length}`;
   gridEl.style.setProperty("--n", longitud);
 
@@ -214,6 +214,18 @@ async function cargarPalabra(idx, jugadaExistente) {
   } else {
     intentoIdx   = jugadaExistente.intentos    || 0;
     pistasUsadas = jugadaExistente.pistas_usadas || 0;
+    // Restaurar estado de pista según intentos guardados
+    if (intentoIdx >= 4 && pistasUsadas === 0) {
+      pistaEl.textContent = "💡 Pista disponible";
+      btnPista.disabled   = false;
+    } else if (pistasUsadas > 0) {
+      pistaEl.textContent = `💡 ${item.pista}`;
+      btnPista.disabled   = true;
+    }
+    // Mostrar cita si ya usó 4+ intentos en sesión anterior
+    if (intentoIdx >= 4) {
+      citaEl.textContent = item.cita || "";
+    }
     if (jugadaExistente.grid?.length) restoreFromDB(jugadaExistente);
   }
 
@@ -339,10 +351,14 @@ function evaluar(guessRaw) {
   }
   setTimeout(() => syncKeyColors(), longitud * 80 + 60);
 
-  // Desbloquear pista tras 2 intentos
-  if (intentoIdx >= 1 && pistasUsadas === 0) {
-    pistaEl.textContent = "Pista disponible";
+  // Desbloquear pista solo tras el 4.º intento (intentoIdx es 0-based, se evalúa ANTES del ++)
+  if (intentoIdx >= 3 && pistasUsadas === 0) {
+    pistaEl.textContent = "💡 Pista disponible";
     btnPista.disabled   = false;
+  }
+  // Mostrar cita bíblica tras el 4.º intento
+  if (intentoIdx >= 3) {
+    citaEl.textContent = palabrasHoy[wordIdx]?.cita || "";
   }
 
   const acierto = res.every(x => x === "ok");
