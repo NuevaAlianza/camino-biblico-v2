@@ -1,61 +1,114 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Quiz Comentado – Camino Bíblico</title>
-  <link rel="stylesheet" href="css/quiz.css" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="theme-color" content="#0d1b2a"/>
+  <title>Quiz Bíblico · Camino Bíblico</title>
+  <link rel="stylesheet" href="css/quiz.css"/>
 </head>
 <body>
-  <div class="cabecera-quiz">
-    <form class="seleccion-tema-v2" id="seleccion-tema-form" autocomplete="off" onsubmit="return false;">
-      <div class="campos-flex">
-        <div class="campo-form">
-          <label for="categoria">Categoría</label>
-          <select id="categoria" required>
-            <option value="">-- Elige una categoría --</option>
-          </select>
-        </div>
-        <div class="campo-form">
-          <label for="tema">Tema</label>
-          <select id="tema" disabled required>
-            <option value="">-- Elige un tema --</option>
-          </select>
-        </div>
+
+  <!-- ═══════════════ PANTALLA: CARGANDO ═══════════════ -->
+  <div id="screen-loading" class="screen active">
+    <div class="loading-inner">
+      <div class="loading-logo">📖</div>
+      <div class="loading-title">Camino Bíblico</div>
+      <div class="loading-bar"><div id="loading-progress"></div></div>
+      <div class="loading-msg" id="loading-msg">Cargando mundos...</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ PANTALLA: MAPA DE MUNDOS ═══════════════ -->
+  <div id="screen-map" class="screen">
+    <header class="map-header">
+      <button class="icon-btn" onclick="history.back()">←</button>
+      <div class="map-header-center">
+        <h1>Camino Bíblico</h1>
+        <div class="header-sub">Elige tu mundo</div>
       </div>
-      <button id="iniciar" disabled type="submit">🎬 Iniciar Quiz</button>
-    </form>
+      <div class="hud-mini">
+        <div class="hud-stat"><span id="total-xp">0</span><small>XP</small></div>
+        <div class="hud-stat"><span id="total-stars">0</span><small>⭐</small></div>
+      </div>
+    </header>
+    <div id="worlds-list" class="worlds-list"></div>
   </div>
-  <div id="juego" class="oculto">
-    <div id="barra-tiempo"><div id="progreso"></div></div>
-    <div id="contador" class="contador">Tiempo: 58s</div>
-    <div id="conteo-pregunta" class="conteo-pregunta"></div>
-    <div id="pregunta" class="pregunta"></div>
-    <div id="opciones" class="opciones"></div>
-    <div id="comentario" class="comentario oculto"></div>
+
+  <!-- ═══════════════ PANTALLA: MAPA DE NIVELES ═══════════════ -->
+  <div id="screen-levels" class="screen">
+    <header class="level-header" id="level-header">
+      <button class="icon-btn" onclick="showScreen('map')">←</button>
+      <div>
+        <h2 id="level-world-title">Mundo</h2>
+        <div class="header-sub" id="level-world-desc"></div>
+      </div>
+    </header>
+    <div id="levels-list" class="levels-list"></div>
   </div>
-  <div id="resultado" class="oculto resultado">
-    <div id="detalle-resultado"></div>
-    <div id="mensaje-resultado"></div>
-    <button id="ver-coleccionables" class="oculto">Ver coleccionables</button>
-    <button id="reiniciar">Reiniciar Quiz</button>
-    <button id="volver">Volver al inicio</button>
+
+  <!-- ═══════════════ PANTALLA: JUEGO ═══════════════ -->
+  <div id="screen-game" class="screen">
+    <!-- HUD -->
+    <div class="game-hud">
+      <button class="icon-btn small" id="btn-quit">✕</button>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-track">
+          <div id="game-progress-bar" class="progress-bar-fill"></div>
+        </div>
+        <span id="game-q-counter" class="q-counter">1/5</span>
+      </div>
+      <div class="hud-right">
+        <div id="lives-display" class="lives"></div>
+        <div class="xp-pill" id="game-xp">0 XP</div>
+      </div>
+    </div>
+
+    <!-- Mentor -->
+    <div class="mentor-area">
+      <div id="mentor-emoji" class="mentor-emoji">🧙</div>
+      <div id="mentor-msg" class="mentor-msg"></div>
+      <div id="streak-badge" class="streak-badge hidden">🔥 <span id="streak-num">0</span></div>
+    </div>
+
+    <!-- Pregunta -->
+    <div class="question-card" id="question-card">
+      <div class="q-category" id="q-category"></div>
+      <p class="q-text" id="q-text">Cargando...</p>
+    </div>
+
+    <!-- Opciones -->
+    <div id="options-grid" class="options-grid"></div>
+
+    <!-- Ref + siguiente -->
+    <div id="answer-footer" class="answer-footer hidden">
+      <div class="ref-line" id="ref-line"></div>
+      <button id="btn-next" class="btn-next">Siguiente →</button>
+    </div>
   </div>
-  <!-- SDK UMD de Supabase -->
+
+  <!-- ═══════════════ MODAL: RESULTADO DE NIVEL ═══════════════ -->
+  <div id="modal-result" class="modal hidden">
+    <div class="modal-card">
+      <div id="res-emoji" class="res-emoji">🏆</div>
+      <h2 id="res-title">¡Completado!</h2>
+      <p id="res-body"></p>
+      <div class="res-stars" id="res-stars"></div>
+      <div class="res-stats">
+        <div class="rstat"><strong id="r-xp">0</strong><small>XP</small></div>
+        <div class="rstat"><strong id="r-correct">0</strong><small>correctas</small></div>
+        <div class="rstat"><strong id="r-streak">0</strong><small>racha máx</small></div>
+      </div>
+      <div class="modal-btns">
+        <button id="btn-retry" class="btn-secondary">🔄 Reintentar</button>
+        <button id="btn-continue" class="btn-primary">Continuar →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script src="supabase.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/progreso.js"></script>
   <script src="js/quiz.js"></script>
-
-  <!-- Favicon -->
-<link rel="icon" type="image/png" sizes="32x32" href="assets/img/icon_192x192.png">
-<link rel="icon" type="image/png" sizes="192x192" href="assets/img/icon_192x192.png">
-<link rel="apple-touch-icon" sizes="180x180" href="assets/img/icon_192x192.png">
-
-<!-- Manifest -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#ead196">
-
 </body>
 </html>
