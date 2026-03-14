@@ -23,6 +23,52 @@ const MSGS = {
   neutral : ["Piensa bien...", "Tómate tu tiempo", "¿Cuál crees tú?"],
 };
 
+// ─── Sound Manager ────────────────────────────────────────────────────────────
+const SND = {
+  _cache: {},
+  _muted: localStorage.getItem("cb:muted") === "1",
+
+  get(name) {
+    if (this._muted) return null;
+    if (!this._cache[name]) {
+      const a = new Audio(`./assets/sonidos/${name}.mp3`);
+      a.preload = "auto";
+      this._cache[name] = a;
+    }
+    return this._cache[name];
+  },
+
+  play(name, vol = 1) {
+    if (this._muted) return;
+    try {
+      const a = this.get(name);
+      if (!a) return;
+      a.currentTime = 0;
+      a.volume = vol;
+      a.play().catch(() => {});
+    } catch(e) {}
+  },
+
+  // Varios wrong aleatorio
+  wrong() {
+    const n = Math.floor(Math.random() * 4) + 1;
+    this.play(`wrong${n}`, 0.7);
+  },
+
+  // Resultado según estrellas
+  result(estrellas) {
+    if (estrellas === 3) this.play("resultado_alto");
+    else if (estrellas >= 1) this.play("resultado_medio");
+    else this.play("resultado_bajo");
+  },
+
+  toggleMute() {
+    this._muted = !this._muted;
+    localStorage.setItem("cb:muted", this._muted ? "1" : "0");
+    return this._muted;
+  }
+};
+
 // ─── Estado global ────────────────────────────────────────────────────────────
 let sb, uid;
 let worlds       = [];
@@ -305,6 +351,7 @@ async function startLevel(nivel) {
   setLoading("¡A jugar!", 100);
   setTimeout(() => {
     showScreen("game");
+    SND.play("go", 0.7);
     renderQuestion();
   }, 250);
 
@@ -408,6 +455,7 @@ function pickAnswer(btn, chosen, correct, ref) {
 
     const mentorState = streak >= 3 ? "fire" : "happy";
     setMentor(mentorState, rand(MSGS[mentorState]));
+    SND.play(streak >= 3 ? "nota_c" : "correcto", 0.8);
 
     if (streak >= 2) {
       $("streak-badge").classList.remove("hidden");
@@ -417,6 +465,8 @@ function pickAnswer(btn, chosen, correct, ref) {
     vidas--;
     streak = 0;
     setMentor("sad", rand(MSGS.sad));
+    SND.wrong();
+    if (vidas === 1) SND.play("warning", 0.6);
     $("lives-display").querySelectorAll(".life").forEach((l, i) => {
       if (i >= vidas) l.classList.add("lost");
     });
@@ -474,6 +524,9 @@ async function finishLevel() {
 
   // Actualizar cache local
   userProgress[activeLevel.id] = { estrellas: bestEst, completado: estrellas > 0, xp };
+
+  // Sonido de resultado
+  SND.result(estrellas);
 
   // Modal resultado
   const emoji    = ["😔","📖","👍","🏆"][estrellas];
