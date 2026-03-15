@@ -299,6 +299,56 @@
     .sec-toggle:hover { background: rgba(255,255,255,0.06); color: var(--text); }
     .sec-toggle-arrow { transition: transform .25s; font-size: 18px; }
     .sec-toggle.open .sec-toggle-arrow { transform: rotate(90deg); }
+
+    /* ── Ranking Banner ── */
+    .ranking-banner {
+      background    : linear-gradient(135deg, rgba(192,160,96,0.12) 0%, rgba(168,85,247,0.08) 100%);
+      border        : 1px solid rgba(192,160,96,0.35);
+      border-radius : 16px;
+      padding       : 14px 18px;
+      display       : flex;
+      align-items   : center;
+      gap           : 14px;
+      cursor        : pointer;
+      text-decoration: none;
+      color         : var(--text);
+      transition    : all .25s;
+      position      : relative;
+      overflow      : hidden;
+      margin-bottom : 8px;
+    }
+    .ranking-banner::before {
+      content   : '';
+      position  : absolute;
+      inset     : 0;
+      background: linear-gradient(90deg, transparent 60%, rgba(192,160,96,0.06));
+      pointer-events: none;
+    }
+    .ranking-banner:hover {
+      border-color : rgba(192,160,96,0.7);
+      transform    : translateY(-2px);
+      box-shadow   : 0 8px 24px rgba(192,160,96,0.15);
+    }
+    .rb-trophy {
+      font-size   : 36px;
+      line-height : 1;
+      filter      : drop-shadow(0 2px 8px rgba(192,160,96,0.5));
+      flex-shrink : 0;
+    }
+    .rb-info    { flex: 1; }
+    .rb-title   { font-size: 15px; font-weight: 800; color: var(--gold); letter-spacing: .3px; }
+    .rb-sub     { font-size: 11px; color: var(--text2); margin-top: 2px; }
+    .rb-pos     {
+      background  : rgba(192,160,96,0.15);
+      border      : 1px solid rgba(192,160,96,0.3);
+      border-radius: 10px;
+      padding     : 6px 12px;
+      text-align  : center;
+      flex-shrink : 0;
+    }
+    .rb-pos strong { display: block; font-size: 18px; font-weight: 900; color: var(--gold); line-height: 1; }
+    .rb-pos small  { font-size: 9px; color: var(--text2); text-transform: uppercase; letter-spacing: .5px; }
+    .rb-arrow { color: var(--gold); font-size: 20px; font-weight: 300; flex-shrink: 0; }
   </style>
 </head>
 <body>
@@ -316,12 +366,8 @@
   <!-- Stats rápidas -->
   <div class="stats-bar">
     <a href="mi-progreso.html" class="stat-pill">
-      <span class="icon">📊</span>
+      <span class="icon">⚡</span>
       <div><strong id="stat-xp">—</strong><small>XP total</small></div>
-    </a>
-    <a href="ranking.html" class="stat-pill">
-      <span class="icon">🏆</span>
-      <div><strong id="stat-rank">—</strong><small>Ranking</small></div>
     </a>
     <a href="mi-progreso.html" class="stat-pill">
       <span class="icon">🔥</span>
@@ -371,18 +417,26 @@
 
   <div class="divider"></div>
 
+  <!-- Ranking banner — acceso directo llamativo -->
+  <a href="ranking.html" class="ranking-banner">
+    <span class="rb-trophy">🏆</span>
+    <div class="rb-info">
+      <div class="rb-title">Ranking Semanal</div>
+      <div class="rb-sub">Compite con tu parroquia · WRP esta semana</div>
+    </div>
+    <div class="rb-pos">
+      <strong id="rb-rank">—</strong>
+      <small>Tu posición</small>
+    </div>
+    <span class="rb-arrow">›</span>
+  </a>
+
   <!-- Navegación secundaria — oculta por defecto -->
   <button class="sec-toggle" id="btn-mi-cuenta">
     <span>👤 Mi cuenta</span>
     <span class="sec-toggle-arrow">›</span>
   </button>
   <div class="secondary-nav" id="secondary-nav" style="display:none; margin-top:8px;">
-    <a href="mi-progreso.html" class="sec-btn">
-      <span class="icon">📈</span>Mi Progreso
-    </a>
-    <a href="ranking.html" class="sec-btn">
-      <span class="icon">🏆</span>Ranking
-    </a>
     <a href="hall_of_fame.html" class="sec-btn">
       <span class="icon">⭐</span>Hall of Faith
     </a>
@@ -450,13 +504,35 @@ async function loadStats(uid) {
       .maybeSingle();
 
     if (data) {
-      document.getElementById("stat-xp").textContent    = (data.xp_global || 0).toLocaleString();
-      document.getElementById("stat-rank").textContent  = `Nv.${data.nivel || 1}`;
+      document.getElementById("stat-xp").textContent = (data.xp_global || 0).toLocaleString();
     }
 
     // Racha desde localStorage (wordle)
     const racha = localStorage.getItem("wb:streak") || "0";
     document.getElementById("stat-racha").textContent = racha;
+
+    // Posición en ranking semanal para el banner
+    try {
+      const hoy     = new Date();
+      const domingo = new Date(hoy);
+      domingo.setDate(hoy.getDate() - hoy.getDay());
+      const semana  = domingo.toISOString().split("T")[0];
+
+      const { data: lb } = await supabase.rpc("get_leaderboard", {
+        p_semana: semana,
+        p_mode  : "wordle",
+        p_scope : "global",
+        p_valor : null,
+        p_limit : 999
+      });
+
+      if (lb?.length) {
+        const idx = lb.findIndex(r => r.user_id === uid);
+        const pos = idx >= 0 ? `#${lb[idx].pos}` : `+${lb.length}`;
+        document.getElementById("rb-rank").textContent = pos;
+      }
+    } catch(e) {}
+
   } catch (e) {
     console.warn("Stats no disponibles:", e);
   }
