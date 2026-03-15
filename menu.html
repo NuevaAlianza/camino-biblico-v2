@@ -360,7 +360,7 @@
   </div>
 
   <!-- Junior — full width -->
-  <a href="junior.html" class="game-btn wide" style="--btn-color:#38bdf8;" id="btn-junior">
+  <a href="Junior.HTML" class="game-btn wide" style="--btn-color:#38bdf8;" id="btn-junior">
     <span class="btn-emoji">🌟</span>
     <div class="btn-info">
       <div class="btn-name">Versión Junior</div>
@@ -408,13 +408,12 @@
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="supabase.js"></script>
-<script src="js/auth.js"></script>
 
 <script>
 // ── Detectar nombre real del archivo junior ──────────────────
 // Prueba los posibles nombres en orden hasta encontrar el correcto
 (async function detectJunior() {
-  const names = ["junior.html", "quiz-junior.html", "biblico-junior.html"];
+  const names = ["Junior.HTML", "junior.html", "quiz-junior.html", "biblico-junior.html"];
   for (const name of names) {
     try {
       const r = await fetch(name, { method: "HEAD" });
@@ -425,12 +424,13 @@
     } catch(_) {}
   }
 })();
+// ── Auth — una sola llamada para evitar lock conflicts ───────
 supabase.auth.getSession().then(({ data }) => {
-  if (!data.session) window.location.href = "index.html";
-});
-
-supabase.auth.getUser().then(({ data }) => {
-  const user   = data?.user;
+  if (!data.session) {
+    window.location.href = "index.html";
+    return;
+  }
+  const user   = data.session.user;
   const nombre = user?.user_metadata?.nombre
     || user?.email?.split("@")[0]
     || "Usuario";
