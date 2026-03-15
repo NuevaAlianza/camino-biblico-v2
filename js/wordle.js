@@ -127,6 +127,11 @@ async function ensureAuth() {
   const hoy = hoyDO();
   todayISO  = isoDateDO(hoy);
 
+  // semana_id = domingo de esta semana
+  const domingo = new Date(hoy);
+  domingo.setDate(hoy.getDate() - hoy.getDay());
+  const semanaISO = isoDateDO(domingo);
+
   // ── Resolver palabras del día ──
   // Formato NUEVO: { "2026-03-15": [{palabra,pista,cita,tema},...] }
   // Formato VIEJO: { semanas: [...] }  ← compatibilidad
@@ -229,22 +234,24 @@ async function cargarPalabra(idx, jugadaExistente) {
 
   // ── Crear o recuperar jugada en Supabase ──
   if (!jugadaExistente) {
-    await sb.from("wordle_jugadas").insert([{
-      user_id    : uid,
-      fecha      : todayISO,
-      palabra_idx: idx,
-      palabra    : solucion,
-      tema       : item.tema || "",
-      cita       : item.cita || "",
-      intentos   : 0,
-      acierto    : false,
+    const { error: insErr } = await sb.from("wordle_jugadas").upsert([{
+      user_id      : uid,
+      fecha        : todayISO,
+      palabra_idx  : idx,
+      semana_id    : semanaISO,  // domingo de la semana para el ranking
+      palabra      : solucion,
+      tema         : item.tema || "",
+      cita         : item.cita || "",
+      intentos     : 0,
+      acierto      : false,
       pistas_usadas: 0,
-      tiempo_seg : 0,
-      grid       : [],
-      estado     : "en curso",
-      xp_otorgado: 0,
-      wrp        : 0
-    }]);
+      tiempo_seg   : 0,
+      grid         : [],
+      estado       : "en curso",
+      xp_otorgado  : 0,
+      wrp          : 0
+    }], { onConflict: "user_id,fecha,palabra_idx", ignoreDuplicates: false });
+    if (insErr) console.error("upsert wordle_jugadas:", insErr);
   } else {
     intentoIdx   = jugadaExistente.intentos    || 0;
     pistasUsadas = jugadaExistente.pistas_usadas || 0;
