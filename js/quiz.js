@@ -184,9 +184,11 @@ async function loadLevelQuestions(levelId) {
 
   if (error) { console.error("Error cargando preguntas:", error); return []; }
 
-  // Convertir formato DB real al formato interno
-  // DB: respuesta_correcta = texto completo, distractores = "op1|op2|op3"
-  return (data || []).map(q => parseQuestion(q)).sort(() => Math.random() - 0.5);
+  // Mezclar y limitar a 15 preguntas por sesión
+  // Si el nivel tiene menos de 15, se usan todas
+  const MAX_POR_SESION = 15;
+  const mezcladas = (data || []).sort(() => Math.random() - 0.5);
+  return mezcladas.slice(0, MAX_POR_SESION).map(q => parseQuestion(q));
 }
 
 // Convierte formato DB → formato interno con opcion_a/b/c/d
@@ -504,10 +506,14 @@ function setMentor(state, msg) {
 // JUEGO — FINALIZAR NIVEL
 // =============================================================================
 async function finishLevel() {
-  const total     = questions.length;
-  const estrellas = calcEstrellas(correctas, total, vidas);
-  const prevProg  = userProgress[activeLevel.id];
-  const bestEst   = Math.max(estrellas, prevProg?.estrellas || 0);
+  const total      = questions.length;
+  const estrellas  = calcEstrellas(correctas, total, vidas);
+  const prevProg   = userProgress[activeLevel.id];
+  const bestEst    = Math.max(estrellas, prevProg?.estrellas || 0);
+  const esPrimer   = !prevProg || (prevProg.xp === 0 && prevProg.estrellas === 0);
+  const xpFinal    = esPrimer ? xp : 0;   // XP solo en el primer intento
+  const intentos   = (prevProg?.intentos || 0) + 1;
+  const mejoro     = estrellas > (prevProg?.estrellas || 0);
 
   // Guardar en Supabase
   try {
@@ -516,31 +522,43 @@ async function finishLevel() {
       nivel_id  : activeLevel.id,
       mundo_id  : activeWorld.id,
       estrellas : bestEst,
-      completado: estrellas > 0,
-      xp        : Math.max(xp, prevProg?.xp || 0),
+      completado: bestEst > 0,
+      xp        : esPrimer ? xp : (prevProg?.xp || 0),
+      intentos  : intentos,
       updated_at: new Date().toISOString(),
     }, { onConflict: "user_id,nivel_id" });
   } catch (e) { console.error("Error guardando progreso:", e); }
 
   // Actualizar cache local
-  userProgress[activeLevel.id] = { estrellas: bestEst, completado: estrellas > 0, xp };
+  userProgress[activeLevel.id] = { estrellas: bestEst, completado: bestEst > 0, xp: esPrimer ? xp : (prevProg?.xp || 0), intentos };
 
   // Sonido de resultado
   SND.result(estrellas);
 
   // Modal resultado
-  const emoji    = ["😔","📖","👍","🏆"][estrellas];
-  const titulo   = ["Sin estrellas","¡Bien!","¡Excelente!","¡Perfecto!"][estrellas];
-  const cuerpo   = estrellas === 0
-    ? `Respondiste ${correctas} de ${total}. ¡Intenta de nuevo!`
-    : `Respondiste ${correctas} de ${total} correctas.${vidas > 0 ? "" : " Sin vidas restantes."}`;
+  const sinVidas = vidas <= 0;
+  const emoji    = sinVidas ? "💔" : ["😔","📖","👍","🏆"][estrellas];
+  const titulo   = sinVidas ? "¡Sin vidas!" : ["Sin estrellas","¡Bien!","¡Excelente!","¡Perfecto!"][estrellas];
+  const cuerpo   = sinVidas
+    ? `Respondiste ${correctas} bien antes de quedarte sin vidas. ¡Inténtalo de nuevo!`
+    : estrellas === 0
+      ? `Respondiste ${correctas} de ${total}. ¡Intenta de nuevo!`
+      : `Respondiste ${correctas} de ${total} correctas.${mejoro ? " ¡Mejoraste! ⬆️" : ""}`;
+
+  const intentosTexto = intentos === 1
+    ? "1er intento"
+    : `${intentos}° intento`;
 
   $("res-emoji").textContent   = emoji;
   $("res-title").textContent   = titulo;
   $("res-body").textContent    = cuerpo;
-  $("r-xp").textContent        = xp;
+  $("r-xp").textContent        = esPrimer ? xpFinal : "—";
   $("r-correct").textContent   = `${correctas}/${total}`;
   $("r-streak").textContent    = maxStreak;
+
+  // Mostrar intentos en el modal
+  const intentosEl = document.getElementById("r-intentos");
+  if (intentosEl) intentosEl.textContent = intentosTexto;
 
   // Estrellas
   $("res-stars").innerHTML = [1,2,3].map(s =>
