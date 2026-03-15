@@ -3,7 +3,7 @@
 // Actualizado: archivos unificados (quiz, wordle, junior)
 // =============================================================
 
-const CACHE_VERSION = 'v10.1';
+const CACHE_VERSION = 'v10.2';
 const CACHE_NAME    = `camino-biblico-${CACHE_VERSION}`;
 
 const FILES_TO_CACHE = [
@@ -81,6 +81,7 @@ const FILES_TO_CACHE = [
   './assets/icons/icon-192-maskable.png',
   './assets/icons/icon-512-maskable.png',
   './assets/icons/favicon.ico',
+  './assets/icons/favicon.png',
 ];
 
 // ─── Instalación ─────────────────────────────────────────────
@@ -124,7 +125,13 @@ self.addEventListener('fetch', e => {
     url.hostname.includes('supabase.co') ||
     url.hostname.includes('cdn.jsdelivr.net')
   ) {
-    return; // dejar pasar sin interceptar
+    return;
+  }
+
+  // favicon.ico en raíz del dominio → ignorar (GitHub Pages no lo sirve ahí)
+  if (url.pathname === '/favicon.ico') {
+    e.respondWith(new Response(null, { status: 204 }));
+    return;
   }
 
   // wordle-semanas.json → network-first (se actualiza con frecuencia)
@@ -146,15 +153,19 @@ self.addEventListener('fetch', e => {
     caches.match(e.request).then(cached => {
       if (cached) return cached;
       return fetch(e.request).then(res => {
-        // Cachear respuestas exitosas de nuestro propio dominio
-        if (res.ok && url.origin === self.location.origin) {
+        // Solo cachear respuestas completas (status 200)
+        // Las respuestas 206 (partial/range) no se pueden cachear
+        if (
+          res.ok &&
+          res.status === 200 &&
+          url.origin === self.location.origin
+        ) {
           const clone = res.clone();
           caches.open(CACHE_NAME).then(c => c.put(e.request, clone));
         }
         return res;
       });
     }).catch(() => {
-      // Fallback offline para páginas HTML
       if (e.request.destination === 'document') {
         return caches.match('./index.html');
       }
