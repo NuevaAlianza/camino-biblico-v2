@@ -150,19 +150,28 @@ async function ensureAuth() {
   rachaEl.textContent = localStorage.getItem("wb:streak") || "0";
 
   // ── Consultar jugadas de hoy en Supabase ──
+  // Usamos LIKE para capturar tanto "2026-03-14" como "2026-03-14T..."
   const { data: jugadas } = await sb
     .from("wordle_jugadas")
     .select("*")
     .eq("user_id", uid)
-    .eq("fecha", todayISO);
+    .like("fecha", todayISO + "%");
 
   const completadas = (jugadas || []).filter(j => j.estado === "terminado");
   xpAcumulado = completadas.reduce((s, j) => s + (j.xp_otorgado || 0), 0);
   xpTotalEl.textContent = `+${xpAcumulado}`;
 
+  // ── Backup en localStorage: marcar día completo ──
+  // Si Supabase falla o hay mismatch de fecha, el localStorage protege
+  const lsKey = `wb:done:${todayISO}`;
+  if (completadas.length >= palabrasHoy.length) {
+    localStorage.setItem(lsKey, "1");
+  }
+  const yaCompletado = localStorage.getItem(lsKey) === "1";
+
   // ── Buscar primera palabra pendiente ──
   wordIdx = completadas.length;
-  if (wordIdx >= palabrasHoy.length) {
+  if (wordIdx >= palabrasHoy.length || yaCompletado) {
     mostrarFinDelDia(completadas); return;
   }
 
@@ -529,6 +538,8 @@ async function terminar(acierto) {
 
   const btn = $("modal-btn");
   if (esUltima) {
+    // Marcar día completo en localStorage como backup
+    localStorage.setItem(`wb:done:${todayISO}`, "1");
     btn.textContent = "Ver resumen del día 🏆";
     btn.onclick = () => {
       modal.classList.add("hidden");
