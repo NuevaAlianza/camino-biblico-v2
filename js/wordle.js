@@ -79,7 +79,7 @@ const modal     = $("modal");
 const modalFin  = $("modal-fin");
 
 // ─── Estado global ───────────────────────────────────────────────────
-let sb, uid, todayISO;
+let sb, uid, todayISO, semanaISO, tomorrowISO;
 let palabrasHoy = [];    // [{palabra, pista, cita, tema}, ...]
 let wordIdx     = 0;     // índice de la palabra activa
 let xpAcumulado = 0;
@@ -128,10 +128,15 @@ async function ensureAuth() {
   const hoy = hoyDO();
   todayISO  = isoDateDO(hoy);
 
+  // tomorrowISO para queries de rango de fecha
+  const manana = new Date(hoy);
+  manana.setDate(hoy.getDate() + 1);
+  tomorrowISO = isoDateDO(manana);
+
   // semana_id = domingo de esta semana
   const domingo = new Date(hoy);
   domingo.setDate(hoy.getDate() - hoy.getDay());
-  const semanaISO = isoDateDO(domingo);
+  semanaISO = isoDateDO(domingo);
 
   // ── Resolver palabras del día ──
   // Formato NUEVO: { "2026-03-15": [{palabra,pista,cita,tema},...] }
@@ -161,7 +166,8 @@ async function ensureAuth() {
     .from("wordle_jugadas")
     .select("*")
     .eq("user_id", uid)
-    .like("fecha", todayISO + "%");
+    .gte("fecha", todayISO)
+    .lt("fecha", tomorrowISO);
 
   const completadas = (jugadas || []).filter(j => j.estado === "terminado");
   xpAcumulado = completadas.reduce((s, j) => s + (j.xp_otorgado || 0), 0);
@@ -239,7 +245,8 @@ async function cargarPalabra(idx, jugadaExistente) {
     const { data: existe } = await sb.from("wordle_jugadas")
       .select("id")
       .eq("user_id",     uid)
-      .like("fecha",     todayISO + "%")
+      .gte("fecha",      todayISO)
+      .lt("fecha",       tomorrowISO)
       .eq("palabra_idx", idx)
       .maybeSingle();
 
