@@ -5,6 +5,16 @@
 // con el campo palabra_idx (0, 1, 2…)
 // =====================================================================
 
+// ─── localStorage seguro (Edge Tracking Prevention) ───────────────────────────
+const LS = {
+  get(k, def = null) {
+    try { const v = localStorage.getItem(k); return v !== null ? v : def; }
+    catch(e) { return def; }
+  },
+  set(k, v) { try { localStorage.setItem(k, v); } catch(e) {} },
+  del(k)    { try { localStorage.removeItem(k); } catch(e) {} }
+};
+
 const TZ       = "America/Santo_Domingo";
 const MAX_INT  = 6;
 const DATA_URL = "datos/wordle-semanas.json";
@@ -12,7 +22,7 @@ const DATA_URL = "datos/wordle-semanas.json";
 // ─── Sound Manager ────────────────────────────────────────────────────────────
 const SND = {
   _cache: {},
-  _muted: localStorage.getItem("cb:muted") === "1",
+  _muted: LS.get("cb:muted") === "1",
   play(name, vol = 1) {
     if (this._muted) return;
     try {
@@ -152,13 +162,13 @@ async function ensureAuth() {
   if (!palabrasHoy.length) { alert("Array de palabras vacío para hoy."); return; }
 
   // ── Racha desde localStorage ──
-  const lastDate  = localStorage.getItem("wb:last");
-  const prevStreak = parseInt(localStorage.getItem("wb:streak") || "0", 10);
+  const lastDate  = LS.get("wb:last");
+  const prevStreak = parseInt(LS.get("wb:streak") || "0", 10);
   if (lastDate && lastDate !== todayISO) {
     const diff = (hoy - new Date(lastDate)) / 86400000;
-    if (diff > 2) localStorage.setItem("wb:streak", "0");
+    if (diff > 2) LS.set("wb:streak", "0");
   }
-  rachaEl.textContent = localStorage.getItem("wb:streak") || "0";
+  rachaEl.textContent = LS.get("wb:streak") || "0";
 
   // ── Consultar jugadas de hoy en Supabase ──
   // Usamos LIKE para capturar tanto "2026-03-14" como "2026-03-14T..."
@@ -177,9 +187,9 @@ async function ensureAuth() {
   // Si Supabase falla o hay mismatch de fecha, el localStorage protege
   const lsKey = `wb:done:${todayISO}`;
   if (completadas.length >= palabrasHoy.length) {
-    localStorage.setItem(lsKey, "1");
+    LS.set(lsKey, "1");
   }
-  const yaCompletado = localStorage.getItem(lsKey) === "1";
+  const yaCompletado = LS.get(lsKey) === "1";
 
   // ── Buscar primera palabra pendiente ──
   wordIdx = completadas.length;
@@ -523,10 +533,10 @@ async function terminar(acierto) {
   xpTotalEl.textContent = `+${xpAcumulado}`;
 
   // ── Racha ──
-  const streak = parseInt(localStorage.getItem("wb:streak") || "0", 10);
+  const streak = parseInt(LS.get("wb:streak") || "0", 10);
   const newStreak = acierto ? streak + 1 : 0;
-  localStorage.setItem("wb:streak", String(newStreak));
-  localStorage.setItem("wb:last",   todayISO);
+  LS.set("wb:streak", String(newStreak));
+  LS.set("wb:last",   todayISO);
   rachaEl.textContent = String(newStreak);
 
   // ── Guardar en Supabase ──
@@ -565,7 +575,7 @@ async function terminar(acierto) {
   const btn = $("modal-btn");
   if (esUltima) {
     // Marcar día completo en localStorage como backup
-    localStorage.setItem(`wb:done:${todayISO}`, "1");
+    LS.set(`wb:done:${todayISO}`, "1");
     btn.textContent = "Ver resumen del día 🏆";
     btn.onclick = () => {
       modal.classList.add("hidden");
