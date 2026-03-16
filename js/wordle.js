@@ -90,6 +90,7 @@ let longitud    = 5;
 let intentoIdx  = 0;
 let terminado   = false;
 let pistasUsadas = 0;
+let jugadaId    = null;  // id de la fila activa en wordle_jugadas
 let keyState    = {};
 let startTime   = Date.now();
 const filasRef  = [];
@@ -232,27 +233,41 @@ async function cargarPalabra(idx, jugadaExistente) {
 
   renderTeclado();
 
-  // ── Crear o recuperar jugada en Supabase ──
+  // ── Crear jugada en Supabase si no existe ──
   if (!jugadaExistente) {
-    const { error: insErr } = await sb.from("wordle_jugadas").upsert([{
-      user_id      : uid,
-      fecha        : todayISO,
-      palabra_idx  : idx,
-      semana_id    : semanaISO,  // domingo de la semana para el ranking
-      palabra      : solucion,
-      tema         : item.tema || "",
-      cita         : item.cita || "",
-      intentos     : 0,
-      acierto      : false,
-      pistas_usadas: 0,
-      tiempo_seg   : 0,
-      grid         : [],
-      estado       : "en curso",
-      xp_otorgado  : 0,
-      wrp          : 0
-    }], { onConflict: "user_id,fecha,palabra_idx", ignoreDuplicates: false });
-    if (insErr) console.error("upsert wordle_jugadas:", insErr);
+    // Verificar si ya existe usando LIKE para capturar cualquier formato de fecha
+    const { data: existe } = await sb.from("wordle_jugadas")
+      .select("id")
+      .eq("user_id",     uid)
+      .like("fecha",     todayISO + "%")
+      .eq("palabra_idx", idx)
+      .maybeSingle();
+
+    if (!existe) {
+      const { data: nuevaFila, error: insErr } = await sb.from("wordle_jugadas").insert({
+        user_id      : uid,
+        fecha        : todayISO,
+        palabra_idx  : idx,
+        semana_id    : semanaISO,
+        palabra      : solucion,
+        tema         : item.tema || "",
+        cita         : item.cita || "",
+        intentos     : 0,
+        acierto      : false,
+        pistas_usadas: 0,
+        tiempo_seg   : 0,
+        grid         : [],
+        estado       : "en curso",
+        xp_otorgado  : 0,
+        wrp          : 0
+      }).select("id").single();
+      if (insErr) console.error("insert wordle_jugadas:", insErr);
+      jugadaId = nuevaFila?.id || null;
+    } else {
+      jugadaId = existe.id;
+    }
   } else {
+    jugadaId     = jugadaExistente.id;
     intentoIdx   = jugadaExistente.intentos    || 0;
     pistasUsadas = jugadaExistente.pistas_usadas || 0;
     // Restaurar estado de pista según intentos guardados
@@ -443,6 +458,7 @@ function gridToJSON() {
 
 // ─── Guardar progreso parcial ────────────────────────────────────────
 async function guardarParcial() {
+  if (!jugadaId) return;
   try {
     await sb.from("wordle_jugadas").update({
       intentos     : intentoIdx,
@@ -450,9 +466,7 @@ async function guardarParcial() {
       tiempo_seg   : Math.round((Date.now() - startTime) / 1000),
       grid         : gridToJSON()
     })
-    .eq("user_id",     uid)
-    .eq("fecha",       todayISO)
-    .eq("palabra_idx", wordIdx);
+    .eq("id", jugadaId);
   } catch (e) { console.error("guardarParcial:", e); }
 }
 
@@ -520,9 +534,7 @@ async function terminar(acierto) {
       wrp,
       estado       : "terminado"
     })
-    .eq("user_id",     uid)
-    .eq("fecha",       todayISO)
-    .eq("palabra_idx", wordIdx);
+    .eq("id", jugadaId);
   } catch (e) { console.error("terminar:", e); }
 
   // ── Modal ──
