@@ -1,5 +1,5 @@
 {
-  "2026-01-01": [
+  "2026-03-31": [
     {
       "palabra": "PALOMA",
       "pista": "El Espíritu Santo descendió sobre Jesús como paloma",
@@ -11,9 +11,27 @@
       "pista": "Isla donde Juan recibió el Apocalipsis",
       "cita": "Ap 1, 1-20",
       "tema": "Lugares"
+    },
+    {
+      "palabra": "CREACION",
+      "pista": "En el principio Dios creó el cielo y la tierra",
+      "cita": "Gn 1, 1",
+      "tema": "Teología"
+    },
+    {
+      "palabra": "EDEN",
+      "pista": "Jardín donde Dios colocó al hombre que formó del barro",
+      "cita": "Gn 2, 15",
+      "tema": "Lugares"
+    },
+    {
+      "palabra": "SEÑAL",
+      "pista": "El arcoíris será señal de mi alianza con vosotros",
+      "cita": "Gn 9, 12-17",
+      "tema": "Teología"
     }
   ],
-  "2026-01-02": [
+  "2026-04-01": [
     {
       "palabra": "BERGAMO",
       "pista": "Ciudad del Apocalipsis donde estaba el trono de Satanás",
@@ -25,9 +43,27 @@
       "pista": "Los Magos ofrecieron mirra al Niño como don fúnebre",
       "cita": "Mt 2, 1-12",
       "tema": "Objetos"
+    },
+    {
+      "palabra": "ABEL",
+      "pista": "Hijo de Adán cuya ofrenda fue aceptada por Dios",
+      "cita": "Gn 4, 1-16",
+      "tema": "Personajes AT"
+    },
+    {
+      "palabra": "CAIN",
+      "pista": "Primer homicida de la historia bíblica, hermano de Abel",
+      "cita": "Gn 4, 1-16",
+      "tema": "Personajes AT"
+    },
+    {
+      "palabra": "DILUVIO",
+      "pista": "Gran inundación de la que se salvó Noé con el arca",
+      "cita": "Gn 7, 1-24",
+      "tema": "Eventos"
     }
   ],
-  "2026-01-03": [
+  "2026-04-02": [
     {
       "palabra": "HAGEO",
       "pista": "Profeta que animó a reconstruir el Templo",
@@ -39,9 +75,27 @@
       "pista": "Id, haced discípulos de todas las naciones",
       "cita": "Mt 28, 19",
       "tema": "Pueblo"
+    },
+    {
+      "palabra": "NOE",
+      "pista": "Patriarca justo que construyó el arca por mandato de Dios",
+      "cita": "Gn 6, 9-22",
+      "tema": "Personajes AT"
+    },
+    {
+      "palabra": "ARCA",
+      "pista": "Embarcación construida por Noé para salvar a su familia",
+      "cita": "Gn 6, 14-22",
+      "tema": "Objetos"
+    },
+    {
+      "palabra": "BABEL",
+      "pista": "Torre cuya construcción Dios confundió multiplicando las lenguas",
+      "cita": "Gn 11, 1-9",
+      "tema": "Lugares"
     }
   ],
-  "2026-01-04": [
+  "2026-04-03": [
     {
       "palabra": "ZORRA",
       "pista": "Cazadnos las raposas pequeñas que echan a perder las viñas",
@@ -59,9 +113,33 @@
       "pista": "Guardaba la Ley con rigor pero a veces olvidaba la misericordia",
       "cita": "Mt 23, 1-12",
       "tema": "Pueblo"
+    },
+    {
+      "palabra": "ABRAHAM",
+      "pista": "Padre de la fe llamado por Dios a dejar su tierra",
+      "cita": "Gn 12, 1-9",
+      "tema": "Personajes AT"
+    },
+    {
+      "palabra": "ALIANZA",
+      "pista": "Pacto eterno sellado entre Dios y Abraham con la circuncisión",
+      "cita": "Gn 17, 1-14",
+      "tema": "Teología"
+    },
+    {
+      "palabra": "LOT",
+      "pista": "Sobrino de Abraham rescatado antes de la destrucción de Sodoma",
+      "cita": "Gn 19, 1-29",
+      "tema": "Personajes AT"
+    },
+    {
+      "palabra": "ANGEL",
+      "pista": "Mensajero de Dios que detuvo la mano de Abraham sobre Isaac",
+      "cita": "Gn 22, 11-12",
+      "tema": "Teología"
     }
   ],
-  "2026-01-05": [
+  "2026-04-04": [
     {
       "palabra": "REINO",
       "pista": "Yo os preparo un reino como mi Padre me lo preparó a mí",
@@ -73,9 +151,27 @@
       "pista": "El sacrificio de Isaac prefiguró el holocausto del Hijo",
       "cita": "Gn 22, 1-19",
       "tema": "Liturgia"
+    },
+    {
+      "palabra": "ARCOIRIS",
+      "pista": "Señal de la alianza de Dios con Noé después del diluvio",
+      "cita": "Gn 9, 13-17",
+      "tema": "Creación"
+    },
+    {
+      "palabra": "PALOMA",
+      "pista": "Noé soltó una paloma que volvió con un ramo de olivo",
+      "cita": "Gn 8, 11",
+      "tema": "Creación"
+    },
+    {
+      "palabra": "BESTIA",
+      "pista": "Número de la bestia del Apocalipsis: seiscientos sesenta y seis",
+      "cita": "Ap 13, 18",
+      "tema": "Teología"
     }
   ],
-  "2026-01-06": [
+  "2026-04-05": [
     {
       "palabra": "JARDIN",
       "pista": "El Señor Dios plantó un jardín en el Edén",
@@ -87,9 +183,27 @@
       "pista": "Id y haced discípulos de todos los pueblos paganos",
       "cita": "Mt 28, 16-20",
       "tema": "Pueblo"
+    },
+    {
+      "palabra": "TRONO",
+      "pista": "Vi un trono en el cielo y Alguien estaba sentado en él",
+      "cita": "Ap 4, 2",
+      "tema": "Objetos"
+    },
+    {
+      "palabra": "SELLO",
+      "pista": "El Cordero abrió el primero de los siete sellos",
+      "cita": "Ap 6, 1",
+      "tema": "Objetos"
+    },
+    {
+      "palabra": "SARA",
+      "pista": "Esposa de Abraham que rio cuando le anunciaron un hijo",
+      "cita": "Gn 18, 9-15",
+      "tema": "Personajes AT"
     }
   ],
-  "2026-01-07": [
+  "2026-04-06": [
     {
       "palabra": "GOZO",
       "pista": "El gozo del Señor es vuestra fortaleza",
@@ -101,11 +215,29 @@
       "pista": "Tomad y bebed todos de él, pues esto es mi sangre",
       "cita": "Mt 26, 26-30",
       "tema": "Objetos"
+    },
+    {
+      "palabra": "TROMPETA",
+      "pista": "El Señor descenderá del cielo con toque de trompeta",
+      "cita": "1 Tes 4, 16",
+      "tema": "Objetos"
+    },
+    {
+      "palabra": "LIBRO",
+      "pista": "Vi en la mano del que estaba sentado un libro sellado",
+      "cita": "Ap 5, 1",
+      "tema": "Objetos"
+    },
+    {
+      "palabra": "ESAU",
+      "pista": "Hermano de Jacob que vendió su primogenitura por un plato",
+      "cita": "Gn 25, 29-34",
+      "tema": "Personajes AT"
     }
   ],
-  "2026-01-08": [
+  "2026-04-07": [
     {
-      "palabra": "PARALÍTICO",
+      "palabra": "PARALITICO",
       "pista": "Levántate, toma tu camilla y anda, dijo Jesús",
       "cita": "Mc 2, 1-12",
       "tema": "Pueblo"
@@ -115,9 +247,27 @@
       "pista": "Doce piedras adornarán los cimientos de la ciudad santa",
       "cita": "Ap 21, 19-21",
       "tema": "Creación"
+    },
+    {
+      "palabra": "JACOB",
+      "pista": "Patriarca que luchó con el ángel y recibió el nombre Israel",
+      "cita": "Gn 32, 25-29",
+      "tema": "Personajes AT"
+    },
+    {
+      "palabra": "JOSE",
+      "pista": "Hijo de Jacob vendido por sus hermanos y exaltado en Egipto",
+      "cita": "Gn 37, 1-36",
+      "tema": "Personajes AT"
+    },
+    {
+      "palabra": "CORDERO",
+      "pista": "El Cordero inmolado que merece recibir el poder y la gloria",
+      "cita": "Ap 5, 12",
+      "tema": "Teología"
     }
   ],
-  "2026-01-09": [
+  "2026-04-08": [
     {
       "palabra": "DIACONO",
       "pista": "Ministro ordenado al servicio de la Iglesia",
@@ -129,9 +279,27 @@
       "pista": "Amigo de Jesús resucitado al cuarto día",
       "cita": "Jn 11, 1-45",
       "tema": "Personajes NT"
+    },
+    {
+      "palabra": "SION",
+      "pista": "Monte santo de Dios, Ciudad del Rey Celestial",
+      "cita": "Ap 14, 1",
+      "tema": "Lugares"
+    },
+    {
+      "palabra": "NUEVA",
+      "pista": "Hago nuevas todas las cosas, dijo el que estaba en el trono",
+      "cita": "Ap 21, 5",
+      "tema": "Teología"
+    },
+    {
+      "palabra": "RUBEN",
+      "pista": "Primogénito de Jacob que quiso salvar a José del pozo",
+      "cita": "Gn 37, 21-22",
+      "tema": "Personajes AT"
     }
   ],
-  "2026-01-10": [
+  "2026-04-09": [
     {
       "palabra": "PANES",
       "pista": "Con cinco panes y dos peces alimentó a cinco mil",
@@ -143,9 +311,27 @@
       "pista": "Luces que arden en la liturgia como señal de la fe",
       "cita": "Ap 1, 12-20",
       "tema": "Objetos"
+    },
+    {
+      "palabra": "BENJAMIN",
+      "pista": "Hijo menor de Jacob, hermano predilecto de José",
+      "cita": "Gn 43, 29-34",
+      "tema": "Personajes AT"
+    },
+    {
+      "palabra": "FARAON",
+      "pista": "Rey de Egipto que acogió a José como gobernador",
+      "cita": "Gn 41, 39-43",
+      "tema": "Personajes AT"
+    },
+    {
+      "palabra": "MANTO",
+      "pista": "José recibió de su padre un manto de muchos colores",
+      "cita": "Gn 37, 3",
+      "tema": "Objetos"
     }
   ],
-  "2026-01-11": [
+  "2026-04-10": [
     {
       "palabra": "LEON",
       "pista": "El Señor cerró la boca de los leones para proteger a Daniel",
@@ -163,9 +349,33 @@
       "pista": "Sus pies parecían bronce bruñido al fuego del horno",
       "cita": "Ap 1, 12-16",
       "tema": "Creación"
+    },
+    {
+      "palabra": "ALFA",
+      "pista": "Yo soy el Alfa y la Omega, el primero y el último",
+      "cita": "Ap 1, 8",
+      "tema": "Teología"
+    },
+    {
+      "palabra": "OMEGA",
+      "pista": "Soy el principio y el fin, dice el Señor Dios",
+      "cita": "Ap 22, 13",
+      "tema": "Teología"
+    },
+    {
+      "palabra": "NUEVO",
+      "pista": "Vi un cielo nuevo y una tierra nueva, el primero había pasado",
+      "cita": "Ap 21, 1",
+      "tema": "Teología"
+    },
+    {
+      "palabra": "CANDELA",
+      "pista": "Quitaré tu candelabro de su lugar si no te conviertes",
+      "cita": "Ap 2, 5",
+      "tema": "Objetos"
     }
   ],
-  "2026-01-12": [
+  "2026-04-11": [
     {
       "palabra": "BERILO",
       "pista": "Piedra preciosa que adorna la ciudad de la nueva Jerusalén",
@@ -177,9 +387,27 @@
       "pista": "Participación en el Cuerpo y Sangre de Cristo",
       "cita": "1 Cor 10, 16-17",
       "tema": "Liturgia"
+    },
+    {
+      "palabra": "SUEÑO",
+      "pista": "José interpretó los sueños del faraón sobre vacas y espigas",
+      "cita": "Gn 41, 15-36",
+      "tema": "Eventos"
+    },
+    {
+      "palabra": "ESPIGAS",
+      "pista": "Siete espigas raquíticas que devoran las siete espigas llenas",
+      "cita": "Gn 41, 22-24",
+      "tema": "Creación"
+    },
+    {
+      "palabra": "CISTERNA",
+      "pista": "Sus hermanos arrojaron a José en una cisterna vacía",
+      "cita": "Gn 37, 24",
+      "tema": "Objetos"
     }
   ],
-  "2026-01-13": [
+  "2026-04-12": [
     {
       "palabra": "MISTERIO",
       "pista": "El misterio oculto desde los siglos ahora revelado",
@@ -191,9 +419,27 @@
       "pista": "País de la esclavitud del pueblo hebreo",
       "cita": "Éx 1, 1-14",
       "tema": "Lugares"
+    },
+    {
+      "palabra": "POTIFAR",
+      "pista": "Oficial egipcio en cuya casa sirvió José con fidelidad",
+      "cita": "Gn 39, 1-6",
+      "tema": "Personajes AT"
+    },
+    {
+      "palabra": "CARCEL",
+      "pista": "Faraón encerró a José en la cárcel al creer la mentira",
+      "cita": "Gn 39, 20",
+      "tema": "Lugares"
+    },
+    {
+      "palabra": "FUEGO",
+      "pista": "El lago de fuego y azufre es la segunda muerte",
+      "cita": "Ap 21, 8",
+      "tema": "Creación"
     }
   ],
-  "2026-01-14": [
+  "2026-04-13": [
     {
       "palabra": "NINIVE",
       "pista": "Ciudad asiria a la que fue enviado el profeta Jonás",
@@ -204,6 +450,24 @@
       "palabra": "TINIEBLAS",
       "pista": "El pueblo que caminaba en tinieblas vio una gran luz",
       "cita": "Is 9, 1",
+      "tema": "Creación"
+    },
+    {
+      "palabra": "COPA",
+      "pista": "El copero olvidó a José en la cárcel durante dos años",
+      "cita": "Gn 40, 23",
+      "tema": "Objetos"
+    },
+    {
+      "palabra": "LAGRIMAS",
+      "pista": "José no pudo contenerse y lloró ante sus hermanos",
+      "cita": "Gn 45, 2",
+      "tema": "Persona"
+    },
+    {
+      "palabra": "CRISTAL",
+      "pista": "El río de agua de vida brillaba como cristal de roca",
+      "cita": "Ap 22, 1",
       "tema": "Creación"
     }
   ],
@@ -219,9 +483,27 @@
       "pista": "Abraham levantó los ojos y vio un carnero enredado",
       "cita": "Gn 22, 13",
       "tema": "Creación"
+    },
+    {
+      "palabra": "HAMBRE",
+      "pista": "El hambre era grave en toda la tierra en tiempos de José",
+      "cita": "Gn 41, 56",
+      "tema": "Eventos"
+    },
+    {
+      "palabra": "TRIGO",
+      "pista": "José almacenó trigo en abundancia durante los siete años",
+      "cita": "Gn 41, 49",
+      "tema": "Creación"
+    },
+    {
+      "palabra": "JASPE",
+      "pista": "El aspecto del que estaba sentado era como piedra de jaspe",
+      "cita": "Ap 4, 3",
+      "tema": "Creación"
     }
   ],
-  "2026-01-16": [
+  "2026-04-15": [
     {
       "palabra": "CITARA",
       "pista": "Instrumento musical con que David alababa al Señor",
@@ -233,9 +515,27 @@
       "pista": "El Señor es mi herencia y mi copa",
       "cita": "Sal 16, 5",
       "tema": "Teología"
+    },
+    {
+      "palabra": "MANASES",
+      "pista": "Primogénito de José a quien Jacob bendijo con la mano izquierda",
+      "cita": "Gn 48, 14-20",
+      "tema": "Personajes AT"
+    },
+    {
+      "palabra": "EFRAIN",
+      "pista": "Segundo hijo de José bendecido por Jacob como primogénito",
+      "cita": "Gn 48, 14-20",
+      "tema": "Personajes AT"
+    },
+    {
+      "palabra": "RESINA",
+      "pista": "Mercaderes ismaelitas llevaban resina y bálsamo camino a Egipto",
+      "cita": "Gn 37, 25",
+      "tema": "Objetos"
     }
   ],
-  "2026-01-17": [
+  "2026-04-16": [
     {
       "palabra": "NOMBRE",
       "pista": "En el nombre de Jesús se dobla toda rodilla",
@@ -247,11 +547,29 @@
       "pista": "Por la tarde llegaron codornices que cubrieron el campamento",
       "cita": "Éx 16, 13",
       "tema": "Creación"
+    },
+    {
+      "palabra": "INCIENSO",
+      "pista": "Cuatro seres vivientes tenían copas de oro llenas de incienso",
+      "cita": "Ap 5, 8",
+      "tema": "Objetos"
+    },
+    {
+      "palabra": "GOSEN",
+      "pista": "Región de Egipto donde se asentó el pueblo de Israel",
+      "cita": "Gn 47, 6",
+      "tema": "Lugares"
+    },
+    {
+      "palabra": "LINO",
+      "pista": "Faraón vistió a José con lino finísimo y le puso collar de oro",
+      "cita": "Gn 41, 42",
+      "tema": "Objetos"
     }
   ],
-  "2026-01-18": [
+  "2026-04-17": [
     {
-      "palabra": "PRÓJIMOS",
+      "palabra": "PROJIMOS",
       "pista": "Amarás a tu prójimo como a ti mismo",
       "cita": "Mc 12, 31",
       "tema": "Virtudes"
@@ -267,9 +585,33 @@
       "pista": "La basílica del Señor, la casa sagrada de la oración",
       "cita": "Is 56, 7",
       "tema": "Lugares"
+    },
+    {
+      "palabra": "ISRAEL",
+      "pista": "Nombre nuevo dado por Dios a Jacob tras luchar con el ángel",
+      "cita": "Gn 32, 29",
+      "tema": "Pueblo"
+    },
+    {
+      "palabra": "PROMESA",
+      "pista": "La promesa hecha a Abraham se cumple en su descendencia",
+      "cita": "Gn 12, 1-3",
+      "tema": "Teología"
+    },
+    {
+      "palabra": "BENDICION",
+      "pista": "El anciano Jacob bendijo a sus doce hijos antes de morir",
+      "cita": "Gn 49, 1-28",
+      "tema": "Liturgia"
+    },
+    {
+      "palabra": "MUERTO",
+      "pista": "El que tiene nombre de vivo pero está muerto, dijo el Señor",
+      "cita": "Ap 3, 1",
+      "tema": "Teología"
     }
   ],
-  "2026-01-19": [
+  "2026-04-18": [
     {
       "palabra": "SOCORRO",
       "pista": "El Señor es mi socorro, ¿a quién temeré?",
@@ -281,9 +623,27 @@
       "pista": "Levantad manos puras sin ira ni disputas en la oración",
       "cita": "1 Tim 2, 8",
       "tema": "Persona"
+    },
+    {
+      "palabra": "PLATA",
+      "pista": "José fue vendido a los mercaderes por veinte monedas de plata",
+      "cita": "Gn 37, 28",
+      "tema": "Objetos"
+    },
+    {
+      "palabra": "POZO",
+      "pista": "Sus hermanos lo arrojaron a un pozo antes de venderlo",
+      "cita": "Gn 37, 20-24",
+      "tema": "Creación"
+    },
+    {
+      "palabra": "TESTIGO",
+      "pista": "El Señor Jesús es el testigo fiel y el primogénito de los muertos",
+      "cita": "Ap 1, 5",
+      "tema": "Teología"
     }
   ],
-  "2026-01-20": [
+  "2026-04-19": [
     {
       "palabra": "PIOJOS",
       "pista": "Plaga de mosquitos que afectó a todo Egipto",
@@ -295,9 +655,27 @@
       "pista": "El nombre del Señor es una torre fuerte para el justo",
       "cita": "Prov 18, 10",
       "tema": "Liturgia"
+    },
+    {
+      "palabra": "PIEDRA",
+      "pista": "Tomó una piedra y la puso como cabecera en Betel",
+      "cita": "Gn 28, 11",
+      "tema": "Objetos"
+    },
+    {
+      "palabra": "ESCALA",
+      "pista": "Jacob vio en sueños una escala que llegaba hasta el cielo",
+      "cita": "Gn 28, 12",
+      "tema": "Objetos"
+    },
+    {
+      "palabra": "ANCIANO",
+      "pista": "Los veinticuatro ancianos se postraron ante el trono",
+      "cita": "Ap 4, 10",
+      "tema": "Pueblo"
     }
   ],
-  "2026-01-21": [
+  "2026-04-20": [
     {
       "palabra": "TUNICA",
       "pista": "La túnica inconsútil de Cristo sorteada por los soldados",
@@ -309,9 +687,27 @@
       "pista": "Tribu encargada del servicio en el Templo",
       "cita": "Nm 3, 5-13",
       "tema": "Pueblo"
+    },
+    {
+      "palabra": "AGAR",
+      "pista": "Esclava de Sara que fue madre de Ismael",
+      "cita": "Gn 16, 1-16",
+      "tema": "Personajes AT"
+    },
+    {
+      "palabra": "ISMAEL",
+      "pista": "Hijo de Abraham e Ismael, padre de doce príncipes",
+      "cita": "Gn 16, 15-16",
+      "tema": "Personajes AT"
+    },
+    {
+      "palabra": "ESPADA",
+      "pista": "El Señor colocó querubines y espada llameante al oriente del Edén",
+      "cita": "Gn 3, 24",
+      "tema": "Objetos"
     }
   ],
-  "2026-01-22": [
+  "2026-04-21": [
     {
       "palabra": "SODOMA",
       "pista": "Ciudad destruida por el pecado, rescatado Lot",
@@ -323,6 +719,24 @@
       "pista": "El amor es sufrido, es benigno, no tiene envidia",
       "cita": "1 Cor 13, 4",
       "tema": "Virtudes"
+    },
+    {
+      "palabra": "QUERUBINES",
+      "pista": "Dios puso querubines para guardar el camino al árbol de la vida",
+      "cita": "Gn 3, 24",
+      "tema": "Teología"
+    },
+    {
+      "palabra": "ADÁN",
+      "pista": "Primer hombre formado por Dios del barro de la tierra",
+      "cita": "Gn 2, 7",
+      "tema": "Personajes AT"
+    },
+    {
+      "palabra": "EVA",
+      "pista": "Primera mujer formada de la costilla de Adán",
+      "cita": "Gn 2, 21-23",
+      "tema": "Personajes AT"
     }
   ],
   "2026-01-23": [
@@ -337,9 +751,27 @@
       "pista": "Vi el cielo nuevo y la tierra nueva, el primero había pasado",
       "cita": "Ap 21, 1",
       "tema": "Creación"
+    },
+    {
+      "palabra": "TENTACION",
+      "pista": "La serpiente tentó a la mujer con el fruto del árbol prohibido",
+      "cita": "Gn 3, 1-7",
+      "tema": "Teología"
+    },
+    {
+      "palabra": "FRUTO",
+      "pista": "Vio que el árbol era bueno para comer y tomó su fruto",
+      "cita": "Gn 3, 6",
+      "tema": "Creación"
+    },
+    {
+      "palabra": "AURORA",
+      "pista": "Vendrá a nosotros como el sol que amanece al despuntar la aurora",
+      "cita": "Os 6, 3",
+      "tema": "Creación"
     }
   ],
-  "2026-01-24": [
+  "2026-04-23": [
     {
       "palabra": "JOVEN",
       "pista": "¿Cómo guardará su camino el joven? Guardando tu Palabra",
@@ -351,9 +783,27 @@
       "pista": "Joven enviado en viaje con el arcángel Rafael",
       "cita": "Tb 5, 1-22",
       "tema": "Personajes AT"
+    },
+    {
+      "palabra": "ESPOSA",
+      "pista": "Dios presentó al hombre la mujer que había formado para él",
+      "cita": "Gn 2, 22",
+      "tema": "Persona"
+    },
+    {
+      "palabra": "HUESO",
+      "pista": "Esto sí es hueso de mis huesos y carne de mi carne",
+      "cita": "Gn 2, 23",
+      "tema": "Persona"
+    },
+    {
+      "palabra": "LAMPARA",
+      "pista": "Las lámparas de los siete espíritus de Dios ardían ante el trono",
+      "cita": "Ap 4, 5",
+      "tema": "Objetos"
     }
   ],
-  "2026-01-25": [
+  "2026-04-24": [
     {
       "palabra": "TORMENTA",
       "pista": "Una gran tormenta se levantó y las olas cubrían la barca",
@@ -361,7 +811,7 @@
       "tema": "Creación"
     },
     {
-      "palabra": "NEFTALÍ",
+      "palabra": "NEFTALI",
       "pista": "Tribu de Israel que habitó en Galilea",
       "cita": "Gn 49, 21",
       "tema": "Personajes AT"
@@ -371,9 +821,33 @@
       "pista": "No sois vosotros quienes me elegisteis, soy yo",
       "cita": "Jn 15, 16-17",
       "tema": "Virtudes"
+    },
+    {
+      "palabra": "REBECA",
+      "pista": "Esposa de Isaac elegida por el siervo de Abraham",
+      "cita": "Gn 24, 15-67",
+      "tema": "Personajes AT"
+    },
+    {
+      "palabra": "MELLIZOS",
+      "pista": "Esaú y Jacob nacieron mellizos en el vientre de Rebeca",
+      "cita": "Gn 25, 24-26",
+      "tema": "Persona"
+    },
+    {
+      "palabra": "VENADO",
+      "pista": "Esaú era diestro cazador y traía venados a su padre",
+      "cita": "Gn 25, 27-28",
+      "tema": "Creación"
+    },
+    {
+      "palabra": "MIEL",
+      "pista": "Una tierra que mana leche y miel para su pueblo",
+      "cita": "Éx 3, 8",
+      "tema": "Creación"
     }
   ],
-  "2026-01-26": [
+  "2026-04-25": [
     {
       "palabra": "LEALTAD",
       "pista": "Lo que se pide al hombre: que practique la lealtad",
@@ -385,9 +859,27 @@
       "pista": "La tierra es del Señor y cuanto la llena",
       "cita": "Sal 24, 1",
       "tema": "Creación"
+    },
+    {
+      "palabra": "SARMIENTO",
+      "pista": "El sarmiento no puede dar fruto si no permanece en la vid",
+      "cita": "Jn 15, 4",
+      "tema": "Creación"
+    },
+    {
+      "palabra": "ESTRELLA",
+      "pista": "La estrella de la mañana resplandeciente al que venza",
+      "cita": "Ap 2, 28",
+      "tema": "Creación"
+    },
+    {
+      "palabra": "NUBE",
+      "pista": "Vi a alguien como el Hijo del hombre sobre una nube blanca",
+      "cita": "Ap 14, 14",
+      "tema": "Creación"
     }
   ],
-  "2026-01-27": [
+  "2026-04-26": [
     {
       "palabra": "JONATAN",
       "pista": "Amigo fiel de David, modelo de amistad bíblica",
@@ -399,9 +891,27 @@
       "pista": "Como el barro en manos del alfarero estáis vosotros",
       "cita": "Jr 18, 1-10",
       "tema": "Pueblo"
+    },
+    {
+      "palabra": "BABILONIA",
+      "pista": "La gran Babilonia bebió el vino de la ira de Dios",
+      "cita": "Ap 14, 8",
+      "tema": "Lugares"
+    },
+    {
+      "palabra": "COPA",
+      "pista": "Un ángel sostenía la copa de oro llena de la ira de Dios",
+      "cita": "Ap 17, 4",
+      "tema": "Objetos"
+    },
+    {
+      "palabra": "SICOMORO",
+      "pista": "Zaqueo subió a un sicomoro para poder ver a Jesús",
+      "cita": "Lc 19, 4",
+      "tema": "Creación"
     }
   ],
-  "2026-01-28": [
+  "2026-04-27": [
     {
       "palabra": "HEBREOS",
       "pista": "Carta escrita a los creyentes de origen judío",
@@ -412,6 +922,24 @@
       "palabra": "VIENTO",
       "pista": "El Espíritu sopla donde quiere como el viento",
       "cita": "Jn 3, 7-8",
+      "tema": "Creación"
+    },
+    {
+      "palabra": "RAQUEL",
+      "pista": "Amada esposa de Jacob por quien sirvió catorce años",
+      "cita": "Gn 29, 18-30",
+      "tema": "Personajes AT"
+    },
+    {
+      "palabra": "LIA",
+      "pista": "Primera esposa de Jacob, madre de seis de las tribus",
+      "cita": "Gn 29, 23-35",
+      "tema": "Personajes AT"
+    },
+    {
+      "palabra": "MAR",
+      "pista": "El mar ya no existía en el cielo nuevo y la tierra nueva",
+      "cita": "Ap 21, 1",
       "tema": "Creación"
     }
   ],
@@ -427,9 +955,27 @@
       "pista": "Seréis diadema de honor en la mano del Señor",
       "cita": "Is 62, 3",
       "tema": "Objetos"
+    },
+    {
+      "palabra": "SANGRE",
+      "pista": "Él nos amó y nos lavó de nuestros pecados con su sangre",
+      "cita": "Ap 1, 5-6",
+      "tema": "Teología"
+    },
+    {
+      "palabra": "MUERTE",
+      "pista": "Ya no habrá más muerte ni llanto ni lamento ni dolor",
+      "cita": "Ap 21, 4",
+      "tema": "Teología"
+    },
+    {
+      "palabra": "DINA",
+      "pista": "Hija de Jacob que fue deshonrada por Siquén",
+      "cita": "Gn 34, 1-31",
+      "tema": "Personajes AT"
     }
   ],
-  "2026-01-30": [
+  "2026-04-29": [
     {
       "palabra": "SERPIENTE",
       "pista": "Moisés levantó la serpiente y el que la miró vivió",
@@ -441,6 +987,24 @@
       "pista": "Yo soy la puerta de las ovejas, dijo el Señor",
       "cita": "Jn 10, 1-10",
       "tema": "Liturgia"
+    },
+    {
+      "palabra": "GRACIA",
+      "pista": "La gracia del Señor Jesús sea con todos vosotros",
+      "cita": "Ap 22, 21",
+      "tema": "Teología"
+    },
+    {
+      "palabra": "VENDIMIA",
+      "pista": "El ángel lanzó su hoz y vendimiará la viña de la tierra",
+      "cita": "Ap 14, 19",
+      "tema": "Creación"
+    },
+    {
+      "palabra": "BETEL",
+      "pista": "Lugar donde Jacob vio la escala y prometió el diezmo a Dios",
+      "cita": "Gn 28, 19",
+      "tema": "Lugares"
     }
   ],
   "2026-01-31": [
@@ -455,4970 +1019,24 @@
       "pista": "Rey que pidió sabiduría y construyó el Templo",
       "cita": "1 Re 3, 3-14",
       "tema": "Personajes AT"
-    }
-  ],
-  "2026-02-01": [
-    {
-      "palabra": "LECHE",
-      "pista": "Una tierra que mana leche y miel",
-      "cita": "Éx 3, 7-8",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "CENIZAS",
-      "pista": "Polvo eres y al polvo volverás",
-      "cita": "Gn 3, 14-19",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "VECINO",
-      "pista": "Amar al vecino como a uno mismo, según la Ley",
-      "cita": "Mc 12, 28-34",
-      "tema": "Persona"
-    }
-  ],
-  "2026-02-02": [
-    {
-      "palabra": "TRIBU",
-      "pista": "De cada tribu de Israel doce mil sellados",
-      "cita": "Ap 7, 5-8",
-      "tema": "Pueblo"
-    },
-    {
-      "palabra": "OBISPO",
-      "pista": "Pastor que cuida la grey de Dios con dedicación plena",
-      "cita": "1 Tim 3, 1-16",
-      "tema": "Teología"
-    }
-  ],
-  "2026-02-03": [
-    {
-      "palabra": "TORO",
-      "pista": "Que lleven un toro sin defecto como holocausto",
-      "cita": "Nm 8, 8",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "COSECHA",
-      "pista": "El día de la cosecha el ángel segará con su hoz",
-      "cita": "Ap 14, 14-20",
-      "tema": "Eventos"
-    }
-  ],
-  "2026-02-04": [
-    {
-      "palabra": "ESTRELLAS",
-      "pista": "Contó las estrellas, a cada una la llamó por su nombre",
-      "cita": "Sal 147, 4",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "GOLIAT",
-      "pista": "Gigante filisteo vencido por David con su honda",
-      "cita": "1 Sam 17, 1-51",
-      "tema": "Personajes AT"
-    }
-  ],
-  "2026-02-05": [
-    {
-      "palabra": "ROMANOS",
-      "pista": "Gran carta paulina que expone el Evangelio de la gracia",
-      "cita": "Rm 8, 28-39",
-      "tema": "Libros"
-    },
-    {
-      "palabra": "TRIGO",
-      "pista": "El trigo que cae en tierra y muere da mucho fruto",
-      "cita": "Jn 12, 24-26",
-      "tema": "Creación"
-    }
-  ],
-  "2026-02-06": [
-    {
-      "palabra": "FUNDAMENTO",
-      "pista": "El fundamento de Dios permanece sólido con su sello",
-      "cita": "2 Tim 2, 19",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "MISIONES",
-      "pista": "Id al mundo entero y proclamad el Evangelio",
-      "cita": "Mc 16, 14-20",
-      "tema": "Teología"
-    }
-  ],
-  "2026-02-07": [
-    {
-      "palabra": "CORDERO",
-      "pista": "He aquí el Cordero de Dios que quita el pecado del mundo",
-      "cita": "Jn 1, 29",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "HUERFANO",
-      "pista": "El Señor hace justicia al huérfano y a la viuda",
-      "cita": "Sal 146, 9",
-      "tema": "Pueblo"
-    }
-  ],
-  "2026-02-08": [
-    {
-      "palabra": "TUMBA",
-      "pista": "María se quedó llorando ante la tumba de Jesús",
-      "cita": "Jn 20, 11-18",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "LIBERTO",
-      "pista": "Quien en el Señor fue llamado siendo esclavo es liberto",
-      "cita": "1 Cor 7, 22",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "MUERTE",
-      "pista": "Cristo murió una vez por los pecados para llevarnos a Dios",
-      "cita": "1 Pe 3, 18",
-      "tema": "Teología"
-    }
-  ],
-  "2026-02-09": [
-    {
-      "palabra": "ANGELES",
-      "pista": "Mensajeros de Dios al servicio de su plan de salvación",
-      "cita": "Heb 1, 1-14",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "CARCEL",
-      "pista": "Pablo y Silas oraban en la cárcel cuando hubo terremoto",
-      "cita": "Hch 16, 22-34",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-02-10": [
-    {
-      "palabra": "ELEFANTE",
-      "pista": "Los macabeos enfrentaron elefantes de guerra en batalla",
-      "cita": "1 Mac 6, 34-37",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "SEMILLA",
-      "pista": "El reino de los cielos se parece a un grano de mostaza",
-      "cita": "Mt 13, 31",
-      "tema": "Creación"
-    }
-  ],
-  "2026-02-11": [
-    {
-      "palabra": "SILAS",
-      "pista": "Profeta compañero de Pablo en su misión",
-      "cita": "Hch 15, 36-16, 5",
-      "tema": "Personajes NT"
-    },
-    {
-      "palabra": "GENESIS",
-      "pista": "Primer libro de la Biblia: En el principio creó Dios el cielo y la tierra",
-      "cita": "Gn 1, 1-31",
-      "tema": "Libros"
-    }
-  ],
-  "2026-02-12": [
-    {
-      "palabra": "MARIA",
-      "pista": "Madre de Jesús, llena de gracia",
-      "cita": "Lc 1, 26-38",
-      "tema": "Personajes NT"
-    },
-    {
-      "palabra": "PEÑASCO",
-      "pista": "El Señor es mi roca y mi peñasco donde me refugio",
-      "cita": "Sal 18, 1-7",
-      "tema": "Creación"
-    }
-  ],
-  "2026-02-13": [
-    {
-      "palabra": "EXPIACION",
-      "pista": "Jesucristo es la víctima de expiación por nuestros pecados",
-      "cita": "1 Jn 2, 2",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "SERVIR",
-      "pista": "Quien quiera ser grande entre vosotros, que sea vuestro servidor",
-      "cita": "Mc 10, 35-45",
-      "tema": "Virtudes"
-    }
-  ],
-  "2026-02-14": [
-    {
-      "palabra": "NUEVO",
-      "pista": "Hago nuevas todas las cosas, dijo el que estaba en el trono",
-      "cita": "Ap 21, 5",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "NEHEMIAS",
-      "pista": "Copero del rey que reconstruyó los muros de Jerusalén",
-      "cita": "Neh 1, 1-2, 20",
-      "tema": "Personajes AT"
-    }
-  ],
-  "2026-02-15": [
-    {
-      "palabra": "REUNION",
-      "pista": "Donde dos o tres están reunidos en mi nombre, allí estoy",
-      "cita": "Mt 18, 20",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "SIEMBRA",
-      "pista": "El que siembra la buena semilla es el Hijo del hombre",
-      "cita": "Mt 13, 36-43",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "PERDON",
-      "pista": "Remisión de las culpas por la misericordia de Dios",
-      "cita": "Lc 15, 11-32",
-      "tema": "Teología"
-    }
-  ],
-  "2026-02-16": [
-    {
-      "palabra": "LITURGIA",
-      "pista": "El trabajo público del pueblo de Dios en la celebración",
-      "cita": "Hch 13, 2",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "JACOB",
-      "pista": "Patriarca que luchó con el ángel y fue Israel",
-      "cita": "Gn 32, 23-33",
-      "tema": "Personajes AT"
-    }
-  ],
-  "2026-02-17": [
-    {
-      "palabra": "CARNE",
-      "pista": "Mi carne es verdadera comida y mi sangre verdadera bebida",
-      "cita": "Jn 6, 55",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "CIGARRA",
-      "pista": "La cigarra y la serpiente son criaturas del Señor",
-      "cita": "Sir 43, 17",
-      "tema": "Creación"
-    }
-  ],
-  "2026-02-18": [
-    {
-      "palabra": "NAAMAN",
-      "pista": "General sirio curado de la lepra por Eliseo",
-      "cita": "2 Re 5, 1-27",
-      "tema": "Personajes AT"
-    },
-    {
-      "palabra": "IDOLO",
-      "pista": "No tendrás otros dioses delante de mí",
-      "cita": "Éx 20, 3-5",
-      "tema": "Liturgia"
-    }
-  ],
-  "2026-02-19": [
-    {
-      "palabra": "TROAS",
-      "pista": "Ciudad donde Pablo tuvo la visión del macedonio",
-      "cita": "Hch 16, 8-10",
-      "tema": "Lugares"
-    },
-    {
-      "palabra": "PLAZA",
-      "pista": "En las plazas y encrucijadas llamó la Sabiduría",
-      "cita": "Prov 1, 20-21",
-      "tema": "Lugares"
-    }
-  ],
-  "2026-02-20": [
-    {
-      "palabra": "PADRES",
-      "pista": "Honra a tu padre y a tu madre",
-      "cita": "Éx 20, 12",
-      "tema": "Persona"
-    },
-    {
-      "palabra": "ESTEBAN",
-      "pista": "Primer mártir de la Iglesia, murió apedreado",
-      "cita": "Hch 7, 55-60",
-      "tema": "Personajes NT"
-    }
-  ],
-  "2026-02-21": [
-    {
-      "palabra": "TESOROS",
-      "pista": "No acumuléis tesoros en la tierra donde hay polilla",
-      "cita": "Mt 6, 19-21",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "PELICANO",
-      "pista": "Me parezco al pelícano del desierto en mi soledad",
-      "cita": "Sal 102, 7",
-      "tema": "Creación"
-    }
-  ],
-  "2026-02-22": [
-    {
-      "palabra": "POBRE",
-      "pista": "Bienaventurados los pobres en el espíritu",
-      "cita": "Mt 5, 3-12",
-      "tema": "Pueblo"
-    },
-    {
-      "palabra": "SAMUEL",
-      "pista": "Profeta que ungió a David como rey",
-      "cita": "1 Sam 3, 1-21",
-      "tema": "Personajes AT"
-    },
-    {
-      "palabra": "CONGREGACION",
-      "pista": "La congregación del pueblo de Dios reunida en asamblea",
-      "cita": "Hch 2, 44-45",
-      "tema": "Liturgia"
-    }
-  ],
-  "2026-02-23": [
-    {
-      "palabra": "PIEDRAS",
-      "pista": "Los muros de la nueva Jerusalén adornados con doce piedras",
-      "cita": "Ap 21, 19",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "TOMAS",
-      "pista": "Apóstol que quiso ver las llagas del Resucitado",
-      "cita": "Jn 20, 24-29",
-      "tema": "Personajes NT"
-    }
-  ],
-  "2026-02-24": [
-    {
-      "palabra": "SINODO",
-      "pista": "Los apóstoles y presbíteros se reunieron para resolver",
-      "cita": "Hch 15, 6",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "JUECES",
-      "pista": "Libro de los caudillos de Israel antes de los reyes",
-      "cita": "Jue 2, 6-23",
-      "tema": "Libros"
-    }
-  ],
-  "2026-02-25": [
-    {
-      "palabra": "CENA",
-      "pista": "En la noche en que iba a ser entregado tomó pan",
-      "cita": "1 Cor 11, 23",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "FLAUTA",
-      "pista": "Entonamos canciones de flauta y no bailasteis",
-      "cita": "Mt 11, 17",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-02-26": [
-    {
-      "palabra": "PIEDAD",
-      "pista": "El ejercicio corporal aprovecha poco pero la piedad aprovecha para todo",
-      "cita": "1 Tim 4, 8",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "ORACION",
-      "pista": "Diálogo del alma con Dios, respiración del cristiano",
-      "cita": "Mt 6, 5-15",
-      "tema": "Teología"
-    }
-  ],
-  "2026-02-27": [
-    {
-      "palabra": "MALAQUIA",
-      "pista": "Último profeta del AT que anunció al mensajero",
-      "cita": "Ml 3, 1-24",
-      "tema": "Personajes AT"
-    },
-    {
-      "palabra": "GRANO",
-      "pista": "Si el grano de trigo muere da mucho fruto",
-      "cita": "Jn 12, 24",
-      "tema": "Creación"
-    }
-  ],
-  "2026-02-28": [
-    {
-      "palabra": "LUNA",
-      "pista": "Dios hizo las dos lumbreras, la mayor y la menor",
-      "cita": "Gn 1, 16",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "LIRIO",
-      "pista": "Los lirios del campo más bellos que el manto de Salomón",
-      "cita": "Mt 6, 28-30",
-      "tema": "Creación"
-    }
-  ],
-  "2026-03-01": [
-    {
-      "palabra": "BAUTISMO",
-      "pista": "Sacramento del renacimiento por agua y Espíritu Santo",
-      "cita": "Jn 3, 3-8",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "IBIS",
-      "pista": "Entre las aves inmundas: el ibis y el gavilán",
-      "cita": "Lv 11, 17-19",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "CORAZA",
-      "pista": "Revistíos de la armadura de Dios, la coraza de justicia",
-      "cita": "Ef 6, 10-17",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-03-02": [
-    {
-      "palabra": "NUEVO",
-      "pista": "El que estaba sentado en el trono dijo: Hago nuevas todas las cosas",
-      "cita": "Ap 21, 5",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "PODER",
-      "pista": "A él sea el poder y la gloria por los siglos",
-      "cita": "Ap 1, 6",
-      "tema": "Teología"
-    }
-  ],
-  "2026-03-03": [
-    {
-      "palabra": "DENARIO",
-      "pista": "El obrero de la viña recibió un denario por su trabajo",
-      "cita": "Mt 20, 1-16",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "MONTE",
-      "pista": "Jesús subió al monte a orar a solas",
-      "cita": "Mt 14, 23",
-      "tema": "Liturgia"
-    }
-  ],
-  "2026-03-04": [
-    {
-      "palabra": "FLECHA",
-      "pista": "Dios lanza sus flechas que ponen en fuga a los enemigos",
-      "cita": "Sal 18, 14",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "LENGUA",
-      "pista": "La lengua puede ser fuego, mundo de iniquidad",
-      "cita": "St 3, 1-12",
-      "tema": "Persona"
-    }
-  ],
-  "2026-03-05": [
-    {
-      "palabra": "PROJIMO",
-      "pista": "¿Quién de los tres fue el prójimo del que cayó en manos de los bandidos?",
-      "cita": "Lc 10, 29-37",
-      "tema": "Persona"
-    },
-    {
-      "palabra": "MANOS",
-      "pista": "Levantad manos puras en la oración",
-      "cita": "1 Tim 2, 8",
-      "tema": "Persona"
-    }
-  ],
-  "2026-03-06": [
-    {
-      "palabra": "SANTIDAD",
-      "pista": "Seguid la paz con todos y la santidad sin la que nadie verá a Dios",
-      "cita": "Heb 12, 14",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "SISARA",
-      "pista": "General cananeo vencido por Débora y Jael",
-      "cita": "Jue 4, 1-24",
-      "tema": "Personajes AT"
-    }
-  ],
-  "2026-03-07": [
-    {
-      "palabra": "JARRA",
-      "pista": "Había allí seis tinajas para las purificaciones del agua",
-      "cita": "Jn 2, 6-7",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "ISAAC",
-      "pista": "Hijo de la promesa, padre de Jacob y Esaú",
-      "cita": "Gn 22, 1-19",
-      "tema": "Personajes AT"
-    }
-  ],
-  "2026-03-08": [
-    {
-      "palabra": "AMIGO",
-      "pista": "Os he llamado amigos porque os he dado a conocer todo",
-      "cita": "Jn 15, 12-17",
-      "tema": "Persona"
-    },
-    {
-      "palabra": "FUERZA",
-      "pista": "El Señor es mi fuerza y mi cántico, dijo el pueblo",
-      "cita": "Éx 15, 1-21",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "JASPE",
-      "pista": "La ciudad santa estaba revestida de jaspe, brillante",
-      "cita": "Ap 21, 10-21",
-      "tema": "Creación"
-    }
-  ],
-  "2026-03-09": [
-    {
-      "palabra": "LEOPARDO",
-      "pista": "¿Acaso puede el leopardo cambiar sus manchas?",
-      "cita": "Jr 13, 23",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "CISMA",
-      "pista": "Os suplico que evitéis las divisiones y las discordias",
-      "cita": "1 Cor 1, 10",
-      "tema": "Liturgia"
-    }
-  ],
-  "2026-03-10": [
-    {
-      "palabra": "CUERVO",
-      "pista": "El Señor envió cuervos a alimentar a Elías",
-      "cita": "1 Re 17, 1-6",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "DOTAN",
-      "pista": "Lugar donde José encontró a sus hermanos y fue vendido",
-      "cita": "Gn 37, 12-28",
-      "tema": "Lugares"
-    }
-  ],
-  "2026-03-11": [
-    {
-      "palabra": "DOGMA",
-      "pista": "Verdad de fe definida por la Iglesia para guiar al pueblo",
-      "cita": "Jn 16, 13",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "PERLA",
-      "pista": "El reino es como una perla de gran valor que el mercader compró",
-      "cita": "Mt 13, 45-46",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-03-12": [
-    {
-      "palabra": "BETESDA",
-      "pista": "Piscina de cinco pórticos donde curó a un paralítico",
-      "cita": "Jn 5, 1-15",
-      "tema": "Lugares"
-    },
-    {
-      "palabra": "LAGRIMAS",
-      "pista": "Enjugará toda lágrima de sus ojos, no habrá más llanto",
-      "cita": "Ap 21, 4",
-      "tema": "Persona"
-    }
-  ],
-  "2026-03-13": [
-    {
-      "palabra": "VIÑA",
-      "pista": "Yo soy la vid verdadera y vosotros los sarmientos",
-      "cita": "Jn 15, 1-8",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "TEMPLO",
-      "pista": "No vi templo en ella porque el Señor Dios Todopoderoso es su templo",
-      "cita": "Ap 21, 22",
-      "tema": "Lugares"
-    }
-  ],
-  "2026-03-14": [
-    {
-      "palabra": "COSECHA",
-      "pista": "La mies es mucha y los obreros pocos",
-      "cita": "Mt 9, 37",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "ALIANZA",
-      "pista": "Pacto sagrado entre Dios y su pueblo",
-      "cita": "Éx 24, 3-8",
-      "tema": "Teología"
-    }
-  ],
-  "2026-03-15": [
-    {
-      "palabra": "MILAGROS",
-      "pista": "Hizo sus milagros a la vista de sus padres en Egipto",
-      "cita": "Sal 78, 12",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "FRATERNIDAD",
-      "pista": "Os habéis purificado para una fraternidad sincera",
-      "cita": "1 Pe 1, 22",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "ESPEJO",
-      "pista": "Ahora vemos como en un espejo, confusamente",
-      "cita": "1 Cor 13, 12",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-03-16": [
-    {
-      "palabra": "POLVO",
-      "pista": "Del polvo eres sacado y al polvo volverás",
-      "cita": "Gn 3, 19",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "RETIRO",
-      "pista": "Jesús se retiraba a lugares solitarios para orar",
-      "cita": "Lc 5, 15-16",
-      "tema": "Liturgia"
-    }
-  ],
-  "2026-03-17": [
-    {
-      "palabra": "VERDAD",
-      "pista": "La verdad os hará libres",
-      "cita": "Jn 8, 32",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "CENIZA",
-      "pista": "Me siento en el polvo y las cenizas en señal de penitencia",
-      "cita": "Jb 42, 6",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-03-18": [
-    {
-      "palabra": "ATRIO",
-      "pista": "¡Qué deseables son tus moradas, Señor, los atrios del Señor!",
-      "cita": "Sal 84, 2",
-      "tema": "Lugares"
-    },
-    {
-      "palabra": "BOOZ",
-      "pista": "Pariente redentor que acogió a Rut en su campo",
-      "cita": "Rut 2, 1-23",
-      "tema": "Personajes AT"
-    }
-  ],
-  "2026-03-19": [
-    {
-      "palabra": "SANDALIAS",
-      "pista": "No soy digno de desatar las sandalias de quien viene",
-      "cita": "Jn 1, 19-28",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "COLOSAS",
-      "pista": "Ciudad de Asia a la que Pablo escribió su carta",
-      "cita": "Col 1, 1-14",
-      "tema": "Lugares"
-    }
-  ],
-  "2026-03-20": [
-    {
-      "palabra": "ROCIO",
-      "pista": "Mi mensaje caerá como rocío sobre la hierba tierna",
-      "cita": "Dt 32, 2",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "HIERRO",
-      "pista": "Los gobernará con vara de hierro como vaso de alfarero",
-      "cita": "Ap 2, 26-27",
-      "tema": "Creación"
-    }
-  ],
-  "2026-03-21": [
-    {
-      "palabra": "LOBOS",
-      "pista": "Os envío como ovejas en medio de lobos",
-      "cita": "Mt 10, 16-23",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "BESTIA",
-      "pista": "Vi subir del mar una bestia con siete cabezas",
-      "cita": "Ap 13, 1-18",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-03-22": [
-    {
-      "palabra": "CHIPRE",
-      "pista": "Isla natal de Bernabé, primer destino del viaje misionero",
-      "cita": "Hch 13, 4-12",
-      "tema": "Lugares"
-    },
-    {
-      "palabra": "OSEAS",
-      "pista": "Profeta que comparó la alianza con el amor conyugal",
-      "cita": "Os 2, 16-25",
-      "tema": "Personajes AT"
-    },
-    {
-      "palabra": "GOZO",
-      "pista": "Estad siempre alegres en el Señor",
-      "cita": "Flp 4, 4",
-      "tema": "Virtudes"
-    }
-  ],
-  "2026-03-23": [
-    {
-      "palabra": "OFRECER",
-      "pista": "Ofreceos como sacrificio vivo, santo y agradable a Dios",
-      "cita": "Rm 12, 1-8",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "GENTILES",
-      "pista": "La luz para iluminar a los gentiles",
-      "cita": "Lc 2, 32",
-      "tema": "Pueblo"
-    }
-  ],
-  "2026-03-24": [
-    {
-      "palabra": "NARDO",
-      "pista": "María ungió los pies de Jesús con nardo puro",
-      "cita": "Jn 12, 1-8",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "ELISEO",
-      "pista": "Discípulo y sucesor de Elías",
-      "cita": "2 Re 2, 1-15",
-      "tema": "Personajes AT"
-    }
-  ],
-  "2026-03-25": [
-    {
-      "palabra": "NOVILLO",
-      "pista": "Con lo mejor de tu ganado, un novillo perfecto",
-      "cita": "Sal 69, 32",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "SORDO",
-      "pista": "Abrió los oídos del sordo y le soltó la traba de la lengua",
-      "cita": "Mc 7, 31-37",
-      "tema": "Pueblo"
-    }
-  ],
-  "2026-03-26": [
-    {
-      "palabra": "FAMILIA",
-      "pista": "Jesús creció en el seno de la Sagrada Familia",
-      "cita": "Lc 2, 41-52",
-      "tema": "Persona"
-    },
-    {
-      "palabra": "ORILLA",
-      "pista": "Jesús se apareció al amanecer en la orilla del lago",
-      "cita": "Jn 21, 1-14",
-      "tema": "Creación"
-    }
-  ],
-  "2026-03-27": [
-    {
-      "palabra": "VINIEDO",
-      "pista": "Yo soy la vid verdadera y mi Padre es el viñador",
-      "cita": "Jn 15, 1-8",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "LUZ",
-      "pista": "Yo soy la luz del mundo, el que me sigue no camina en tinieblas",
-      "cita": "Jn 8, 12",
-      "tema": "Creación"
-    }
-  ],
-  "2026-03-28": [
-    {
-      "palabra": "REDENCION",
-      "pista": "En él tenemos la redención por su sangre",
-      "cita": "Ef 1, 7",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "OVEJA",
-      "pista": "Si uno tiene cien ovejas y pierde una, la busca",
-      "cita": "Mt 18, 12-14",
-      "tema": "Creación"
-    }
-  ],
-  "2026-03-29": [
-    {
-      "palabra": "LLUVIA",
-      "pista": "El Señor envía la lluvia sobre justos e injustos",
-      "cita": "Mt 5, 43-48",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "MENTE",
-      "pista": "Renovaos en el espíritu de vuestra mente",
-      "cita": "Ef 4, 17-24",
-      "tema": "Persona"
-    },
-    {
-      "palabra": "SIERVO",
-      "pista": "El Siervo sufriente cargó con nuestros dolores",
-      "cita": "Is 53, 1-12",
-      "tema": "Pueblo"
-    }
-  ],
-  "2026-03-30": [
-    {
-      "palabra": "ADORAR",
-      "pista": "Al Señor tu Dios adorarás y solo a Él darás culto",
-      "cita": "Mt 4, 1-11",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "CIZAÑA",
-      "pista": "Dejad crecer juntos el trigo y la cizaña hasta la cosecha",
-      "cita": "Mt 13, 24-30",
-      "tema": "Creación"
-    }
-  ],
-  "2026-03-31": [
-    {
-      "palabra": "DOMINGO",
-      "pista": "El primer día de la semana, el día del Señor Resucitado",
-      "cita": "Jn 20, 1",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "SOLDADO",
-      "pista": "El centurión confesó que Jesús era el Hijo de Dios",
-      "cita": "Mc 15, 33-39",
-      "tema": "Pueblo"
-    }
-  ],
-  "2026-04-01": [
-    {
-      "palabra": "PALABRA",
-      "pista": "En el principio era la Palabra y era Dios",
-      "cita": "Jn 1, 1-18",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "SELVA",
-      "pista": "Los árboles del campo batirán palmas ante el Señor",
-      "cita": "Is 55, 12",
-      "tema": "Creación"
-    }
-  ],
-  "2026-04-02": [
-    {
-      "palabra": "MANANTIAL",
-      "pista": "El Señor es la fuente de agua viva",
-      "cita": "Jr 2, 13",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "HOSPITALIDAD",
-      "pista": "Practicad la hospitalidad sin murmuraciones",
-      "cita": "1 Pe 4, 9",
-      "tema": "Virtudes"
-    }
-  ],
-  "2026-04-03": [
-    {
-      "palabra": "SALMOS",
-      "pista": "Libro de ciento cincuenta oraciones y poemas sagrados",
-      "cita": "Sal 1, 1-6",
-      "tema": "Libros"
-    },
-    {
-      "palabra": "PALACIO",
-      "pista": "No, los vestidos finos se encuentran en los palacios",
-      "cita": "Mt 11, 8",
-      "tema": "Lugares"
-    }
-  ],
-  "2026-04-04": [
-    {
-      "palabra": "LLAMADO",
-      "pista": "El que Dios eligió y destinó desde el vientre materno",
-      "cita": "Jr 1, 4-10",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "CAMINO",
-      "pista": "Preparad el camino del Señor, allanad sus senderos",
-      "cita": "Is 40, 3-5",
-      "tema": "Teología"
-    }
-  ],
-  "2026-04-05": [
-    {
-      "palabra": "LUCAS",
-      "pista": "Evangelista y médico, compañero de Pablo",
-      "cita": "Lc 1, 1-4",
-      "tema": "Personajes NT"
-    },
-    {
-      "palabra": "BLANCO",
-      "pista": "Los vencedores vestirán vestiduras blancas",
-      "cita": "Ap 3, 4-5",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "SIEGA",
-      "pista": "La mies es abundante pero los obreros son pocos",
-      "cita": "Mt 9, 35-38",
-      "tema": "Creación"
-    }
-  ],
-  "2026-04-06": [
-    {
-      "palabra": "NOMBRE",
-      "pista": "Os daré una piedra blanca con un nombre nuevo grabado",
-      "cita": "Ap 2, 17",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "AMOR",
-      "pista": "Dios es amor y quien permanece en el amor permanece en Dios",
-      "cita": "1 Jn 4, 7-16",
-      "tema": "Virtudes"
-    }
-  ],
-  "2026-04-07": [
-    {
-      "palabra": "MANSO",
-      "pista": "Bienaventurados los mansos, poseerán la tierra",
-      "cita": "Mt 5, 4",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "GETSEMANI",
-      "pista": "Huerto donde Jesús sudó sangre en la noche de la traición",
-      "cita": "Lc 22, 39-46",
-      "tema": "Lugares"
-    }
-  ],
-  "2026-04-08": [
-    {
-      "palabra": "REBECA",
-      "pista": "Esposa de Isaac, madre de Jacob y Esaú",
-      "cita": "Gn 24, 10-67",
-      "tema": "Personajes AT"
-    },
-    {
-      "palabra": "PUREZA",
-      "pista": "Bienaventurados los limpios de corazón porque verán a Dios",
-      "cita": "Mt 5, 8",
-      "tema": "Virtudes"
-    }
-  ],
-  "2026-04-09": [
-    {
-      "palabra": "JESUS",
-      "pista": "Lo llamarás Jesús porque salvará a su pueblo",
-      "cita": "Mt 1, 18-25",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "TIENDA",
-      "pista": "La morada de Dios está con los hombres, pone su tienda",
-      "cita": "Ap 21, 3",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-04-10": [
-    {
-      "palabra": "PASTOR",
-      "pista": "Yo mismo apacentaré a mis ovejas y las haré reposar",
-      "cita": "Ez 34, 15",
-      "tema": "Pueblo"
-    },
-    {
-      "palabra": "OVEJA",
-      "pista": "Todos nosotros erramos como ovejas, cada uno por su camino",
-      "cita": "Is 53, 6",
-      "tema": "Creación"
-    }
-  ],
-  "2026-04-11": [
-    {
-      "palabra": "PODA",
-      "pista": "Todo sarmiento que da fruto el Padre lo poda",
-      "cita": "Jn 15, 2",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "ACOGER",
-      "pista": "Quien acoge a un niño en mi nombre me acoge a mí",
-      "cita": "Mt 18, 1-5",
-      "tema": "Virtudes"
-    }
-  ],
-  "2026-04-12": [
-    {
-      "palabra": "UNIDOS",
-      "pista": "Que todos sean uno como el Padre y el Hijo son uno",
-      "cita": "Jn 17, 22",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "PLATA",
-      "pista": "Os rescataron no con plata ni oro sino con la sangre",
-      "cita": "1 Pe 1, 17-21",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "MESA",
-      "pista": "Preparo una mesa ante mí frente a mis enemigos",
-      "cita": "Sal 23, 5",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-04-13": [
-    {
-      "palabra": "RED",
-      "pista": "El reino de los cielos es como una red echada al mar",
-      "cita": "Mt 13, 47-50",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "PROFETA",
-      "pista": "Portavoz de la Palabra de Dios al pueblo",
-      "cita": "Jr 1, 4-19",
-      "tema": "Teología"
-    }
-  ],
-  "2026-04-14": [
-    {
-      "palabra": "PAZ",
-      "pista": "Mi paz os doy, no como la da el mundo",
-      "cita": "Jn 14, 27",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "OCEANO",
-      "pista": "El espíritu de Dios aleteaba sobre las aguas",
-      "cita": "Gn 1, 1-2",
-      "tema": "Creación"
-    }
-  ],
-  "2026-04-15": [
-    {
-      "palabra": "CRISTO",
-      "pista": "Tú eres el Cristo, el Hijo de Dios vivo",
-      "cita": "Mt 16, 13-20",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "HONDA",
-      "pista": "David mató al gigante con una piedra y una honda",
-      "cita": "1 Sam 17, 40-51",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-04-16": [
-    {
-      "palabra": "CALLE",
-      "pista": "La calle de la ciudad era de oro puro como vidrio transparente",
-      "cita": "Ap 21, 21",
-      "tema": "Lugares"
-    },
-    {
-      "palabra": "EZEQUIEL",
-      "pista": "Profeta del exilio que vio el carro del trono de Dios",
-      "cita": "Ez 1, 1-28",
-      "tema": "Personajes AT"
-    }
-  ],
-  "2026-04-17": [
-    {
-      "palabra": "SANAR",
-      "pista": "Jesús curó a todos los enfermos que se le acercaron",
-      "cita": "Mt 4, 23-25",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "PATENA",
-      "pista": "Recipiente sagrado que sostiene el Pan eucarístico",
-      "cita": "1 Cor 11, 23-26",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-04-18": [
-    {
-      "palabra": "PRADERA",
-      "pista": "En verdes praderas me hace reposar",
-      "cita": "Sal 23, 2",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "CIUDAD",
-      "pista": "La ciudad fundada sobre el monte no puede ocultarse",
-      "cita": "Mt 5, 14",
-      "tema": "Lugares"
-    }
-  ],
-  "2026-04-19": [
-    {
-      "palabra": "DIVINO",
-      "pista": "Partícipes de la naturaleza divina por la gracia",
-      "cita": "2 Pe 1, 3-11",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "LENGUA",
-      "pista": "La lengua es un pequeño miembro pero inflama la existencia",
-      "cita": "St 3, 1-12",
-      "tema": "Persona"
-    },
-    {
-      "palabra": "TRUENO",
-      "pista": "Su voz es como el estruendo de muchas aguas",
-      "cita": "Ap 1, 12-16",
-      "tema": "Creación"
-    }
-  ],
-  "2026-04-20": [
-    {
-      "palabra": "GLORIA",
-      "pista": "La tierra está llena de su gloria",
-      "cita": "Is 6, 3",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "ASTRO",
-      "pista": "La estrella que los guiaba se detuvo sobre el niño",
-      "cita": "Mt 2, 1-12",
-      "tema": "Creación"
-    }
-  ],
-  "2026-04-21": [
-    {
-      "palabra": "SIMON",
-      "pista": "Apóstol llamado el Zelote",
-      "cita": "Lc 6, 12-16",
-      "tema": "Personajes NT"
-    },
-    {
-      "palabra": "SERMON",
-      "pista": "El gran discurso del monte donde Jesús proclamó las Bienaventuranzas",
-      "cita": "Mt 5, 1-12",
-      "tema": "Teología"
-    }
-  ],
-  "2026-04-22": [
-    {
-      "palabra": "MUJER",
-      "pista": "Mujer, grande es tu fe, que se haga según tu deseo",
-      "cita": "Mt 15, 21-28",
-      "tema": "Pueblo"
-    },
-    {
-      "palabra": "COLINA",
-      "pista": "Levanto los ojos a los montes de donde vendrá mi socorro",
-      "cita": "Sal 121, 1",
-      "tema": "Creación"
-    }
-  ],
-  "2026-04-23": [
-    {
-      "palabra": "ABDIAS",
-      "pista": "Profeta menor que anunció el día del Señor",
-      "cita": "Abd 1, 1-21",
-      "tema": "Personajes AT"
-    },
-    {
-      "palabra": "MOSCA",
-      "pista": "Plaga de tábanos que asoló a Egipto",
-      "cita": "Éx 8, 16-32",
-      "tema": "Creación"
-    }
-  ],
-  "2026-04-24": [
-    {
-      "palabra": "APOCALIPSIS",
-      "pista": "Último libro del NT, la revelación de Juan en Patmos",
-      "cita": "Ap 22, 12-20",
-      "tema": "Libros"
-    },
-    {
-      "palabra": "PORTAL",
-      "pista": "Entrad por sus puertas con acción de gracias",
-      "cita": "Sal 100, 4",
-      "tema": "Lugares"
-    }
-  ],
-  "2026-04-25": [
-    {
-      "palabra": "ANDRES",
-      "pista": "Primer llamado, hermano de Pedro, apóstol",
-      "cita": "Jn 1, 35-42",
-      "tema": "Personajes NT"
-    },
-    {
-      "palabra": "VERDAD",
-      "pista": "Jesús dijo: Yo soy el camino, la verdad y la vida",
-      "cita": "Jn 14, 1-12",
-      "tema": "Teología"
-    }
-  ],
-  "2026-04-26": [
-    {
-      "palabra": "CUERPO",
-      "pista": "No sabéis que vuestro cuerpo es templo del Espíritu",
-      "cita": "1 Cor 6, 12-20",
-      "tema": "Persona"
-    },
-    {
-      "palabra": "SAMARIA",
-      "pista": "Región del pozo donde Jesús habló con la samaritana",
-      "cita": "Jn 4, 1-42",
-      "tema": "Lugares"
-    },
-    {
-      "palabra": "KOINONIA",
-      "pista": "Comunión y fraternidad de los primeros creyentes",
-      "cita": "Hch 2, 42-47",
-      "tema": "Teología"
-    }
-  ],
-  "2026-04-27": [
-    {
-      "palabra": "VIRTUD",
-      "pista": "Hábito firme de hacer el bien con facilidad y gozo",
-      "cita": "2 Pe 1, 3-11",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "ARPA",
-      "pista": "Con salterio de diez cuerdas y con arpa cantadnos",
-      "cita": "Sal 33, 2-3",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-04-28": [
-    {
-      "palabra": "CIRO",
-      "pista": "Rey persa que liberó a los judíos del exilio",
-      "cita": "Esd 1, 1-11",
-      "tema": "Personajes AT"
-    },
-    {
-      "palabra": "VIDA",
-      "pista": "En él estaba la vida y la vida era la luz de los hombres",
-      "cita": "Jn 1, 4",
-      "tema": "Teología"
-    }
-  ],
-  "2026-04-29": [
-    {
-      "palabra": "ALTAR",
-      "pista": "Me acercaré al altar de Dios que alegra mi juventud",
-      "cita": "Sal 43, 4",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "PRUDENCIA",
-      "pista": "El prudente ve el peligro y se esconde a tiempo",
-      "cita": "Prov 22, 3",
-      "tema": "Virtudes"
-    }
-  ],
-  "2026-04-30": [
-    {
-      "palabra": "PRISCILA",
-      "pista": "Colaboradora de Pablo en Corinto, maestra de Apolo",
-      "cita": "Hch 18, 24-26",
-      "tema": "Personajes NT"
-    },
-    {
-      "palabra": "PIZARRA",
-      "pista": "El padre pidió una tablilla y escribió: Juan es su nombre",
-      "cita": "Lc 1, 63",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-05-01": [
-    {
-      "palabra": "OJOS",
-      "pista": "La lámpara del cuerpo es el ojo",
-      "cita": "Mt 6, 22-23",
-      "tema": "Persona"
-    },
-    {
-      "palabra": "HERODES",
-      "pista": "Rey que ordenó matar a los niños de Belén",
-      "cita": "Mt 2, 1-18",
-      "tema": "Personajes NT"
-    }
-  ],
-  "2026-05-02": [
-    {
-      "palabra": "CABRA",
-      "pista": "Separará a los hombres como el pastor separa ovejas y cabras",
-      "cita": "Mt 25, 31-46",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "BALAAM",
-      "pista": "Profeta cuya burra vio al ángel del Señor",
-      "cita": "Nm 22, 1-38",
-      "tema": "Personajes AT"
-    }
-  ],
-  "2026-05-03": [
-    {
-      "palabra": "OBLACION",
-      "pista": "La oblación pura que se ofrece en todo lugar al Señor",
-      "cita": "Ml 1, 11",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "ANANIAS",
-      "pista": "Discípulo que devolvió la vista a Pablo en Damasco",
-      "cita": "Hch 9, 10-19",
-      "tema": "Personajes NT"
-    },
-    {
-      "palabra": "BENDITO",
-      "pista": "Bendito el que viene en nombre del Señor",
-      "cita": "Mt 21, 1-11",
-      "tema": "Liturgia"
-    }
-  ],
-  "2026-05-04": [
-    {
-      "palabra": "DEBORA",
-      "pista": "Profetisa y jueza de Israel",
-      "cita": "Jue 4, 1-24",
-      "tema": "Personajes AT"
-    },
-    {
-      "palabra": "ESPERAR",
-      "pista": "Los que esperan en el Señor renuevan sus fuerzas",
-      "cita": "Is 40, 28-31",
-      "tema": "Virtudes"
-    }
-  ],
-  "2026-05-05": [
-    {
-      "palabra": "CABALLO",
-      "pista": "No hay victoria segura con los caballos de guerra",
-      "cita": "Sal 20, 8",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "HERMANO",
-      "pista": "Quien haga la voluntad de Dios ese es mi hermano",
-      "cita": "Mc 3, 31-35",
-      "tema": "Persona"
-    }
-  ],
-  "2026-05-06": [
-    {
-      "palabra": "MENORA",
-      "pista": "Candelabro de siete brazos del Templo de Israel",
-      "cita": "Éx 25, 31-40",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "PEREGRINO",
-      "pista": "Reconocemos que somos forasteros y peregrinos",
-      "cita": "1 Pe 2, 11",
-      "tema": "Pueblo"
-    }
-  ],
-  "2026-05-07": [
-    {
-      "palabra": "MURALLA",
-      "pista": "Muralla y foso: estas serán las defensas de Sión",
-      "cita": "Is 26, 1",
-      "tema": "Lugares"
-    },
-    {
-      "palabra": "CORONA",
-      "pista": "Corona de justicia que el Señor dará en ese día",
-      "cita": "2 Tim 4, 6-8",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-05-08": [
-    {
-      "palabra": "ALEGRIA",
-      "pista": "Fruto del Espíritu que nace del encuentro con Dios",
-      "cita": "Jn 15, 9-17",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "KENOSIS",
-      "pista": "Se vació a sí mismo tomando la condición de siervo",
-      "cita": "Flp 2, 7",
-      "tema": "Teología"
-    }
-  ],
-  "2026-05-09": [
-    {
-      "palabra": "REDIMIR",
-      "pista": "Fuisteis rescatados no con plata sino con la sangre",
-      "cita": "1 Pe 1, 17-25",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "HUMILDE",
-      "pista": "El que se humilla será exaltado, dijo el Señor",
-      "cita": "Lc 14, 7-11",
-      "tema": "Virtudes"
-    }
-  ],
-  "2026-05-10": [
-    {
-      "palabra": "HEREJIA",
-      "pista": "Doctrina que se aparta de la fe definida por la Iglesia",
-      "cita": "Gal 1, 6-9",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "AARON",
-      "pista": "Hermano de Moisés, primer sumo sacerdote",
-      "cita": "Éx 28, 1-43",
-      "tema": "Personajes AT"
-    },
-    {
-      "palabra": "PULGA",
-      "pista": "Saúl perseguía a David como a una pulga inofensiva",
-      "cita": "1 Sam 24, 15",
-      "tema": "Creación"
-    }
-  ],
-  "2026-05-11": [
-    {
-      "palabra": "MERCADER",
-      "pista": "El mercader vendió todo por la perla de gran valor",
-      "cita": "Mt 13, 45-46",
-      "tema": "Pueblo"
-    },
-    {
-      "palabra": "CLEOPAS",
-      "pista": "Discípulo de Emaús que no reconoció al Resucitado",
-      "cita": "Lc 24, 13-35",
-      "tema": "Personajes NT"
-    }
-  ],
-  "2026-05-12": [
-    {
-      "palabra": "RÍO",
-      "pista": "Me mostró un río de agua de vida resplandeciente como cristal",
-      "cita": "Ap 22, 1",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "SINAGOGA",
-      "pista": "Jesús enseñaba en las sinagogas recorriendo toda Galilea",
-      "cita": "Mt 4, 23",
-      "tema": "Lugares"
-    }
-  ],
-  "2026-05-13": [
-    {
-      "palabra": "PIEDRA",
-      "pista": "La piedra que desecharon los constructores fue la angular",
-      "cita": "Sal 118, 19-29",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "VIUDO",
-      "pista": "Defended al huérfano, abogad por la viuda",
-      "cita": "Is 1, 17",
-      "tema": "Pueblo"
-    }
-  ],
-  "2026-05-14": [
-    {
-      "palabra": "SADOC",
-      "pista": "Sumo sacerdote que ungió a Salomón como rey",
-      "cita": "1 Re 1, 32-40",
-      "tema": "Personajes AT"
-    },
-    {
-      "palabra": "HIMNO",
-      "pista": "Cantad al Señor un cántico nuevo",
-      "cita": "Sal 149, 1",
-      "tema": "Liturgia"
-    }
-  ],
-  "2026-05-15": [
-    {
-      "palabra": "ESPOSA",
-      "pista": "La Iglesia como esposa preparada para su esposo",
-      "cita": "Ap 21, 2",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "VICTORIA",
-      "pista": "Gracias a Dios que nos da la victoria por Cristo",
-      "cita": "1 Cor 15, 57",
-      "tema": "Teología"
-    }
-  ],
-  "2026-05-16": [
-    {
-      "palabra": "PALOMAS",
-      "pista": "Dos pichones u ofrecidas a Dios en la purificación",
-      "cita": "Lc 2, 22-24",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "AGUILA",
-      "pista": "El Señor te lleva sobre alas de águila",
-      "cita": "Éx 19, 4",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-05-17": [
-    {
-      "palabra": "ENDEMONIADO",
-      "pista": "El endemoniado de Gerasa vivía entre los sepulcros",
-      "cita": "Mc 5, 1-20",
-      "tema": "Pueblo"
-    },
-    {
-      "palabra": "PRESENCIA",
-      "pista": "Yo estoy con vosotros todos los días hasta el fin",
-      "cita": "Mt 28, 20",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "LIBERAR",
-      "pista": "La verdad os hará libres, prometió Jesús",
-      "cita": "Jn 8, 31-36",
-      "tema": "Virtudes"
-    }
-  ],
-  "2026-05-18": [
-    {
-      "palabra": "LIMOSNA",
-      "pista": "Obra de misericordia que purifica y libera al pobre",
-      "cita": "Tb 4, 5-19",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "ONESIMO",
-      "pista": "Esclavo fugitivo por quien intercedió Pablo",
-      "cita": "Flm 1, 8-21",
-      "tema": "Personajes NT"
-    }
-  ],
-  "2026-05-19": [
-    {
-      "palabra": "SEMBRAR",
-      "pista": "El sembrador salió a sembrar y la semilla es la Palabra",
-      "cita": "Mc 4, 1-20",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "ENCARNA",
-      "pista": "El Verbo se encarnó y vino a nosotros lleno de gracia",
-      "cita": "Jn 1, 14",
-      "tema": "Teología"
-    }
-  ],
-  "2026-05-20": [
-    {
-      "palabra": "TALENTO",
-      "pista": "A cada uno dio según su capacidad: uno, dos o cinco talentos",
-      "cita": "Mt 25, 14-30",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "NUBES",
-      "pista": "Vendrá sobre las nubes del cielo con poder y gloria",
-      "cita": "Mt 24, 29-31",
-      "tema": "Creación"
-    }
-  ],
-  "2026-05-21": [
-    {
-      "palabra": "NOVIAS",
-      "pista": "Diez doncellas salieron al encuentro del esposo",
-      "cita": "Mt 25, 1-13",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "SABIDURÍA",
-      "pista": "Libro que celebra la sabiduría divina y la inmortalidad",
-      "cita": "Sab 1, 1-16",
-      "tema": "Libros"
-    }
-  ],
-  "2026-05-22": [
-    {
-      "palabra": "POBREZA",
-      "pista": "Bienaventurados los pobres en el espíritu",
-      "cita": "Mt 5, 3",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "GRANDEZA",
-      "pista": "El que quiera hacerse grande entre vosotros sea vuestro servidor",
-      "cita": "Mt 20, 26",
-      "tema": "Virtudes"
-    }
-  ],
-  "2026-05-23": [
-    {
-      "palabra": "HOSANNA",
-      "pista": "Aclamación mesiánica en la entrada en Jerusalén",
-      "cita": "Mt 21, 1-11",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "MATRIMONIO",
-      "pista": "Lo que Dios unió que no lo separe el hombre",
-      "cita": "Mc 10, 6-9",
-      "tema": "Liturgia"
-    }
-  ],
-  "2026-05-24": [
-    {
-      "palabra": "HUERTO",
-      "pista": "Había un huerto donde Jesús y sus discípulos solían reunirse",
-      "cita": "Jn 18, 1-2",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "DELFIN",
-      "pista": "Los grandes monstruos marinos que Dios creó",
-      "cita": "Gn 1, 21",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "DIEZMO",
-      "pista": "Traed todo el diezmo al granero para que haya alimento",
-      "cita": "Ml 3, 10",
-      "tema": "Liturgia"
-    }
-  ],
-  "2026-05-25": [
-    {
-      "palabra": "BECERRO",
-      "pista": "El pueblo fundió un becerro de oro para adorarlo",
-      "cita": "Éx 32, 1-20",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "VIUDA",
-      "pista": "La viuda pobre echó todo lo que tenía para vivir",
-      "cita": "Mc 12, 41-44",
-      "tema": "Pueblo"
-    }
-  ],
-  "2026-05-26": [
-    {
-      "palabra": "VARON",
-      "pista": "Dios creó al varón y a la mujer a su imagen",
-      "cita": "Gn 1, 26-31",
-      "tema": "Pueblo"
-    },
-    {
-      "palabra": "NICODEMO",
-      "pista": "Fariseo que visitó a Jesús de noche buscando la verdad",
-      "cita": "Jn 3, 1-21",
-      "tema": "Personajes NT"
-    }
-  ],
-  "2026-05-27": [
-    {
-      "palabra": "BARUC",
-      "pista": "Libro deuterocanonical del secretario del profeta Jeremías",
-      "cita": "Bar 3, 9-15",
-      "tema": "Libros"
-    },
-    {
-      "palabra": "PASTOR",
-      "pista": "El Señor es mi pastor, nada me falta",
-      "cita": "Sal 23, 1",
-      "tema": "Pueblo"
-    }
-  ],
-  "2026-05-28": [
-    {
-      "palabra": "FIDELIDAD",
-      "pista": "La fidelidad del Señor dura para siempre",
-      "cita": "Sal 117, 2",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "PASCUA",
-      "pista": "Fiesta de la liberación: paso del Señor y Resurrección",
-      "cita": "Éx 12, 1-28",
-      "tema": "Teología"
-    }
-  ],
-  "2026-05-29": [
-    {
-      "palabra": "MALVADO",
-      "pista": "El malvado huye sin que nadie le persiga",
-      "cita": "Prov 28, 1",
-      "tema": "Pueblo"
-    },
-    {
-      "palabra": "EXODO",
-      "pista": "La salida de Egipto: liberación del pueblo de Dios",
-      "cita": "Éx 14, 1-31",
-      "tema": "Eventos"
-    }
-  ],
-  "2026-05-30": [
-    {
-      "palabra": "FIELES",
-      "pista": "Bien, siervo bueno y fiel, entrarás en el gozo",
-      "cita": "Mt 25, 14-30",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "PACIENCIA",
-      "pista": "Tenéis necesidad de paciencia para hacer la voluntad de Dios",
-      "cita": "Heb 10, 36",
-      "tema": "Virtudes"
-    }
-  ],
-  "2026-05-31": [
-    {
-      "palabra": "CENÁCULO",
-      "pista": "Subieron al piso superior, el lugar donde se reunían",
-      "cita": "Hch 1, 13",
-      "tema": "Lugares"
-    },
-    {
-      "palabra": "CANTO",
-      "pista": "Cantad al Señor un cántico nuevo porque ha hecho maravillas",
-      "cita": "Sal 98, 1",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "AYUNO",
-      "pista": "Práctica penitencial de abstinencia y conversión",
-      "cita": "Mt 6, 16-18",
-      "tema": "Virtudes"
-    }
-  ],
-  "2026-06-01": [
-    {
-      "palabra": "NATAN",
-      "pista": "Profeta que reprendió a David por el pecado con Betsabé",
-      "cita": "2 Sam 12, 1-15",
-      "tema": "Personajes AT"
-    },
-    {
-      "palabra": "ESCRIBA",
-      "pista": "Copista y maestro de la Ley en tiempo de Jesús",
-      "cita": "Mc 12, 28-34",
-      "tema": "Pueblo"
-    }
-  ],
-  "2026-06-02": [
-    {
-      "palabra": "NAZARET",
-      "pista": "Ciudad donde Jesús creció y fue rechazado",
-      "cita": "Lc 4, 16-30",
-      "tema": "Lugares"
-    },
-    {
-      "palabra": "ROMANO",
-      "pista": "La carta de Pablo a los romanos expone el Evangelio",
-      "cita": "Rm 1, 1-17",
-      "tema": "Pueblo"
-    }
-  ],
-  "2026-06-03": [
-    {
-      "palabra": "ESMIRNA",
-      "pista": "Ciudad del Apocalipsis que recibió el elogio de Cristo",
-      "cita": "Ap 2, 8-11",
-      "tema": "Lugares"
-    },
-    {
-      "palabra": "MAESTRO",
-      "pista": "Jesús enseñaba con autoridad y no como los escribas",
-      "cita": "Mc 1, 21-28",
-      "tema": "Teología"
-    }
-  ],
-  "2026-06-04": [
-    {
-      "palabra": "CAPERNAUM",
-      "pista": "Ciudad junto al lago donde Jesús estableció su base",
-      "cita": "Mt 4, 13-17",
-      "tema": "Lugares"
-    },
-    {
-      "palabra": "ICONIO",
-      "pista": "Ciudad evangelizada por Pablo y Bernabé en su primer viaje",
-      "cita": "Hch 14, 1-7",
-      "tema": "Lugares"
-    }
-  ],
-  "2026-06-05": [
-    {
-      "palabra": "CIELO",
-      "pista": "Dios creó el cielo y la tierra al principio",
-      "cita": "Gn 1, 1-31",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "MARIPOSA",
-      "pista": "Las criaturas alaban al Señor por sus coloridos vuelos",
-      "cita": "Sal 148, 10",
-      "tema": "Creación"
-    }
-  ],
-  "2026-06-06": [
-    {
-      "palabra": "SALVACION",
-      "pista": "No hay bajo el cielo otro nombre por el que debamos salvarnos",
-      "cita": "Hch 4, 12",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "NIÑOS",
-      "pista": "Dejad que los niños vengan a mí y no los detengáis",
-      "cita": "Mc 10, 13-16",
-      "tema": "Pueblo"
-    }
-  ],
-  "2026-06-07": [
-    {
-      "palabra": "METANOIA",
-      "pista": "Conversión profunda del corazón y la mente",
-      "cita": "Mc 1, 15",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "MALDITO",
-      "pista": "Quien proclame un Evangelio distinto sea anatema",
-      "cita": "Gal 1, 8-9",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "RABINO",
-      "pista": "Maestro de la Ley a quien los discípulos seguían",
-      "cita": "Jn 3, 1-21",
-      "tema": "Teología"
-    }
-  ],
-  "2026-06-08": [
-    {
-      "palabra": "MARTIR",
-      "pista": "El que da su vida como testimonio de la fe",
-      "cita": "Hch 6, 8-7, 60",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "BALLENA",
-      "pista": "El Señor dispuso un gran pez para que engullera a Jonás",
-      "cita": "Jon 2, 1",
-      "tema": "Creación"
-    }
-  ],
-  "2026-06-09": [
-    {
-      "palabra": "VERAZ",
-      "pista": "Sea vuestro sí, sí, y vuestro no, no",
-      "cita": "Mt 5, 33-37",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "SILENCIO",
-      "pista": "El Señor está en su templo, guarde silencio toda la tierra",
-      "cita": "Hab 2, 20",
-      "tema": "Virtudes"
-    }
-  ],
-  "2026-06-10": [
-    {
-      "palabra": "JEPTE",
-      "pista": "Juez que hizo un voto precipitado al Señor",
-      "cita": "Jue 11, 1-40",
-      "tema": "Personajes AT"
-    },
-    {
-      "palabra": "DAMASCO",
-      "pista": "Ciudad donde Pablo fue convertido por una luz del cielo",
-      "cita": "Hch 9, 1-22",
-      "tema": "Lugares"
-    }
-  ],
-  "2026-06-11": [
-    {
-      "palabra": "JUDAS",
-      "pista": "Apóstol que traicionó a Jesús por treinta monedas",
-      "cita": "Mt 26, 14-16",
-      "tema": "Personajes NT"
-    },
-    {
-      "palabra": "GRIEGO",
-      "pista": "No hay distinción entre judío y griego, todos son uno en Cristo",
-      "cita": "Gal 3, 26-29",
-      "tema": "Pueblo"
-    }
-  ],
-  "2026-06-12": [
-    {
-      "palabra": "LIBRE",
-      "pista": "La verdad os hará libres, prometió Cristo",
-      "cita": "Jn 8, 31-36",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "BELEN",
-      "pista": "Ciudad de David donde nació Jesús",
-      "cita": "Lc 2, 1-20",
-      "tema": "Lugares"
-    }
-  ],
-  "2026-06-13": [
-    {
-      "palabra": "JUSTO",
-      "pista": "El justo vivirá por la fe, dijo el profeta",
-      "cita": "Hab 2, 4",
-      "tema": "Pueblo"
-    },
-    {
-      "palabra": "EXODO",
-      "pista": "Libro de la salida de Egipto y los diez mandamientos",
-      "cita": "Éx 12, 1-14",
-      "tema": "Libros"
-    }
-  ],
-  "2026-06-14": [
-    {
-      "palabra": "LIBERTO",
-      "pista": "El liberto que fue llamado siendo esclavo",
-      "cita": "1 Cor 7, 21-23",
-      "tema": "Pueblo"
-    },
-    {
-      "palabra": "PABLO",
-      "pista": "Apóstol de los gentiles, perseguidor convertido",
-      "cita": "Hch 9, 1-22",
-      "tema": "Personajes NT"
-    },
-    {
-      "palabra": "GUSANO",
-      "pista": "Nada importan ante ti los reinos como gusano",
-      "cita": "Is 41, 14",
-      "tema": "Creación"
-    }
-  ],
-  "2026-06-15": [
-    {
-      "palabra": "SABIO",
-      "pista": "El principio de la sabiduría es el temor del Señor",
-      "cita": "Prov 9, 1-12",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "FELIPE",
-      "pista": "Apóstol que bautizó al oficial etíope",
-      "cita": "Hch 8, 26-40",
-      "tema": "Personajes NT"
-    }
-  ],
-  "2026-06-16": [
-    {
-      "palabra": "GRACIA",
-      "pista": "Grace y verdad vinieron por Jesucristo",
-      "cita": "Jn 1, 17",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "VENDIMIA",
-      "pista": "El ángel lanzó su hoz sobre la tierra y vendimiará",
-      "cita": "Ap 14, 19",
-      "tema": "Creación"
-    }
-  ],
-  "2026-06-17": [
-    {
-      "palabra": "NACION",
-      "pista": "Todas las naciones caminarán a la luz del Señor",
-      "cita": "Is 60, 1-9",
-      "tema": "Pueblo"
-    },
-    {
-      "palabra": "ALELUYA",
-      "pista": "Aclamación litúrgica: Alabad al Señor",
-      "cita": "Sal 150, 1-6",
-      "tema": "Teología"
-    }
-  ],
-  "2026-06-18": [
-    {
-      "palabra": "RESCATE",
-      "pista": "El Hijo del hombre vino a dar su vida en rescate",
-      "cita": "Mc 10, 42-45",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "CRIATURA",
-      "pista": "El que está en Cristo es una nueva criatura",
-      "cita": "2 Cor 5, 14-21",
-      "tema": "Teología"
-    }
-  ],
-  "2026-06-19": [
-    {
-      "palabra": "AMOS",
-      "pista": "Profeta pastor que defendió la justicia social",
-      "cita": "Am 1, 1-2",
-      "tema": "Personajes AT"
-    },
-    {
-      "palabra": "ESPOSA",
-      "pista": "El que tiene la esposa es el esposo",
-      "cita": "Jn 3, 27-30",
-      "tema": "Persona"
-    }
-  ],
-  "2026-06-20": [
-    {
-      "palabra": "CISMA",
-      "pista": "División dolorosa en el seno de la Iglesia",
-      "cita": "1 Cor 1, 10-17",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "PENITENCIA",
-      "pista": "Sacramento del perdón de los pecados tras la confesión",
-      "cita": "Jn 20, 19-23",
-      "tema": "Liturgia"
-    }
-  ],
-  "2026-06-21": [
-    {
-      "palabra": "ELEGIDO",
-      "pista": "Escogido por Dios antes de la creación del mundo",
-      "cita": "Ef 1, 3-14",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "DRACMA",
-      "pista": "La mujer que perdió una dracma buscó hasta encontrarla",
-      "cita": "Lc 15, 8-10",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "LEALTAD",
-      "pista": "Fidelidad inquebrantable a la alianza con Dios",
-      "cita": "Sal 89, 1-37",
-      "tema": "Virtudes"
-    }
-  ],
-  "2026-06-22": [
-    {
-      "palabra": "JORDAN",
-      "pista": "Río donde Jesús fue bautizado por Juan",
-      "cita": "Mc 1, 1-11",
-      "tema": "Lugares"
-    },
-    {
-      "palabra": "TRIFENA",
-      "pista": "Colaboradora de Pablo, mujer que se fatisgó en el Señor",
-      "cita": "Rm 16, 12",
-      "tema": "Personajes NT"
-    }
-  ],
-  "2026-06-23": [
-    {
-      "palabra": "CORINTO",
-      "pista": "Ciudad griega evangelizada por Pablo durante dieciocho meses",
-      "cita": "Hch 18, 1-18",
-      "tema": "Lugares"
-    },
-    {
-      "palabra": "TRIBUS",
-      "pista": "Las doce tribus de Israel, una por cada hijo de Jacob",
-      "cita": "Ap 7, 4-8",
-      "tema": "Liturgia"
-    }
-  ],
-  "2026-06-24": [
-    {
-      "palabra": "SOMBRA",
-      "pista": "A la sombra de tus alas me cobijo cuando estoy angustiado",
-      "cita": "Sal 57, 2",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "VINO",
-      "pista": "Yo soy la vid verdadera, tomad, este es mi sangre",
-      "cita": "Jn 15, 1-8",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-06-25": [
-    {
-      "palabra": "ZAFIRO",
-      "pista": "La base del trono de Dios era zafiro, como el cielo",
-      "cita": "Éx 24, 10",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "AVESTRUZ",
-      "pista": "El avestruz en el desierto se ríe del caballo y su jinete",
-      "cita": "Jb 39, 13-18",
-      "tema": "Creación"
-    }
-  ],
-  "2026-06-26": [
-    {
-      "palabra": "NOCHE",
-      "pista": "No habrá allí noche alguna, el Señor Dios les dará luz",
-      "cita": "Ap 22, 5",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "SALVAR",
-      "pista": "El Hijo del hombre vino a buscar y salvar lo que estaba perdido",
-      "cita": "Lc 19, 1-10",
-      "tema": "Virtudes"
-    }
-  ],
-  "2026-06-27": [
-    {
-      "palabra": "EFESO",
-      "pista": "Ciudad de Asia donde Pablo fundó una gran comunidad",
-      "cita": "Hch 19, 1-20",
-      "tema": "Lugares"
-    },
-    {
-      "palabra": "SENDERO",
-      "pista": "Enséñame tus senderos, instrúyeme en tus caminos",
-      "cita": "Sal 25, 4",
-      "tema": "Teología"
-    }
-  ],
-  "2026-06-28": [
-    {
-      "palabra": "HACHA",
-      "pista": "Ya está puesta el hacha a la raíz de los árboles",
-      "cita": "Mt 3, 10",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "INCIENSO",
-      "pista": "Que suba mi oración como incienso ante tu presencia",
-      "cita": "Sal 141, 2",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "CUERVO",
-      "pista": "Al cuervo Dios le da el alimento cuando clama",
-      "cita": "Sal 147, 9",
-      "tema": "Creación"
-    }
-  ],
-  "2026-06-29": [
-    {
-      "palabra": "MARAVILLA",
-      "pista": "El que hace maravillas solo, porque es eterno su amor",
-      "cita": "Sal 136, 4",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "TEMOR",
-      "pista": "Reverencia y respeto a Dios, inicio de la sabiduría",
-      "cita": "Prov 1, 1-9",
-      "tema": "Virtudes"
-    }
-  ],
-  "2026-06-30": [
-    {
-      "palabra": "VISION",
-      "pista": "Revelación sobrenatural en que Dios habla al hombre",
-      "cita": "Is 1, 1-20",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "FUENTE",
-      "pista": "Daré de beber al sediento de la fuente de agua de vida",
-      "cita": "Ap 21, 6",
-      "tema": "Creación"
-    }
-  ],
-  "2026-07-01": [
-    {
-      "palabra": "ASIRIA",
-      "pista": "Imperio que llevó cautivas a las tribus del norte",
-      "cita": "2 Re 17, 1-23",
-      "tema": "Lugares"
-    },
-    {
-      "palabra": "ASCENSION",
-      "pista": "Fue llevado al cielo y se sentó a la derecha de Dios",
-      "cita": "Mc 16, 19",
-      "tema": "Teología"
-    }
-  ],
-  "2026-07-02": [
-    {
-      "palabra": "MEDICO",
-      "pista": "No necesitan médico los sanos sino los enfermos",
-      "cita": "Mt 9, 10-13",
-      "tema": "Pueblo"
-    },
-    {
-      "palabra": "HUERTO",
-      "pista": "Había un huerto donde Jesús y sus discípulos solían ir",
-      "cita": "Jn 18, 1",
-      "tema": "Creación"
-    }
-  ],
-  "2026-07-03": [
-    {
-      "palabra": "PIEDAD",
-      "pista": "Reverencia filial y amor hacia Dios y sus cosas",
-      "cita": "1 Tim 6, 6-19",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "PECADOR",
-      "pista": "Sed misericordioso conmigo, Señor, que soy un pecador",
-      "cita": "Lc 18, 9-14",
-      "tema": "Liturgia"
-    }
-  ],
-  "2026-07-04": [
-    {
-      "palabra": "NOBLEZA",
-      "pista": "Todo lo que es noble y puro, en eso pensad",
-      "cita": "Flp 4, 8",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "SEÑALES",
-      "pista": "Estas señales seguirán a los que crean en mi nombre",
-      "cita": "Mc 16, 17",
-      "tema": "Teología"
-    }
-  ],
-  "2026-07-05": [
-    {
-      "palabra": "RIQUEZA",
-      "pista": "La riqueza de los gentiles vendrá hacia ti",
-      "cita": "Is 60, 5",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "ENVIADO",
-      "pista": "El que es enviado lleva la autoridad de quien lo envía",
-      "cita": "Jn 20, 19-23",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "PROMESA",
-      "pista": "Las promesas de Dios son sí en Cristo",
-      "cita": "2 Cor 1, 20",
-      "tema": "Teología"
-    }
-  ],
-  "2026-07-06": [
-    {
-      "palabra": "CEDRO",
-      "pista": "El justo crecerá como el cedro del Líbano",
-      "cita": "Sal 92, 12-15",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "PECADO",
-      "pista": "Ofensa libremente cometida contra Dios y el prójimo",
-      "cita": "Rm 5, 12-21",
-      "tema": "Teología"
-    }
-  ],
-  "2026-07-07": [
-    {
-      "palabra": "APOSTOL",
-      "pista": "Enviado de Cristo, testigo de la Resurrección",
-      "cita": "Lc 6, 12-16",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "CONSEJO",
-      "pista": "Don del Espíritu que guía en la toma de decisiones",
-      "cita": "Is 11, 1-9",
-      "tema": "Virtudes"
-    }
-  ],
-  "2026-07-08": [
-    {
-      "palabra": "GALILEO",
-      "pista": "Los apóstoles eran galileos, reconocibles por su acento",
-      "cita": "Hch 2, 1-13",
-      "tema": "Pueblo"
-    },
-    {
-      "palabra": "SIQUEM",
-      "pista": "Primera ciudad de Canaán visitada por Abraham",
-      "cita": "Gn 12, 6-7",
-      "tema": "Lugares"
-    }
-  ],
-  "2026-07-09": [
-    {
-      "palabra": "SEÑAL",
-      "pista": "Signo del poder de Dios para creer en su nombre",
-      "cita": "Jn 20, 30-31",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "POSEIDO",
-      "pista": "Jesús expulsó al espíritu inmundo que gritaba",
-      "cita": "Mc 1, 21-28",
-      "tema": "Pueblo"
-    }
-  ],
-  "2026-07-10": [
-    {
-      "palabra": "SIMEON",
-      "pista": "Anciano del Templo que esperaba la consolación",
-      "cita": "Lc 2, 25-35",
-      "tema": "Personajes NT"
-    },
-    {
-      "palabra": "JOSUE",
-      "pista": "Sucesor de Moisés, conquistó la Tierra Prometida",
-      "cita": "Jos 1, 1-18",
-      "tema": "Personajes AT"
-    }
-  ],
-  "2026-07-11": [
-    {
-      "palabra": "CAMELLO",
-      "pista": "Juan el Bautista vestía piel de camello",
-      "cita": "Mc 1, 1-8",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "ANCIANO",
-      "pista": "No hables duramente al anciano, antes exhórtalo como a padre",
-      "cita": "1 Tim 5, 1",
-      "tema": "Pueblo"
-    }
-  ],
-  "2026-07-12": [
-    {
-      "palabra": "FIESTA",
-      "pista": "Celebrad ante el Señor vuestro Dios con alegría",
-      "cita": "Dt 16, 13-15",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "JAEL",
-      "pista": "Mujer que clavó una estaca en la sien del enemigo",
-      "cita": "Jue 4, 17-22",
-      "tema": "Personajes AT"
-    },
-    {
-      "palabra": "SOLIDARIDAD",
-      "pista": "Ayudaos mutuamente a llevar las cargas",
-      "cita": "Gal 6, 2",
-      "tema": "Virtudes"
-    }
-  ],
-  "2026-07-13": [
-    {
-      "palabra": "MANTO",
-      "pista": "Elías arrojó su manto sobre Eliseo al llamarlo",
-      "cita": "1 Re 19, 19-21",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "LISTRE",
-      "pista": "Ciudad donde Pablo curó a un cojo y fue apedreado",
-      "cita": "Hch 14, 8-20",
-      "tema": "Lugares"
-    }
-  ],
-  "2026-07-14": [
-    {
-      "palabra": "CEBADA",
-      "pista": "Cinco panes de cebada y dos peces en manos de Jesús",
-      "cita": "Jn 6, 9-13",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "SEGUNDA",
-      "pista": "A los que lo esperan para salvación aparecerá por segunda vez",
-      "cita": "Heb 9, 28",
-      "tema": "Teología"
-    }
-  ],
-  "2026-07-15": [
-    {
-      "palabra": "PIADOSO",
-      "pista": "La piedad es provechosa para todo y tiene promesa",
-      "cita": "1 Tim 4, 7-10",
-      "tema": "Pueblo"
-    },
-    {
-      "palabra": "ESTER",
-      "pista": "Reina que intercedió por su pueblo ante el rey",
-      "cita": "Est 4, 1-17",
-      "tema": "Personajes AT"
-    }
-  ],
-  "2026-07-16": [
-    {
-      "palabra": "ABSALON",
-      "pista": "Hijo de David que se rebeló contra su padre",
-      "cita": "2 Sam 18, 1-33",
-      "tema": "Personajes AT"
-    },
-    {
-      "palabra": "SEPULCRO",
-      "pista": "Se acercaron al sepulcro muy de madrugada el primer día",
-      "cita": "Lc 24, 1-3",
-      "tema": "Lugares"
-    }
-  ],
-  "2026-07-17": [
-    {
-      "palabra": "CALEB",
-      "pista": "Explorador fiel que entró en la Tierra Prometida",
-      "cita": "Nm 13, 1-14, 24",
-      "tema": "Personajes AT"
-    },
-    {
-      "palabra": "IGLESIA",
-      "pista": "Asamblea del pueblo de Dios convocada por Cristo",
-      "cita": "Mt 16, 13-20",
-      "tema": "Teología"
-    }
-  ],
-  "2026-07-18": [
-    {
-      "palabra": "ACEITE",
-      "pista": "El aceite ungía a reyes, sacerdotes y enfermos",
-      "cita": "St 5, 13-16",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "EUNICE",
-      "pista": "Madre de Timoteo, modelo de fe transmitida",
-      "cita": "2 Tim 1, 1-7",
-      "tema": "Personajes NT"
-    }
-  ],
-  "2026-07-19": [
-    {
-      "palabra": "TORRE",
-      "pista": "El nombre del Señor es una torre fuerte donde el justo se refugia",
-      "cita": "Prov 18, 10",
-      "tema": "Lugares"
-    },
-    {
-      "palabra": "NECIO",
-      "pista": "El necio dice en su corazón: no hay Dios",
-      "cita": "Sal 14, 1",
-      "tema": "Pueblo"
-    },
-    {
-      "palabra": "COFRE",
-      "pista": "Guardad estos mandatos como cofre de tu corazón",
-      "cita": "Prov 7, 1-3",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-07-20": [
-    {
-      "palabra": "CIENCIA",
-      "pista": "Don del Espíritu Santo que ilumina la fe",
-      "cita": "Is 11, 1-9",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "DIEZMO",
-      "pista": "Traed íntegro el diezmo a los graneros del Señor",
-      "cita": "Ml 3, 10",
-      "tema": "Liturgia"
-    }
-  ],
-  "2026-07-21": [
-    {
-      "palabra": "HEBRON",
-      "pista": "Ciudad donde vivió Abraham y fue enterrado",
-      "cita": "Gn 23, 1-20",
-      "tema": "Lugares"
-    },
-    {
-      "palabra": "SELLO",
-      "pista": "El rey puso su sello en la piedra del sepulcro",
-      "cita": "Mt 27, 66",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-07-22": [
-    {
-      "palabra": "BUENO",
-      "pista": "Solo Dios es bueno, respondió Jesús al joven rico",
-      "cita": "Mc 10, 17-22",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "ALABAR",
-      "pista": "Alabad al Señor por sus obras maravillosas",
-      "cita": "Sal 148, 1-14",
-      "tema": "Virtudes"
-    }
-  ],
-  "2026-07-23": [
-    {
-      "palabra": "PLAGAS",
-      "pista": "Señales enviadas para liberar al pueblo de Egipto",
-      "cita": "Éx 7, 1-12, 36",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "INOCENCIA",
-      "pista": "Lavaré mis manos en señal de inocencia",
-      "cita": "Sal 26, 6",
-      "tema": "Virtudes"
-    }
-  ],
-  "2026-07-24": [
-    {
-      "palabra": "FLORES",
-      "pista": "La lluvia pasó, las flores aparecen en la tierra",
-      "cita": "Cant 2, 11-12",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "PACTO",
-      "pista": "El Señor hizo un pacto con Abraham bajo las estrellas",
-      "cita": "Gn 15, 1-21",
-      "tema": "Liturgia"
-    }
-  ],
-  "2026-07-25": [
-    {
-      "palabra": "PAZ",
-      "pista": "La paz de Dios que supera todo entendimiento",
-      "cita": "Flp 4, 7",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "ABEJA",
-      "pista": "Las naciones me rodearon como abejas",
-      "cita": "Sal 118, 12",
-      "tema": "Creación"
-    }
-  ],
-  "2026-07-26": [
-    {
-      "palabra": "BONDAD",
-      "pista": "La bondad y la misericordia me siguen todos los días",
-      "cita": "Sal 23, 6",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "VALLE",
-      "pista": "Aunque camine por cañadas oscuras no temo ningún mal",
-      "cita": "Sal 23, 4",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "BATALLA",
-      "pista": "La gran batalla del día del Señor todopoderoso",
-      "cita": "Ap 16, 12-16",
-      "tema": "Eventos"
-    }
-  ],
-  "2026-07-27": [
-    {
-      "palabra": "PRODIGO",
-      "pista": "El padre corrió hacia el hijo pródigo y lo abrazó",
-      "cita": "Lc 15, 11-32",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "COSMOS",
-      "pista": "En él fueron creadas todas las cosas del cielo y la tierra",
-      "cita": "Col 1, 15-20",
-      "tema": "Creación"
-    }
-  ],
-  "2026-07-28": [
-    {
-      "palabra": "CABEZA",
-      "pista": "Cristo es la cabeza de la Iglesia su cuerpo",
-      "cita": "Ef 1, 22-23",
-      "tema": "Persona"
-    },
-    {
-      "palabra": "ALIANZA",
-      "pista": "Esta copa es la nueva alianza en mi sangre",
-      "cita": "1 Cor 11, 25",
-      "tema": "Teología"
-    }
-  ],
-  "2026-07-29": [
-    {
-      "palabra": "GACELA",
-      "pista": "Mi amado viene saltando por los montes como una gacela",
-      "cita": "Cant 2, 8-9",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "RAQUEL",
-      "pista": "Esposa amada de Jacob, madre de José",
-      "cita": "Gn 29, 1-30",
-      "tema": "Personajes AT"
-    }
-  ],
-  "2026-07-30": [
-    {
-      "palabra": "MOISES",
-      "pista": "Profeta que liberó al pueblo de Egipto",
-      "cita": "Éx 3, 1-17",
-      "tema": "Personajes AT"
-    },
-    {
-      "palabra": "SERAFIN",
-      "pista": "Ángel de seis alas que rodea el trono de Dios",
-      "cita": "Is 6, 1-7",
-      "tema": "Teología"
-    }
-  ],
-  "2026-07-31": [
-    {
-      "palabra": "ISABEL",
-      "pista": "Madre de Juan el Bautista, prima de María",
-      "cita": "Lc 1, 39-45",
-      "tema": "Personajes NT"
-    },
-    {
-      "palabra": "CAMINO",
-      "pista": "Yo soy el camino, la verdad y la vida",
-      "cita": "Jn 14, 6",
-      "tema": "Teología"
-    }
-  ],
-  "2026-08-01": [
-    {
-      "palabra": "SEÑOR",
-      "pista": "El Señor reina, se vistió de majestad",
-      "cita": "Sal 93, 1",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "AMPARO",
-      "pista": "El Señor es nuestro amparo y fortaleza",
-      "cita": "Sal 46, 2",
-      "tema": "Liturgia"
-    }
-  ],
-  "2026-08-02": [
-    {
-      "palabra": "PESCA",
-      "pista": "Después de la Resurrección, Jesús los invitó a pescar",
-      "cita": "Jn 21, 1-14",
-      "tema": "Eventos"
-    },
-    {
-      "palabra": "ESPERA",
-      "pista": "Espero al Señor, le espera mi alma",
-      "cita": "Sal 130, 5",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "VELO",
-      "pista": "El velo del Templo se rasgó en dos de arriba abajo",
-      "cita": "Mc 15, 37-38",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-08-03": [
-    {
-      "palabra": "SACERDOTE",
-      "pista": "Sois linaje elegido, sacerdocio real y nación santa",
-      "cita": "1 Pe 2, 9",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "ESPADA",
-      "pista": "La Palabra de Dios es espada de doble filo",
-      "cita": "Heb 4, 12-13",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-08-04": [
-    {
-      "palabra": "PARUSIA",
-      "pista": "La venida gloriosa de Cristo al fin de los tiempos",
-      "cita": "1 Tes 4, 13-18",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "OIDOS",
-      "pista": "El que tenga oídos que escuche",
-      "cita": "Mt 11, 15",
-      "tema": "Persona"
-    }
-  ],
-  "2026-08-05": [
-    {
-      "palabra": "LAODICEA",
-      "pista": "Iglesia tibia del Apocalipsis a la que Cristo amenazó",
-      "cita": "Ap 3, 14-22",
-      "tema": "Lugares"
-    },
-    {
-      "palabra": "PEDRO",
-      "pista": "Apóstol sobre quien Cristo edificó su Iglesia",
-      "cita": "Mt 16, 13-20",
-      "tema": "Personajes NT"
-    }
-  ],
-  "2026-08-06": [
-    {
-      "palabra": "HERMANA",
-      "pista": "Marta, hermana de María, sirvió a Jesús en su casa",
-      "cita": "Lc 10, 38-42",
-      "tema": "Persona"
-    },
-    {
-      "palabra": "REBAÑO",
-      "pista": "No temáis pequeño rebaño porque el Padre os da el reino",
-      "cita": "Lc 12, 32",
-      "tema": "Pueblo"
-    }
-  ],
-  "2026-08-07": [
-    {
-      "palabra": "BETANIA",
-      "pista": "Aldea de Lázaro, Marta y María, cerca de Jerusalén",
-      "cita": "Jn 11, 1-12, 11",
-      "tema": "Lugares"
-    },
-    {
-      "palabra": "GOLONDRINA",
-      "pista": "La golondrina tiene nido junto al altar del Señor",
-      "cita": "Sal 84, 4",
-      "tema": "Creación"
-    }
-  ],
-  "2026-08-08": [
-    {
-      "palabra": "PERSIA",
-      "pista": "Imperio bajo el que vivió Ester y Daniel",
-      "cita": "Est 1, 1-22",
-      "tema": "Lugares"
-    },
-    {
-      "palabra": "HIERBA",
-      "pista": "La hierba se seca pero la Palabra del Señor permanece",
-      "cita": "Is 40, 6-8",
-      "tema": "Creación"
-    }
-  ],
-  "2026-08-09": [
-    {
-      "palabra": "RESURRECCION",
-      "pista": "Yo soy la resurrección y la vida",
-      "cita": "Jn 11, 25",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "MUDO",
-      "pista": "Sacado el demonio, el mudo habló y la gente se maravilló",
-      "cita": "Mt 9, 32-33",
-      "tema": "Pueblo"
-    },
-    {
-      "palabra": "CANDELA",
-      "pista": "No se enciende una lámpara para ponerla debajo",
-      "cita": "Mt 5, 14-16",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-08-10": [
-    {
-      "palabra": "COLUMNA",
-      "pista": "La Iglesia es columna y fundamento de la verdad",
-      "cita": "1 Tim 3, 15",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "NOVENA",
-      "pista": "Nueve días de oración en espera del Espíritu",
-      "cita": "Hch 1, 12-14",
-      "tema": "Liturgia"
-    }
-  ],
-  "2026-08-11": [
-    {
-      "palabra": "MONTAÑA",
-      "pista": "El monte Sión, la ciudad del Dios vivo",
-      "cita": "Heb 12, 18-24",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "JUDIT",
-      "pista": "Viuda valiente que salvó a su pueblo",
-      "cita": "Jdt 13, 1-20",
-      "tema": "Personajes AT"
-    }
-  ],
-  "2026-08-12": [
-    {
-      "palabra": "LOGOS",
-      "pista": "En el principio existía el Logos y era Dios",
-      "cita": "Jn 1, 1-18",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "BENDITA",
-      "pista": "Bendita tú entre las mujeres y bendito el fruto de tu vientre",
-      "cita": "Lc 1, 42",
-      "tema": "Liturgia"
-    }
-  ],
-  "2026-08-13": [
-    {
-      "palabra": "ABIGAIL",
-      "pista": "Mujer prudente que aplacó la ira de David",
-      "cita": "1 Sam 25, 2-42",
-      "tema": "Personajes AT"
-    },
-    {
-      "palabra": "HONESTO",
-      "pista": "Sed honrados ante Dios y ante los hombres",
-      "cita": "2 Cor 8, 16-24",
-      "tema": "Virtudes"
-    }
-  ],
-  "2026-08-14": [
-    {
-      "palabra": "CIELOS",
-      "pista": "Morada de Dios a la que estamos llamados",
-      "cita": "Mt 5, 3-12",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "PUERTA",
-      "pista": "Las doce puertas de la ciudad son doce perlas",
-      "cita": "Ap 21, 21",
-      "tema": "Lugares"
-    }
-  ],
-  "2026-08-15": [
-    {
-      "palabra": "CONCILIO",
-      "pista": "El Espíritu Santo y nosotros hemos decidido juntos",
-      "cita": "Hch 15, 28",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "BARCA",
-      "pista": "Jesús subió a una barca y se sentó a enseñar",
-      "cita": "Mt 13, 1-3",
-      "tema": "Creación"
-    }
-  ],
-  "2026-08-16": [
-    {
-      "palabra": "JOVEN",
-      "pista": "Un joven rico se fue triste porque tenía muchos bienes",
-      "cita": "Mc 10, 17-22",
-      "tema": "Pueblo"
-    },
-    {
-      "palabra": "CESAREA",
-      "pista": "Puerto romano donde Pablo fue encarcelado dos años",
-      "cita": "Hch 23, 23-35",
-      "tema": "Lugares"
-    },
-    {
-      "palabra": "PILATO",
-      "pista": "Gobernador romano que juzgó a Jesús",
-      "cita": "Jn 18, 28-19, 16",
-      "tema": "Personajes NT"
-    }
-  ],
-  "2026-08-17": [
-    {
-      "palabra": "POBRES",
-      "pista": "El buen pastor se preocupa por los pobres del rebaño",
-      "cita": "Jn 10, 1-21",
-      "tema": "Pueblo"
-    },
-    {
-      "palabra": "FRUTO",
-      "pista": "El que permanece en mí y yo en él da mucho fruto",
-      "cita": "Jn 15, 5",
-      "tema": "Creación"
-    }
-  ],
-  "2026-08-18": [
-    {
-      "palabra": "DRAGON",
-      "pista": "El gran dragón, la serpiente antigua, fue arrojado",
-      "cita": "Ap 12, 1-17",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "TEMPLO",
-      "pista": "Casa de Dios purificada por Jesús de mercaderes",
-      "cita": "Jn 2, 13-25",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-08-19": [
-    {
-      "palabra": "BONDAD",
-      "pista": "Benevolencia de Dios hacia todas sus criaturas",
-      "cita": "Sal 103, 1-22",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "MIQUEAS",
-      "pista": "Profeta que anunció que el Mesías nacería en Belén",
-      "cita": "Mi 5, 1-5",
-      "tema": "Personajes AT"
-    }
-  ],
-  "2026-08-20": [
-    {
-      "palabra": "BARRO",
-      "pista": "El Señor formó al hombre del barro de la tierra",
-      "cita": "Gn 2, 7",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "YELMO",
-      "pista": "Tomad el yelmo de la salvación y la espada del Espíritu",
-      "cita": "Ef 6, 10-17",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-08-21": [
-    {
-      "palabra": "JUDIOS",
-      "pista": "La salvación viene de los judíos, dijo Jesús",
-      "cita": "Jn 4, 19-26",
-      "tema": "Pueblo"
-    },
-    {
-      "palabra": "CREDO",
-      "pista": "Profesión de fe proclamada en la liturgia",
-      "cita": "Jn 20, 24-29",
-      "tema": "Liturgia"
-    }
-  ],
-  "2026-08-22": [
-    {
-      "palabra": "ESPOSO",
-      "pista": "Cristo es el esposo y la Iglesia su esposa amada",
-      "cita": "Ef 5, 25-33",
-      "tema": "Persona"
-    },
-    {
-      "palabra": "GALATAS",
-      "pista": "Carta de Pablo sobre la libertad en Cristo",
-      "cita": "Gal 5, 1-26",
-      "tema": "Libros"
-    }
-  ],
-  "2026-08-23": [
-    {
-      "palabra": "HERMANOS",
-      "pista": "Mira, qué bueno y agradable vivir los hermanos unidos",
-      "cita": "Sal 133, 1",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "EVANGELIO",
-      "pista": "El principio del Evangelio de Jesucristo Hijo de Dios",
-      "cita": "Mc 1, 1",
-      "tema": "Libros"
-    },
-    {
-      "palabra": "ANTIOQUÍA",
-      "pista": "Ciudad donde los discípulos fueron llamados por primera vez cristianos",
-      "cita": "Hch 11, 19-26",
-      "tema": "Lugares"
-    }
-  ],
-  "2026-08-24": [
-    {
-      "palabra": "CASCABEL",
-      "pista": "En aquel día los cascabeles de los caballos serán sagrados",
-      "cita": "Zac 14, 20",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "AZADA",
-      "pista": "Forjarán sus espadas en azadas y sus lanzas en hoces",
-      "cita": "Is 2, 4",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-08-25": [
-    {
-      "palabra": "ELIAS",
-      "pista": "Profeta del Carmelo alimentado por ángeles",
-      "cita": "1 Re 19, 1-18",
-      "tema": "Personajes AT"
-    },
-    {
-      "palabra": "PENUEL",
-      "pista": "Lugar donde Jacob luchó con el ángel del Señor",
-      "cita": "Gn 32, 23-33",
-      "tema": "Lugares"
-    }
-  ],
-  "2026-08-26": [
-    {
-      "palabra": "CORNELIO",
-      "pista": "Centurión romano bautizado por Pedro, primer pagano",
-      "cita": "Hch 10, 1-48",
-      "tema": "Personajes NT"
-    },
-    {
-      "palabra": "PENTECOSTÉS",
-      "pista": "Fiesta en que el Espíritu Santo descendió sobre los discípulos",
-      "cita": "Hch 2, 1-13",
-      "tema": "Liturgia"
-    }
-  ],
-  "2026-08-27": [
-    {
-      "palabra": "PROVERBIOS",
-      "pista": "Libro de máximas sabias atribuidas a Salomón",
-      "cita": "Prov 1, 1-7",
-      "tema": "Libros"
-    },
-    {
-      "palabra": "LANGOSTAS",
-      "pista": "El Señor envió langostas sobre todo el país de Egipto",
-      "cita": "Éx 10, 13-15",
-      "tema": "Creación"
-    }
-  ],
-  "2026-08-28": [
-    {
-      "palabra": "EDIFICIO",
-      "pista": "Sois edificio de Dios levantado sobre el fundamento",
-      "cita": "1 Cor 3, 9-10",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "ATENAS",
-      "pista": "Ciudad donde Pablo predicó en el Areópago",
-      "cita": "Hch 17, 16-34",
-      "tema": "Lugares"
-    }
-  ],
-  "2026-08-29": [
-    {
-      "palabra": "MONEDA",
-      "pista": "La mujer que perdió una moneda encendió la lámpara",
-      "cita": "Lc 15, 8-10",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "DERROTA",
-      "pista": "Israel fue vencido en Ay por el pecado oculto de Acán",
-      "cita": "Jos 7, 1-26",
-      "tema": "Eventos"
-    }
-  ],
-  "2026-08-30": [
-    {
-      "palabra": "TOBIT",
-      "pista": "Libro deuterocanonical del joven Rafael y Tobías",
-      "cita": "Tb 3, 1-17",
-      "tema": "Libros"
-    },
-    {
-      "palabra": "EPIFANIA",
-      "pista": "Manifestación del Señor a los Magos de Oriente",
-      "cita": "Mt 2, 1-12",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "SINAI",
-      "pista": "Monte donde Dios entregó los diez mandamientos",
-      "cita": "Éx 19, 1-20, 21",
-      "tema": "Lugares"
-    }
-  ],
-  "2026-08-31": [
-    {
-      "palabra": "JUSTICIA",
-      "pista": "Que corra el derecho como agua y la justicia como río",
-      "cita": "Am 5, 24",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "ISMAEL",
-      "pista": "Hijo de Abraham y Agar, padre de doce príncipes",
-      "cita": "Gn 16, 1-16",
-      "tema": "Personajes AT"
-    }
-  ],
-  "2026-09-01": [
-    {
-      "palabra": "MISION",
-      "pista": "Envío de los discípulos a todo el mundo",
-      "cita": "Mt 28, 16-20",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "LIDIA",
-      "pista": "Primera europea bautizada por Pablo en Filipos",
-      "cita": "Hch 16, 11-15",
-      "tema": "Personajes NT"
-    }
-  ],
-  "2026-09-02": [
-    {
-      "palabra": "FINEES",
-      "pista": "Sacerdote cuyo celo por Dios detuvo la plaga",
-      "cita": "Nm 25, 1-15",
-      "tema": "Personajes AT"
-    },
-    {
-      "palabra": "MOSCA",
-      "pista": "Una mosca muerta echa a perder el perfume del perfumero",
-      "cita": "Qo 10, 1",
-      "tema": "Creación"
-    }
-  ],
-  "2026-09-03": [
-    {
-      "palabra": "ESCARCHA",
-      "pista": "El hielo y la escarcha alaban al Señor",
-      "cita": "Dn 3, 69",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "MONTAÑA",
-      "pista": "¿Quién subirá al monte del Señor?",
-      "cita": "Sal 24, 3",
-      "tema": "Creación"
-    }
-  ],
-  "2026-09-04": [
-    {
-      "palabra": "NIEVE",
-      "pista": "Lávame y quedaré más blanco que la nieve",
-      "cita": "Sal 51, 9",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "SAGRADO",
-      "pista": "El lugar donde estás es tierra sagrada, le dijo Dios",
-      "cita": "Éx 3, 4-5",
-      "tema": "Liturgia"
-    }
-  ],
-  "2026-09-05": [
-    {
-      "palabra": "NOEMI",
-      "pista": "Suegra que no abandonó a su nuera Rut",
-      "cita": "Rut 1, 1-22",
-      "tema": "Personajes AT"
-    },
-    {
-      "palabra": "HIGUERA",
-      "pista": "Cuando la higuera echa brotes sabéis que el verano está cerca",
-      "cita": "Mc 13, 28-32",
-      "tema": "Creación"
-    }
-  ],
-  "2026-09-06": [
-    {
-      "palabra": "ARBOL",
-      "pista": "El árbol de la vida en el jardín del Edén",
-      "cita": "Gn 2, 9",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "LEONES",
-      "pista": "Daniel fue arrojado al foso de los leones y vivió",
-      "cita": "Dn 6, 1-29",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "ESCOBAS",
-      "pista": "Yo barro con escoba del olvido, dice el Señor",
-      "cita": "Is 14, 23",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-09-07": [
-    {
-      "palabra": "GOMORRA",
-      "pista": "Ciudad destruida junto con Sodoma por el Señor",
-      "cita": "Gn 19, 24-25",
-      "tema": "Lugares"
     },
     {
       "palabra": "TRONO",
-      "pista": "Vi un trono en el cielo y Alguien estaba sentado en él",
-      "cita": "Ap 4, 2",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-09-08": [
-    {
-      "palabra": "OLIVOS",
-      "pista": "Jesús salió hacia el monte de los Olivos después de cenar",
-      "cita": "Lc 22, 39-46",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "PECES",
-      "pista": "La red que el pescador lanzó al mar recogió peces",
-      "cita": "Mt 13, 47-50",
-      "tema": "Creación"
-    }
-  ],
-  "2026-09-09": [
-    {
-      "palabra": "LLUVIA",
-      "pista": "Él hace llover sobre justos e injustos por igual",
-      "cita": "Mt 5, 45",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "GAMALIEL",
-      "pista": "Doctor de la Ley que defendió a los apóstoles",
-      "cita": "Hch 5, 33-39",
-      "tema": "Personajes NT"
-    }
-  ],
-  "2026-09-10": [
-    {
-      "palabra": "ZORRO",
-      "pista": "Las zorras tienen madrigueras y las aves nidos",
-      "cita": "Mt 8, 20",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "SANTO",
-      "pista": "Sed santos porque yo, el Señor vuestro Dios, soy santo",
-      "cita": "Lv 19, 1-2",
-      "tema": "Virtudes"
-    }
-  ],
-  "2026-09-11": [
-    {
-      "palabra": "CANTARES",
-      "pista": "El Cantar de los Cantares habla del amor esponsal",
-      "cita": "Cant 1, 1-17",
-      "tema": "Libros"
-    },
-    {
-      "palabra": "SANGRE",
-      "pista": "Esta es mi sangre de la alianza derramada por muchos",
-      "cita": "Mc 14, 22-24",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-09-12": [
-    {
-      "palabra": "ZAQUEO",
-      "pista": "Publicano que subió al sicómoro para ver a Jesús",
-      "cita": "Lc 19, 1-10",
-      "tema": "Personajes NT"
-    },
-    {
-      "palabra": "SANGRE",
-      "pista": "La sangre del cordero borrará todo pecado",
-      "cita": "Ap 7, 14",
-      "tema": "Teología"
-    }
-  ],
-  "2026-09-13": [
-    {
-      "palabra": "EFESIOS",
-      "pista": "Carta de Pablo sobre la Iglesia como cuerpo de Cristo",
-      "cita": "Ef 2, 4-10",
-      "tema": "Libros"
-    },
-    {
-      "palabra": "COMPASION",
-      "pista": "Jesús sintió compasión de la multitud agotada",
-      "cita": "Mt 9, 35-38",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "HEBREOS",
-      "pista": "Carta sobre Cristo como sumo sacerdote de la nueva alianza",
-      "cita": "Heb 4, 14-16",
-      "tema": "Libros"
-    }
-  ],
-  "2026-09-14": [
-    {
-      "palabra": "ARBOL",
-      "pista": "El árbol de la vida produce doce cosechas al año",
-      "cita": "Ap 22, 2",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "CAMPO",
-      "pista": "El reino de los cielos es como un tesoro escondido en un campo",
-      "cita": "Mt 13, 44",
-      "tema": "Creación"
-    }
-  ],
-  "2026-09-15": [
-    {
-      "palabra": "EDOM",
-      "pista": "País de los descendientes de Esaú al sur de Judá",
-      "cita": "Nm 20, 14-21",
-      "tema": "Lugares"
-    },
-    {
-      "palabra": "ROLLO",
-      "pista": "Le entregaron el rollo del profeta Isaías y lo encontró",
-      "cita": "Lc 4, 16-21",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-09-16": [
-    {
-      "palabra": "SANSON",
-      "pista": "Juez de gran fuerza entregada a Dios",
-      "cita": "Jue 13, 1-25",
-      "tema": "Personajes AT"
-    },
-    {
-      "palabra": "GENEROSIDAD",
-      "pista": "Al que da con alegría Dios lo ama",
-      "cita": "2 Cor 9, 7",
-      "tema": "Virtudes"
-    }
-  ],
-  "2026-09-17": [
-    {
-      "palabra": "CADENAS",
-      "pista": "Pedro fue liberado de las cadenas por el ángel del Señor",
-      "cita": "Hch 12, 1-19",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "PADRE",
-      "pista": "Cuando recéis, decid: Padre nuestro que estás en el cielo",
-      "cita": "Lc 11, 1-4",
-      "tema": "Persona"
-    }
-  ],
-  "2026-09-18": [
-    {
-      "palabra": "RUBEN",
-      "pista": "Primogénito de Jacob que quiso salvar a José",
-      "cita": "Gn 37, 18-30",
-      "tema": "Personajes AT"
-    },
-    {
-      "palabra": "MUERTE",
-      "pista": "Ya no habrá más muerte ni llanto ni lamento ni dolor",
-      "cita": "Ap 21, 4",
-      "tema": "Teología"
-    }
-  ],
-  "2026-09-19": [
-    {
-      "palabra": "CONSTANCIA",
-      "pista": "El que persevere hasta el final se salvará",
-      "cita": "Mt 10, 22",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "CORINTIOS",
-      "pista": "Cartas de Pablo a la joven comunidad de Corinto",
-      "cita": "1 Cor 1, 1-17",
-      "tema": "Libros"
-    }
-  ],
-  "2026-09-20": [
-    {
-      "palabra": "MISPA",
-      "pista": "Lugar donde Samuel reunió al pueblo para orar",
-      "cita": "1 Sam 7, 5-12",
-      "tema": "Lugares"
-    },
-    {
-      "palabra": "TERNURA",
-      "pista": "El Señor te amó con ternura y te atrae con benevolencia",
-      "cita": "Jr 31, 3-4",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "AYUNAR",
-      "pista": "Praxis penitencial que abre el corazón a Dios",
-      "cita": "Jl 2, 12-18",
-      "tema": "Virtudes"
-    }
-  ],
-  "2026-09-21": [
-    {
-      "palabra": "HERENCIA",
-      "pista": "El Señor es mi herencia y mi copa",
-      "cita": "Sal 16, 5",
+      "pista": "Al vencedor le daré sentarse conmigo en mi trono",
+      "cita": "Ap 3, 21",
       "tema": "Teología"
     },
-    {
-      "palabra": "ESAU",
-      "pista": "Hermano de Jacob que vendió su primogenitura",
-      "cita": "Gn 25, 27-34",
-      "tema": "Personajes AT"
-    }
-  ],
-  "2026-09-22": [
-    {
-      "palabra": "OFRENDA",
-      "pista": "Ofrece tus dones en el altar y reconcíliate antes",
-      "cita": "Mt 5, 23-24",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "PERDIZ",
-      "pista": "Como la perdiz que incuba lo que no puso",
-      "cita": "Jr 17, 11",
-      "tema": "Creación"
-    }
-  ],
-  "2026-09-23": [
-    {
-      "palabra": "MADERA",
-      "pista": "El Señor del árbol de la vida en el paraíso",
-      "cita": "Ap 22, 1-5",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "SINCERIDAD",
-      "pista": "Os exhorto en la sinceridad e integridad de Cristo",
-      "cita": "1 Cor 5, 8",
-      "tema": "Virtudes"
-    }
-  ],
-  "2026-09-24": [
-    {
-      "palabra": "PRISION",
-      "pista": "Juan el Bautista fue encarcelado por Herodes",
-      "cita": "Mt 14, 1-12",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "LAMENTACIONES",
-      "pista": "Elegías sobre la destrucción de Jerusalén",
-      "cita": "Lm 3, 22-26",
-      "tema": "Libros"
-    }
-  ],
-  "2026-09-25": [
-    {
-      "palabra": "JERICO",
-      "pista": "Ciudad cuyas murallas cayeron al sonido de las trompetas",
-      "cita": "Jos 6, 1-27",
-      "tema": "Lugares"
-    },
-    {
-      "palabra": "CRETA",
-      "pista": "Isla donde Tito ejerció el ministerio pastoral",
-      "cita": "Tit 1, 1-16",
-      "tema": "Lugares"
-    }
-  ],
-  "2026-09-26": [
-    {
-      "palabra": "BARRABAS",
-      "pista": "Asesino liberado en lugar de Jesús por Pilato",
-      "cita": "Mt 27, 15-26",
-      "tema": "Personajes NT"
-    },
-    {
-      "palabra": "MOSTAZA",
-      "pista": "La fe como un grano de mostaza mueve montañas",
-      "cita": "Mt 17, 20",
-      "tema": "Creación"
-    }
-  ],
-  "2026-09-27": [
-    {
-      "palabra": "CONFIANZA",
-      "pista": "No os angustiéis, confiad en Dios y en mí",
-      "cita": "Jn 14, 1-6",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "RAHAB",
-      "pista": "Mujer de Jericó que protegió a los espías de Josué",
-      "cita": "Jos 2, 1-24",
-      "tema": "Personajes AT"
-    },
-    {
-      "palabra": "GOLGOTA",
-      "pista": "Colina del Cráneo donde Jesús fue crucificado",
-      "cita": "Jn 19, 16-30",
-      "tema": "Lugares"
-    }
-  ],
-  "2026-09-28": [
-    {
-      "palabra": "CORAZON",
-      "pista": "Bienaventurados los limpios de corazón, verán a Dios",
-      "cita": "Mt 5, 8",
-      "tema": "Persona"
-    },
-    {
-      "palabra": "TRUENO",
-      "pista": "La voz del Señor era como el ruido de grandes truenos",
-      "cita": "Sal 29, 3-9",
-      "tema": "Creación"
-    }
-  ],
-  "2026-09-29": [
-    {
-      "palabra": "FE",
-      "pista": "La fe es garantía de lo que se espera y certeza de lo no visto",
-      "cita": "Heb 11, 1-3",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "REINO",
-      "pista": "La soberanía de Dios que ya está entre nosotros",
-      "cita": "Mc 1, 14-15",
-      "tema": "Virtudes"
-    }
-  ],
-  "2026-09-30": [
-    {
-      "palabra": "CIMIENTO",
-      "pista": "Nadie puede poner otro cimiento que el ya puesto: Cristo",
-      "cita": "1 Cor 3, 11",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "ENOC",
-      "pista": "Caminó con Dios y desapareció porque Dios se lo llevó",
-      "cita": "Gn 5, 21-24",
-      "tema": "Personajes AT"
-    }
-  ],
-  "2026-10-01": [
-    {
-      "palabra": "TROMPETA",
-      "pista": "El Señor descenderá del cielo al sonido de la trompeta",
-      "cita": "1 Tes 4, 16",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "SOFONIAS",
-      "pista": "Profeta que anunció el día grande del Señor",
-      "cita": "Sof 1, 1-18",
-      "tema": "Personajes AT"
-    }
-  ],
-  "2026-10-02": [
-    {
-      "palabra": "PORTENTO",
-      "pista": "Contaré todos tus portentos, te daré gracias Señor",
-      "cita": "Sal 9, 2",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "CAMINO",
-      "pista": "Yo soy el camino, la verdad y la vida",
-      "cita": "Jn 14, 1-12",
-      "tema": "Liturgia"
-    }
-  ],
-  "2026-10-03": [
-    {
-      "palabra": "COJO",
-      "pista": "El cojo saltó y comenzó a caminar alabando a Dios",
-      "cita": "Hch 3, 1-10",
-      "tema": "Pueblo"
-    },
-    {
-      "palabra": "BARRO",
-      "pista": "El Señor formó al hombre del barro de la tierra",
-      "cita": "Gn 2, 7",
-      "tema": "Creación"
-    }
-  ],
-  "2026-10-04": [
-    {
-      "palabra": "NIDO",
-      "pista": "Hasta el pájaro y la golondrina tienen nido junto al altar",
-      "cita": "Sal 84, 4",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "NAHUM",
-      "pista": "Profeta que anunció la caída de Nínive",
-      "cita": "Na 1, 1-15",
-      "tema": "Personajes AT"
-    },
-    {
-      "palabra": "REYES",
-      "pista": "Libros que narran la monarquía israelita",
-      "cita": "1 Re 8, 22-61",
-      "tema": "Libros"
-    }
-  ],
-  "2026-10-05": [
-    {
-      "palabra": "VALLE",
-      "pista": "Aunque pase por un valle de tinieblas, no temo",
-      "cita": "Sal 23, 1-6",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "ZARZA",
-      "pista": "Moisés vio una zarza que ardía sin consumirse",
-      "cita": "Éx 3, 1-6",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-10-06": [
-    {
-      "palabra": "PRODIGIO",
-      "pista": "Haced que vuestro siervo realice prodigios de salvación",
-      "cita": "Sal 86, 17",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "DAVID",
-      "pista": "Rey pastor según el corazón de Dios",
-      "cita": "1 Sam 16, 1-13",
-      "tema": "Personajes AT"
-    }
-  ],
-  "2026-10-07": [
-    {
-      "palabra": "ENVIAR",
-      "pista": "Id al mundo entero y proclamad el Evangelio",
-      "cita": "Mc 16, 14-20",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "PASION",
-      "pista": "Los sufrimientos de Jesús desde el Huerto al Calvario",
-      "cita": "Lc 22, 39-23, 56",
-      "tema": "Eventos"
-    }
-  ],
-  "2026-10-08": [
-    {
-      "palabra": "ADVIENTO",
-      "pista": "Tiempo de espera y preparación para la venida del Señor",
-      "cita": "Is 40, 1-11",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "UMBRAL",
-      "pista": "Prefiero estar en el umbral de la casa de mi Dios",
-      "cita": "Sal 84, 11",
-      "tema": "Lugares"
-    }
-  ],
-  "2026-10-09": [
-    {
-      "palabra": "GANADO",
-      "pista": "A él pertenecemos, somos su pueblo y rebaño de su prado",
-      "cita": "Sal 100, 3",
-      "tema": "Pueblo"
-    },
-    {
-      "palabra": "ESPIRITU",
-      "pista": "El Espíritu da vida, la carne no aprovecha para nada",
-      "cita": "Jn 6, 60-69",
-      "tema": "Teología"
-    }
-  ],
-  "2026-10-10": [
-    {
-      "palabra": "FUENTE",
-      "pista": "Jesús prometió una fuente que brotaría hasta la vida eterna",
-      "cita": "Jn 4, 7-15",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "MOAB",
-      "pista": "País al este del Mar Muerto, patria de Rut la moabita",
-      "cita": "Rut 1, 1-5",
-      "tema": "Lugares"
-    }
-  ],
-  "2026-10-11": [
-    {
-      "palabra": "CORONA",
-      "pista": "Seré coronado con la corona de justicia",
-      "cita": "2 Tim 4, 8",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "MAZMORRA",
-      "pista": "Juan había sido metido en la mazmorra",
-      "cita": "Mt 11, 2",
-      "tema": "Lugares"
-    },
-    {
-      "palabra": "ENTREGA",
-      "pista": "Padre, en tus manos encomiendo mi espíritu",
-      "cita": "Lc 23, 44-46",
-      "tema": "Virtudes"
-    }
-  ],
-  "2026-10-12": [
-    {
-      "palabra": "ALABANZA",
-      "pista": "El que ofrece alabanza me glorifica, dijo el Señor",
-      "cita": "Sal 50, 23",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "MILAGRO",
-      "pista": "Señal del poder divino que revela la gloria de Dios",
-      "cita": "Jn 2, 1-12",
-      "tema": "Teología"
-    }
-  ],
-  "2026-10-13": [
-    {
-      "palabra": "GRACIA",
-      "pista": "Don gratuito e inmerecido de Dios para la salvación",
-      "cita": "Ef 2, 1-10",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "GRACIA",
-      "pista": "La gracia del Señor Jesús sea con todos vosotros",
-      "cita": "Ap 22, 21",
-      "tema": "Teología"
-    }
-  ],
-  "2026-10-14": [
-    {
-      "palabra": "COLUMNA",
-      "pista": "De nube de día y de fuego de noche guió al pueblo",
-      "cita": "Éx 13, 21-22",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "CARMELO",
-      "pista": "Monte donde Elías venció a los profetas de Baal",
-      "cita": "1 Re 18, 19-40",
-      "tema": "Lugares"
-    }
-  ],
-  "2026-10-15": [
-    {
-      "palabra": "BÁCULO",
-      "pista": "Tu báculo y tu cayado me infunden seguridad",
-      "cita": "Sal 23, 4",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "AURORA",
-      "pista": "El Señor vendrá como la aurora, segura como la mañana",
-      "cita": "Os 6, 3",
-      "tema": "Creación"
-    }
-  ],
-  "2026-10-16": [
-    {
-      "palabra": "MATEO",
-      "pista": "Publicano llamado por Jesús al seguimiento",
-      "cita": "Mt 9, 9-13",
-      "tema": "Personajes NT"
-    },
-    {
-      "palabra": "CIUDAD",
-      "pista": "Vi la ciudad santa, la nueva Jerusalén, descender del cielo",
-      "cita": "Ap 21, 2",
-      "tema": "Lugares"
-    }
-  ],
-  "2026-10-17": [
-    {
-      "palabra": "PIEDRA",
-      "pista": "Sobre esta piedra edificaré mi iglesia",
-      "cita": "Mt 16, 18",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "VIDA",
-      "pista": "El que cree en mí aunque muera vivirá",
-      "cita": "Jn 11, 25",
-      "tema": "Teología"
-    }
-  ],
-  "2026-10-18": [
-    {
-      "palabra": "HONRADEZ",
-      "pista": "Andamos con honradez ante Dios y ante los hombres",
-      "cita": "2 Cor 8, 21",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "AVISPA",
-      "pista": "Enviaré avispas delante de ti para expulsar a los enemigos",
-      "cita": "Éx 23, 28",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "REDES",
-      "pista": "Dejaron las redes y le siguieron",
-      "cita": "Mt 4, 18-22",
-      "tema": "Creación"
-    }
-  ],
-  "2026-10-19": [
-    {
-      "palabra": "JUDIOS",
-      "pista": "No hay diferencia entre judío y griego",
-      "cita": "Rm 10, 12",
-      "tema": "Pueblo"
-    },
-    {
-      "palabra": "MIRLO",
-      "pista": "Los pájaros del cielo no siembran ni cosechan",
-      "cita": "Mt 6, 26",
-      "tema": "Creación"
-    }
-  ],
-  "2026-10-20": [
-    {
-      "palabra": "LIBERALIDAD",
-      "pista": "Dad y se os dará, medida buena y colmada",
-      "cita": "Lc 6, 38",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "DESIERTO",
-      "pista": "Conducirá a Israel al desierto y le hablará al corazón",
-      "cita": "Os 2, 16",
-      "tema": "Creación"
-    }
-  ],
-  "2026-10-21": [
-    {
-      "palabra": "SEMILLA",
-      "pista": "La semilla de mostaza es la más pequeña y se hace árbol",
-      "cita": "Mt 13, 31-32",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "CAYADO",
-      "pista": "Instrumento del pastor para guiar el rebaño",
-      "cita": "Mi 7, 14",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-10-22": [
-    {
-      "palabra": "JUZGAR",
-      "pista": "No juzguéis para que no seáis juzgados",
-      "cita": "Mt 7, 1-5",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "LLAMADA",
-      "pista": "Vocación divina que transforma la vida del elegido",
-      "cita": "Is 49, 1-7",
-      "tema": "Teología"
-    }
-  ],
-  "2026-10-23": [
-    {
-      "palabra": "COLINA",
-      "pista": "Levanto mis ojos a los montes, ¿de dónde vendrá mi socorro?",
-      "cita": "Sal 121, 1-8",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "ESCLAVO",
-      "pista": "El que quiera ser grande sea esclavo de todos",
-      "cita": "Mc 10, 42-45",
-      "tema": "Pueblo"
-    }
-  ],
-  "2026-10-24": [
-    {
-      "palabra": "MARTA",
-      "pista": "Hermana de María y Lázaro, confesó a Jesús como Hijo",
-      "cita": "Jn 11, 17-27",
-      "tema": "Personajes NT"
-    },
-    {
-      "palabra": "PUEBLO",
-      "pista": "Vosotros seréis mi pueblo y yo seré vuestro Dios",
-      "cita": "Éx 6, 6-8",
-      "tema": "Pueblo"
-    }
-  ],
-  "2026-10-25": [
-    {
-      "palabra": "ROCA",
-      "pista": "El Señor es mi roca, mi baluarte y mi libertador",
-      "cita": "Sal 18, 3",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "SERVICIO",
-      "pista": "El mayor entre vosotros sea vuestro servidor",
-      "cita": "Mt 23, 11",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "AGUA",
-      "pista": "El que beba del agua que yo daré no tendrá sed jamás",
-      "cita": "Jn 4, 7-15",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-10-26": [
-    {
-      "palabra": "ANCIANO",
-      "pista": "Los ancianos del Apocalipsis se postraron ante el trono",
-      "cita": "Ap 4, 1-11",
-      "tema": "Pueblo"
-    },
-    {
-      "palabra": "LLAMAR",
-      "pista": "Muchos son los llamados, pero pocos los elegidos",
-      "cita": "Mt 22, 1-14",
-      "tema": "Virtudes"
-    }
-  ],
-  "2026-10-27": [
-    {
-      "palabra": "MARCOS",
-      "pista": "Evangelista que escribió el Evangelio más breve",
-      "cita": "Mc 1, 1-20",
-      "tema": "Personajes NT"
-    },
-    {
-      "palabra": "AMOR",
-      "pista": "Nadie tiene amor más grande que dar la vida por amigos",
-      "cita": "Jn 15, 13",
-      "tema": "Virtudes"
-    }
-  ],
-  "2026-10-28": [
-    {
-      "palabra": "NACION",
-      "pista": "Todas las naciones caminarán a su luz",
-      "cita": "Ap 21, 24",
-      "tema": "Pueblo"
-    },
-    {
-      "palabra": "LETANIA",
-      "pista": "Súplica litúrgica que invoca a Dios o a los santos",
-      "cita": "Sal 136, 1-26",
-      "tema": "Liturgia"
-    }
-  ],
-  "2026-10-29": [
-    {
-      "palabra": "GRULLA",
-      "pista": "La cigüeña y la grulla conocen los tiempos de migración",
-      "cita": "Jr 8, 7",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "BERSEBA",
-      "pista": "Ciudad en el límite sur de Israel, símbolo del país",
-      "cita": "Gn 21, 31-34",
-      "tema": "Lugares"
-    }
-  ],
-  "2026-10-30": [
-    {
-      "palabra": "ARENA",
-      "pista": "Tu descendencia será como la arena del mar",
-      "cita": "Gn 22, 17",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "ENEMIGO",
-      "pista": "Amad a vuestros enemigos y orad por los que os persiguen",
-      "cita": "Mt 5, 43-48",
-      "tema": "Persona"
-    }
-  ],
-  "2026-10-31": [
-    {
-      "palabra": "CORDERO",
-      "pista": "Símbolo de Cristo inmolado que quita el pecado",
-      "cita": "Jn 1, 29-34",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "ESDRAS",
-      "pista": "Sacerdote reformador que leyó la Ley al pueblo",
-      "cita": "Neh 8, 1-18",
-      "tema": "Personajes AT"
-    }
-  ],
-  "2026-11-01": [
-    {
-      "palabra": "CASTO",
-      "pista": "Bienaventurados los limpios de corazón, verán a Dios",
-      "cita": "Mt 5, 8",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "VIBORA",
-      "pista": "¡Raza de víboras, quién os enseñó a huir de la ira!",
-      "cita": "Mt 3, 7-12",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "ROBOAM",
-      "pista": "Hijo de Salomón que dividió el reino",
-      "cita": "1 Re 12, 1-19",
-      "tema": "Personajes AT"
-    }
-  ],
-  "2026-11-02": [
-    {
-      "palabra": "FUEGO",
-      "pista": "El Espíritu Santo descendió en forma de lenguas de fuego",
-      "cita": "Hch 2, 1-13",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "CARIDAD",
-      "pista": "El amor sobrenatural que supera todos los dones",
-      "cita": "1 Cor 13, 1-13",
-      "tema": "Teología"
-    }
-  ],
-  "2026-11-03": [
-    {
-      "palabra": "TESORO",
-      "pista": "El reino de los cielos es como un tesoro escondido",
-      "cita": "Mt 13, 44-46",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "ALTAR",
-      "pista": "Lugar sagrado de la ofrenda y el encuentro con Dios",
-      "cita": "Gn 8, 20-22",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-11-04": [
-    {
-      "palabra": "CELOSO",
-      "pista": "El Señor es un Dios celoso que no tolera ídolos",
-      "cita": "Éx 20, 1-6",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "FUERZA",
-      "pista": "El Señor es mi fuerza y mi fortaleza",
-      "cita": "Éx 15, 2",
-      "tema": "Virtudes"
-    }
-  ],
-  "2026-11-05": [
-    {
-      "palabra": "BIEN",
-      "pista": "No os canséis de hacer el bien a todos",
-      "cita": "Gal 6, 6-10",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "PLENITUD",
-      "pista": "En él habita toda la plenitud de la divinidad",
-      "cita": "Col 2, 9-10",
-      "tema": "Teología"
-    }
-  ],
-  "2026-11-06": [
-    {
-      "palabra": "FRATERNOS",
-      "pista": "Que el amor fraterno sea constante entre vosotros",
-      "cita": "Rm 12, 10",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "ZACARÍAS",
-      "pista": "Sacerdote que enmudeció al anuncio del ángel",
-      "cita": "Lc 1, 5-25",
-      "tema": "Personajes NT"
-    }
-  ],
-  "2026-11-07": [
     {
       "palabra": "MARANATA",
-      "pista": "Ven, Señor Jesús, aclamación de los primeros cristianos",
+      "pista": "Ven, Señor Jesús, aclamación final del Apocalipsis",
       "cita": "Ap 22, 20",
       "tema": "Liturgia"
     },
     {
-      "palabra": "DIAKONIA",
-      "pista": "Servicio, ministerio: el que sirve como si Dios hablara",
-      "cita": "1 Pe 4, 11",
-      "tema": "Teología"
-    }
-  ],
-  "2026-11-08": [
-    {
-      "palabra": "CONFIAR",
-      "pista": "Confía en el Señor de todo corazón y no te apoyes en tu prudencia",
-      "cita": "Prov 3, 1-12",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "ROCAS",
-      "pista": "El que edifica sobre la roca no cae con la tormenta",
-      "cita": "Mt 7, 24-27",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "FAVOR",
-      "pista": "María encontró gracia y favor ante los ojos de Dios",
-      "cita": "Lc 1, 28-30",
-      "tema": "Liturgia"
-    }
-  ],
-  "2026-11-09": [
-    {
-      "palabra": "BALANZA",
-      "pista": "La balanza justa y las pesas exactas son del Señor",
-      "cita": "Prov 16, 11",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "SINCERO",
-      "pista": "Los que adoran a Dios lo hacen en espíritu y verdad",
-      "cita": "Jn 4, 19-26",
-      "tema": "Virtudes"
-    }
-  ],
-  "2026-11-10": [
-    {
-      "palabra": "BERNABE",
-      "pista": "Apóstol que llevó a Pablo a los apóstoles",
-      "cita": "Hch 11, 19-26",
-      "tema": "Personajes NT"
-    },
-    {
-      "palabra": "NIEVE",
-      "pista": "Aunque vuestros pecados sean rojos como el escarlata, quedarán como nieve",
-      "cita": "Is 1, 18-20",
-      "tema": "Creación"
-    }
-  ],
-  "2026-11-11": [
-    {
-      "palabra": "LAMENTO",
-      "pista": "¡Cómo yace solitaria la ciudad que era tan populosa!",
-      "cita": "Lm 1, 1-22",
+      "palabra": "SEPULTURA",
+      "pista": "José pidió que llevaran sus huesos al salir de Egipto",
+      "cita": "Gn 50, 25",
       "tema": "Eventos"
-    },
-    {
-      "palabra": "PUEBLO",
-      "pista": "Seréis mi pueblo y yo seré vuestro Dios",
-      "cita": "Jr 30, 22",
-      "tema": "Pueblo"
-    }
-  ],
-  "2026-11-12": [
-    {
-      "palabra": "GALILEA",
-      "pista": "Región donde Jesús realizó gran parte de su ministerio",
-      "cita": "Mt 4, 12-25",
-      "tema": "Lugares"
-    },
-    {
-      "palabra": "MELITA",
-      "pista": "Isla donde naufragó Pablo y curó al enfermo",
-      "cita": "Hch 28, 1-10",
-      "tema": "Lugares"
-    }
-  ],
-  "2026-11-13": [
-    {
-      "palabra": "POLVO",
-      "pista": "Del polvo fuiste sacado y al polvo volverás",
-      "cita": "Gn 3, 17-19",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "KERYGMA",
-      "pista": "Anuncio central: Cristo murió y resucitó por nosotros",
-      "cita": "1 Cor 15, 1-11",
-      "tema": "Teología"
-    }
-  ],
-  "2026-11-14": [
-    {
-      "palabra": "GEDEON",
-      "pista": "Juez que venció con trescientos hombres",
-      "cita": "Jue 7, 1-25",
-      "tema": "Personajes AT"
-    },
-    {
-      "palabra": "HOREB",
-      "pista": "Monte de Dios donde Elías escuchó la brisa suave",
-      "cita": "1 Re 19, 9-18",
-      "tema": "Lugares"
-    }
-  ],
-  "2026-11-15": [
-    {
-      "palabra": "APOLO",
-      "pista": "Predicador elocuente conocedor de las Escrituras",
-      "cita": "Hch 18, 24-28",
-      "tema": "Personajes NT"
-    },
-    {
-      "palabra": "JONAS",
-      "pista": "Profeta tragado por un gran pez",
-      "cita": "Jon 1, 1-2, 11",
-      "tema": "Personajes AT"
-    },
-    {
-      "palabra": "LECHUZA",
-      "pista": "La lechuza y el búho habitarán en las ruinas de Babilonia",
-      "cita": "Is 34, 11",
-      "tema": "Creación"
-    }
-  ],
-  "2026-11-16": [
-    {
-      "palabra": "PIES",
-      "pista": "¡Qué hermosos los pies del que trae la buena noticia!",
-      "cita": "Rm 10, 15",
-      "tema": "Persona"
-    },
-    {
-      "palabra": "INTEGRIDAD",
-      "pista": "El que camina en integridad camina seguro",
-      "cita": "Prov 10, 9",
-      "tema": "Virtudes"
-    }
-  ],
-  "2026-11-17": [
-    {
-      "palabra": "SABIO",
-      "pista": "El principio de la sabiduría es el temor del Señor",
-      "cita": "Prov 1, 7",
-      "tema": "Pueblo"
-    },
-    {
-      "palabra": "COSMOS",
-      "pista": "Tanto amó Dios al cosmos que dio a su Hijo único",
-      "cita": "Jn 3, 16",
-      "tema": "Teología"
-    }
-  ],
-  "2026-11-18": [
-    {
-      "palabra": "MILETO",
-      "pista": "Ciudad donde Pablo se despidió de los presbíteros de Éfeso",
-      "cita": "Hch 20, 17-38",
-      "tema": "Lugares"
-    },
-    {
-      "palabra": "CAIFAS",
-      "pista": "Sumo sacerdote que condenó a Jesús a muerte",
-      "cita": "Jn 18, 13-28",
-      "tema": "Personajes NT"
-    }
-  ],
-  "2026-11-19": [
-    {
-      "palabra": "BETEL",
-      "pista": "Lugar donde Jacob tuvo el sueño de la escalera",
-      "cita": "Gn 28, 10-22",
-      "tema": "Lugares"
-    },
-    {
-      "palabra": "DILUVIO",
-      "pista": "Gran inundación de la que se salvó Noé con el arca",
-      "cita": "Gn 7, 1-24",
-      "tema": "Eventos"
-    }
-  ],
-  "2026-11-20": [
-    {
-      "palabra": "BACULO",
-      "pista": "Bastón del pastor que reconforta y guía",
-      "cita": "Sal 23, 1-6",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "CONVERSION",
-      "pista": "Volveos a mí de todo corazón con ayuno y llanto",
-      "cita": "Jl 2, 12-13",
-      "tema": "Virtudes"
-    }
-  ],
-  "2026-11-21": [
-    {
-      "palabra": "OLIVO",
-      "pista": "Serás como olivo frondoso en la casa de Dios",
-      "cita": "Sal 52, 10",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "PRÓJIMO",
-      "pista": "Amarás a tu prójimo como a ti mismo",
-      "cita": "Lv 19, 18",
-      "tema": "Persona"
-    }
-  ],
-  "2026-11-22": [
-    {
-      "palabra": "MONJE",
-      "pista": "El que busca a Dios en la soledad del claustro",
-      "cita": "Sal 131, 1-3",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "BATALLA",
-      "pista": "El Señor pelea por vosotros, responded en silencio",
-      "cita": "Éx 14, 13-14",
-      "tema": "Eventos"
-    },
-    {
-      "palabra": "EXTRANJERO",
-      "pista": "Fuisteis extranjeros en Egipto, amad al forastero",
-      "cita": "Lv 19, 34",
-      "tema": "Pueblo"
-    }
-  ],
-  "2026-11-23": [
-    {
-      "palabra": "SILOÉ",
-      "pista": "Piscina donde Jesús mandó lavarse al ciego de nacimiento",
-      "cita": "Jn 9, 1-12",
-      "tema": "Lugares"
-    },
-    {
-      "palabra": "INFANTE",
-      "pista": "De la boca de los infantes perfeccionas la alabanza",
-      "cita": "Mt 21, 16",
-      "tema": "Pueblo"
-    }
-  ],
-  "2026-11-24": [
-    {
-      "palabra": "GRANO",
-      "pista": "Si el grano de trigo no cae en tierra y muere, queda solo",
-      "cita": "Jn 12, 24",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "JEHU",
-      "pista": "Rey de Israel que exterminó a la casa de Acab",
-      "cita": "2 Re 9, 1-37",
-      "tema": "Personajes AT"
-    }
-  ],
-  "2026-11-25": [
-    {
-      "palabra": "BOSQUE",
-      "pista": "Entonad cánticos al Señor, aclamen los árboles del bosque",
-      "cita": "1 Cr 16, 33",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "SOL",
-      "pista": "El Señor Dios es sol y escudo, concede gracia",
-      "cita": "Sal 84, 12",
-      "tema": "Creación"
-    }
-  ],
-  "2026-11-26": [
-    {
-      "palabra": "CIEGO",
-      "pista": "El ciego de nacimiento lavó en Siloé y vio",
-      "cita": "Jn 9, 1-12",
-      "tema": "Pueblo"
-    },
-    {
-      "palabra": "MADRE",
-      "pista": "Mujer, ahí tienes a tu hijo, al discípulo: ahí tienes a tu madre",
-      "cita": "Jn 19, 25-27",
-      "tema": "Persona"
-    }
-  ],
-  "2026-11-27": [
-    {
-      "palabra": "PUERTA",
-      "pista": "Llamo a la puerta: si alguien escucha y abre, entraré",
-      "cita": "Ap 3, 20",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "ETERNO",
-      "pista": "El Señor reina eternamente, dios por los siglos",
-      "cita": "Sal 146, 1-10",
-      "tema": "Liturgia"
-    }
-  ],
-  "2026-11-28": [
-    {
-      "palabra": "NUMEROS",
-      "pista": "Cuarto libro del Pentateuco, el censo del pueblo",
-      "cita": "Nm 6, 22-27",
-      "tema": "Libros"
-    },
-    {
-      "palabra": "LAMPARA",
-      "pista": "Tu palabra es lámpara a mis pies y luz en mi sendero",
-      "cita": "Sal 119, 105",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-11-29": [
-    {
-      "palabra": "CANON",
-      "pista": "Regla de fe, lista de libros sagrados de la Biblia",
-      "cita": "2 Tim 3, 14-17",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "NAVIDAD",
-      "pista": "Fiesta del nacimiento del Hijo de Dios hecho hombre",
-      "cita": "Lc 2, 1-20",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "CREADOR",
-      "pista": "Creo en Dios, Padre Todopoderoso, Creador del cielo",
-      "cita": "Gn 1, 1-31",
-      "tema": "Liturgia"
-    }
-  ],
-  "2026-11-30": [
-    {
-      "palabra": "LLANURA",
-      "pista": "En el desierto, allanad la llanura para nuestro Dios",
-      "cita": "Is 40, 1-11",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "CLAMOR",
-      "pista": "Escucha, Señor, mi voz cuando clamo",
-      "cita": "Sal 27, 7",
-      "tema": "Liturgia"
-    }
-  ],
-  "2026-12-01": [
-    {
-      "palabra": "ASAMBLEA",
-      "pista": "Reuníos el primer día de la semana para partir el pan",
-      "cita": "Hch 20, 7",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "OSO",
-      "pista": "Salió una osa del bosque y devoró a cuarenta y dos muchachos",
-      "cita": "2 Re 2, 24",
-      "tema": "Creación"
-    }
-  ],
-  "2026-12-02": [
-    {
-      "palabra": "CIELOS",
-      "pista": "Los cielos proclaman la gloria de Dios",
-      "cita": "Sal 19, 2",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "GLORIA",
-      "pista": "Vimos su gloria, gloria del unigénito del Padre",
-      "cita": "Jn 1, 14",
-      "tema": "Teología"
-    }
-  ],
-  "2026-12-03": [
-    {
-      "palabra": "DANIEL",
-      "pista": "Profeta fiel en la corte babilónica",
-      "cita": "Dn 6, 1-29",
-      "tema": "Personajes AT"
-    },
-    {
-      "palabra": "JOSIAS",
-      "pista": "Rey que renovó la alianza con la Ley hallada",
-      "cita": "2 Re 22, 1-23, 3",
-      "tema": "Personajes AT"
-    }
-  ],
-  "2026-12-04": [
-    {
-      "palabra": "MIRIAM",
-      "pista": "Hermana de Moisés y Aarón, profetisa",
-      "cita": "Éx 15, 19-21",
-      "tema": "Personajes AT"
-    },
-    {
-      "palabra": "PÓRTICO",
-      "pista": "Jesús pasó por el pórtico de Salomón en el Templo",
-      "cita": "Jn 10, 23",
-      "tema": "Lugares"
-    }
-  ],
-  "2026-12-05": [
-    {
-      "palabra": "EMAUS",
-      "pista": "Camino donde los discípulos reconocieron al Resucitado",
-      "cita": "Lc 24, 13-35",
-      "tema": "Lugares"
-    },
-    {
-      "palabra": "SADUCEO",
-      "pista": "No creía en la resurrección de los muertos",
-      "cita": "Mt 22, 23-33",
-      "tema": "Pueblo"
-    }
-  ],
-  "2026-12-06": [
-    {
-      "palabra": "AGUILA",
-      "pista": "Suben con alas de águila y no se fatigan",
-      "cita": "Is 40, 31",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "UNIDAD",
-      "pista": "Que todos sean uno como tú Padre en mí y yo en ti",
-      "cita": "Jn 17, 21",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "GORRION",
-      "pista": "¿No se venden dos gorriones por un as? Y ninguno cae sin el Padre",
-      "cita": "Mt 10, 29",
-      "tema": "Creación"
-    }
-  ],
-  "2026-12-07": [
-    {
-      "palabra": "TIMOTEO",
-      "pista": "Joven discípulo y colaborador de Pablo",
-      "cita": "1 Tim 1, 1-20",
-      "tema": "Personajes NT"
-    },
-    {
-      "palabra": "PALOMA",
-      "pista": "El Espíritu descendió sobre él en forma de paloma",
-      "cita": "Lc 3, 22",
-      "tema": "Creación"
-    }
-  ],
-  "2026-12-08": [
-    {
-      "palabra": "SEÑOR",
-      "pista": "El Señor es mi pastor, nada me falta",
-      "cita": "Sal 23, 1-6",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "ARCOIRIS",
-      "pista": "El arcoíris rodea el trono de la majestad divina",
-      "cita": "Ap 4, 3",
-      "tema": "Creación"
-    }
-  ],
-  "2026-12-09": [
-    {
-      "palabra": "TAMBORIL",
-      "pista": "Miriam tomó el tamboril y todas salieron a danzar",
-      "cita": "Éx 15, 20",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "CETRO",
-      "pista": "Tu cetro real es cetro de justicia",
-      "cita": "Heb 1, 8",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-12-10": [
-    {
-      "palabra": "SABADO",
-      "pista": "El sábado fue hecho para el hombre, no el hombre para el sábado",
-      "cita": "Mc 2, 27",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "VIENTO",
-      "pista": "El viento sopla donde quiere, así es el que nace del Espíritu",
-      "cita": "Jn 3, 7-9",
-      "tema": "Creación"
-    }
-  ],
-  "2026-12-11": [
-    {
-      "palabra": "FILIPOS",
-      "pista": "Primera ciudad europea evangelizada por Pablo",
-      "cita": "Hch 16, 12-40",
-      "tema": "Lugares"
-    },
-    {
-      "palabra": "VIRGEN",
-      "pista": "María fue prometida a José y concibió del Espíritu",
-      "cita": "Lc 1, 26-38",
-      "tema": "Teología"
-    }
-  ],
-  "2026-12-12": [
-    {
-      "palabra": "CABRITO",
-      "pista": "Mataron el cabrito para celebrar al fariseo en casa",
-      "cita": "Lc 15, 29",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "TESTIGO",
-      "pista": "El que da fe de lo que ha visto y oído",
-      "cita": "Hch 1, 6-14",
-      "tema": "Teología"
-    }
-  ],
-  "2026-12-13": [
-    {
-      "palabra": "HAMBRE",
-      "pista": "No sólo de pan vive el hombre sino de la Palabra",
-      "cita": "Mt 4, 1-11",
-      "tema": "Pueblo"
-    },
-    {
-      "palabra": "PANTERA",
-      "pista": "El leopardo se acostará con el cabrito en el reino de paz",
-      "cita": "Is 11, 6",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "CANAAN",
-      "pista": "Tierra Prometida a Abraham y sus descendientes",
-      "cita": "Gn 12, 1-9",
-      "tema": "Lugares"
-    }
-  ],
-  "2026-12-14": [
-    {
-      "palabra": "LABIOS",
-      "pista": "Ay de mí, pues soy un hombre de labios impuros",
-      "cita": "Is 6, 1-8",
-      "tema": "Persona"
-    },
-    {
-      "palabra": "REFUGIO",
-      "pista": "El Señor es refugio de los oprimidos en tiempos difíciles",
-      "cita": "Sal 9, 9-10",
-      "tema": "Liturgia"
-    }
-  ],
-  "2026-12-15": [
-    {
-      "palabra": "GLORIA",
-      "pista": "Majestad y esplendor de Dios manifestados al hombre",
-      "cita": "Is 6, 1-13",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "LIBRO",
-      "pista": "Dichoso el que lee y los que escuchan las palabras proféticas",
-      "cita": "Ap 1, 3",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-12-16": [
-    {
-      "palabra": "ABISMO",
-      "pista": "Me has arrojado al abismo más profundo del mar",
-      "cita": "Sal 88, 7",
-      "tema": "Creación"
-    },
-    {
-      "palabra": "UNCION",
-      "pista": "Gesto sagrado de consagración con aceite",
-      "cita": "1 Sam 16, 1-13",
-      "tema": "Teología"
-    }
-  ],
-  "2026-12-17": [
-    {
-      "palabra": "YAHVE",
-      "pista": "Nombre sagrado de Dios revelado a Moisés en la zarza",
-      "cita": "Éx 3, 13-15",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "BURRO",
-      "pista": "El rey entró en Jerusalén montado en un pollino de asna",
-      "cita": "Mt 21, 7",
-      "tema": "Creación"
-    }
-  ],
-  "2026-12-18": [
-    {
-      "palabra": "CARNE",
-      "pista": "El Verbo se hizo carne y puso su morada entre nosotros",
-      "cita": "Jn 1, 14",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "LANZA",
-      "pista": "Un soldado le atravesó el costado con una lanza",
-      "cita": "Jn 19, 31-37",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-12-19": [
-    {
-      "palabra": "MEDIADOR",
-      "pista": "Hay un solo mediador entre Dios y los hombres, Cristo",
-      "cita": "1 Tim 2, 5",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "CIERVO",
-      "pista": "Como el ciervo desea las corrientes de agua así mi alma",
-      "cita": "Sal 42, 2",
-      "tema": "Creación"
-    }
-  ],
-  "2026-12-20": [
-    {
-      "palabra": "FORTALEZA",
-      "pista": "Todo lo puedo en aquel que me da fuerzas",
-      "cita": "Flp 4, 13",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "JORNALERO",
-      "pista": "El jornalero recibió su denario al final del día",
-      "cita": "Mt 20, 1-16",
-      "tema": "Pueblo"
-    },
-    {
-      "palabra": "UNGIDO",
-      "pista": "Consagrado por el óleo y el Espíritu para una misión",
-      "cita": "Sal 2, 1-12",
-      "tema": "Teología"
-    }
-  ],
-  "2026-12-21": [
-    {
-      "palabra": "CAUTIVO",
-      "pista": "Anunciar la libertad a los cautivos",
-      "cita": "Lc 4, 16-21",
-      "tema": "Pueblo"
-    },
-    {
-      "palabra": "OFRENDA",
-      "pista": "Si traes tu ofrenda al altar y recuerdas que tienes algo",
-      "cita": "Mt 5, 23-24",
-      "tema": "Liturgia"
-    }
-  ],
-  "2026-12-22": [
-    {
-      "palabra": "BOCA",
-      "pista": "Lo que sale de la boca contamina al hombre",
-      "cita": "Mt 15, 10-11",
-      "tema": "Persona"
-    },
-    {
-      "palabra": "PALOMAS",
-      "pista": "Ofrecían un par de tórtolas o dos pichones",
-      "cita": "Lc 2, 22-24",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-12-23": [
-    {
-      "palabra": "INJUSTO",
-      "pista": "Dios hace salir el sol sobre justos e injustos",
-      "cita": "Mt 5, 43-48",
-      "tema": "Pueblo"
-    },
-    {
-      "palabra": "MANÁ",
-      "pista": "Pan del cielo que Dios envió al pueblo en el desierto",
-      "cita": "Éx 16, 1-36",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-12-24": [
-    {
-      "palabra": "ARCA",
-      "pista": "El arca de la alianza contenía las tablas de la ley",
-      "cita": "Éx 25, 10-22",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "RAYO",
-      "pista": "Lanzó sus rayos y los dispersó con gran relámpago",
-      "cita": "Sal 18, 14-15",
-      "tema": "Creación"
-    }
-  ],
-  "2026-12-25": [
-    {
-      "palabra": "ENOJO",
-      "pista": "El que se enoja sin razón peca contra su hermano",
-      "cita": "Mt 5, 21-22",
-      "tema": "Virtudes"
-    },
-    {
-      "palabra": "PROMESA",
-      "pista": "Compromiso fiel de Dios a su pueblo elegido",
-      "cita": "Gn 15, 1-21",
-      "tema": "Teología"
-    }
-  ],
-  "2026-12-26": [
-    {
-      "palabra": "AMPARO",
-      "pista": "El ángel del Señor acampa en torno a quienes le temen",
-      "cita": "Sal 34, 1-22",
-      "tema": "Liturgia"
-    },
-    {
-      "palabra": "RICO",
-      "pista": "Le es muy difícil al rico entrar en el reino de los cielos",
-      "cita": "Mt 19, 23",
-      "tema": "Pueblo"
-    }
-  ],
-  "2026-12-27": [
-    {
-      "palabra": "SHALOM",
-      "pista": "La paz hebrea que significa plenitud y bienestar integral",
-      "cita": "Jn 14, 27",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "MANASES",
-      "pista": "Rey que se convirtió desde la prisión babilónica",
-      "cita": "2 Cr 33, 1-20",
-      "tema": "Personajes AT"
-    },
-    {
-      "palabra": "TEMPLO",
-      "pista": "No sabéis que sois templo de Dios y el Espíritu habita",
-      "cita": "1 Cor 3, 16",
-      "tema": "Teología"
-    }
-  ],
-  "2026-12-28": [
-    {
-      "palabra": "HIJOS",
-      "pista": "Mirad qué amor nos ha dado el Padre, que nos llamemos hijos de Dios",
-      "cita": "1 Jn 3, 1-3",
-      "tema": "Persona"
-    },
-    {
-      "palabra": "TRONO",
-      "pista": "El cielo es mi trono y la tierra el escabel de mis pies",
-      "cita": "Is 66, 1-2",
-      "tema": "Objetos"
-    }
-  ],
-  "2026-12-29": [
-    {
-      "palabra": "COMUNIDAD",
-      "pista": "La multitud de los creyentes tenía un solo corazón",
-      "cita": "Hch 4, 32",
-      "tema": "Pueblo"
-    },
-    {
-      "palabra": "ROSARIO",
-      "pista": "Corona de rosas ofrecida a la Virgen en oración",
-      "cita": "Lc 1, 26-56",
-      "tema": "Liturgia"
-    }
-  ],
-  "2026-12-30": [
-    {
-      "palabra": "MESÍAS",
-      "pista": "El Ungido de Dios prometido por los profetas",
-      "cita": "Dn 9, 24-27",
-      "tema": "Teología"
-    },
-    {
-      "palabra": "PARAISO",
-      "pista": "Jardín del Edén y promesa de vida eterna con Dios",
-      "cita": "Gn 2, 4-25",
-      "tema": "Teología"
-    }
-  ],
-  "2026-12-31": [
-    {
-      "palabra": "PANÉS",
-      "pista": "Jesús los miró, tomó los panes, y los multiplicó",
-      "cita": "Jn 6, 1-15",
-      "tema": "Objetos"
-    },
-    {
-      "palabra": "AQUILA",
-      "pista": "Artesano de tiendas colaborador de Pablo en Corinto",
-      "cita": "Hch 18, 1-4",
-      "tema": "Personajes NT"
     }
   ]
 }
