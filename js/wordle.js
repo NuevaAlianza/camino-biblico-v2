@@ -1,11 +1,11 @@
 // =====================================================================
 // wordle.js  — Camino Bíblico v2
-// Multi-palabra por día: 2 de lun-sáb, 3 los domingos
-// Cada palabra se guarda como fila separada en wordle_jugadas
-// con el campo palabra_idx (0, 1, 2…)
+// Multi-palabra por día: 5 de lun-sáb, 7 los domingos
+// Modo invitado: ?invitado=1 → usa palabras de ayer, sin login, sin saves
+// Pista: disponible solo en el ÚLTIMO intento (intento 6)
 // =====================================================================
 
-// ─── localStorage seguro (Edge Tracking Prevention) ───────────────────────────
+// ─── localStorage seguro ─────────────────────────────────────────────
 const LS = {
   get(k, def = null) {
     try { const v = localStorage.getItem(k); return v !== null ? v : def; }
@@ -19,7 +19,11 @@ const TZ       = "America/Santo_Domingo";
 const MAX_INT  = 6;
 const DATA_URL = "datos/wordle-semanas.json";
 
-// ─── Sound Manager ────────────────────────────────────────────────────────────
+// ─── Modo invitado ────────────────────────────────────────────────────
+// ?invitado=1 activa modo sin login. Usa palabras de ayer para evitar trampas.
+const ES_INVITADO = new URLSearchParams(location.search).get("invitado") === "1";
+
+// ─── Sound Manager ────────────────────────────────────────────────────
 const SND = {
   _cache: {},
   _muted: LS.get("cb:muted") === "1",
@@ -38,7 +42,6 @@ const SND = {
     } catch(e) {}
   },
   nota(idx) {
-    // idx 0-5 → nota_a, nota_b, nota_c según posición
     const notas = ["nota_a","nota_b","nota_a","nota_b","nota_c","nota_c"];
     this.play(notas[Math.min(idx, notas.length - 1)], 0.5);
   }
@@ -90,20 +93,20 @@ const modalFin  = $("modal-fin");
 
 // ─── Estado global ───────────────────────────────────────────────────
 let sb, uid, todayISO, semanaISO, tomorrowISO;
-let palabrasHoy = [];    // [{palabra, pista, cita, tema}, ...]
-let wordIdx     = 0;     // índice de la palabra activa
+let palabrasHoy = [];
+let wordIdx     = 0;
 let xpAcumulado = 0;
 
 // ─── Estado por ronda ────────────────────────────────────────────────
-let solucion    = "";
-let longitud    = 5;
-let intentoIdx  = 0;
-let terminado   = false;
+let solucion     = "";
+let longitud     = 5;
+let intentoIdx   = 0;
+let terminado    = false;
 let pistasUsadas = 0;
-let jugadaId    = null;  // id de la fila activa en wordle_jugadas
-let keyState    = {};
-let startTime   = Date.now();
-const filasRef  = [];
+let jugadaId     = null;
+let keyState     = {};
+let startTime    = Date.now();
+const filasRef   = [];
 
 const FILAS_TECLADO = [
   "Q W E R T Y U I O P".split(" "),
@@ -111,8 +114,28 @@ const FILAS_TECLADO = [
   ["ENTER", ..."Z X C V B N M".split(" "), "BORRAR"]
 ];
 
-// ─── Auth anónima ────────────────────────────────────────────────────
+// ─── Banner modo invitado ─────────────────────────────────────────────
+function mostrarBannerInvitado() {
+  if (!ES_INVITADO) return;
+  const banner = document.createElement("div");
+  banner.style.cssText = `
+    background: rgba(168,85,247,0.12);
+    border: 1px solid rgba(168,85,247,0.35);
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-size: 12px;
+    color: #c084fc;
+    text-align: center;
+    margin: 8px 0 4px;
+  `;
+  banner.textContent = "👤 Modo invitado — jugando con las palabras de ayer · El progreso no se guarda";
+  const header = document.querySelector(".header") || document.querySelector(".meta-card");
+  if (header) header.insertAdjacentElement("afterend", banner);
+}
+
+// ─── Auth ─────────────────────────────────────────────────────────────
 async function ensureAuth() {
+  if (ES_INVITADO) return;   // sin login en modo invitado
   const { data } = await sb.auth.getUser();
   if (!data?.user) {
     const { error } = await sb.auth.signInAnonymously();
@@ -124,11 +147,15 @@ async function ensureAuth() {
 // INIT
 // ─────────────────────────────────────────────────────────────────────
 (async function init() {
-  try { sb = await waitForSupabase(); }
-  catch (e) { alert(e.message); return; }
+  mostrarBannerInvitado();
 
-  await ensureAuth();
-  uid = (await sb.auth.getUser()).data.user.id;
+  // En modo invitado no necesitamos Supabase para jugar
+  if (!ES_INVITADO) {
+    try { sb = await waitForSupabase(); }
+    catch (e) { alert(e.message); return; }
+    await ensureAuth();
+    uid = (await sb.auth.getUser()).data.user.id;
+  }
 
   // ── Cargar JSON ──
   let cfg;
@@ -136,42 +163,55 @@ async function ensureAuth() {
   catch (e) { alert("No se pudo cargar " + DATA_URL); return; }
 
   const hoy = hoyDO();
-  todayISO  = isoDateDO(hoy);
 
-  // tomorrowISO para queries de rango de fecha
-  const manana = new Date(hoy);
-  manana.setDate(hoy.getDate() + 1);
+  // MODO INVITADO: usa las palabras de ayer para evitar trampas
+  const fechaJuego = ES_INVITADO
+    ? (() => { const a = new Date(hoy); a.setDate(hoy.getDate() - 1); return a; })()
+    : hoy;
+
+  todayISO    = isoDateDO(fechaJuego);
+  const manana = new Date(fechaJuego);
+  manana.setDate(fechaJuego.getDate() + 1);
   tomorrowISO = isoDateDO(manana);
 
-  // semana_id = domingo de esta semana
-  const domingo = new Date(hoy);
-  domingo.setDate(hoy.getDate() - hoy.getDay());
+  // semana_id = domingo de la semana del día de juego
+  const domingo = new Date(fechaJuego);
+  domingo.setDate(fechaJuego.getDate() - fechaJuego.getDay());
   semanaISO = isoDateDO(domingo);
 
-  // ── Resolver palabras del día ──
-  // Formato NUEVO: { "2026-03-15": [{palabra,pista,cita,tema},...] }
-  // Formato VIEJO: { semanas: [...] }  ← compatibilidad
+  // ── Resolver palabras ──
   if (cfg[todayISO]) {
     palabrasHoy = cfg[todayISO];
   } else if (cfg.semanas) {
-    palabrasHoy = resolverDesdeFormatoViejo(cfg.semanas, hoy);
+    palabrasHoy = resolverDesdeFormatoViejo(cfg.semanas, fechaJuego);
   } else {
-    alert("No hay palabras para hoy en el JSON."); return;
+    alert("No hay palabras disponibles en el JSON."); return;
   }
 
-  if (!palabrasHoy.length) { alert("Array de palabras vacío para hoy."); return; }
+  if (!palabrasHoy.length) { alert("Array de palabras vacío."); return; }
 
-  // ── Racha desde localStorage ──
-  const lastDate  = LS.get("wb:last");
-  const prevStreak = parseInt(LS.get("wb:streak") || "0", 10);
-  if (lastDate && lastDate !== todayISO) {
-    const diff = (hoy - new Date(lastDate)) / 86400000;
-    if (diff > 2) LS.set("wb:streak", "0");
+  // ── Racha (solo usuarios registrados) ──
+  if (!ES_INVITADO) {
+    const lastDate   = LS.get("wb:last");
+    const hoyRealISO = isoDateDO(hoy);
+    if (lastDate && lastDate !== hoyRealISO) {
+      const diff = (hoy - new Date(lastDate)) / 86400000;
+      if (diff > 2) LS.set("wb:streak", "0");
+    }
+    rachaEl.textContent = LS.get("wb:streak") || "0";
+  } else {
+    rachaEl.textContent = "—";
+    xpTotalEl.textContent = "—";
   }
-  rachaEl.textContent = LS.get("wb:streak") || "0";
 
-  // ── Consultar jugadas de hoy en Supabase ──
-  // Usamos LIKE para capturar tanto "2026-03-14" como "2026-03-14T..."
+  // ── Modo invitado: siempre empieza desde la primera palabra ──
+  if (ES_INVITADO) {
+    wordIdx = 0;
+    await cargarPalabra(wordIdx, null);
+    return;
+  }
+
+  // ── Consultar jugadas del día en Supabase ──
   const { data: jugadas } = await sb
     .from("wordle_jugadas")
     .select("*")
@@ -183,21 +223,15 @@ async function ensureAuth() {
   xpAcumulado = completadas.reduce((s, j) => s + (j.xp_otorgado || 0), 0);
   xpTotalEl.textContent = `+${xpAcumulado}`;
 
-  // ── Backup en localStorage: marcar día completo ──
-  // Si Supabase falla o hay mismatch de fecha, el localStorage protege
   const lsKey = `wb:done:${todayISO}`;
-  if (completadas.length >= palabrasHoy.length) {
-    LS.set(lsKey, "1");
-  }
+  if (completadas.length >= palabrasHoy.length) LS.set(lsKey, "1");
   const yaCompletado = LS.get(lsKey) === "1";
 
-  // ── Buscar primera palabra pendiente ──
   wordIdx = completadas.length;
   if (wordIdx >= palabrasHoy.length || yaCompletado) {
     mostrarFinDelDia(completadas); return;
   }
 
-  // Buscar jugada en curso para esta palabra (si el usuario cerró antes de terminar)
   const enCurso = (jugadas || []).find(
     j => j.palabra_idx === wordIdx && j.estado !== "terminado"
   ) || null;
@@ -209,32 +243,31 @@ async function ensureAuth() {
 // CARGAR PALABRA
 // ─────────────────────────────────────────────────────────────────────
 async function cargarPalabra(idx, jugadaExistente) {
-  // Limpiar estado anterior
-  gridEl.innerHTML   = "";
+  gridEl.innerHTML    = "";
   tecladoEl.innerHTML = "";
-  filasRef.length    = 0;
-  keyState           = {};
-  intentoIdx         = 0;
-  terminado          = false;
-  pistasUsadas       = 0;
-  startTime          = Date.now();
+  filasRef.length     = 0;
+  keyState            = {};
+  intentoIdx          = 0;
+  terminado           = false;
+  pistasUsadas        = 0;
+  startTime           = Date.now();
   window.removeEventListener("keydown", onKey);
 
-  pistaEl.textContent = "Pista disponible tras el 4.º intento";
+  pistaEl.textContent = "💡 Pista disponible en el último intento";
   btnPista.disabled   = true;
 
   const item = palabrasHoy[idx];
   solucion   = normalize(item.palabra);
   longitud   = solucion.length;
 
-  temaEl.textContent  = item.tema  || "—";
-  citaEl.textContent  = "";   // ocultar cita hasta el 4.º intento
+  temaEl.textContent    = item.tema || "—";
+  citaEl.textContent    = "";  // se revela en el último intento
   wordLabel.textContent = `Palabra ${idx + 1} de ${palabrasHoy.length}`;
   gridEl.style.setProperty("--n", longitud);
 
   renderDots(idx);
 
-  // ── Construir grilla ──
+  // Construir grilla
   for (let r = 0; r < MAX_INT; r++) {
     const row = document.createElement("div");
     row.className = "row";
@@ -249,9 +282,15 @@ async function cargarPalabra(idx, jugadaExistente) {
 
   renderTeclado();
 
-  // ── Crear jugada en Supabase si no existe ──
+  // ── Modo invitado: no crea jugada en DB ──
+  if (ES_INVITADO) {
+    jugadaId = null;
+    window.addEventListener("keydown", onKey);
+    return;
+  }
+
+  // ── Crear/recuperar jugada en Supabase ──
   if (!jugadaExistente) {
-    // Verificar si ya existe usando LIKE para capturar cualquier formato de fecha
     const { data: existe } = await sb.from("wordle_jugadas")
       .select("id")
       .eq("user_id",     uid)
@@ -287,16 +326,17 @@ async function cargarPalabra(idx, jugadaExistente) {
     jugadaId     = jugadaExistente.id;
     intentoIdx   = jugadaExistente.intentos    || 0;
     pistasUsadas = jugadaExistente.pistas_usadas || 0;
-    // Restaurar estado de pista según intentos guardados
-    if (intentoIdx >= 4 && pistasUsadas === 0) {
-      pistaEl.textContent = "💡 Pista disponible";
+
+    // Restaurar estado de pista: disponible SOLO si ya hizo 5 intentos (para el 6to)
+    if (intentoIdx >= 5 && pistasUsadas === 0) {
+      pistaEl.textContent = "💡 Pista disponible — último intento";
       btnPista.disabled   = false;
     } else if (pistasUsadas > 0) {
       pistaEl.textContent = `💡 ${item.pista}`;
       btnPista.disabled   = true;
     }
-    // Mostrar cita si ya usó 4+ intentos en sesión anterior
-    if (intentoIdx >= 4) {
+    // Mostrar cita si ya estaba en el último intento
+    if (intentoIdx >= 5) {
       citaEl.textContent = item.cita || "";
     }
     if (jugadaExistente.grid?.length) restoreFromDB(jugadaExistente);
@@ -376,7 +416,7 @@ function pressKey(k) {
   if (/^[A-ZÑ]$/.test(k)) {
     for (let i = 0; i < longitud; i++) {
       if (!tiles[i].dataset.letter) {
-        tiles[i].textContent  = k;
+        tiles[i].textContent    = k;
         tiles[i].dataset.letter = k;
         tiles[i].classList.add("filled");
         break;
@@ -397,11 +437,9 @@ function evaluar(guessRaw) {
   const count = {};
   for (const ch of solucion) count[ch] = (count[ch] || 0) + 1;
 
-  // Primero exactas
   for (let i = 0; i < longitud; i++) {
     if (guess[i] === solucion[i]) { res[i] = "ok"; count[guess[i]]--; }
   }
-  // Luego presentes
   for (let i = 0; i < longitud; i++) {
     if (res[i] !== "no") continue;
     const ch = guess[i];
@@ -416,7 +454,7 @@ function evaluar(guessRaw) {
       tile.innerHTML = `${guess[i]}<span class="icon">${
         res[i]==="ok" ? "✓" : res[i]==="mid" ? "•" : "×"
       }</span>`;
-      SND.nota(i);  // nota musical por cada tile revelado
+      SND.nota(i);
     }, i * 80);
   });
 
@@ -425,13 +463,16 @@ function evaluar(guessRaw) {
   }
   setTimeout(() => syncKeyColors(), longitud * 80 + 60);
 
-  // Desbloquear pista solo tras el 4.º intento (intentoIdx es 0-based, se evalúa ANTES del ++)
-  if (intentoIdx >= 3 && pistasUsadas === 0) {
-    pistaEl.textContent = "💡 Pista disponible";
+  // ── Pista: se desbloquea SOLO antes del ÚLTIMO intento (intento 5, índice 4) ──
+  // intentoIdx es 0-based y se evalúa ANTES del ++
+  // intentoIdx === 4 → acabamos de evaluar el 5.º intento → falta el 6.º (último)
+  if (intentoIdx === 4 && pistasUsadas === 0) {
+    pistaEl.textContent = "💡 Pista disponible — último intento";
     btnPista.disabled   = false;
   }
-  // Mostrar cita bíblica tras el 4.º intento
-  if (intentoIdx >= 3) {
+
+  // Mostrar cita bíblica también en el último intento
+  if (intentoIdx === 4) {
     citaEl.textContent = palabrasHoy[wordIdx]?.cita || "";
   }
 
@@ -442,7 +483,7 @@ function evaluar(guessRaw) {
   if (acierto || intentoIdx === MAX_INT) {
     setTimeout(() => terminar(acierto), delay);
   } else {
-    setTimeout(() => guardarParcial(), 300);
+    if (!ES_INVITADO) setTimeout(() => guardarParcial(), 300);
   }
 }
 
@@ -475,15 +516,14 @@ function gridToJSON() {
 
 // ─── Guardar progreso parcial ────────────────────────────────────────
 async function guardarParcial() {
-  if (!jugadaId) return;
+  if (!jugadaId || ES_INVITADO) return;
   try {
     await sb.from("wordle_jugadas").update({
       intentos     : intentoIdx,
       pistas_usadas: pistasUsadas,
       tiempo_seg   : Math.round((Date.now() - startTime) / 1000),
       grid         : gridToJSON()
-    })
-    .eq("id", jugadaId);
+    }).eq("id", jugadaId);
   } catch (e) { console.error("guardarParcial:", e); }
 }
 
@@ -511,48 +551,51 @@ async function terminar(acierto) {
   terminado = true;
   window.removeEventListener("keydown", onKey);
 
-  // ── Sonido de resultado ──
   if (acierto) {
     SND.play(intentoIdx <= 2 ? "resultado_alto" : "resultado_medio", 0.9);
   } else {
     SND.play("resultado_bajo", 0.8);
   }
 
-  // ── Calcular XP ──
+  // ── XP (no se guarda en modo invitado pero sí se muestra) ──
   let xp = 0;
   if (acierto) {
     xp = 10;
-    if (intentoIdx <= 2) xp += 8;       // muy rápido
-    else if (intentoIdx <= 3) xp += 5;  // rápido
-    else if (intentoIdx <= 4) xp += 2;  // normal
-    if (pistasUsadas === 0) xp += 3;    // sin pista
+    if (intentoIdx <= 2)      xp += 8;
+    else if (intentoIdx <= 3) xp += 5;
+    else if (intentoIdx <= 4) xp += 2;
+    if (pistasUsadas === 0)   xp += 3;
   }
   const wrp = xp * 4;
 
   xpAcumulado += xp;
-  xpTotalEl.textContent = `+${xpAcumulado}`;
+  if (!ES_INVITADO) xpTotalEl.textContent = `+${xpAcumulado}`;
 
-  // ── Racha ──
-  const streak = parseInt(LS.get("wb:streak") || "0", 10);
-  const newStreak = acierto ? streak + 1 : 0;
-  LS.set("wb:streak", String(newStreak));
-  LS.set("wb:last",   todayISO);
-  rachaEl.textContent = String(newStreak);
+  // ── Racha (solo usuarios registrados) ──
+  let newStreak = 0;
+  if (!ES_INVITADO) {
+    const streak = parseInt(LS.get("wb:streak") || "0", 10);
+    newStreak = acierto ? streak + 1 : 0;
+    LS.set("wb:streak", String(newStreak));
+    LS.set("wb:last",   isoDateDO(hoyDO()));
+    rachaEl.textContent = String(newStreak);
+  }
 
-  // ── Guardar en Supabase ──
-  try {
-    await sb.from("wordle_jugadas").update({
-      intentos     : intentoIdx,
-      acierto,
-      pistas_usadas: pistasUsadas,
-      tiempo_seg   : Math.round((Date.now() - startTime) / 1000),
-      grid         : gridToJSON(),
-      xp_otorgado  : xp,
-      wrp,
-      estado       : "terminado"
-    })
-    .eq("id", jugadaId);
-  } catch (e) { console.error("terminar:", e); }
+  // ── Guardar en Supabase (solo registrados) ──
+  if (!ES_INVITADO) {
+    try {
+      await sb.from("wordle_jugadas").update({
+        intentos     : intentoIdx,
+        acierto,
+        pistas_usadas: pistasUsadas,
+        tiempo_seg   : Math.round((Date.now() - startTime) / 1000),
+        grid         : gridToJSON(),
+        xp_otorgado  : xp,
+        wrp,
+        estado       : "terminado"
+      }).eq("id", jugadaId);
+    } catch (e) { console.error("terminar:", e); }
+  }
 
   // ── Modal ──
   const esUltima = wordIdx >= palabrasHoy.length - 1;
@@ -564,19 +607,22 @@ async function terminar(acierto) {
     ? (intentoIdx <= 2 ? "¡Increíble!" : intentoIdx <= 3 ? "¡Excelente!" : "¡Correcto!")
     : `Respuesta: ${palabrasHoy[wordIdx].palabra}`;
 
-  $("modal-body").textContent = acierto
-    ? `Resolviste en ${intentoIdx} ${intentoIdx === 1 ? "intento" : "intentos"}.${pistasUsadas ? "" : " Sin pista 🏅"}`
-    : `La palabra era "${palabrasHoy[wordIdx].palabra}". ¡Mañana va mejor!`;
+  $("modal-body").textContent = ES_INVITADO
+    ? (acierto
+        ? `¡Resolviste en ${intentoIdx} intento${intentoIdx===1?'':'s'}! (Modo invitado)`
+        : `La palabra era "${palabrasHoy[wordIdx].palabra}". Inicia sesión para guardar tu progreso.`)
+    : (acierto
+        ? `Resolviste en ${intentoIdx} ${intentoIdx===1?"intento":"intentos"}.${pistasUsadas?"":' Sin pista 🏅'}`
+        : `La palabra era "${palabrasHoy[wordIdx].palabra}". ¡Mañana va mejor!`);
 
   $("m-xp").textContent       = `+${xp}`;
   $("m-intentos").textContent = intentoIdx;
-  $("m-racha").textContent    = newStreak;
+  $("m-racha").textContent    = ES_INVITADO ? "—" : newStreak;
 
   const btn = $("modal-btn");
   if (esUltima) {
-    // Marcar día completo en localStorage como backup
-    LS.set(`wb:done:${todayISO}`, "1");
-    btn.textContent = "Ver resumen del día 🏆";
+    if (!ES_INVITADO) LS.set(`wb:done:${todayISO}`, "1");
+    btn.textContent = ES_INVITADO ? "¡Gracias por jugar! 🙏" : "Ver resumen del día 🏆";
     btn.onclick = () => {
       modal.classList.add("hidden");
       mostrarFinDelDia(null);
@@ -598,18 +644,30 @@ function mostrarFinDelDia(jugadas) {
   const xpFinal = jugadas
     ? jugadas.reduce((s, j) => s + (j.xp_otorgado || 0), 0)
     : xpAcumulado;
-  $("fin-body").textContent =
-    `Completaste las ${palabrasHoy.length} palabras de hoy. ` +
-    `Total XP ganado: +${xpFinal} 🎖️`;
+
+  const totalPalabras = palabrasHoy.length;
+
+  if (ES_INVITADO) {
+    $("fin-body").textContent =
+      `Completaste las ${totalPalabras} palabras. ¡Inicia sesión para guardar tu progreso y competir en el ranking!`;
+  } else {
+    $("fin-body").textContent =
+      `Completaste las ${totalPalabras} palabras de hoy. Total XP ganado: +${xpFinal} 🎖️`;
+  }
   modalFin.classList.remove("hidden");
 }
 
 // ─────────────────────────────────────────────────────────────────────
 // COMPATIBILIDAD CON FORMATO ANTERIOR
+// Nuevo formato esperado del JSON:
+// {
+//   "2026-03-16": [{palabra,pista,cita,tema}, ...],  ← 5 items lun-sáb
+//   "2026-03-22": [{...}, ...],                      ← 7 items domingo
+// }
 // ─────────────────────────────────────────────────────────────────────
-function resolverDesdeFormatoViejo(semanas, hoy) {
-  const dow = hoy.getDay(); // 0=dom
-  const domFecha = new Date(hoy);
+function resolverDesdeFormatoViejo(semanas, fecha) {
+  const dow = fecha.getDay(); // 0=dom
+  const domFecha = new Date(fecha);
   domFecha.setDate(domFecha.getDate() - dow);
   domFecha.setHours(0,0,0,0);
   const domISO = isoDateDO(domFecha);
@@ -620,12 +678,17 @@ function resolverDesdeFormatoViejo(semanas, hoy) {
         .sort((a,b) => b.domingo.localeCompare(a.domingo))[0]
     || semanas[0];
 
+  // Si la semana tiene array palabras_dia (nuevo formato embebido en semana vieja)
+  if (semana.palabras_dia?.[dow]) {
+    return semana.palabras_dia[dow];
+  }
+
+  // Formato original simple: un objeto por día
   const item = semana.dias?.find(d => d.dow === dow) || semana.dias?.[0];
   if (!item) return [];
 
   const base = [{ palabra: item.palabra, pista: item.pista, cita: item.cita, tema: semana.tema }];
 
-  // Si es domingo y hay extras en el viejo formato
   if (dow === 0 && semana.domingoExtra?.length) {
     return [...base, ...semana.domingoExtra.map(e => ({
       palabra: e.palabra, pista: e.pista, cita: e.cita, tema: semana.tema
