@@ -96,6 +96,7 @@ let sb, uid, todayISO, semanaISO, tomorrowISO;
 let palabrasHoy = [];
 let wordIdx     = 0;
 let xpAcumulado = 0;
+const historialGrids = [];  // almacena grids de cada palabra para compartir
 
 // ─── Estado por ronda ────────────────────────────────────────────────
 let solucion     = "";
@@ -571,6 +572,9 @@ async function terminar(acierto) {
   xpAcumulado += xp;
   if (!ES_INVITADO) xpTotalEl.textContent = `+${xpAcumulado}`;
 
+  // Guardar grid para compartir
+  historialGrids.push({ grid: gridToJSON(), intentos: intentoIdx, acierto });
+
   // ── Racha (solo usuarios registrados) ──
   let newStreak = 0;
   if (!ES_INVITADO) {
@@ -639,21 +643,73 @@ async function terminar(acierto) {
   modal.classList.remove("hidden");
 }
 
+
+// ─── Compartir por WhatsApp ───────────────────────────────────────────
+function generarEmojiGrid(gridData) {
+  return gridData.map(fila =>
+    fila.result.map(r =>
+      r === "ok"  ? "🟩" :
+      r === "mid" ? "🟨" : "⬛"
+    ).join("")
+  ).join("\n");
+}
+
+function compartirWhatsApp(xpTotal, completadas, total) {
+  const hoyStr = new Date().toLocaleDateString("es-DO", {
+    day: "numeric", month: "long"
+  });
+
+  // Construir los grids de cada palabra
+  const bloques = historialGrids.map((g, i) => {
+    const emoji = generarEmojiGrid(g.grid);
+    const intentos = g.intentos;
+    const acierto  = g.acierto;
+    return `Palabra ${i + 1}: ${acierto ? intentos + "/6 ✅" : "❌"}\n${emoji}`;
+  }).join("\n\n");
+
+  const modoTexto = ES_INVITADO ? "👤 Modo invitado" : "🔐 Usuario registrado";
+
+  const texto =
+    `📖 *Camino Bíblico* — ${hoyStr}\n` +
+    `${modoTexto}\n\n` +
+    `Completé ${completadas}/${total} palabras\n` +
+    `🏅 +${xpTotal} XP\n\n` +
+    `${bloques}\n\n` +
+    `¿Puedes superarme? 👇\n` +
+    `${location.origin}${location.pathname}${ES_INVITADO ? "?invitado=1" : ""}`;
+
+  const url = `https://wa.me/?text=${encodeURIComponent(texto)}`;
+  window.open(url, "_blank");
+}
+
 // ─── Fin del día ─────────────────────────────────────────────────────
 function mostrarFinDelDia(jugadas) {
   const xpFinal = jugadas
     ? jugadas.reduce((s, j) => s + (j.xp_otorgado || 0), 0)
     : xpAcumulado;
 
-  const totalPalabras = palabrasHoy.length;
+  const totalPalabras  = palabrasHoy.length;
+  const completadasCnt = historialGrids.filter(g => g.acierto).length;
 
   if (ES_INVITADO) {
     $("fin-body").textContent =
-      `Completaste las ${totalPalabras} palabras. ¡Inicia sesión para guardar tu progreso y competir en el ranking!`;
+      `Completaste ${completadasCnt}/${totalPalabras} palabras. ¡Inicia sesión para guardar tu progreso y competir en el ranking!`;
   } else {
     $("fin-body").textContent =
       `Completaste las ${totalPalabras} palabras de hoy. Total XP ganado: +${xpFinal} 🎖️`;
   }
+
+  // Botón compartir WhatsApp — siempre visible al finalizar
+  const cardFin = document.querySelector("#modal-fin .modal-card");
+  if (cardFin && !cardFin.querySelector(".btn-wsp")) {
+    const btnWsp = document.createElement("button");
+    btnWsp.className   = "btn-primary btn-wsp";
+    btnWsp.style.cssText = "background:linear-gradient(135deg,#25d366,#128c7e);margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px;";
+    btnWsp.innerHTML   = '<span style="font-size:18px">📲</span> Compartir resultado en WhatsApp';
+    btnWsp.onclick     = () => compartirWhatsApp(xpFinal, completadasCnt, totalPalabras);
+    cardFin.appendChild(btnWsp);
+  }
+
   modalFin.classList.remove("hidden");
 }
 
