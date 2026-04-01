@@ -3,7 +3,7 @@
 // Actualizado: archivos unificados (quiz, wordle, junior)
 // =============================================================
 
-const CACHE_VERSION = 'v10.4';
+const CACHE_VERSION = 'v10.5';
 const CACHE_NAME    = `camino-biblico-${CACHE_VERSION}`;
 
 const FILES_TO_CACHE = [
