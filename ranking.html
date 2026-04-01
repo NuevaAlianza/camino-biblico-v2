@@ -3,71 +3,406 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="theme-color" content="#0f172a"/>
-  <title>Ranking</title>
-  <link rel="stylesheet" href="css/ranking.css"/>
+  <meta name="theme-color" content="#0d1b2a"/>
+  <title>Ranking · Camino Bíblico</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg    : #0d1b2a;
+      --bg2   : #122233;
+      --card  : #1a2e45;
+      --border: #1e3a5a;
+      --gold  : #c0a060;
+      --gold2 : #d4b483;
+      --text  : #f0ead6;
+      --text2 : #7a9ab5;
+      --green : #22c55e;
+      --amber : #f59e0b;
+      --blue  : #38bdf8;
+      --red   : #ef4444;
+      --r     : 14px;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .app {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 0 14px 80px;
+    }
+
+    /* ── Header ── */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 0 14px;
+    }
+    .back-btn {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid var(--border);
+      color: var(--text2);
+      border-radius: 8px;
+      width: 36px; height: 36px;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .top-title { font-size: 20px; font-weight: 900; color: var(--gold); }
+    .top-sub   { font-size: 11px; color: var(--text2); margin-top: 1px; }
+
+    /* ── Tabs ── */
+    .tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 14px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 4px;
+    }
+    .tab {
+      flex: 1;
+      background: none;
+      border: none;
+      color: var(--text2);
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 8px 4px;
+      border-radius: 9px;
+      cursor: pointer;
+      transition: all .2s;
+      letter-spacing: .3px;
+    }
+    .tab.active {
+      background: var(--card);
+      color: var(--gold);
+      box-shadow: 0 2px 8px #0004;
+    }
+
+    /* ── Semana badge ── */
+    .semana-badge {
+      text-align: center;
+      font-size: 11px;
+      color: var(--text2);
+      margin-bottom: 12px;
+      letter-spacing: .5px;
+    }
+    .semana-badge strong { color: var(--gold2); }
+
+    /* ── Tu posición ── */
+    .you-card {
+      background: linear-gradient(135deg, rgba(192,160,96,0.12), rgba(56,189,248,0.06));
+      border: 1px solid rgba(192,160,96,0.3);
+      border-radius: var(--r);
+      padding: 14px 18px;
+      display: flex;
+      gap: 0;
+      margin-bottom: 12px;
+    }
+    .you-stat {
+      flex: 1;
+      text-align: center;
+    }
+    .you-stat + .you-stat {
+      border-left: 1px solid var(--border);
+    }
+    .you-stat .label { font-size: 10px; color: var(--text2); letter-spacing: .8px; text-transform: uppercase; }
+    .you-stat .val   { font-size: 22px; font-weight: 900; color: var(--gold); line-height: 1.2; margin-top: 2px; }
+    .you-stat .val.small { font-size: 14px; }
+
+    /* ── Pódium ── */
+    .podio {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .podio-item {
+      flex: 1;
+      max-width: 140px;
+      text-align: center;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 12px 8px 14px;
+      position: relative;
+      transition: transform .2s;
+    }
+    .podio-item.pos-1 {
+      border-color: #c0a060;
+      transform: translateY(-8px);
+      box-shadow: 0 8px 24px rgba(192,160,96,0.2);
+    }
+    .podio-item.pos-2 { border-color: #94a3b8; }
+    .podio-item.pos-3 { border-color: #b45309; }
+
+    .podio-medal { font-size: 28px; line-height: 1; margin-bottom: 6px; }
+    .podio-name  { font-size: 12px; font-weight: 700; color: var(--text); word-break: break-word; line-height: 1.3; }
+    .podio-pts   { font-size: 16px; font-weight: 900; color: var(--gold); margin-top: 4px; }
+    .podio-label { font-size: 9px; color: var(--text2); text-transform: uppercase; letter-spacing: .6px; }
+    .podio-rank  {
+      position: absolute;
+      top: -10px; left: 50%; transform: translateX(-50%);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--text2);
+      padding: 2px 8px;
+    }
+
+    /* ── Buscador ── */
+    .search-wrap {
+      position: relative;
+      margin-bottom: 10px;
+    }
+    .search-icon {
+      position: absolute;
+      left: 12px; top: 50%; transform: translateY(-50%);
+      font-size: 14px;
+      pointer-events: none;
+    }
+    .search-input {
+      width: 100%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px 10px 36px;
+      font-size: 13px;
+      color: var(--text);
+      font-family: inherit;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .search-input::placeholder { color: var(--text2); }
+    .search-input:focus { border-color: var(--gold); }
+
+    /* ── Tabla ── */
+    .table-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+    }
+    .t-head {
+      display: grid;
+      grid-template-columns: 42px 1fr 68px 68px;
+      padding: 10px 14px;
+      background: rgba(0,0,0,0.2);
+      border-bottom: 1px solid var(--border);
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text2);
+      letter-spacing: .8px;
+      text-transform: uppercase;
+    }
+    .t-head .center { text-align: center; }
+
+    .t-row {
+      display: grid;
+      grid-template-columns: 42px 1fr 68px 68px;
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      align-items: center;
+      transition: background .15s;
+    }
+    .t-row:last-child { border-bottom: none; }
+    .t-row:hover { background: rgba(255,255,255,0.03); }
+    .t-row.is-you {
+      background: rgba(192,160,96,0.08);
+      border-left: 3px solid var(--gold);
+    }
+    .t-row.top-1 { background: rgba(192,160,96,0.07); }
+    .t-row.top-2 { background: rgba(148,163,184,0.05); }
+    .t-row.top-3 { background: rgba(180,83,9,0.05); }
+
+    .t-pos {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text2);
+      text-align: center;
+    }
+    .t-pos.gold   { color: #f59e0b; }
+    .t-pos.silver { color: #94a3b8; }
+    .t-pos.bronze { color: #b45309; }
+
+    .t-name   { font-size: 13px; font-weight: 700; color: var(--text); }
+    .t-sub    { font-size: 10px; color: var(--text2); margin-top: 1px; }
+    .t-you-tag {
+      display: inline-block;
+      background: rgba(192,160,96,0.2);
+      color: var(--gold2);
+      font-size: 9px;
+      font-weight: 800;
+      padding: 1px 6px;
+      border-radius: 10px;
+      margin-left: 5px;
+      vertical-align: middle;
+    }
+    .t-num {
+      text-align: center;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .t-num.hi { color: var(--gold); }
+    .t-num.med { color: var(--blue); }
+
+    /* ── Skeleton ── */
+    .skel-row {
+      display: grid;
+      grid-template-columns: 42px 1fr 68px 68px;
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      align-items: center;
+    }
+    .skel {
+      height: 10px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 6px;
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:.5} 50%{opacity:1} }
+
+    /* ── Empty ── */
+    .empty-msg {
+      padding: 32px;
+      text-align: center;
+      color: var(--text2);
+      font-size: 13px;
+    }
+
+    /* ── Share button ── */
+    .share-bar {
+      margin-top: 14px;
+      display: flex;
+      justify-content: center;
+    }
+    .share-btn {
+      background: linear-gradient(135deg, #25d366, #128c7e);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 22px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: opacity .2s;
+    }
+    .share-btn:hover { opacity: .85; }
+
+    /* ── Toast ── */
+    .toast {
+      position: fixed;
+      bottom: 24px; left: 50%; transform: translateX(-50%);
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 4px 16px #0005;
+      z-index: 999;
+      opacity: 0;
+      transition: opacity .3s;
+      pointer-events: none;
+    }
+    .toast.show { opacity: 1; }
+
+    /* ── Mode description ── */
+    .mode-desc {
+      font-size: 11px;
+      color: var(--text2);
+      text-align: center;
+      margin-bottom: 10px;
+      min-height: 16px;
+    }
+  </style>
 </head>
 <body>
-  <main class="app">
-    <header class="card header">
-      <div>
-        <h1>Ranking</h1>
-        <p class="muted">Semana actual • Domingo ancla • TZ America/Santo_Domingo</p>
-      </div>
-      <div class="tabs">
-        <button id="tab-wordle" class="tab active">Wordle (WRP)</button>
-        <button id="tab-global" class="tab">Global (XP)</button>
-      </div>
-    </header>
+<main class="app">
 
-<section class="card controls">
-  <div class="scope">
-    <span>Ámbito:</span>
-    <div class="seg">
-      <button data-scope="global" class="seg-btn active">Global</button>
-      <button data-scope="parroquia" class="seg-btn">Parroquia</button>
-      <button data-scope="subgrupo" class="seg-btn">Subgrupo</button>
+  <!-- Header -->
+  <div class="top-bar">
+    <a href="menu.html" class="back-btn">←</a>
+    <div>
+      <div class="top-title">🏆 Ranking</div>
+      <div class="top-sub" id="semana-txt">Cargando semana…</div>
     </div>
-    <input id="valor" class="input" placeholder="Nombre de parroquia/subgrupo" disabled/>
   </div>
-  <input id="buscar" class="input grow" placeholder="Buscar jugador…"/>
-</section>
 
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" data-mode="wordle">🔤 Wordle</button>
+    <button class="tab"        data-mode="quiz">⚔️ Quiz</button>
+    <button class="tab"        data-mode="global">🌟 Global</button>
+  </div>
 
-    <section class="you card">
-      <div>
-        <div class="muted tiny">Tu posición</div>
-        <div id="you-rank" class="big">—</div>
-      </div>
-      <div>
-        <div class="muted tiny">Tu WRP</div>
-        <div id="you-wrp" class="big">—</div>
-      </div>
-      <div>
-        <div class="muted tiny">Tu XP (Wordle→Global)</div>
-        <div id="you-xp" class="big">—</div>
-      </div>
-    </section>
+  <!-- Descripción del modo -->
+  <div class="mode-desc" id="mode-desc"></div>
 
-    <section id="podio" class="podio card hidden"></section>
+  <!-- Tu posición -->
+  <div class="you-card">
+    <div class="you-stat">
+      <div class="label">Tu posición</div>
+      <div class="val" id="you-pos">—</div>
+    </div>
+    <div class="you-stat">
+      <div class="label" id="you-pts-label">Puntos</div>
+      <div class="val" id="you-pts">—</div>
+    </div>
+    <div class="you-stat">
+      <div class="label">Racha</div>
+      <div class="val" id="you-racha">—</div>
+    </div>
+  </div>
 
-    <section class="card table">
-      <div id="thead" class="thead"></div>
-      <div id="tbody" class="tbody"></div>
-      <div id="empty" class="empty hidden">Sin datos para este filtro.</div>
-      <div id="more-wrap" class="more-wrap">
-        <button id="more" class="primary">Ver más</button>
-      </div>
-    </section>
+  <!-- Pódium -->
+  <div class="podio" id="podio"></div>
 
-    <div id="toast" class="toast hidden"></div>
-  </main>
+  <!-- Buscador -->
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input class="search-input" id="buscar" placeholder="Buscar jugador…"/>
+  </div>
 
-  <!-- 1) SDK UMD -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-  <!-- 2) Tu cliente global (igual que Trivia) -->
-  <script src="supabase.js"></script>
-  <!-- 3) Lógica de ranking -->
-  <script src="js/app/ranking.js"></script>
+  <!-- Tabla -->
+  <div class="table-card">
+    <div class="t-head" id="thead"></div>
+    <div id="tbody"></div>
+  </div>
+
+  <!-- Share -->
+  <div class="share-bar">
+    <button class="share-btn" id="btn-share">
+      <span>📲</span> Compartir mi posición
+    </button>
+  </div>
+
+</main>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="supabase.js"></script>
+<script src="js/app/ranking.js"></script>
 </body>
 </html>
