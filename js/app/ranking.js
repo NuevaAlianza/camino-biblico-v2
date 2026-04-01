@@ -1,368 +1,414 @@
-// ====== CONFIG ======
+// =====================================================================
+// ranking.js  — Camino Bíblico
+// Modos: wordle (WRP semana) | quiz (XP quiz semana) | global (XP total)
+// =====================================================================
+
 const TZ = "America/Santo_Domingo";
 
-// ====== Debounce timers ======
-let debounceValor = null;
-let debounceBuscar = null;
-
-// Espera hasta que window.supabase esté listo (por si tarda en cargar)
-function waitForSupabase(timeoutMs = 5000) {
+// ─── Supabase ─────────────────────────────────────────────────────────
+function waitForSupabase(ms = 5000) {
   return new Promise((resolve, reject) => {
-    const start = Date.now();
-    (function spin(){
+    const t0 = Date.now();
+    (function poll() {
       if (window.supabase) return resolve(window.supabase);
-      if (Date.now() - start > timeoutMs) return reject(new Error('Supabase no cargó. Revisa <script src="supabase.js"> y la ruta.'));
-      requestAnimationFrame(spin);
+      if (Date.now() - t0 > ms) return reject(new Error("Supabase no cargó"));
+      requestAnimationFrame(poll);
     })();
   });
 }
 
-// ====== FECHAS (TZ RD) ======
+// ─── Fechas ───────────────────────────────────────────────────────────
 const hoyDO = () => new Date(new Date().toLocaleString("en-US", { timeZone: TZ }));
-function isoDateDO(d) {
-  const parts = new Intl.DateTimeFormat("en-CA", {
+function isoDate(d) {
+  return new Intl.DateTimeFormat("en-CA", {
     timeZone: TZ, year: "numeric", month: "2-digit", day: "2-digit"
-  }).formatToParts(d).reduce((acc,p)=> (acc[p.type]=p.value, acc), {});
-  return `${parts.year}-${parts.month}-${parts.day}`;
+  }).format(d);
 }
-function domingoDe(d) {
-  const x = hoyDO(); x.setFullYear(d.getFullYear(), d.getMonth(), d.getDate()); x.setHours(0,0,0,0);
-  x.setDate(x.getDate() - x.getDay()); return x;
+function domingoSemana(d) {
+  const x = new Date(d);
+  x.setDate(x.getDate() - x.getDay());
+  return x;
 }
-const domingoISO = isoDateDO(domingoDe(hoyDO()));
 
-// ====== UI REFS ======
-const tabWordle = document.getElementById("tab-wordle");
-const tabGlobal = document.getElementById("tab-global");
-const segBtns = [...document.querySelectorAll(".seg-btn")];
-const inputValor = document.getElementById("valor");
-const inputBuscar = document.getElementById("buscar");
-const podioEl = document.getElementById("podio");
-const theadEl = document.getElementById("thead");
-const tbodyEl = document.getElementById("tbody");
-const emptyEl = document.getElementById("empty");
-const moreWrap = document.getElementById("more-wrap");
-const moreBtn = document.getElementById("more");
+// ─── Refs UI ─────────────────────────────────────────────────────────
+const tabs      = [...document.querySelectorAll(".tab")];
+const podioEl   = document.getElementById("podio");
+const tbodyEl   = document.getElementById("tbody");
+const theadEl   = document.getElementById("thead");
+const buscarEl  = document.getElementById("buscar");
+const toastEl   = document.getElementById("toast");
+const youPosEl  = document.getElementById("you-pos");
+const youPtsEl  = document.getElementById("you-pts");
+const youRachaEl= document.getElementById("you-racha");
+const youLblEl  = document.getElementById("you-pts-label");
+const modeDescEl= document.getElementById("mode-desc");
+const semanaEl  = document.getElementById("semana-txt");
+const shareBtn  = document.getElementById("btn-share");
 
-const youRankEl = document.getElementById("you-rank");
-const youWrpEl  = document.getElementById("you-wrp");
-const youXpEl   = document.getElementById("you-xp");
+// ─── Estado ───────────────────────────────────────────────────────────
+let sb, user;
+let mode       = "wordle";
+let allRows    = [];
+let semanaISO  = "";
+let youRow     = null;
 
-const toastEl = document.getElementById("toast");
+const MODOS = {
+  wordle: {
+    desc  : "Puntos Wordle (WRP) acumulados esta semana",
+    cols  : ["#", "Jugador", "WRP", "XP"],
+    ptsLbl: "WRP semana",
+  },
+  quiz: {
+    desc  : "Experiencia (XP) ganada en el Quiz esta semana",
+    cols  : ["#", "Jugador", "XP Quiz", "Nivel"],
+    ptsLbl: "XP Quiz sem.",
+  },
+  global: {
+    desc  : "XP total acumulado en todos los modos",
+    cols  : ["#", "Jugador", "XP Total", "Nivel"],
+    ptsLbl: "XP global",
+  },
+};
 
-// ====== ESTADO ======
-let sb = null;
-let user = null;
-let mode = "wordle";        // "wordle" | "global"
-let scope = "global";       // "global" | "parroquia" | "subgrupo"
-let valor = null;
-let limit = 200;
-let dataRows = [];
+const MEDALS = ["🥇","🥈","🥉"];
 
-// ====== AUTH (anónimo) ======
-async function ensureAuth() {
+// ─── INIT ─────────────────────────────────────────────────────────────
+(async function init() {
+  try { sb = await waitForSupabase(); } catch(e) { alert(e.message); return; }
+
+  // Auth
   const { data: g } = await sb.auth.getUser();
-  if (!g?.user) {
-    const { error } = await sb.auth.signInAnonymously();
-    if (error) console.error("Auth anónima falló:", error);
+  user = g?.user || null;
+  if (!user) {
+    const { data: a } = await sb.auth.signInAnonymously();
+    user = a?.user || null;
   }
-  const { data: g2 } = await sb.auth.getUser();
-  return g2?.user || null;
-}
 
-// ====== HELPERS ======
-function debounce(fn, ms){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); }; }
-function updateValorPlaceholder(){
-  if (scope === "global") {
-    inputValor.placeholder = "";
-  } else if (scope === "parroquia") {
-    inputValor.placeholder = "Escribe la parroquia…";
-  } else {
-    inputValor.placeholder = "Escribe el subgrupo…";
-  }
-}
-function showLoading(){
-  tbodyEl.innerHTML = Array.from({length:6}).map(()=>`
-    <div class="row">
-      <div class="cell center">…</div>
-      <div>
-        <div class="skeleton" style="width:140px;height:10px;margin:6px 0;background:#e5e7eb;border-radius:6px;"></div>
-        <div class="skeleton" style="width:100px;height:8px;background:#eef2f7;border-radius:6px;"></div>
-      </div>
-      <div class="cell center"><div class="skeleton" style="width:40px;height:10px;margin:6px auto;background:#e5e7eb;border-radius:6px;"></div></div>
-      <div class="cell center"><div class="skeleton" style="width:40px;height:10px;margin:6px auto;background:#e5e7eb;border-radius:6px;"></div></div>
-      <div class="cell center"><div class="skeleton" style="width:60px;height:10px;margin:6px auto;background:#e5e7eb;border-radius:6px;"></div></div>
-    </div>
-  `).join("");
-  emptyEl.classList.add("hidden");
-}
-function hideLoading(){ /* no-op */ }
-function toast(msg){
-  toastEl.textContent = msg;
-  toastEl.classList.remove("hidden");
-  setTimeout(()=> toastEl.classList.add("hidden"), 2500);
-}
-function escapeHTML(s){ return (s??"").replace(/[&<>"']/g, m=> ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+  // Semana
+  const hoy = hoyDO();
+  const dom  = domingoSemana(hoy);
+  semanaISO  = isoDate(dom);
 
-// ====== INIT ======
-(async function init(){
-  try { sb = await waitForSupabase(); } catch(e){ console.error(e); alert(e.message); return; }
-  user = await ensureAuth();
+  // Formato legible: "Semana del 30 mar al 5 abr"
+  const fin = new Date(dom); fin.setDate(dom.getDate() + 6);
+  const fmt = (d) => d.toLocaleDateString("es-DO", { day:"numeric", month:"short", timeZone: TZ });
+  semanaEl.textContent = `Semana del ${fmt(dom)} al ${fmt(fin)}`;
+
+  // Racha desde localStorage
+  youRachaEl.textContent = localStorage.getItem("wb:streak") || "0";
 
   // Tabs
-  tabWordle.addEventListener("click", ()=> switchTab("wordle"));
-  tabGlobal.addEventListener("click", ()=> switchTab("global"));
+  tabs.forEach(t => t.addEventListener("click", () => {
+    tabs.forEach(x => x.classList.remove("active"));
+    t.classList.add("active");
+    mode = t.dataset.mode;
+    cargar();
+  }));
 
-  // Scope buttons (NO llamamos RPC hasta tener valor cuando no es global)
-  segBtns.forEach(b=>{
-    b.addEventListener("click", ()=>{
-      segBtns.forEach(x=>x.classList.remove("active"));
-      b.classList.add("active");
+  // Búsqueda local
+  buscarEl.addEventListener("input", () => renderTabla(filtrar()));
 
-      scope = (b.dataset.scope || "global").trim().toLowerCase();
-      inputValor.disabled = (scope === "global");
-      updateValorPlaceholder();
+  // Compartir
+  shareBtn.addEventListener("click", compartir);
 
-      if (scope !== "global") {
-        // No llamar aún: esperar a que el usuario escriba 'valor'
-        dataRows = [];
-        podioEl.classList.add("hidden"); podioEl.innerHTML = "";
-        theadEl.innerHTML = (mode === "wordle") ? `
-          <div class="cell center">#</div>
-          <div>Jugador</div>
-          <div class="cell center">WRP</div>
-          <div class="cell center">Aciertos</div>
-          <div class="cell center">Intentos prom.</div>`
-        : `
-          <div class="cell center">#</div>
-          <div>Jugador</div>
-          <div class="cell center">XP (sem.)</div>
-          <div class="cell center">WRP (sem.)</div>
-          <div class="cell center">Intentos prom.</div>`;
-        tbodyEl.innerHTML = "";
-        emptyEl.classList.remove("hidden");
-        emptyEl.textContent = `Escribe el nombre de la ${scope==="parroquia"?"parroquia":"subgrupo"}…`;
-        inputValor.focus();
-        return;
-      }
-
-      // scope = global → sí consultamos de una
-      fetchAndRender(true);
-    });
-  });
-
-  // Input de valor (parroquia/subgrupo) con debounce
-  inputValor.addEventListener("input", debounce(()=>{
-    valor = inputValor.value; // crudo; TRIM en fetch
-    const v = valor && valor.trim();
-    if (scope !== "global" && v && v.length >= 2) {
-      fetchAndRender(true);
-    } else if (scope !== "global") {
-      // sin valor suficiente: no llames
-      dataRows = [];
-      podioEl.classList.add("hidden"); podioEl.innerHTML = "";
-      tbodyEl.innerHTML = "";
-      emptyEl.classList.remove("hidden");
-      emptyEl.textContent = `Escribe el nombre de la ${scope==="parroquia"?"parroquia":"subgrupo"}…`;
-    }
-  }, 250));
-
-  // Búsqueda local en la tabla (debounce suave)
-  inputBuscar.addEventListener("input", debounce(renderTable, 150));
-
-  // Más filas
-  moreBtn.addEventListener("click", ()=> { limit += 200; fetchAndRender(true); });
-
-  updateValorPlaceholder();
-  switchTab("wordle"); // Primera carga
+  cargar();
 })();
 
-// ====== TABS ======
-async function switchTab(next){
-  mode = next;
-  tabWordle.classList.toggle("active", mode==="wordle");
-  tabGlobal.classList.toggle("active", mode==="global");
-  podioEl.classList.toggle("hidden", mode!=="wordle");
-  limit = 200;
-  await fetchAndRender(true);
-}
+// ─── CARGAR DATOS ─────────────────────────────────────────────────────
+async function cargar() {
+  modeDescEl.textContent = MODOS[mode].desc;
+  mostrarSkeleton();
 
-// ====== FETCH (unificado con get_leaderboard) ======
-async function fetchAndRender(reset = false) {
-  showLoading();
   try {
-    // Guard: si el scope requiere valor y no hay, no llamamos
-    const needsVal = scope !== "global";
-    const val = needsVal ? (valor && valor.trim() ? valor.trim() : null) : null;
-
-    if (needsVal && !val) {
-      dataRows = [];
-      // Cabeceras según modo
-      if (mode === "wordle") {
-        theadEl.innerHTML = `
-          <div class="cell center">#</div>
-          <div>Jugador</div>
-          <div class="cell center">WRP</div>
-          <div class="cell center">Aciertos</div>
-          <div class="cell center">Intentos prom.</div>`;
-      } else {
-        theadEl.innerHTML = `
-          <div class="cell center">#</div>
-          <div>Jugador</div>
-          <div class="cell center">XP (sem.)</div>
-          <div class="cell center">WRP (sem.)</div>
-          <div class="cell center">Intentos prom.</div>`;
-      }
-      podioEl.classList.add("hidden"); podioEl.innerHTML = "";
-      tbodyEl.innerHTML = "";
-      emptyEl.classList.remove("hidden");
-      emptyEl.textContent = `Escribe el nombre de la ${scope === "parroquia" ? "parroquia" : "subgrupo"}…`;
-      hideLoading();
-      return;
-    }
-
-    // Payload correcto
-    const payload = {
-      p_semana: domingoISO,
-      p_mode: mode,                   // "wordle" | "global"
-      p_scope: scope,                 // "global" | "parroquia" | "subgrupo"
-      p_valor: needsVal ? val : null, // 👈 ahora sí mandamos valor
-      p_limit: limit
-    };
-    console.debug("[RPC get_leaderboard payload]", payload);
-
-    // Llamada
-    const { data, error } = await sb.rpc("get_leaderboard", payload);
-    if (error) throw error;
-    dataRows = Array.isArray(data) ? data : [];
-
-    // Cabeceras + tarjetas “Tú” + podio según modo
     if (mode === "wordle") {
-      theadEl.innerHTML = `
-        <div class="cell center">#</div>
-        <div>Jugador</div>
-        <div class="cell center">WRP</div>
-        <div class="cell center">Aciertos</div>
-        <div class="cell center">Intentos prom.</div>`;
-      renderPodio(dataRows.slice(0, 3));              // podio visible
-      await renderYouCardWordle(dataRows);
+      await cargarWordle();
+    } else if (mode === "quiz") {
+      await cargarQuiz();
     } else {
-      theadEl.innerHTML = `
-        <div class="cell center">#</div>
-        <div>Jugador</div>
-        <div class="cell center">XP (sem.)</div>      <!-- rotulado correcto -->
-        <div class="cell center">WRP (sem.)</div>
-        <div class="cell center">Intentos prom.</div>`;
-      podioEl.classList.add("hidden"); podioEl.innerHTML = ""; // podio oculto en Global
-      renderYouCardGlobal(dataRows);
+      await cargarGlobal();
     }
-
-    // Render tabla + estados vacíos
-    emptyEl.classList.toggle("hidden", dataRows.length > 0);
-    if (!dataRows.length) {
-      emptyEl.textContent = "No hay datos esta semana en este filtro.";
-    }
-    renderTable();
-  } catch (e) {
+  } catch(e) {
     console.error(e);
-    tbodyEl.innerHTML = "";
-    emptyEl.classList.remove("hidden");
-    emptyEl.textContent = "No se pudo cargar el ranking.";
-    toast("No se pudo cargar el ranking.");
-  } finally {
-    hideLoading();
+    tbodyEl.innerHTML = `<div class="empty-msg">⚠️ No se pudo cargar el ranking.<br><small>${e.message}</small></div>`;
+    toast("Error al cargar ranking");
   }
 }
 
-// ====== RENDER PODIO ======
-function renderPodio(top3){
-  if (!top3 || top3.length===0){ podioEl.classList.add("hidden"); return; }
-  podioEl.classList.remove("hidden");
-  podioEl.innerHTML = top3.map((r)=> `
-    <div class="p">
-      <div class="rank">#${r.pos}</div>
-      <div class="name">${escapeHTML(r.nombre || "Jugador")}</div>
-      <div class="meta">${escapeHTML(r.parroquia || "—")} • ${escapeHTML(r.subgrupo || "—")}</div>
-      <div class="num">${r.wrp_total}</div>
-      <div class="meta">WRP</div>
-    </div>
-  `).join("");
+// ─── MODO WORDLE ──────────────────────────────────────────────────────
+async function cargarWordle() {
+  // Consultar wordle_jugadas de esta semana agrupado por usuario
+  const { data, error } = await sb
+    .from("wordle_jugadas")
+    .select("user_id, xp_otorgado, wrp, intentos, acierto")
+    .eq("semana_id", semanaISO)
+    .eq("estado", "terminado");
+
+  if (error) throw error;
+
+  // Agrupar por user_id
+  const mapa = {};
+  for (const j of (data || [])) {
+    if (!mapa[j.user_id]) mapa[j.user_id] = { user_id: j.user_id, wrp: 0, xp: 0, aciertos: 0, jugadas: 0 };
+    mapa[j.user_id].wrp      += j.wrp        || 0;
+    mapa[j.user_id].xp       += j.xp_otorgado|| 0;
+    mapa[j.user_id].aciertos += j.acierto ? 1 : 0;
+    mapa[j.user_id].jugadas  += 1;
+  }
+
+  // Obtener nombres desde resumen_ranking
+  const uids = Object.keys(mapa);
+  let nombres = {};
+  if (uids.length) {
+    const { data: perfiles } = await sb
+      .from("resumen_ranking")
+      .select("user_id, nombre, nivel")
+      .in("user_id", uids);
+    (perfiles || []).forEach(p => { nombres[p.user_id] = { nombre: p.nombre, nivel: p.nivel }; });
+  }
+
+  // Construir filas y ordenar por WRP
+  allRows = Object.values(mapa)
+    .map(r => ({
+      ...r,
+      nombre: nombres[r.user_id]?.nombre || "Jugador",
+      nivel : nombres[r.user_id]?.nivel  || 1,
+      pts   : r.wrp,
+      pts2  : r.xp,
+      pts2lbl: "XP",
+    }))
+    .sort((a, b) => b.pts - a.pts)
+    .map((r, i) => ({ ...r, pos: i + 1 }));
+
+  youRow = allRows.find(r => r.user_id === user?.id) || null;
+  renderYou("WRP");
+  renderCabecera(["#", "Jugador", "WRP", "XP"]);
+  renderPodio();
+  renderTabla(allRows);
 }
 
-// ====== RENDER TABLA ======
-function renderTable(){
-  const q = (inputBuscar.value||"").toLowerCase();
-  let rows = dataRows;
-  if (q) rows = rows.filter(r => (r.nombre||"").toLowerCase().includes(q));
+// ─── MODO QUIZ ────────────────────────────────────────────────────────
+async function cargarQuiz() {
+  // XP de quiz se guarda en resumen_ranking con xp_global
+  // Aquí tomamos progreso de la semana desde quiz_resultados si existe,
+  // o fallback desde resumen_ranking
+  let rows = [];
 
-  emptyEl.classList.toggle("hidden", rows.length>0);
-  tbodyEl.innerHTML = rows.map((r, idx)=> {
-    const isYou = user && r.user_id === user.id;
-    if (mode==="wordle"){
-      return `
-        <div class="row ${isYou?"you":""}">
-          <div class="cell center">#${r.pos ?? (idx+1)}</div>
-          <div>
-            <div><strong>${escapeHTML(r.nombre||"Jugador")}</strong>${isYou?' <span class="tag">Tú</span>':''}</div>
-            <div class="muted tiny">${escapeHTML(r.parroquia||"—")} • ${escapeHTML(r.subgrupo||"—")}</div>
-          </div>
-          <div class="cell center"><strong>${r.wrp_total ?? "0"}</strong></div>
-          <div class="cell center">${r.aciertos ?? "0"}</div>
-          <div class="cell center">${Number(r.wordle_prom_intentos||0).toFixed(2)}</div>
-        </div>`;
-    } else {
-      return `
-        <div class="row ${isYou?"you":""}">
-          <div class="cell center">#${r.pos ?? (idx+1)}</div>
-          <div>
-            <div><strong>${escapeHTML(r.nombre||"Jugador")}</strong>${isYou?' <span class="tag">Tú</span>':''}</div>
-            <div class="muted tiny">${escapeHTML(r.parroquia||"—")} • ${escapeHTML(r.subgrupo||"—")}</div>
-          </div>
-          <div class="cell center"><strong>${r.xp_total_semana ?? "0"}</strong></div>
-          <div class="cell center">${r.wrp_wordle_semana ?? "—"}</div>
-          <div class="cell center">${Number(r.wordle_prom_intentos||0).toFixed(2)}</div>
-        </div>`;
+  try {
+    // Intentar tabla quiz_resultados (si existe)
+    const { data, error } = await sb
+      .from("quiz_resultados")
+      .select("user_id, xp, created_at")
+      .gte("created_at", semanaISO + "T00:00:00")
+      .order("xp", { ascending: false });
+
+    if (!error && data?.length) {
+      // Agrupar por usuario
+      const mapa = {};
+      for (const r of data) {
+        if (!mapa[r.user_id]) mapa[r.user_id] = { user_id: r.user_id, xp: 0, partidas: 0 };
+        mapa[r.user_id].xp      += r.xp || 0;
+        mapa[r.user_id].partidas += 1;
+      }
+      const uids = Object.keys(mapa);
+      let nombres = {};
+      if (uids.length) {
+        const { data: perfiles } = await sb
+          .from("resumen_ranking")
+          .select("user_id, nombre, nivel")
+          .in("user_id", uids);
+        (perfiles || []).forEach(p => { nombres[p.user_id] = { nombre: p.nombre, nivel: p.nivel }; });
+      }
+      rows = Object.values(mapa)
+        .map(r => ({
+          ...r,
+          nombre : nombres[r.user_id]?.nombre || "Jugador",
+          nivel  : nombres[r.user_id]?.nivel  || 1,
+          pts    : r.xp,
+          pts2   : r.partidas,
+          pts2lbl: "partidas",
+        }))
+        .sort((a, b) => b.pts - a.pts)
+        .map((r, i) => ({ ...r, pos: i + 1 }));
     }
+  } catch(_) {}
+
+  // Fallback: si no hay tabla quiz_resultados, usar xp_global de resumen_ranking
+  if (!rows.length) {
+    const { data: perfiles, error } = await sb
+      .from("resumen_ranking")
+      .select("user_id, nombre, nivel, xp_global")
+      .order("xp_global", { ascending: false })
+      .limit(100);
+    if (error) throw error;
+    rows = (perfiles || []).map((r, i) => ({
+      user_id: r.user_id,
+      nombre : r.nombre || "Jugador",
+      nivel  : r.nivel || 1,
+      pts    : r.xp_global || 0,
+      pts2   : r.nivel || 1,
+      pts2lbl: "nivel",
+      pos    : i + 1,
+    }));
+  }
+
+  allRows = rows;
+  youRow  = allRows.find(r => r.user_id === user?.id) || null;
+  renderYou("XP Quiz");
+  renderCabecera(["#", "Jugador", "XP Quiz", "Nivel"]);
+  renderPodio();
+  renderTabla(allRows);
+}
+
+// ─── MODO GLOBAL ──────────────────────────────────────────────────────
+async function cargarGlobal() {
+  const { data, error } = await sb
+    .from("resumen_ranking")
+    .select("user_id, nombre, nivel, xp_global")
+    .order("xp_global", { ascending: false })
+    .limit(200);
+
+  if (error) throw error;
+
+  allRows = (data || []).map((r, i) => ({
+    user_id: r.user_id,
+    nombre : r.nombre || "Jugador",
+    nivel  : r.nivel  || 1,
+    pts    : r.xp_global || 0,
+    pts2   : r.nivel  || 1,
+    pts2lbl: "nivel",
+    pos    : i + 1,
+  }));
+
+  youRow = allRows.find(r => r.user_id === user?.id) || null;
+  renderYou("XP Total");
+  renderCabecera(["#", "Jugador", "XP Total", "Nivel"]);
+  renderPodio();
+  renderTabla(allRows);
+}
+
+// ─── RENDER YOU ───────────────────────────────────────────────────────
+function renderYou(label) {
+  youLblEl.textContent = label;
+  if (!youRow) {
+    youPosEl.textContent = "—";
+    youPtsEl.textContent = "—";
+    return;
+  }
+  youPosEl.textContent = `#${youRow.pos}`;
+  youPtsEl.textContent = (youRow.pts || 0).toLocaleString();
+}
+
+// ─── RENDER PÓDIUM ────────────────────────────────────────────────────
+function renderPodio() {
+  const top3 = allRows.slice(0, 3);
+  if (!top3.length) { podioEl.innerHTML = ""; return; }
+
+  // Orden visual: 2 - 1 - 3
+  const orden = [top3[1], top3[0], top3[2]].filter(Boolean);
+
+  podioEl.innerHTML = orden.map(r => {
+    const medal = MEDALS[r.pos - 1] || `#${r.pos}`;
+    const cls   = `pos-${r.pos}`;
+    return `
+      <div class="podio-item ${cls}">
+        <div class="podio-rank">${medal}</div>
+        <div class="podio-medal">${["🥇","🥈","🥉"][r.pos-1]||""}</div>
+        <div class="podio-name">${esc(r.nombre)}</div>
+        <div class="podio-pts">${(r.pts||0).toLocaleString()}</div>
+        <div class="podio-label">${MODOS[mode].ptsLbl}</div>
+      </div>`;
   }).join("");
 }
 
-// ====== RENDER YOU CARD (Wordle) ======
-async function renderYouCardWordle(list){
-  if (!user){ youRankEl.textContent="—"; youWrpEl.textContent="—"; youXpEl.textContent="—"; return; }
-  const idx = list.findIndex(r => r.user_id === user.id);
-  if (idx >= 0){
-    const row = list[idx];
-    youRankEl.textContent = `#${row.pos} / ${list.length}`;
-    youWrpEl.textContent  = row.wrp_total ?? "0";
-    // soporta xp_wordle_semana o xp_total_semana según tu RPC
-    youXpEl.textContent   = (row.xp_wordle_semana ?? row.xp_total_semana ?? "0");
-  } else {
-    // Fallback a la vista directa (si no estás en el top N)
-    const { data, error } = await sb
-      .from("wordle_v_semana")
-      .select("wrp_total, xp_total, prom_intentos, aciertos")
-      .eq("semana_id", domingoISO)
-      .eq("user_id", user.id)
-      .maybeSingle();
-    if (error) { console.warn(error); }
-    youRankEl.textContent = `Fuera del top ${list.length}`;
-    youWrpEl.textContent  = data?.wrp_total ?? "0";
-    youXpEl.textContent   = data?.xp_total ?? "0";
-  }
+// ─── RENDER CABECERA ──────────────────────────────────────────────────
+function renderCabecera(cols) {
+  theadEl.innerHTML = cols.map((c, i) =>
+    `<div${i===0||i>=2?' class="center"':''}>${c}</div>`
+  ).join("");
 }
 
-// ====== RENDER YOU CARD (Global) ======
-function renderYouCardGlobal(list){
-  if (!user){ youRankEl.textContent="—"; youWrpEl.textContent="—"; youXpEl.textContent="—"; return; }
-  const idx = list.findIndex(r => r.user_id === user.id);
-  if (idx >= 0){
-    const row = list[idx];
-    youRankEl.textContent = `#${row.pos} / ${list.length}`;
-    youWrpEl.textContent  = row.wrp_wordle_semana ?? "0";
-    youXpEl.textContent   = row.xp_total_semana ?? "0";
-  } else {
-    youRankEl.textContent = `Fuera del top ${list.length}`;
-    youWrpEl.textContent  = "—";
-    youXpEl.textContent   = "—";
+// ─── FILTRAR ──────────────────────────────────────────────────────────
+function filtrar() {
+  const q = buscarEl.value.trim().toLowerCase();
+  return q ? allRows.filter(r => (r.nombre||"").toLowerCase().includes(q)) : allRows;
+}
+
+// ─── RENDER TABLA ─────────────────────────────────────────────────────
+function renderTabla(rows) {
+  if (!rows.length) {
+    tbodyEl.innerHTML = `<div class="empty-msg">Sin datos para este filtro.</div>`;
+    return;
   }
+
+  tbodyEl.innerHTML = rows.map(r => {
+    const isYou  = user && r.user_id === user.id;
+    const posCls = r.pos===1?"gold":r.pos===2?"silver":r.pos===3?"bronze":"";
+    const rowCls = [
+      "t-row",
+      isYou    ? "is-you" : "",
+      r.pos===1 ? "top-1" : r.pos===2 ? "top-2" : r.pos===3 ? "top-3" : ""
+    ].filter(Boolean).join(" ");
+
+    const pts2 = (r.pts2 ?? "—").toLocaleString ? (r.pts2||0).toLocaleString() : r.pts2;
+
+    return `
+      <div class="${rowCls}">
+        <div class="t-pos ${posCls}">${MEDALS[r.pos-1]||"#"+r.pos}</div>
+        <div>
+          <div class="t-name">${esc(r.nombre)}${isYou?'<span class="t-you-tag">Tú</span>':''}</div>
+          <div class="t-sub">Nivel ${r.nivel||1}</div>
+        </div>
+        <div class="t-num hi">${(r.pts||0).toLocaleString()}</div>
+        <div class="t-num med">${pts2}</div>
+      </div>`;
+  }).join("");
+}
+
+// ─── SKELETON ─────────────────────────────────────────────────────────
+function mostrarSkeleton() {
+  podioEl.innerHTML = "";
+  renderCabecera(MODOS[mode].cols);
+  tbodyEl.innerHTML = Array.from({length:8}).map(() => `
+    <div class="skel-row">
+      <div class="skel" style="width:28px;height:12px;margin:0 auto;"></div>
+      <div>
+        <div class="skel" style="width:120px;height:10px;margin-bottom:5px;"></div>
+        <div class="skel" style="width:70px;height:8px;"></div>
+      </div>
+      <div class="skel" style="width:36px;height:12px;margin:0 auto;"></div>
+      <div class="skel" style="width:36px;height:12px;margin:0 auto;"></div>
+    </div>`).join("");
+}
+
+// ─── COMPARTIR ────────────────────────────────────────────────────────
+function compartir() {
+  const pos   = youRow ? `#${youRow.pos}` : "Sin posición";
+  const pts   = youRow ? (youRow.pts||0).toLocaleString() : "0";
+  const label = MODOS[mode].ptsLbl;
+  const nombre= youRow?.nombre || "Jugador";
+  const modos = { wordle:"🔤 Wordle", quiz:"⚔️ Quiz Bíblico", global:"🌟 Global" };
+  const total = allRows.length;
+
+  const texto =
+    `📖 *Camino Bíblico* — Ranking\n` +
+    `${modos[mode]}\n\n` +
+    `${nombre} está en la posición *${pos}* de ${total} jugadores\n` +
+    `${label}: *${pts}*\n\n` +
+    `¿Puedes superarme? 👇\n` +
+    `${location.origin}${location.pathname.replace("ranking.html","")}ranking.html`;
+
+  window.open(`https://wa.me/?text=${encodeURIComponent(texto)}`, "_blank");
+}
+
+// ─── HELPERS ──────────────────────────────────────────────────────────
+function esc(s) {
+  return (s || "").replace(/[&<>"']/g, m =>
+    ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":'&#39;' }[m])
+  );
+}
+
+function toast(msg) {
+  toastEl.textContent = msg;
+  toastEl.classList.add("show");
+  setTimeout(() => toastEl.classList.remove("show"), 2500);
 }
